@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const deviceCreateSchema = z.object({
-  name: z.string(),
+  name: z.string().min(2).max(256),
   serialId: z.string().uuid(),
 });
 
