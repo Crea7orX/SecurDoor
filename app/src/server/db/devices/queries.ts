@@ -27,12 +27,16 @@ export function devicesGetAll(userId: string) {
   return db.select().from(devices).where(eq(devices.ownerId, userId));
 }
 
-export function deviceGetById(id: string, userId: string) {
-  return db
-    .select()
-    .from(devices)
-    .where(and(eq(devices.ownerId, userId), eq(devices.id, id)))
-    .limit(1);
+export async function deviceGetById(id: string, userId: string) {
+  return (
+    (
+      await db
+        .select()
+        .from(devices)
+        .where(and(eq(devices.ownerId, userId), eq(devices.id, id)))
+        .limit(1)
+    )[0] ?? null
+  );
 }
 
 export function deviceGetBySerialId(serialId: string) {
