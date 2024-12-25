@@ -16,9 +16,9 @@ export async function GET(req: NextRequest) {
 
     const device = await deviceGetById(id, userId);
 
-    if (!device.length) throw new NotFoundError();
+    if (!device) throw new NotFoundError();
 
-    return NextResponse.json(deviceKeyResponseSchema.parse(device[0]));
+    return NextResponse.json(deviceKeyResponseSchema.parse(device));
   } catch (error) {
     return handleError(error);
   }
