@@ -1,4 +1,5 @@
 enum IdPrefix {
+  CARD = "card_",
   DEVICE = "dvc_",
 }
 
