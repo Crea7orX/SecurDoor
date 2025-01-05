@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import {
   BellElectric,
@@ -37,6 +38,7 @@ const DeviceControlsCard = React.forwardRef<
         <CardDescription>Controls for the device</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
+        <Label className="text-md">Basic</Label>
         <div className="flex gap-2 max-md:flex-col">
           <Button variant="destructive">
             <Lock />
@@ -52,6 +54,7 @@ const DeviceControlsCard = React.forwardRef<
           </Button>
         </div>
         <Separator className="h-1 rounded-xl" />
+        <Label className="text-md">Emergency</Label>
         <div className="flex gap-2 max-md:flex-col">
           <Button variant="destructive" className="w-full">
             <Construction />

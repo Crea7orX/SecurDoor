@@ -16,6 +16,12 @@ export class NotFoundError extends Error {
   }
 }
 
+export class CardWithSameFingerprintError extends Error {
+  constructor(message = "Card with same fingerprint already exists") {
+    super(message);
+  }
+}
+
 export class DeviceWithSameSerialIdError extends Error {
   constructor(message = "Device with same serial id already exists") {
     super(message);

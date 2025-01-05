@@ -1,3 +1,5 @@
+import "server-only";
+
 import { DeviceWithSameSerialIdError } from "@/lib/exceptions";
 import IdPrefix, { generateId } from "@/lib/ids";
 import { generateKey } from "@/lib/keys";
@@ -7,7 +9,7 @@ import { devices } from "@/server/db/devices/schema";
 import { and, eq } from "drizzle-orm";
 
 export async function deviceInsert(deviceCreate: DeviceCreate, userId: string) {
-  if ((await deviceGetBySerialId(deviceCreate.serialId)).length > 0) {
+  if (await deviceGetBySerialId(deviceCreate.serialId)) {
     throw new DeviceWithSameSerialIdError();
   }
 
@@ -39,10 +41,14 @@ export async function deviceGetById(id: string, userId: string) {
   );
 }
 
-export function deviceGetBySerialId(serialId: string) {
-  return db
-    .select()
-    .from(devices)
-    .where(eq(devices.serialId, serialId))
-    .limit(1);
+export async function deviceGetBySerialId(serialId: string) {
+  return (
+    (
+      await db
+        .select()
+        .from(devices)
+        .where(eq(devices.serialId, serialId))
+        .limit(1)
+    )[0] ?? null
+  );
 }

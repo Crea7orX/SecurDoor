@@ -1,5 +1,5 @@
 import { Navigation } from "@/types";
-import { Microchip, ScrollText } from "lucide-react";
+import { IdCard, Microchip, ScrollText } from "lucide-react";
 
 export function getNavigationList(pathname: string): Navigation[] {
   return [
@@ -8,6 +8,12 @@ export function getNavigationList(pathname: string): Navigation[] {
       url: "/dashboard/devices",
       icon: Microchip,
       active: pathname.includes("/devices"),
+    },
+    {
+      title: "Cards",
+      url: "/dashboard/cards",
+      icon: IdCard,
+      active: pathname.includes("/cards"),
     },
     {
       title: "Logs",

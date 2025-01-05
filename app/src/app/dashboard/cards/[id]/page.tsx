@@ -1,30 +1,29 @@
 "use client";
 
-import DevicesLoading from "@/app/dashboard/devices/loading";
-import { DeviceAccessCard } from "@/components/devices/device-access-card";
-import { DeviceAddedCard } from "@/components/devices/device-added-card";
-import { DeviceControlsCard } from "@/components/devices/device-controls-card";
-import { DeviceDangerZoneCard } from "@/components/devices/device-danger-zone-card";
+import CardsLoading from "@/app/dashboard/cards/loading";
+import { CardAccessCard } from "@/components/cards/card-access-card";
+import { CardAddedCard } from "@/components/cards/card-added-card";
+import { CardDangerZoneCard } from "@/components/cards/card-danger-zone-card";
+import { CardHolderCard } from "@/components/cards/card-holder-card";
+import { CardStatusCard } from "@/components/cards/card-status-card";
 import { DeviceRecentActivitiesCard } from "@/components/devices/device-recent-activities-card";
-import { DeviceStateCard } from "@/components/devices/device-state-card";
-import { DeviceStatusCard } from "@/components/devices/device-status-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { useGetDeviceByIdQuery } from "@/hooks/api/devices/use-get-device-by-id-query";
-import { ArrowLeft, Microchip } from "lucide-react";
+import { useGetCardByIdQuery } from "@/hooks/api/cards/use-get-card-by-id-query";
+import { ArrowLeft, IdCard } from "lucide-react";
 import { notFound } from "next/navigation";
 import * as React from "react";
 
-interface DevicePageProps {
+interface CardPageProps {
   params: { id: string };
 }
 
-export default function DevicePage({ params }: DevicePageProps) {
-  const { data, isLoading } = useGetDeviceByIdQuery({ id: params.id });
+export default function CardPage({ params }: CardPageProps) {
+  const { data, isLoading } = useGetCardByIdQuery({ id: params.id });
 
   if (isLoading) {
-    return <DevicesLoading />;
+    return <CardsLoading />;
   }
 
   if (!data) {
@@ -35,7 +34,7 @@ export default function DevicePage({ params }: DevicePageProps) {
     <div className="flex flex-1 gap-6 p-4">
       <div className="flex w-96 flex-col gap-8 max-lg:hidden">
         <Button className="self-start" disabled={isLoading} asChild>
-          <a href="/dashboard/devices">
+          <a href="/dashboard/cards">
             <ArrowLeft className="size-4" />
             Go Back
           </a>
@@ -46,10 +45,10 @@ export default function DevicePage({ params }: DevicePageProps) {
       <div className="flex flex-1 flex-col gap-4">
         <Card className="w-full bg-border">
           <CardHeader className="flex-row justify-center gap-2 space-y-0 p-2">
-            <span className="text-2xl font-bold">Device</span>
+            <span className="text-2xl font-bold">Card</span>
             <Badge variant="secondary" className="text-lg font-bold">
-              <Microchip className="mr-1" />
-              {data.name}
+              <IdCard className="mr-1" />
+              {data.fingerprint}
             </Badge>
           </CardHeader>
         </Card>
@@ -57,16 +56,15 @@ export default function DevicePage({ params }: DevicePageProps) {
         <Card className="h-full w-full bg-border px-2 py-4">
           <div className="flex flex-wrap justify-center">
             <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
-              <DeviceControlsCard id={params.id} />
-              <DeviceAddedCard id={params.id} />
+              <CardHolderCard card={data} />
+              <CardAddedCard card={data} />
             </div>
             <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
-              <DeviceStateCard id={params.id} />
-              <DeviceAccessCard id={params.id} />
+              <CardStatusCard card={data} />
+              <CardAccessCard id={params.id} />
             </div>
             <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
-              <DeviceStatusCard id={params.id} />
-              <DeviceDangerZoneCard id={params.id} />
+              <CardDangerZoneCard id={params.id} />
             </div>
           </div>
         </Card>

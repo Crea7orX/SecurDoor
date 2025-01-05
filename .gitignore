@@ -2,3 +2,7 @@
 
 # idea files
 .idea
+
+# vscode
+.vscode
+.history

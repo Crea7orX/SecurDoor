@@ -1,6 +1,7 @@
 import "server-only";
 import {
   BadRequestError,
+  CardWithSameFingerprintError,
   DeviceWithSameSerialIdError,
   NotFoundError,
   UnauthorizedError,
@@ -24,6 +25,10 @@ export function handleError(error: unknown) {
   // todo: catching zod errors from return schema conversion
   if (error instanceof z.ZodError) {
     return NextResponse.json(error.issues, { status: 422 });
+  }
+
+  if (error instanceof CardWithSameFingerprintError) {
+    return NextResponse.json({ error: error.message }, { status: 409 });
   }
 
   if (error instanceof DeviceWithSameSerialIdError) {
