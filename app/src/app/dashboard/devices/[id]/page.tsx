@@ -55,16 +55,16 @@ export default function DevicePage({ params }: DevicePageProps) {
         </Card>
 
         <Card className="h-full w-full bg-border px-2 py-4">
-          <div className="grid h-fit w-full gap-4 2xl:grid-cols-2 min-[1920px]:grid-cols-3">
-            <div className="grid gap-4">
+          <div className="flex flex-wrap justify-center">
+            <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
               <DeviceControlsCard id={params.id} />
               <DeviceAddedCard id={params.id} />
             </div>
-            <div className="grid gap-4">
+            <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
               <DeviceStateCard id={params.id} />
               <DeviceAccessCard id={params.id} />
             </div>
-            <div className="grid gap-4">
+            <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
               <DeviceStatusCard id={params.id} />
               <DeviceDangerZoneCard id={params.id} />
             </div>
