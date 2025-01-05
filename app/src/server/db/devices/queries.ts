@@ -1,3 +1,5 @@
+import "server-only";
+
 import { DeviceWithSameSerialIdError } from "@/lib/exceptions";
 import IdPrefix, { generateId } from "@/lib/ids";
 import { generateKey } from "@/lib/keys";
