@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +11,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useUpdateCardMutation } from "@/hooks/api/cards/use-update-card-mutation";
 import { CardResponse } from "@/lib/validations/card";
 import { Hand, OctagonMinus, ShieldCheck } from "lucide-react";
 import * as React from "react";
+import { toast } from "sonner";
 
 interface CardStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
   card: CardResponse;
@@ -19,6 +23,42 @@ interface CardStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
   ({ className, card, ...props }, ref) => {
+    const { mutateAsync: update } = useUpdateCardMutation({
+      id: card.id,
+    });
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    const handleUpdate = async (value: boolean) => {
+      setIsLoading(true);
+      const toastId = toast.loading(
+        value ? "Activating card..." : "Disabling card...",
+      );
+      await update({
+        active: value,
+      })
+        .then(() => {
+          if (value) {
+            toast.success("Card activated!", {
+              id: toastId,
+            });
+          } else {
+            toast.warning("Card disabled!", {
+              id: toastId,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error(
+            value ? "Failed to activate card!" : "Failed to disable card!",
+            {
+              id: toastId,
+            },
+          );
+        });
+
+      setIsLoading(false);
+    };
+
     return (
       <Card className={className} ref={ref} {...props}>
         <CardHeader>
@@ -44,12 +84,22 @@ const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
         </CardContent>
         <CardFooter className="justify-end gap-2 max-md:flex-col">
           {card.active ? (
-            <Button variant="destructive" className="max-md:w-full">
+            <Button
+              variant="destructive"
+              disabled={isLoading}
+              className="max-md:w-full"
+              onClick={() => handleUpdate(false)}
+            >
               <OctagonMinus />
               <span>Disable</span>
             </Button>
           ) : (
-            <Button variant="success" className="max-md:w-full">
+            <Button
+              variant="success"
+              disabled={isLoading}
+              className="max-md:w-full"
+              onClick={() => handleUpdate(true)}
+            >
               <ShieldCheck />
               <span>Activate</span>
             </Button>
