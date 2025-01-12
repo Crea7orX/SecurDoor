@@ -28,7 +28,7 @@ const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
         {...props}
       >
         <CardHeader className="flex-row items-center gap-2 space-y-0">
-          <CardTitle>Card {card.fingerprint}</CardTitle>
+          <CardTitle>Card {card.fingerprint.slice(-8)}</CardTitle>
           <Separator
             orientation="vertical"
             className="h-6 bg-card-foreground"
