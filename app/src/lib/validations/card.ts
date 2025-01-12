@@ -19,3 +19,10 @@ export const cardResponseSchema = z.object({
 });
 
 export type CardResponse = z.infer<typeof cardResponseSchema>;
+
+export const cardUpdateSchema = z.object({
+  holder: z.string().optional().nullable(),
+  active: z.boolean().optional().nullable(),
+});
+
+export type CardUpdate = z.infer<typeof cardUpdateSchema>;
