@@ -2,10 +2,10 @@ import "server-only";
 
 import { CardWithSameFingerprintError } from "@/lib/exceptions";
 import IdPrefix, { generateId } from "@/lib/ids";
-import { CardCreate } from "@/lib/validations/card";
+import { CardCreate, CardUpdate } from "@/lib/validations/card";
 import { db } from "@/server/db";
 import { cards } from "@/server/db/cards/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 export async function cardInsert(create: CardCreate, userId: string) {
   if (await cardFindByFingerprint(create.fingerprint)) {
@@ -17,8 +17,8 @@ export async function cardInsert(create: CardCreate, userId: string) {
       .insert(cards)
       .values({
         id: generateId(IdPrefix.CARD),
-        fingerprint: create.fingerprint,
-        holder: create.holder,
+        fingerprint: create.fingerprint.trim(),
+        holder: create.holder?.trim(),
         active: create.active ?? true,
         ownerId: userId,
       })
@@ -57,6 +57,35 @@ export async function cardGetByFingerprint(
         .limit(1)
     )[0] ?? null
   );
+}
+
+export async function cardUpdate(
+  id: string,
+  update: CardUpdate,
+  ownerId: string,
+) {
+  return (
+    await db
+      .update(cards)
+      .set({
+        ...(typeof update.holder === "string" && {
+          holder: update.holder.length > 0 ? update.holder.trim() : null,
+        }),
+        ...(typeof update.active === "boolean" && { active: update.active }),
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
+      .returning()
+  )[0];
+}
+
+export async function cardDelete(id: string, ownerId: string) {
+  return (
+    await db
+      .delete(cards)
+      .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
+      .returning()
+  )[0];
 }
 
 async function cardFindByFingerprint(fingerprint: string) {
