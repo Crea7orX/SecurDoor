@@ -1,6 +1,7 @@
 enum IdPrefix {
   CARD = "card_",
   DEVICE = "dvc_",
+  LOG = "log_",
 }
 
 export default IdPrefix;
