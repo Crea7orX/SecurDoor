@@ -41,11 +41,13 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
       })),
     },
     {
-      id: "actor",
+      id: "actorId",
       label: "Actor",
       options: actors?.map((actor) => ({
-        label: actor.actor,
-        value: actor.actor,
+        label:
+          `${actor.actorName ?? ""}${actor.actorEmail ? (actor.actorName ? ` (${actor.actorEmail})` : `${actor.actorEmail}`) : ""}` ||
+          actor.actorId,
+        value: actor.actorId,
       })),
     },
   ];
