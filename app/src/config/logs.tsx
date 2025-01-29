@@ -1,7 +1,7 @@
 import { LogDisplayInfo } from "@/types";
 import { CircleHelp, CircleMinus, CirclePlus } from "lucide-react";
 
-const LogDisplayInfos: Record<string, LogDisplayInfo> = {
+export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
   "card.create": {
     text: "{actor} created card",
     icon: CirclePlus,
