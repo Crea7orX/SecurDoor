@@ -3,9 +3,18 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getLogDisplayInfo } from "@/config/logs";
 import { cn } from "@/lib/utils";
-import { LogResponse } from "@/lib/validations/log";
+import { type LogResponse } from "@/lib/validations/log";
 import { UserCircle } from "lucide-react";
 import * as React from "react";
+
+const colorVariants = {
+  default: "border-default text-default ring-default",
+  destructive: "border-destructive text-destructive ring-destructive",
+  secondary: "border-secondary text-secondary ring-secondary",
+  success: "border-success text-success ring-success",
+  info: "border-info text-info ring-info",
+  warning: "border-warning text-warning ring-warning",
+};
 
 interface LogCardProps extends React.HTMLAttributes<HTMLDivElement> {
   log: LogResponse;
@@ -20,8 +29,8 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
         <Badge
           variant="outline"
           className={cn(
-            "absolute -left-3 -top-3 w-fit border-2 bg-card p-1.5 ring-2",
-            `border-${logDisplayInfo.color} text-[hsl(var(--${logDisplayInfo.color}))] ring-[hsl(var(--${logDisplayInfo.color}))]`,
+            "absolute -left-3 -top-3 w-fit bg-card p-1.5 ring-2",
+            `${colorVariants[logDisplayInfo.color]}`,
           )}
         >
           <logDisplayInfo.icon
@@ -49,7 +58,7 @@ LogCard.displayName = "LogCard";
 const LogCardSkeleton = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+>(({ className, children, ...props }, ref) => {
   return (
     <Card className={cn("relative", className)} ref={ref} {...props}>
       <div className="absolute -left-3 -top-3 size-8 bg-card">
@@ -62,6 +71,7 @@ const LogCardSkeleton = React.forwardRef<
           <Skeleton className="h-4 w-48" />
         </div>
       </div>
+      {children}
     </Card>
   );
 });
