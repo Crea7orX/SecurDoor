@@ -2,9 +2,10 @@ import "server-only";
 
 import { CardWithSameFingerprintError } from "@/lib/exceptions";
 import IdPrefix, { generateId } from "@/lib/ids";
-import { CardCreate, CardUpdate } from "@/lib/validations/card";
+import { type CardCreate, type CardUpdate } from "@/lib/validations/card";
 import { db } from "@/server/db";
 import { cards } from "@/server/db/cards/schema";
+import { logInsert } from "@/server/db/logs/queries";
 import { and, eq, sql } from "drizzle-orm";
 
 export async function cardInsert(create: CardCreate, userId: string) {
@@ -12,7 +13,7 @@ export async function cardInsert(create: CardCreate, userId: string) {
     throw new CardWithSameFingerprintError();
   }
 
-  return (
+  const card = (
     await db
       .insert(cards)
       .values({
@@ -24,6 +25,13 @@ export async function cardInsert(create: CardCreate, userId: string) {
       })
       .returning()
   )[0];
+
+  if (card) {
+    const reference = [card.fingerprint, card.active.toString()];
+    void logInsert(userId, "card.create", userId, card.id, reference);
+  }
+
+  return card;
 }
 
 export function cardsGetAll(ownerId: string) {
@@ -64,7 +72,7 @@ export async function cardUpdate(
   update: CardUpdate,
   ownerId: string,
 ) {
-  return (
+  const card = (
     await db
       .update(cards)
       .set({
@@ -77,15 +85,37 @@ export async function cardUpdate(
       .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
       .returning()
   )[0];
+
+  if (card) {
+    const reference = [
+      card.fingerprint,
+      card.holder ?? "NULL",
+      card.active.toString(),
+    ];
+    void logInsert(ownerId, "card.update", ownerId, card.id, reference);
+  }
+
+  return card;
 }
 
 export async function cardDelete(id: string, ownerId: string) {
-  return (
+  const card = (
     await db
       .delete(cards)
       .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
       .returning()
   )[0];
+
+  if (card) {
+    const reference = [
+      card.fingerprint,
+      card.holder ?? "NULL",
+      card.active.toString(),
+    ];
+    void logInsert(ownerId, "card.delete", ownerId, card.id, reference);
+  }
+
+  return card;
 }
 
 async function cardFindByFingerprint(fingerprint: string) {
