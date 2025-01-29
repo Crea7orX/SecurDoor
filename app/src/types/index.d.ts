@@ -8,6 +8,7 @@ export type Navigation = {
 };
 
 export type LogDisplayInfo = {
+  title: string;
   text: string;
   icon: LucideIcon;
   color:

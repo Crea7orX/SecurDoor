@@ -34,7 +34,7 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
       id: "action",
       label: "Action",
       options: Object.entries(LogDisplayInfos).map(([action, display]) => ({
-        label: action,
+        label: display.title,
         value: action,
         icon: display.icon,
         iconClassName: `text-${display.color}`,
