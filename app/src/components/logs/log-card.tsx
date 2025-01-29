@@ -41,7 +41,10 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
           <UserCircle className="size-8" />
           <div className="flex-1">
             <h2 className="font-semibold">
-              {logDisplayInfo.text.replace("{actor}", log.actor)}
+              {logDisplayInfo.text.replace(
+                "{actor}",
+                `${log.actorName ?? ""}${log.actorEmail ? (log.actorName ? ` (${log.actorEmail})` : `${log.actorEmail}`) : ""}`,
+              )}
             </h2>
             <span className="text-muted-foreground">
               {new Date(log.createdAt * 1000).toLocaleString()}
