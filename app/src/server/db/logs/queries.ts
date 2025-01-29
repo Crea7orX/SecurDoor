@@ -13,12 +13,14 @@ export async function logInsert(
   objectId?: string,
   reference?: string[],
 ) {
-  let actorInfo = actor;
+  let actorName;
+  let actorEmail;
   if (actor.startsWith("user_")) {
     const user = await clerkClient.users.getUser(userId);
 
     if (user) {
-      actorInfo = `${user.firstName ?? ""}${user.lastName ? ` ${user.lastName}` : ""}${user.primaryEmailAddress?.emailAddress ? ` (${user.primaryEmailAddress.emailAddress})` : ""}`;
+      actorName = `${user.firstName ?? ""}${user.lastName ? ` ${user.lastName}` : ""}`;
+      actorEmail = user.primaryEmailAddress?.emailAddress;
     }
   }
 
@@ -26,7 +28,9 @@ export async function logInsert(
     .values({
       id: generateId(IdPrefix.LOG),
       action,
-      actor: actorInfo,
+      actorName,
+      actorEmail,
+      actorId: actor,
       objectId: objectId,
       reference: reference,
       ownerId: userId,
@@ -43,7 +47,9 @@ export async function logsGetAll(input: LogsGetSchema, ownerId: string) {
     const where = and(
       eq(logs.ownerId, ownerId), // Only show logs for the organization
       input.action.length > 0 ? inArray(logs.action, input.action) : undefined,
-      input.actor.length > 0 ? inArray(logs.actor, input.actor) : undefined,
+      input.actorId.length > 0
+        ? inArray(logs.actorId, input.actorId)
+        : undefined,
     );
 
     const orderBy =
@@ -98,11 +104,12 @@ export async function logGetById(id: string, ownerId: string) {
 
 export function logsActorsGetAll(ownerId: string) {
   return db
-    .select({
-      actor: logs.actor,
+    .selectDistinctOn([logs.actorName, logs.actorId], {
+      actorName: logs.actorName,
+      actorEmail: logs.actorEmail,
+      actorId: logs.actorId,
     })
     .from(logs)
     .where(eq(logs.ownerId, ownerId))
-    .groupBy(logs.actor)
-    .orderBy(asc(logs.actor));
+    .orderBy(asc(logs.actorName), asc(logs.actorId));
 }
