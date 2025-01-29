@@ -1,9 +1,12 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useUpdateCardMutation } from "@/hooks/api/cards/use-update-card-mutation";
 import { cn } from "@/lib/utils";
 import { CardResponse } from "@/lib/validations/card";
 import {
@@ -14,6 +17,7 @@ import {
   User,
 } from "lucide-react";
 import * as React from "react";
+import { toast } from "sonner";
 
 interface CardCardProps extends React.HTMLAttributes<HTMLDivElement> {
   card: CardResponse;
@@ -21,6 +25,42 @@ interface CardCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
   ({ className, card, ...props }, ref) => {
+    const { mutateAsync: update } = useUpdateCardMutation({
+      id: card.id,
+    });
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    const handleUpdate = async (value: boolean) => {
+      setIsLoading(true);
+      const toastId = toast.loading(
+        value ? "Activating card..." : "Disabling card...",
+      );
+      await update({
+        active: value,
+      })
+        .then(() => {
+          if (value) {
+            toast.success("Card activated!", {
+              id: toastId,
+            });
+          } else {
+            toast.warning("Card disabled!", {
+              id: toastId,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error(
+            value ? "Failed to activate card!" : "Failed to disable card!",
+            {
+              id: toastId,
+            },
+          );
+        });
+
+      setIsLoading(false);
+    };
+
     return (
       <Card
         className={cn("bg-border lg:min-w-[360px]", className)}
@@ -69,12 +109,20 @@ const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
               </a>
             </Button>
             {card.active ? (
-              <Button variant="destructive">
+              <Button
+                variant="destructive"
+                disabled={isLoading}
+                onClick={() => handleUpdate(false)}
+              >
                 <OctagonMinus className="size-4" />
                 <span>Disable</span>
               </Button>
             ) : (
-              <Button variant="success">
+              <Button
+                variant="success"
+                disabled={isLoading}
+                onClick={() => handleUpdate(true)}
+              >
                 <ShieldCheck className="size-4" />
                 <span>Activate</span>
               </Button>

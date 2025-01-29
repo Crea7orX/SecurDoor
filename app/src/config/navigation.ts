@@ -19,7 +19,7 @@ export function getNavigationList(pathname: string): Navigation[] {
       title: "Logs",
       url: "/dashboard/logs",
       icon: ScrollText,
-      active: pathname.includes("/admin/update-requests"),
+      active: pathname.includes("/logs"),
     },
   ];
 }
