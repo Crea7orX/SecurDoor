@@ -1,11 +1,20 @@
+import { useParseSearchParams } from "@/hooks/use-parse-search-params";
 import { axiosInstance } from "@/lib/axios";
-import { LogResponse } from "@/lib/validations/log";
-import { useQuery } from "@tanstack/react-query";
+import { LogsPaginatedResponse } from "@/lib/validations/log";
+import { SearchParams } from "@/types/data-table";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
-export function useGetAllLogsQuery() {
-  return useQuery<LogResponse[], AxiosError>({
-    queryKey: ["Logs", "GetAll"],
-    queryFn: async () => (await axiosInstance.get("/logs")).data,
+interface UseGetAllLogsQueryProps {
+  searchParams: SearchParams;
+}
+
+export function useGetAllLogsQuery({ searchParams }: UseGetAllLogsQueryProps) {
+  const search = useParseSearchParams(searchParams);
+
+  return useQuery<LogsPaginatedResponse, AxiosError>({
+    queryKey: ["Logs", "GetAll", searchParams],
+    queryFn: async () => (await axiosInstance.get(`/logs?${search}`)).data,
+    placeholderData: keepPreviousData,
   });
 }
