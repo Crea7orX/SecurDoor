@@ -1,5 +1,5 @@
 import { LogDisplayInfo } from "@/types";
-import { CircleHelp, CircleMinus, CirclePlus } from "lucide-react";
+import { CircleDot, CircleHelp, CircleMinus, CirclePlus } from "lucide-react";
 
 export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
   "card.create": {
@@ -11,6 +11,11 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     text: "{actor} deleted card",
     icon: CircleMinus,
     color: "destructive",
+  },
+  "card.update": {
+    text: "{actor} updated card",
+    icon: CircleDot,
+    color: "info",
   },
 };
 
