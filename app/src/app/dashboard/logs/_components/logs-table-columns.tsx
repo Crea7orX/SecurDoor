@@ -11,7 +11,7 @@ export function getColumns(): ColumnDef<LogResponse>[] {
       enableHiding: false,
     },
     {
-      accessorKey: "actor",
+      accessorKey: "actorId",
       enableSorting: false,
       enableHiding: false,
     },
