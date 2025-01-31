@@ -22,7 +22,7 @@ export const logResponseSchema = z.object({
 
 export type LogResponse = z.infer<typeof logResponseSchema>;
 
-export const logSearchParamsCache = createSearchParamsCache({
+export const logsSearchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
   sort: getSortingStateParser<LogResponse>().withDefault([
@@ -35,7 +35,7 @@ export const logSearchParamsCache = createSearchParamsCache({
 });
 
 export type LogsGetSchema = Awaited<
-  ReturnType<typeof logSearchParamsCache.parse>
+  ReturnType<typeof logsSearchParamsCache.parse>
 >;
 
 export const logsPaginatedResponseSchema = z.object({

@@ -1,7 +1,7 @@
 import { authenticate } from "@/lib/auth";
 import { handleError } from "@/lib/errors";
 import {
-  logSearchParamsCache,
+  logsSearchParamsCache,
   logsPaginatedResponseSchema,
 } from "@/lib/validations/log";
 import { logsGetAll } from "@/server/db/logs/queries";
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const { userId } = authenticate(request);
 
     const url = new URL(request.url);
-    const searchParams = await logSearchParamsCache.parse(
+    const searchParams = await logsSearchParamsCache.parse(
       Promise.resolve(url.searchParams),
     );
 
