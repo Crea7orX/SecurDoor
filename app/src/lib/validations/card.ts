@@ -1,3 +1,12 @@
+import { getSortingStateParser } from "@/lib/data-table-parsers";
+import {
+  createSearchParamsCache,
+  parseAsArrayOf,
+  parseAsInteger,
+  parseAsNumberLiteral,
+  parseAsBoolean,
+  parseAsString,
+} from "nuqs/server";
 import { z } from "zod";
 
 export const cardCreateSchema = z.object({
@@ -26,3 +35,26 @@ export const cardUpdateSchema = z.object({
 });
 
 export type CardUpdate = z.infer<typeof cardUpdateSchema>;
+
+export const cardSearchParamsCache = createSearchParamsCache({
+  page: parseAsInteger.withDefault(1),
+  perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
+  sort: getSortingStateParser<CardResponse>().withDefault([
+    { id: "createdAt", desc: false },
+  ]),
+  holder: parseAsString,
+  active: parseAsArrayOf(parseAsBoolean),
+});
+
+export type CardGetSchema = Awaited<
+  ReturnType<typeof cardSearchParamsCache.parse>
+>;
+
+export const cardsPaginatedResponseSchema = z.object({
+  data: cardResponseSchema.array(),
+  pageCount: z.number(),
+});
+
+export type CardsPaginatedResponse = z.infer<
+  typeof cardsPaginatedResponseSchema
+>;
