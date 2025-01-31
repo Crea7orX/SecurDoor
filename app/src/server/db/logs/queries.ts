@@ -40,21 +40,23 @@ export async function logInsert(
     });
 }
 
-export async function logsGetAll(input: LogsGetSchema, ownerId: string) {
+export async function logsGetAll(searchParams: LogsGetSchema, ownerId: string) {
   try {
-    const offset = (input.page - 1) * input.perPage;
+    const offset = (searchParams.page - 1) * searchParams.perPage;
 
     const where = and(
       eq(logs.ownerId, ownerId), // Only show logs for the organization
-      input.action.length > 0 ? inArray(logs.action, input.action) : undefined,
-      input.actorId.length > 0
-        ? inArray(logs.actorId, input.actorId)
+      searchParams.action.length > 0
+        ? inArray(logs.action, searchParams.action)
+        : undefined,
+      searchParams.actorId.length > 0
+        ? inArray(logs.actorId, searchParams.actorId)
         : undefined,
     );
 
     const orderBy =
-      input.sort.length > 0
-        ? input.sort.map((item) =>
+      searchParams.sort.length > 0
+        ? searchParams.sort.map((item) =>
             item.desc ? desc(logs[item.id]) : asc(logs[item.id]),
           )
         : [asc(logs.createdAt)];
@@ -63,7 +65,7 @@ export async function logsGetAll(input: LogsGetSchema, ownerId: string) {
       const data = await tx
         .select()
         .from(logs)
-        .limit(input.perPage)
+        .limit(searchParams.perPage)
         .offset(offset)
         .where(where)
         .orderBy(...orderBy);
@@ -83,7 +85,7 @@ export async function logsGetAll(input: LogsGetSchema, ownerId: string) {
       };
     });
 
-    const pageCount = Math.ceil(total / input.perPage);
+    const pageCount = Math.ceil(total / searchParams.perPage);
     return { data, pageCount };
   } catch (error) {
     return { data: [], pageCount: 0 };
