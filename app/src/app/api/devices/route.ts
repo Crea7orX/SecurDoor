@@ -1,9 +1,11 @@
 import { authenticate } from "@/lib/auth";
 import { handleError } from "@/lib/errors";
 import {
-  DeviceCreate,
+  type DeviceCreate,
   deviceCreateSchema,
   deviceResponseSchema,
+  devicesPaginatedResponseSchema,
+  devicesSearchParamsCache,
 } from "@/lib/validations/device";
 import { deviceInsert, devicesGetAll } from "@/server/db/devices/queries";
 import { NextResponse } from "next/server";
@@ -12,9 +14,14 @@ export async function GET(request: Request) {
   try {
     const { userId } = authenticate(request);
 
-    const userDevices = await devicesGetAll(userId);
+    const url = new URL(request.url);
+    const searchParams = await devicesSearchParamsCache.parse(
+      Promise.resolve(url.searchParams),
+    );
 
-    return NextResponse.json(deviceResponseSchema.array().parse(userDevices));
+    const devices = await devicesGetAll(searchParams, userId);
+
+    return NextResponse.json(devicesPaginatedResponseSchema.parse(devices));
   } catch (error) {
     return handleError(error);
   }
