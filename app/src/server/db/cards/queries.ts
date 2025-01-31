@@ -2,11 +2,15 @@ import "server-only";
 
 import { CardWithSameFingerprintError } from "@/lib/exceptions";
 import IdPrefix, { generateId } from "@/lib/ids";
-import { type CardCreate, type CardUpdate } from "@/lib/validations/card";
+import {
+  type CardCreate,
+  type CardGetSchema,
+  type CardUpdate,
+} from "@/lib/validations/card";
 import { db } from "@/server/db";
 import { cards } from "@/server/db/cards/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import { and, eq, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, ilike, inArray, sql } from "drizzle-orm";
 
 export async function cardInsert(create: CardCreate, userId: string) {
   if (await cardFindByFingerprint(create.fingerprint)) {
@@ -34,8 +38,59 @@ export async function cardInsert(create: CardCreate, userId: string) {
   return card;
 }
 
-export function cardsGetAll(ownerId: string) {
-  return db.select().from(cards).where(eq(cards.ownerId, ownerId));
+export async function cardsGetAll(
+  searchParams: CardGetSchema,
+  ownerId: string,
+) {
+  try {
+    const offset = (searchParams.page - 1) * searchParams.perPage;
+
+    const where = and(
+      eq(cards.ownerId, ownerId), // Only show cards for the organization
+      searchParams.holder && searchParams.holder.trim() !== ""
+        ? ilike(cards.holder, `%${searchParams.holder.trim()}%`)
+        : undefined,
+      searchParams.active && searchParams.active.length > 0
+        ? inArray(cards.active, searchParams.active)
+        : undefined,
+    );
+
+    const orderBy =
+      searchParams.sort.length > 0
+        ? searchParams.sort.map((item) =>
+            item.desc ? desc(cards[item.id]) : asc(cards[item.id]),
+          )
+        : [asc(cards.createdAt)];
+
+    const { data, total } = await db.transaction(async (tx) => {
+      const data = await tx
+        .select()
+        .from(cards)
+        .limit(searchParams.perPage)
+        .offset(offset)
+        .where(where)
+        .orderBy(...orderBy);
+
+      const total = await tx
+        .select({
+          count: count(),
+        })
+        .from(cards)
+        .where(where)
+        .execute()
+        .then((res) => res[0]?.count ?? 0);
+
+      return {
+        data,
+        total,
+      };
+    });
+
+    const pageCount = Math.ceil(total / searchParams.perPage);
+    return { data, pageCount };
+  } catch (error) {
+    return { data: [], pageCount: 0 };
+  }
 }
 
 export async function cardGetById(id: string, ownerId: string) {
