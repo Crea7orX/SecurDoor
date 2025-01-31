@@ -4,7 +4,7 @@ import {
   type CardCreate,
   cardCreateSchema,
   cardResponseSchema,
-  cardSearchParamsCache,
+  cardsSearchParamsCache,
   cardsPaginatedResponseSchema,
 } from "@/lib/validations/card";
 import { cardInsert, cardsGetAll } from "@/server/db/cards/queries";
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
     const { userId } = authenticate(request);
 
     const url = new URL(request.url);
-    const searchParams = await cardSearchParamsCache.parse(
+    const searchParams = await cardsSearchParamsCache.parse(
       Promise.resolve(url.searchParams),
     );
 

@@ -36,7 +36,7 @@ export const cardUpdateSchema = z.object({
 
 export type CardUpdate = z.infer<typeof cardUpdateSchema>;
 
-export const cardSearchParamsCache = createSearchParamsCache({
+export const cardsSearchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
   sort: getSortingStateParser<CardResponse>().withDefault([
@@ -46,8 +46,8 @@ export const cardSearchParamsCache = createSearchParamsCache({
   active: parseAsArrayOf(parseAsBoolean),
 });
 
-export type CardGetSchema = Awaited<
-  ReturnType<typeof cardSearchParamsCache.parse>
+export type CardsGetSchema = Awaited<
+  ReturnType<typeof cardsSearchParamsCache.parse>
 >;
 
 export const cardsPaginatedResponseSchema = z.object({

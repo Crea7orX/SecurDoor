@@ -4,7 +4,7 @@ import { CardWithSameFingerprintError } from "@/lib/exceptions";
 import IdPrefix, { generateId } from "@/lib/ids";
 import {
   type CardCreate,
-  type CardGetSchema,
+  type CardsGetSchema,
   type CardUpdate,
 } from "@/lib/validations/card";
 import { db } from "@/server/db";
@@ -39,7 +39,7 @@ export async function cardInsert(create: CardCreate, userId: string) {
 }
 
 export async function cardsGetAll(
-  searchParams: CardGetSchema,
+  searchParams: CardsGetSchema,
   ownerId: string,
 ) {
   try {
