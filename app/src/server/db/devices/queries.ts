@@ -9,6 +9,7 @@ import {
 } from "@/lib/validations/device";
 import { db } from "@/server/db";
 import { devices } from "@/server/db/devices/schema";
+import { logInsert } from "@/server/db/logs/queries";
 import { and, asc, count, desc, eq, ilike } from "drizzle-orm";
 
 export async function deviceInsert(deviceCreate: DeviceCreate, userId: string) {
@@ -16,16 +17,25 @@ export async function deviceInsert(deviceCreate: DeviceCreate, userId: string) {
     throw new DeviceWithSameSerialIdError();
   }
 
-  return db
-    .insert(devices)
-    .values({
-      id: generateId(IdPrefix.DEVICE),
-      name: deviceCreate.name,
-      serialId: deviceCreate.serialId,
-      key: generateKey(),
-      ownerId: userId,
-    })
-    .returning();
+  const device = (
+    await db
+      .insert(devices)
+      .values({
+        id: generateId(IdPrefix.DEVICE),
+        name: deviceCreate.name,
+        serialId: deviceCreate.serialId,
+        key: generateKey(),
+        ownerId: userId,
+      })
+      .returning()
+  )[0];
+
+  if (device) {
+    const reference = [device.serialId, device.name];
+    void logInsert(userId, "device.create", userId, device.id, reference);
+  }
+
+  return device;
 }
 
 export async function devicesGetAll(

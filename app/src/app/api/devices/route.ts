@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
     const device = await deviceInsert(deviceCreate, userId);
 
-    return NextResponse.json(deviceResponseSchema.parse(device[0]), {
+    return NextResponse.json(deviceResponseSchema.parse(device), {
       status: 201,
     });
   } catch (error) {
