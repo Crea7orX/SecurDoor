@@ -1,7 +1,6 @@
 import "server-only";
 
 import { DeviceWithSameSerialIdError } from "@/lib/exceptions";
-import IdPrefix, { generateId } from "@/lib/ids";
 import { generateKey } from "@/lib/keys";
 import {
   type DeviceCreate,
@@ -21,7 +20,6 @@ export async function deviceInsert(deviceCreate: DeviceCreate, userId: string) {
     await db
       .insert(devices)
       .values({
-        id: generateId(IdPrefix.DEVICE),
         name: deviceCreate.name,
         serialId: deviceCreate.serialId,
         key: generateKey(),
