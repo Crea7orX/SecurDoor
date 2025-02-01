@@ -31,6 +31,7 @@ export const logsSearchParamsCache = createSearchParamsCache({
   action: parseAsArrayOf(
     z.enum(Object.keys(LogDisplayInfos) as [keyof typeof LogDisplayInfos]),
   ).withDefault([]),
+  objectId: parseAsArrayOf(z.string()),
   actorId: parseAsArrayOf(z.string()).withDefault([]),
 });
 
