@@ -5,7 +5,7 @@ import { DeviceAccessCard } from "@/components/devices/device-access-card";
 import { DeviceAddedCard } from "@/components/devices/device-added-card";
 import { DeviceControlsCard } from "@/components/devices/device-controls-card";
 import { DeviceDangerZoneCard } from "@/components/devices/device-danger-zone-card";
-import { DeviceRecentActivitiesCard } from "@/components/devices/device-recent-activities-card";
+import { LogRecentActivitiesCard } from "@/components/logs/log-recent-activities-card";
 import { DeviceStateCard } from "@/components/devices/device-state-card";
 import { DeviceStatusCard } from "@/components/devices/device-status-card";
 import { Badge } from "@/components/ui/badge";
@@ -40,7 +40,7 @@ export default function DevicePage({ params }: DevicePageProps) {
             Go Back
           </a>
         </Button>
-        <DeviceRecentActivitiesCard id={params.id} />
+        <LogRecentActivitiesCard id={params.id} />
       </div>
 
       <div className="flex flex-1 flex-col gap-4">
@@ -55,7 +55,7 @@ export default function DevicePage({ params }: DevicePageProps) {
         </Card>
 
         <Card className="h-full w-full bg-border px-2 py-4">
-          <div className="flex flex-wrap justify-center">
+          <div className="sticky top-0 flex flex-wrap justify-center">
             <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
               <DeviceControlsCard id={params.id} />
               <DeviceAddedCard id={params.id} />
@@ -71,7 +71,7 @@ export default function DevicePage({ params }: DevicePageProps) {
           </div>
         </Card>
 
-        <DeviceRecentActivitiesCard className="lg:hidden" id={params.id} />
+        <LogRecentActivitiesCard className="lg:hidden" id={params.id} />
       </div>
     </div>
   );

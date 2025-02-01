@@ -6,7 +6,7 @@ import { CardAddedCard } from "@/components/cards/card-added-card";
 import { CardDangerZoneCard } from "@/components/cards/card-danger-zone-card";
 import { CardHolderCard } from "@/components/cards/card-holder-card";
 import { CardStatusCard } from "@/components/cards/card-status-card";
-import { DeviceRecentActivitiesCard } from "@/components/devices/device-recent-activities-card";
+import { LogRecentActivitiesCard } from "@/components/logs/log-recent-activities-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
@@ -39,7 +39,7 @@ export default function CardPage({ params }: CardPageProps) {
             Go Back
           </a>
         </Button>
-        <DeviceRecentActivitiesCard id={params.id} />
+        <LogRecentActivitiesCard id={params.id} />
       </div>
 
       <div className="flex flex-1 flex-col gap-4">
@@ -54,7 +54,7 @@ export default function CardPage({ params }: CardPageProps) {
         </Card>
 
         <Card className="h-full w-full bg-border px-2 py-4">
-          <div className="flex flex-wrap justify-center">
+          <div className="sticky top-0 flex flex-wrap justify-center">
             <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
               <CardHolderCard card={data} />
               <CardAddedCard card={data} />
@@ -69,7 +69,7 @@ export default function CardPage({ params }: CardPageProps) {
           </div>
         </Card>
 
-        <DeviceRecentActivitiesCard className="lg:hidden" id={params.id} />
+        <LogRecentActivitiesCard className="lg:hidden" id={params.id} />
       </div>
     </div>
   );
