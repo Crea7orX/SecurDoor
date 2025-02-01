@@ -49,6 +49,9 @@ export async function logsGetAll(searchParams: LogsGetSchema, ownerId: string) {
       searchParams.action.length > 0
         ? inArray(logs.action, searchParams.action)
         : undefined,
+      searchParams.objectId && searchParams.objectId.length > 0
+        ? inArray(logs.objectId, searchParams.objectId)
+        : undefined,
       searchParams.actorId.length > 0
         ? inArray(logs.actorId, searchParams.actorId)
         : undefined,
