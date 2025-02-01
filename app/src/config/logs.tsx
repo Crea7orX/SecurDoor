@@ -7,6 +7,8 @@ import {
   Diamond,
   DiamondMinus,
   DiamondPlus,
+  OctagonMinus,
+  ShieldCheck,
 } from "lucide-react";
 
 export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
@@ -40,11 +42,23 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: CircleMinus,
     color: "destructive",
   },
-  "card.update": {
-    title: "Card updated",
-    text: "{actor} updated card",
+  "card.rename": {
+    title: "Card renamed",
+    text: "{actor} renamed card",
     icon: CircleDot,
     color: "info",
+  },
+  "card.activate": {
+    title: "Card activated",
+    text: "{actor} activated card",
+    icon: ShieldCheck,
+    color: "success",
+  },
+  "card.deactivate": {
+    title: "Card deactivated",
+    text: "{actor} deactivated card",
+    icon: OctagonMinus,
+    color: "warning",
   },
 };
 
