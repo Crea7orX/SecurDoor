@@ -45,8 +45,8 @@ dependencies:
     specifier: ^0.10.1
     version: 0.10.1(typescript@5.6.3)(zod@3.23.8)
   '@tanstack/react-query':
-    specifier: ^5.62.8
-    version: 5.62.8(react@18.3.1)
+    specifier: ^5.66.0
+    version: 5.66.0(react@18.3.1)
   '@tanstack/react-table':
     specifier: ^8.20.6
     version: 8.20.6(react-dom@18.3.1)(react@18.3.1)
@@ -109,6 +109,9 @@ dependencies:
     version: 3.23.8
 
 devDependencies:
+  '@tanstack/react-query-devtools':
+    specifier: ^5.66.0
+    version: 5.66.0(@tanstack/react-query@5.66.0)(react@18.3.1)
   '@types/eslint':
     specifier: ^8.56.10
     version: 8.56.12
@@ -1898,18 +1901,31 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@tanstack/query-core@5.62.8:
-    resolution: {integrity: sha512-4fV31vDsUyvNGrKIOUNPrZztoyL187bThnoQOvAXEVlZbSiuPONpfx53634MKKdvsDir5NyOGm80ShFaoHS/mw==}
-    dev: false
+  /@tanstack/query-core@5.66.0:
+    resolution: {integrity: sha512-J+JeBtthiKxrpzUu7rfIPDzhscXF2p5zE/hVdrqkACBP8Yu0M96mwJ5m/8cPPYQE9aRNvXztXHlNwIh4FEeMZw==}
 
-  /@tanstack/react-query@5.62.8(react@18.3.1):
-    resolution: {integrity: sha512-8TUstKxF/fysHonZsWg/hnlDVgasTdHx6Q+f1/s/oPKJBJbKUWPZEHwLTMOZgrZuroLMiqYKJ9w69Abm8mWP0Q==}
+  /@tanstack/query-devtools@5.65.0:
+    resolution: {integrity: sha512-g5y7zc07U9D3esMdqUfTEVu9kMHoIaVBsD0+M3LPdAdD710RpTcLiNvJY1JkYXqkq9+NV+CQoemVNpQPBXVsJg==}
+    dev: true
+
+  /@tanstack/react-query-devtools@5.66.0(@tanstack/react-query@5.66.0)(react@18.3.1):
+    resolution: {integrity: sha512-uB57wA2YZaQ2fPcFW0E9O1zAGDGSbRKRx84uMk/86VyU9jWVxvJ3Uzp+zNm+nZJYsuekCIo2opTdgNuvM3cKgA==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.66.0
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-devtools': 5.65.0
+      '@tanstack/react-query': 5.66.0(react@18.3.1)
+      react: 18.3.1
+    dev: true
+
+  /@tanstack/react-query@5.66.0(react@18.3.1):
+    resolution: {integrity: sha512-z3sYixFQJe8hndFnXgWu7C79ctL+pI0KAelYyW+khaNJ1m22lWrhJU2QrsTcRKMuVPtoZvfBYrTStIdKo+x0Xw==}
     peerDependencies:
       react: ^18 || ^19
     dependencies:
-      '@tanstack/query-core': 5.62.8
+      '@tanstack/query-core': 5.66.0
       react: 18.3.1
-    dev: false
 
   /@tanstack/react-table@8.20.6(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-w0jluT718MrOKthRcr2xsjqzx+oEM7B7s/XXyfs19ll++hlId3fjTm+B2zrR3ijpANpkzBAr15j1XGVOMxpggQ==}
@@ -4464,7 +4480,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}

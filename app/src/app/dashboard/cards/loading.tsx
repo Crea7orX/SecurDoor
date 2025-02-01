@@ -2,7 +2,7 @@ import { CardCardSkeleton } from "@/components/cards/card-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PlusCircle } from "lucide-react";
-import * as React from "react";
+import Link from "next/link";
 
 export default function CardsLoading() {
   return (
@@ -14,10 +14,10 @@ export default function CardsLoading() {
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" asChild>
-            <a href="/dashboard/cards/add">
+            <Link href="/dashboard/cards/add">
               <PlusCircle className="size-4" />
               Add Card
-            </a>
+            </Link>
           </Button>
         </div>
       </div>

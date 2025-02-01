@@ -2,6 +2,7 @@ import { DeviceCardSkeleton } from "@/components/devices/device-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PlusCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function DevicesLoading() {
   return (
@@ -12,10 +13,10 @@ export default function DevicesLoading() {
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" asChild>
-            <a href="/dashboard/devices/add">
+            <Link href="/dashboard/devices/add">
               <PlusCircle className="size-4" />
               Add Device
-            </a>
+            </Link>
           </Button>
         </div>
       </div>

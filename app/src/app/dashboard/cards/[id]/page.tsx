@@ -12,8 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { useGetCardByIdQuery } from "@/hooks/api/cards/use-get-card-by-id-query";
 import { ArrowLeft, IdCard } from "lucide-react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import * as React from "react";
 
 interface CardPageProps {
   params: { id: string };
@@ -34,10 +34,10 @@ export default function CardPage({ params }: CardPageProps) {
     <div className="flex flex-1 gap-6 p-4">
       <div className="flex w-96 flex-col gap-8 max-lg:hidden">
         <Button className="self-start" disabled={isLoading} asChild>
-          <a href="/dashboard/cards">
+          <Link href="/dashboard/cards">
             <ArrowLeft className="size-4" />
             Go Back
-          </a>
+          </Link>
         </Button>
         <LogRecentActivitiesCard id={params.id} />
       </div>

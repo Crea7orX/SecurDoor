@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import type { DataTableFilterField, SearchParams } from "@/types/data-table";
 import { PlusCircle } from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 
 interface DevicesPageProps {
@@ -58,10 +59,10 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     <div className="flex flex-col items-center justify-center gap-6 p-4">
       <DataTableToolbar table={table} filterFields={filterFields}>
         <Button size="sm" asChild>
-          <a href="/dashboard/devices/add">
+          <Link href="/dashboard/devices/add">
             <PlusCircle className="size-4" />
             Add Device
-          </a>
+          </Link>
         </Button>
       </DataTableToolbar>
       <div className="relative flex w-full flex-wrap items-center justify-center gap-12 rounded-lg border bg-muted/60 px-2 py-4">

@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { DeviceResponse } from "@/lib/validations/device";
+import { type DeviceResponse } from "@/lib/validations/device";
 import { Lock, LockOpen, Settings } from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 
 interface DeviceCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -37,10 +38,10 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
         </CardHeader>
         <CardContent className="flex gap-2 pt-2">
           <Button className="flex-1" asChild>
-            <a href={`/dashboard/devices/${device.id}`}>
+            <Link href={`/dashboard/devices/${device.id}`}>
               <Settings className="size-4" />
               Settings
-            </a>
+            </Link>
           </Button>
           {index % 2 === 0 ? (
             <Button variant="success">

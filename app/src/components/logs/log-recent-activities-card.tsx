@@ -17,6 +17,7 @@ import { useGetAllLogsQuery } from "@/hooks/api/logs/use-get-all-logs-query";
 import { cn } from "@/lib/utils";
 import { type SearchParams } from "@/types/data-table";
 import { Eye, ScrollText } from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 
 interface LogRecentActivitiesCardProps
@@ -75,10 +76,10 @@ const LogRecentActivitiesCard = React.forwardRef<
       </CardContent>
       <CardFooter className="justify-end p-4">
         <Button variant="info" className="max-md:w-full" asChild>
-          <a href={`/dashboard/logs?objectId=${id}`}>
+          <Link href={`/dashboard/logs?objectId=${id}`}>
             <Eye />
             <span>View all Logs</span>
-          </a>
+          </Link>
         </Button>
       </CardFooter>
     </Card>
