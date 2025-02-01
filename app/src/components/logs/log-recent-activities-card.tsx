@@ -36,7 +36,7 @@ const LogRecentActivitiesCard = React.forwardRef<
     [id],
   );
 
-  const { data, isLoading } = useGetAllLogsQuery({
+  const { data, isLoading, dataUpdatedAt } = useGetAllLogsQuery({
     searchParams,
     refetchInterval: 5000,
   });
@@ -44,9 +44,16 @@ const LogRecentActivitiesCard = React.forwardRef<
   return (
     <Card className={cn("h-full bg-border", className)} ref={ref} {...props}>
       <CardHeader>
-        <CardTitle className="inline-flex items-center gap-1 font-bold">
+        <CardTitle className="inline-flex items-center gap-2 font-bold">
           <ScrollText className="size-6" />
-          <span>Recent Activity</span>
+          <div className="flex flex-col gap-1">
+            <span>Recent Activity</span>
+            {dataUpdatedAt > 0 && (
+              <span className="text-muted-foreground">
+                {`(Last updated: ${new Date(dataUpdatedAt).toLocaleTimeString()})`}
+              </span>
+            )}
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent className="relative flex h-full flex-col gap-6 px-2">
