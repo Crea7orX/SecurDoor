@@ -1,7 +1,6 @@
 import "server-only";
 
 import { CardWithSameFingerprintError } from "@/lib/exceptions";
-import IdPrefix, { generateId } from "@/lib/ids";
 import {
   type CardCreate,
   type CardsGetSchema,
@@ -21,7 +20,6 @@ export async function cardInsert(create: CardCreate, userId: string) {
     await db
       .insert(cards)
       .values({
-        id: generateId(IdPrefix.CARD),
         fingerprint: create.fingerprint.trim(),
         holder: create.holder?.trim(),
         active: create.active ?? true,
