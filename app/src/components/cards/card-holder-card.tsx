@@ -17,8 +17,8 @@ import {
 import { InputInline } from "@/components/ui/input-inline";
 import { useUpdateCardMutation } from "@/hooks/api/cards/use-update-card-mutation";
 import {
-  CardResponse,
-  CardUpdate,
+  type CardResponse,
+  type CardUpdate,
   cardUpdateSchema,
 } from "@/lib/validations/card";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,7 +59,7 @@ const CardHolderCard = React.forwardRef<HTMLDivElement, CardHolderCardProps>(
     };
 
     const handleUpdate = async (value: string) => {
-      if (value === card.holder) return;
+      if (value === card.holder || (value === "" && !card.holder)) return;
       if (!form.formState.isValid) return resetForm();
 
       setIsLoading(true);
