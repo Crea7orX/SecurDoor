@@ -142,12 +142,21 @@ export async function cardUpdate(
   )[0];
 
   if (card) {
-    const reference = [
-      card.fingerprint,
-      card.holder ?? "NULL",
-      card.active.toString(),
-    ];
-    void logInsert(ownerId, "card.update", ownerId, card.id, reference);
+    if (typeof update.holder === "string") {
+      const reference = [card.fingerprint, card.holder ?? "NULL"];
+      void logInsert(ownerId, "card.rename", ownerId, card.id, reference);
+    }
+
+    if (typeof update.active === "boolean") {
+      const reference = [card.fingerprint, card.active.toString()];
+      void logInsert(
+        ownerId,
+        card.active ? "card.activate" : "card.deactivate",
+        ownerId,
+        card.id,
+        reference,
+      );
+    }
   }
 
   return card;
