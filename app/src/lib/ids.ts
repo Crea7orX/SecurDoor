@@ -7,9 +7,14 @@ enum IdPrefix {
 export default IdPrefix;
 
 export function generateId(prefix: IdPrefix, length = 32) {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
   let randomId = "";
   for (let i = 0; i < length; i++) {
-    randomId += Math.floor(Math.random() * 10).toString();
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomId += characters[randomIndex];
   }
+
   return `${prefix}${randomId}`;
 }

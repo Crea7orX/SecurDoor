@@ -1,5 +1,5 @@
 import "server-only";
-import IdPrefix, { generateId } from "@/lib/ids";
+
 import { type LogsGetSchema } from "@/lib/validations/log";
 import { db } from "@/server/db";
 import { logs } from "@/server/db/logs/schema";
@@ -26,7 +26,6 @@ export async function logInsert(
 
   db.insert(logs)
     .values({
-      id: generateId(IdPrefix.LOG),
       action,
       actorName,
       actorEmail,

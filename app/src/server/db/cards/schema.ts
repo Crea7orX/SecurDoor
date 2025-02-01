@@ -1,8 +1,11 @@
+import IdPrefix, { generateId } from "@/lib/ids";
 import { sql } from "drizzle-orm";
 import { boolean, integer, pgTable, varchar } from "drizzle-orm/pg-core";
 
 export const cards = pgTable("cards", {
-  id: varchar("id", { length: 256 }).primaryKey(),
+  id: varchar("id", { length: 256 })
+    .primaryKey()
+    .$default(() => generateId(IdPrefix.CARD)),
   fingerprint: varchar("fingerprint", { length: 32 }).notNull(),
   holder: varchar("holder", { length: 256 }),
   active: boolean("active").default(true).notNull(),
