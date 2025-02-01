@@ -1,8 +1,9 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import React from "react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { type AxiosError } from "axios";
+import * as React from "react";
 
 export const noRetryStatusCodes = [400, 401, 403, 404, 500];
 
@@ -28,6 +29,9 @@ export function ApiProvider({ children }: ApiProviderProps) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
