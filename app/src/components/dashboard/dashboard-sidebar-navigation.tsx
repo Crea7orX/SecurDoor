@@ -5,7 +5,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Navigation } from "@/types";
+import { type Navigation } from "@/types";
+import Link from "next/link";
 
 interface DashboardSidebarNavigationProps {
   items: Navigation[];
@@ -25,10 +26,10 @@ export function DashboardSidebarNavigation({
               isActive={item.active}
               asChild
             >
-              <a href={item.url}>
+              <Link href={item.url}>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}

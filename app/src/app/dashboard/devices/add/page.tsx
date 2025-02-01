@@ -13,10 +13,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCreateDeviceMutation } from "@/hooks/api/devices/use-create-device-mutation";
-import { DeviceCreate, deviceCreateSchema } from "@/lib/validations/device";
+import {
+  type DeviceCreate,
+  deviceCreateSchema,
+} from "@/lib/validations/device";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useForm } from "react-hook-form";
@@ -71,10 +75,10 @@ export default function DevicesAddPage() {
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-4">
       <Button className="md:self-start" disabled={isLoading} asChild>
-        <a href="/dashboard/devices">
+        <Link href="/dashboard/devices">
           <ArrowLeft className="size-4" />
           Go Back
-        </a>
+        </Link>
       </Button>
       <Card className="bg-border lg:min-w-[380px]">
         <CardHeader>

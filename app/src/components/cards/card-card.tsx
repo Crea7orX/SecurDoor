@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUpdateCardMutation } from "@/hooks/api/cards/use-update-card-mutation";
 import { cn } from "@/lib/utils";
-import { CardResponse } from "@/lib/validations/card";
+import { type CardResponse } from "@/lib/validations/card";
 import {
   OctagonMinus,
   Settings,
@@ -16,6 +16,7 @@ import {
   ShieldQuestion,
   User,
 } from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -103,10 +104,10 @@ const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
           <Separator className="h-1 rounded-xl" />
           <div className="flex gap-2">
             <Button className="flex-1" asChild>
-              <a href={`/dashboard/cards/${card.id}`}>
+              <Link href={`/dashboard/cards/${card.id}`}>
                 <Settings className="size-4" />
                 Settings
-              </a>
+              </Link>
             </Button>
             {card.active ? (
               <Button
