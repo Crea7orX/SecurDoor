@@ -1,9 +1,11 @@
 import { authenticate } from "@/lib/auth";
 import { handleError } from "@/lib/errors";
 import {
-  CardCreate,
+  type CardCreate,
   cardCreateSchema,
   cardResponseSchema,
+  cardsSearchParamsCache,
+  cardsPaginatedResponseSchema,
 } from "@/lib/validations/card";
 import { cardInsert, cardsGetAll } from "@/server/db/cards/queries";
 import { NextResponse } from "next/server";
@@ -12,9 +14,14 @@ export async function GET(request: Request) {
   try {
     const { userId } = authenticate(request);
 
-    const cards = await cardsGetAll(userId);
+    const url = new URL(request.url);
+    const searchParams = await cardsSearchParamsCache.parse(
+      Promise.resolve(url.searchParams),
+    );
 
-    return NextResponse.json(cardResponseSchema.array().parse(cards));
+    const cards = await cardsGetAll(searchParams, userId);
+
+    return NextResponse.json(cardsPaginatedResponseSchema.parse(cards));
   } catch (error) {
     return handleError(error);
   }

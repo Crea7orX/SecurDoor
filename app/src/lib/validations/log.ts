@@ -4,6 +4,7 @@ import {
   createSearchParamsCache,
   parseAsArrayOf,
   parseAsInteger,
+  parseAsNumberLiteral,
 } from "nuqs/server";
 import { z } from "zod";
 
@@ -21,20 +22,21 @@ export const logResponseSchema = z.object({
 
 export type LogResponse = z.infer<typeof logResponseSchema>;
 
-export const logSearchParamsCache = createSearchParamsCache({
+export const logsSearchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
-  perPage: parseAsInteger.withDefault(10),
+  perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
   sort: getSortingStateParser<LogResponse>().withDefault([
     { id: "createdAt", desc: true },
   ]),
   action: parseAsArrayOf(
     z.enum(Object.keys(LogDisplayInfos) as [keyof typeof LogDisplayInfos]),
   ).withDefault([]),
+  objectId: parseAsArrayOf(z.string()),
   actorId: parseAsArrayOf(z.string()).withDefault([]),
 });
 
 export type LogsGetSchema = Awaited<
-  ReturnType<typeof logSearchParamsCache.parse>
+  ReturnType<typeof logsSearchParamsCache.parse>
 >;
 
 export const logsPaginatedResponseSchema = z.object({

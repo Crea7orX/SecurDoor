@@ -7,7 +7,7 @@ import { type LogResponse } from "@/lib/validations/log";
 import { UserCircle } from "lucide-react";
 import * as React from "react";
 
-const colorVariants = {
+export const logColorVariants = {
   default: "border-default text-default ring-default",
   destructive: "border-destructive text-destructive ring-destructive",
   secondary: "border-secondary text-secondary ring-secondary",
@@ -30,7 +30,7 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
           variant="outline"
           className={cn(
             "absolute -left-3 -top-3 w-fit bg-card p-1.5 ring-2",
-            `${colorVariants[logDisplayInfo.color]}`,
+            `${logColorVariants[logDisplayInfo.color]}`,
           )}
         >
           <logDisplayInfo.icon

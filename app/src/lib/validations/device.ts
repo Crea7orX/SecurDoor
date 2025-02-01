@@ -1,3 +1,10 @@
+import { getSortingStateParser } from "@/lib/data-table-parsers";
+import {
+  createSearchParamsCache,
+  parseAsInteger,
+  parseAsNumberLiteral,
+  parseAsString,
+} from "nuqs/server";
 import { z } from "zod";
 
 export const deviceCreateSchema = z.object({
@@ -30,3 +37,25 @@ export const deviceKeyResponseSchema = z.object({
 });
 
 export type DeviceKeyResponse = z.infer<typeof deviceKeyResponseSchema>;
+
+export const devicesSearchParamsCache = createSearchParamsCache({
+  page: parseAsInteger.withDefault(1),
+  perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
+  sort: getSortingStateParser<DeviceResponse>().withDefault([
+    { id: "createdAt", desc: false },
+  ]),
+  name: parseAsString,
+});
+
+export type DevicesGetSchema = Awaited<
+  ReturnType<typeof devicesSearchParamsCache.parse>
+>;
+
+export const devicesPaginatedResponseSchema = z.object({
+  data: deviceResponseSchema.array(),
+  pageCount: z.number(),
+});
+
+export type DevicesPaginatedResponse = z.infer<
+  typeof devicesPaginatedResponseSchema
+>;
