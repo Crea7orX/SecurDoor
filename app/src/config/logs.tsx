@@ -1,12 +1,12 @@
 import { type LogDisplayInfo } from "@/types";
 import {
-  CircleDot,
   CircleHelp,
   CircleMinus,
   CirclePlus,
   Diamond,
   DiamondMinus,
   DiamondPlus,
+  IdCard,
   OctagonMinus,
   ShieldCheck,
 } from "lucide-react";
@@ -45,7 +45,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
   "card.rename": {
     title: "Card renamed",
     text: "{actor} renamed card",
-    icon: CircleDot,
+    icon: IdCard,
     color: "info",
   },
   "card.activate": {
