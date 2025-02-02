@@ -11,7 +11,10 @@ import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
 import { and, asc, count, desc, eq, ilike } from "drizzle-orm";
 
-export async function deviceInsert(deviceCreate: DeviceCreate, userId: string) {
+export async function deviceInsert(
+  deviceCreate: DeviceCreate,
+  ownerId: string,
+) {
   if (await deviceGetBySerialId(deviceCreate.serialId)) {
     throw new DeviceWithSameSerialIdError();
   }
@@ -23,14 +26,14 @@ export async function deviceInsert(deviceCreate: DeviceCreate, userId: string) {
         name: deviceCreate.name,
         serialId: deviceCreate.serialId,
         key: generateKey(),
-        ownerId: userId,
+        ownerId: ownerId,
       })
       .returning()
   )[0];
 
   if (device) {
     const reference = [device.serialId, device.name];
-    void logInsert(userId, "device.create", userId, device.id, reference);
+    void logInsert(ownerId, "device.create", ownerId, device.id, reference);
   }
 
   return device;
@@ -88,13 +91,13 @@ export async function devicesGetAll(
   }
 }
 
-export async function deviceGetById(id: string, userId: string) {
+export async function deviceGetById(id: string, ownerId: string) {
   return (
     (
       await db
         .select()
         .from(devices)
-        .where(and(eq(devices.ownerId, userId), eq(devices.id, id)))
+        .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
         .limit(1)
     )[0] ?? null
   );
@@ -112,17 +115,17 @@ export async function deviceGetBySerialId(serialId: string) {
   );
 }
 
-export async function deviceDelete(id: string, userId: string) {
+export async function deviceDelete(id: string, ownerId: string) {
   const device = (
     await db
       .delete(devices)
-      .where(and(eq(devices.ownerId, userId), eq(devices.id, id)))
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
       .returning()
   )[0];
 
   if (device) {
     const reference = [device.serialId, device.name];
-    void logInsert(userId, "device.delete", userId, device.id, reference);
+    void logInsert(ownerId, "device.delete", ownerId, device.id, reference);
   }
 
   return device;
