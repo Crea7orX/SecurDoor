@@ -11,8 +11,8 @@ import { cards } from "@/server/db/cards/schema";
 import { logInsert } from "@/server/db/logs/queries";
 import { and, asc, count, desc, eq, ilike, inArray, sql } from "drizzle-orm";
 
-export async function cardInsert(create: CardCreate, userId: string) {
-  if (await cardFindByFingerprint(create.fingerprint)) {
+export async function cardInsert(create: CardCreate, ownerId: string) {
+  if (await cardGetByFingerprint(create.fingerprint, ownerId)) {
     throw new CardWithSameFingerprintError();
   }
 
@@ -23,14 +23,14 @@ export async function cardInsert(create: CardCreate, userId: string) {
         fingerprint: create.fingerprint.trim(),
         holder: create.holder?.trim(),
         active: create.active ?? true,
-        ownerId: userId,
+        ownerId,
       })
       .returning()
   )[0];
 
   if (card) {
     const reference = [card.fingerprint, card.active.toString()];
-    void logInsert(userId, "card.create", userId, card.id, reference);
+    void logInsert(ownerId, "card.create", ownerId, card.id, reference);
   }
 
   return card;
@@ -178,16 +178,4 @@ export async function cardDelete(id: string, ownerId: string) {
   }
 
   return card;
-}
-
-async function cardFindByFingerprint(fingerprint: string) {
-  return (
-    (
-      await db
-        .select()
-        .from(cards)
-        .where(eq(cards.fingerprint, fingerprint))
-        .limit(1)
-    )[0] ?? null
-  );
 }
