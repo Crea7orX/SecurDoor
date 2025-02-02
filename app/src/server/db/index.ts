@@ -6,6 +6,7 @@ import postgres from "postgres";
 import * as cards from "./cards/schema";
 import * as devices from "./devices/schema";
 import * as logs from "./logs/schema";
+import * as cardsToDevices from "./cards-to-devices/schema";
 
 /**
  * Cache the database connection in development. This avoids creating a new connection on every HMR
@@ -23,5 +24,6 @@ export const db = drizzle(conn, {
     ...cards,
     ...devices,
     ...logs,
+    ...cardsToDevices,
   },
 });
