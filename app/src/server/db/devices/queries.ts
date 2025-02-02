@@ -27,6 +27,7 @@ export async function deviceInsert(
         name: deviceCreate.name,
         serialId: deviceCreate.serialId,
         key: generateKey(),
+        reLockDelay: deviceCreate.reLockDelay,
         ownerId,
       })
       .returning()
@@ -128,6 +129,9 @@ export async function deviceUpdate(
         ...(typeof update.name === "string" && {
           name: update.name.trim(),
         }),
+        ...(typeof update.reLockDelay === "number" && {
+          reLockDelay: update.reLockDelay,
+        }),
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
       .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
@@ -138,6 +142,17 @@ export async function deviceUpdate(
     if (typeof update.name === "string") {
       const reference = [device.serialId, device.name];
       void logInsert(ownerId, "device.rename", ownerId, device.id, reference);
+    }
+
+    if (typeof update.reLockDelay === "number") {
+      const reference = [device.serialId, device.reLockDelay.toString()];
+      void logInsert(
+        ownerId,
+        "device.re_lock_delay",
+        ownerId,
+        device.id,
+        reference,
+      );
     }
   }
 
