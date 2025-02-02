@@ -111,3 +111,19 @@ export async function deviceGetBySerialId(serialId: string) {
     )[0] ?? null
   );
 }
+
+export async function deviceDelete(id: string, userId: string) {
+  const device = (
+    await db
+      .delete(devices)
+      .where(and(eq(devices.ownerId, userId), eq(devices.id, id)))
+      .returning()
+  )[0];
+
+  if (device) {
+    const reference = [device.serialId, device.name];
+    void logInsert(userId, "device.delete", userId, device.id, reference);
+  }
+
+  return device;
+}
