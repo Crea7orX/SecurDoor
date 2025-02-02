@@ -1,8 +1,16 @@
 import { authenticate } from "@/lib/auth";
 import { handleError } from "@/lib/errors";
 import { NotFoundError } from "@/lib/exceptions";
-import { deviceResponseSchema } from "@/lib/validations/device";
-import { deviceDelete, deviceGetById } from "@/server/db/devices/queries";
+import {
+  deviceResponseSchema,
+  type DeviceUpdate,
+  deviceUpdateSchema,
+} from "@/lib/validations/device";
+import {
+  deviceDelete,
+  deviceGetById,
+  deviceUpdate,
+} from "@/server/db/devices/queries";
 import { type NextRequest, NextResponse } from "next/server";
 
 interface DevicesByIdProps {
@@ -17,6 +25,24 @@ export async function GET(request: NextRequest, props: DevicesByIdProps) {
 
     const device = await deviceGetById(id, userId);
 
+    if (!device) throw new NotFoundError();
+
+    return NextResponse.json(deviceResponseSchema.parse(device));
+  } catch (error) {
+    return handleError(error);
+  }
+}
+
+// update device
+export async function PUT(request: Request, props: DevicesByIdProps) {
+  try {
+    const { id } = await props.params;
+    const { userId } = authenticate(request);
+
+    const json = (await request.json()) as DeviceUpdate;
+    const update = deviceUpdateSchema.parse(json);
+
+    const device = await deviceUpdate(id, update, userId);
     if (!device) throw new NotFoundError();
 
     return NextResponse.json(deviceResponseSchema.parse(device));
