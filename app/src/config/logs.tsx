@@ -3,7 +3,6 @@ import {
   CircleHelp,
   CircleMinus,
   CirclePlus,
-  Diamond,
   DiamondMinus,
   DiamondPlus,
   IdCard,
@@ -25,10 +24,10 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: DiamondMinus,
     color: "destructive",
   },
-  "device.update": {
-    title: "Device updated",
-    text: "{actor} updated device",
-    icon: Diamond,
+  "device.rename": {
+    title: "Device renamed",
+    text: "{actor} renamed device",
+    icon: Microchip,
     color: "info",
   },
   "device.access_update": {
