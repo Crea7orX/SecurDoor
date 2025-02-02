@@ -27,7 +27,7 @@ export async function deviceInsert(
         name: deviceCreate.name,
         serialId: deviceCreate.serialId,
         key: generateKey(),
-        ownerId: ownerId,
+        ownerId,
       })
       .returning()
   )[0];
