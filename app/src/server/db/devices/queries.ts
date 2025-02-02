@@ -5,11 +5,12 @@ import { generateKey } from "@/lib/keys";
 import {
   type DeviceCreate,
   type DevicesGetSchema,
+  type DeviceUpdate,
 } from "@/lib/validations/device";
 import { db } from "@/server/db";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import { and, asc, count, desc, eq, ilike } from "drizzle-orm";
+import { and, asc, count, desc, eq, ilike, sql } from "drizzle-orm";
 
 export async function deviceInsert(
   deviceCreate: DeviceCreate,
@@ -113,6 +114,34 @@ export async function deviceGetBySerialId(serialId: string) {
         .limit(1)
     )[0] ?? null
   );
+}
+
+export async function deviceUpdate(
+  id: string,
+  update: DeviceUpdate,
+  ownerId: string,
+) {
+  const device = (
+    await db
+      .update(devices)
+      .set({
+        ...(typeof update.name === "string" && {
+          name: update.name.trim(),
+        }),
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .returning()
+  )[0];
+
+  if (device) {
+    if (typeof update.name === "string") {
+      const reference = [device.serialId, device.name];
+      void logInsert(ownerId, "device.rename", ownerId, device.id, reference);
+    }
+  }
+
+  return device;
 }
 
 export async function deviceDelete(id: string, ownerId: string) {
