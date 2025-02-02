@@ -7,6 +7,7 @@ import {
   DiamondMinus,
   DiamondPlus,
   IdCard,
+  Microchip,
   OctagonMinus,
   ShieldCheck,
 } from "lucide-react";
@@ -30,6 +31,25 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: Diamond,
     color: "info",
   },
+  "device.access_update": {
+    title: "Device access updated",
+    text: "{actor} updated device access",
+    icon: IdCard,
+    color: "info",
+  },
+  "device.add_card": {
+    title: "Device added to card",
+    text: "{actor} added device to card",
+    icon: IdCard,
+    color: "success",
+  },
+  "device.remove_card": {
+    title: "Device removed from card",
+    text: "{actor} removed device from card",
+    icon: IdCard,
+    color: "destructive",
+  },
+
   "card.create": {
     title: "Card created",
     text: "{actor} created card",
@@ -59,6 +79,24 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     text: "{actor} deactivated card",
     icon: OctagonMinus,
     color: "warning",
+  },
+  "card.access_update": {
+    title: "Card access updated",
+    text: "{actor} updated card access",
+    icon: IdCard,
+    color: "info",
+  },
+  "card.add_device": {
+    title: "Card added to device",
+    text: "{actor} added card to device",
+    icon: Microchip,
+    color: "success",
+  },
+  "card.remove_device": {
+    title: "Card removed from device",
+    text: "{actor} removed card from device",
+    icon: Microchip,
+    color: "destructive",
   },
 };
 
