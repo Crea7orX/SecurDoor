@@ -52,6 +52,7 @@ export function DeviceSettingsDialog({
     resolver: zodResolver(deviceUpdateSchema),
     defaultValues: {
       name: device.name,
+      reLockDelay: device.reLockDelay,
     },
     disabled: isLoading,
   });
@@ -61,6 +62,7 @@ export function DeviceSettingsDialog({
     form.reset(
       {
         name: device.name,
+        reLockDelay: device.reLockDelay,
       },
       {
         keepValues: true,
@@ -120,10 +122,41 @@ export function DeviceSettingsDialog({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      maxLength={
+                        deviceUpdateSchema.shape.name.unwrap().maxLength!
+                      }
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     Display name for the device.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="reLockDelay"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Re-lock delay</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min={
+                        deviceUpdateSchema.shape.reLockDelay.unwrap().minValue!
+                      }
+                      max={
+                        deviceUpdateSchema.shape.reLockDelay.unwrap().maxValue!
+                      }
+                      {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Re-lock delay in seconds. 0 to disable auto re-lock.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
