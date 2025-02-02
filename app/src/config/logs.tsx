@@ -3,6 +3,7 @@ import {
   CircleHelp,
   CircleMinus,
   CirclePlus,
+  ClockAlert,
   DiamondMinus,
   DiamondPlus,
   IdCard,
@@ -29,6 +30,12 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     text: "{actor} renamed device",
     icon: Microchip,
     color: "info",
+  },
+  "device.re_lock_delay": {
+    title: "Device re-lock delay updated",
+    text: "{actor} updated device re-lock delay",
+    icon: ClockAlert,
+    color: "warning",
   },
   "device.access_update": {
     title: "Device access updated",
