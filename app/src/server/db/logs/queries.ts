@@ -13,8 +13,9 @@ export async function logInsert(
   objectId?: string,
   reference?: string[],
 ) {
-  let actorName;
-  let actorEmail;
+  let actorName: string | undefined;
+  let actorEmail: string | undefined;
+
   if (actor.startsWith("user_")) {
     const user = await clerkClient.users.getUser(userId);
 
@@ -34,6 +35,48 @@ export async function logInsert(
       reference: reference,
       ownerId: userId,
     })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+export type LogsInsertMultipleData = {
+  action: string;
+  objectId?: string;
+  reference?: string[] | string[][];
+};
+
+export async function logInsertMultiple(
+  userId: string,
+  logsData: LogsInsertMultipleData[],
+  actor: string,
+) {
+  let actorName: string | undefined;
+  let actorEmail: string | undefined;
+
+  if (actor.startsWith("user_")) {
+    const user = await clerkClient.users.getUser(userId);
+    if (user) {
+      actorName = `${user.firstName ?? ""}${user.lastName ? ` ${user.lastName}` : ""}`;
+      actorEmail = user.primaryEmailAddress?.emailAddress;
+    }
+  }
+
+  // Prepare multiple values for bulk insert
+  const values = logsData.map((log) => ({
+    ownerId: userId,
+    action: log.action,
+    objectId: log.objectId,
+    reference: JSON.stringify(log.reference),
+    actorId: actor,
+    actorName,
+    actorEmail,
+  }));
+
+  // Insert all logs in one query
+  await db
+    .insert(logs)
+    .values(values)
     .catch((error) => {
       console.error(error);
     });

@@ -1,6 +1,6 @@
 import IdPrefix, { generateId } from "@/lib/ids";
 import { sql } from "drizzle-orm";
-import { integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { integer, jsonb, pgTable, varchar } from "drizzle-orm/pg-core";
 
 export const logs = pgTable("logs", {
   id: varchar("id", { length: 256 })
@@ -11,9 +11,7 @@ export const logs = pgTable("logs", {
   actorEmail: varchar("actor_email", { length: 1024 }),
   actorId: varchar("actor_id", { length: 256 }).notNull(),
   objectId: varchar("object_id", { length: 256 }),
-  reference: text("reference")
-    .array()
-    .default(sql`ARRAY[]::text[]`),
+  reference: jsonb("reference"),
   ownerId: varchar("owner_id", { length: 256 }).notNull(),
   createdAt: integer("created_at")
     .default(sql`(EXTRACT(EPOCH FROM NOW()))`)

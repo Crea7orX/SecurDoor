@@ -1,3 +1,6 @@
+"use client";
+
+import { AccessCardsEditDialog } from "@/components/access/cards/access-cards-edit-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +12,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGetAllAccessCardsQuery } from "@/hooks/api/access/cards/use-get-all-access-cards-query";
 import { DoorOpen, IdCard, SlidersHorizontal } from "lucide-react";
 import * as React from "react";
 
@@ -18,7 +23,7 @@ interface CardAccessCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const CardAccessCard = React.forwardRef<HTMLDivElement, CardAccessCardProps>(
   ({ className, id, ...props }, ref) => {
-    // todo: fetch data from api with id
+    const { data, isLoading } = useGetAllAccessCardsQuery({ id });
 
     return (
       <Card className={className} ref={ref} {...props}>
@@ -32,17 +37,28 @@ const CardAccessCard = React.forwardRef<HTMLDivElement, CardAccessCardProps>(
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Badge variant="info" className="text-md">
-            <DoorOpen className="mr-1 size-4" />
-            <span>32 doors</span>
-          </Badge>
+          {isLoading ? (
+            <Skeleton className="h-8 w-28" />
+          ) : (
+            <Badge variant="info" className="text-md">
+              <DoorOpen className="mr-1 size-4" />
+              <span>{data?.devices.length} doors</span>
+              {/*todo: plural or singular*/}
+            </Badge>
+          )}
           <Separator className="mt-6 h-1 rounded-xl" />
         </CardContent>
         <CardFooter className="justify-end gap-2 max-md:flex-col">
-          <Button variant="info" className="max-md:w-full">
-            <SlidersHorizontal />
-            <span>Edit Doors</span>
-          </Button>
+          <AccessCardsEditDialog id={id} devices={data?.devices ?? []}>
+            <Button
+              variant="info"
+              className="max-md:w-full"
+              disabled={isLoading}
+            >
+              <SlidersHorizontal />
+              <span>Edit Doors</span>
+            </Button>
+          </AccessCardsEditDialog>
         </CardFooter>
       </Card>
     );

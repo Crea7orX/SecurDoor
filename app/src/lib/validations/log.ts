@@ -15,7 +15,7 @@ export const logResponseSchema = z.object({
   actorEmail: z.string().email().nullable(),
   actorId: z.string(),
   objectId: z.string().optional().nullable(),
-  reference: z.string().array().optional().nullable(),
+  reference: z.array(z.any()).optional().nullable(),
   ownerId: z.string(),
   createdAt: z.number(),
 });
