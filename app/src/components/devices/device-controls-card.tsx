@@ -1,3 +1,4 @@
+import { DeviceSettingsDialog } from "@/components/devices/device-settings-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { type DeviceResponse } from "@/lib/validations/device";
 import {
   BellElectric,
   Construction,
@@ -19,15 +21,13 @@ import {
 import * as React from "react";
 
 interface DeviceControlsCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  id: string;
+  device: DeviceResponse;
 }
 
 const DeviceControlsCard = React.forwardRef<
   HTMLDivElement,
   DeviceControlsCardProps
->(({ className, id, ...props }, ref) => {
-  // todo: fetch data from api with id
-
+>(({ className, device, ...props }, ref) => {
   return (
     <Card className={className} ref={ref} {...props}>
       <CardHeader>
@@ -48,10 +48,12 @@ const DeviceControlsCard = React.forwardRef<
             <RotateCw />
             <span>Refresh</span>
           </Button>
-          <Button className="flex-1">
-            <Settings />
-            <span>Settings</span>
-          </Button>
+          <DeviceSettingsDialog device={device}>
+            <Button className="flex-1">
+              <Settings />
+              <span>Settings</span>
+            </Button>
+          </DeviceSettingsDialog>
         </div>
         <Separator className="h-1 rounded-xl" />
         <Label className="text-md">Emergency</Label>
