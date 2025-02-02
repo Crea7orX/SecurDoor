@@ -25,6 +25,12 @@ export const deviceResponseSchema = z.object({
 
 export type DeviceResponse = z.infer<typeof deviceResponseSchema>;
 
+export const deviceUpdateSchema = z.object({
+  name: z.string().min(2).max(256).optional().nullable(),
+});
+
+export type DeviceUpdate = z.infer<typeof deviceUpdateSchema>;
+
 export const deviceGetKeySchema = z.object({
   id: z.string(),
 });
