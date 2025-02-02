@@ -8,10 +8,16 @@ export const cardsToDevices = pgTable(
   {
     cardId: varchar("card_id", { length: 256 })
       .notNull()
-      .references(() => cards.id),
+      .references(() => cards.id, {
+        onUpdate: "cascade",
+        onDelete: "cascade",
+      }),
     deviceId: varchar("device_id", { length: 256 })
       .notNull()
-      .references(() => devices.id),
+      .references(() => devices.id, {
+        onUpdate: "cascade",
+        onDelete: "cascade",
+      }),
     createdAt: integer("created_at")
       .default(sql`(EXTRACT(EPOCH FROM NOW()))`)
       .notNull(),
