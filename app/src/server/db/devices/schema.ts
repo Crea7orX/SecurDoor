@@ -9,6 +9,7 @@ export const devices = pgTable("devices", {
   name: varchar("name", { length: 256 }).notNull(),
   serialId: uuid("serial_id").notNull(),
   key: varchar("key", { length: 6 }).notNull(),
+  reLockDelay: integer("re_lock_delay").notNull().default(5),
   ownerId: varchar("owner_id", { length: 256 }).notNull(),
   createdAt: integer("created_at")
     .default(sql`(EXTRACT(EPOCH FROM NOW()))`)
