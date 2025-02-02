@@ -1,3 +1,4 @@
+import { DeviceDeleteAlertDialog } from "@/components/devices/device-delete-alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -36,10 +37,12 @@ const DeviceDangerZoneCard = React.forwardRef<
           <Power />
           <span>Reboot</span>
         </Button>
-        <Button variant="destructive">
-          <Trash />
-          <span>Remove</span>
-        </Button>
+        <DeviceDeleteAlertDialog id={id}>
+          <Button variant="destructive">
+            <Trash />
+            <span>Remove</span>
+          </Button>
+        </DeviceDeleteAlertDialog>
       </CardContent>
     </Card>
   );
