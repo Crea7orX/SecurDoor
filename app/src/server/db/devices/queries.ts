@@ -10,7 +10,7 @@ import {
 import { db } from "@/server/db";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import { and, asc, count, desc, eq, ilike, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, ilike, inArray, sql } from "drizzle-orm";
 
 export async function deviceInsert(
   deviceCreate: DeviceCreate,
@@ -52,6 +52,9 @@ export async function devicesGetAll(
       eq(devices.ownerId, ownerId), // Only show devices for the organization
       searchParams.name && searchParams.name.trim() !== ""
         ? ilike(devices.name, `%${searchParams.name.trim()}%`)
+        : undefined,
+      searchParams.emergencyState && searchParams.emergencyState.length > 0
+        ? inArray(devices.emergencyState, searchParams.emergencyState)
         : undefined,
     );
 
