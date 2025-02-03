@@ -62,17 +62,18 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
               Settings
             </Link>
           </Button>
-          {index % 2 === 0 ? (
-            <Button variant="success">
-              <LockOpen className="size-4" />
-              <span>Unlock</span>
-            </Button>
-          ) : (
-            <Button variant="destructive">
-              <Lock className="size-4" />
-              <span>Lock</span>
-            </Button>
-          )}
+          {!device.emergencyState &&
+            (index % 2 === 0 ? (
+              <Button variant="success">
+                <LockOpen className="size-4" />
+                <span>Unlock</span>
+              </Button>
+            ) : (
+              <Button variant="destructive">
+                <Lock className="size-4" />
+                <span>Lock</span>
+              </Button>
+            ))}
         </CardContent>
       </Card>
     );
