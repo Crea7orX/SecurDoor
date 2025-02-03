@@ -20,9 +20,9 @@ interface AccessDeviceByIdProps {
 export async function GET(request: NextRequest, props: AccessDeviceByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { ownerId } = authenticate(request);
 
-    const cards = await accessDeviceGetAll(id, userId);
+    const cards = await accessDeviceGetAll(id, ownerId);
 
     return NextResponse.json(
       accessDeviceResponseSchema.parse({
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest, props: AccessDeviceByIdProps) {
 export async function POST(request: Request, props: AccessDeviceByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
     const json = (await request.json()) as AccessDeviceUpdate;
     const update = accessDeviceUpdateSchema.parse(json);
@@ -51,6 +51,7 @@ export async function POST(request: Request, props: AccessDeviceByIdProps) {
       id,
       update.cards,
       userId,
+      ownerId,
     );
 
     return NextResponse.json(

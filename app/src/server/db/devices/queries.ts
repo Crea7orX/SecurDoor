@@ -14,9 +14,10 @@ import { and, asc, count, desc, eq, ilike, inArray, sql } from "drizzle-orm";
 
 export async function deviceInsert(
   deviceCreate: DeviceCreate,
+  userId: string,
   ownerId: string,
 ) {
-  if (await deviceGetBySerialId(deviceCreate.serialId)) {
+  if (await deviceGetBySerialIdUnprotected(deviceCreate.serialId)) {
     throw new DeviceWithSameSerialIdError();
   }
 
@@ -35,7 +36,7 @@ export async function deviceInsert(
 
   if (device) {
     const reference = [device.serialId, device.name];
-    void logInsert(ownerId, "device.create", ownerId, device.id, reference);
+    void logInsert(ownerId, "device.create", userId, device.id, reference);
   }
 
   return device;
@@ -108,7 +109,7 @@ export async function deviceGetById(id: string, ownerId: string) {
   );
 }
 
-export async function deviceGetBySerialId(serialId: string) {
+export async function deviceGetBySerialIdUnprotected(serialId: string) {
   return (
     (
       await db
@@ -123,6 +124,7 @@ export async function deviceGetBySerialId(serialId: string) {
 export async function deviceUpdate(
   id: string,
   update: DeviceUpdate,
+  userId: string,
   ownerId: string,
 ) {
   const device = (
@@ -144,7 +146,7 @@ export async function deviceUpdate(
   if (device) {
     if (typeof update.name === "string") {
       const reference = [device.serialId, device.name];
-      void logInsert(ownerId, "device.rename", ownerId, device.id, reference);
+      void logInsert(ownerId, "device.rename", userId, device.id, reference);
     }
 
     if (typeof update.reLockDelay === "number") {
@@ -152,7 +154,7 @@ export async function deviceUpdate(
       void logInsert(
         ownerId,
         "device.re_lock_delay",
-        ownerId,
+        userId,
         device.id,
         reference,
       );
@@ -162,7 +164,11 @@ export async function deviceUpdate(
   return device;
 }
 
-export async function deviceDelete(id: string, ownerId: string) {
+export async function deviceDelete(
+  id: string,
+  userId: string,
+  ownerId: string,
+) {
   const device = (
     await db
       .delete(devices)
@@ -172,7 +178,7 @@ export async function deviceDelete(id: string, ownerId: string) {
 
   if (device) {
     const reference = [device.serialId, device.name];
-    void logInsert(ownerId, "device.delete", ownerId, device.id, reference);
+    void logInsert(ownerId, "device.delete", userId, device.id, reference);
   }
 
   return device;

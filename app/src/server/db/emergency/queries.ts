@@ -20,6 +20,7 @@ export async function emergencyStateGetById(deviceId: string, ownerId: string) {
 export async function emergencyStateSetDevice(
   deviceId: string,
   state: (typeof emergencyStateEnum.enumValues)[number] | null,
+  userId: string,
   ownerId: string,
 ) {
   const device = (
@@ -42,7 +43,7 @@ export async function emergencyStateSetDevice(
     void logInsert(
       ownerId,
       "device.emergency_state",
-      ownerId,
+      userId,
       device.id,
       reference,
     );

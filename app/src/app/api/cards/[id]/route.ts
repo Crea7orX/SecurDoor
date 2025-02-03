@@ -22,14 +22,14 @@ interface CardByIdProps {
 export async function GET(request: NextRequest, props: CardByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { ownerId } = authenticate(request);
 
     const url = new URL(request.url);
     const getFingerprint = url.searchParams.get("get_fingerprint");
 
     let card;
-    if (getFingerprint !== "true") card = await cardGetById(id, userId);
-    else card = await cardGetByFingerprint(id, userId);
+    if (getFingerprint !== "true") card = await cardGetById(id, ownerId);
+    else card = await cardGetByFingerprint(id, ownerId);
 
     if (!card) throw new NotFoundError();
 
@@ -43,12 +43,12 @@ export async function GET(request: NextRequest, props: CardByIdProps) {
 export async function PUT(request: Request, props: CardByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
     const json = (await request.json()) as CardUpdate;
     const update = cardUpdateSchema.parse(json);
 
-    const card = await cardUpdate(id, update, userId);
+    const card = await cardUpdate(id, update, userId, ownerId);
     if (!card) throw new NotFoundError();
 
     return NextResponse.json(cardResponseSchema.parse(card));
@@ -61,9 +61,9 @@ export async function PUT(request: Request, props: CardByIdProps) {
 export async function DELETE(request: Request, props: CardByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
-    const card = await cardDelete(id, userId);
+    const card = await cardDelete(id, userId, ownerId);
     if (!card) throw new NotFoundError();
 
     return NextResponse.json(cardResponseSchema.parse(card));

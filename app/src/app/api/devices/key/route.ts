@@ -7,14 +7,14 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const { userId } = authenticate(req);
+    const { ownerId } = authenticate(req);
 
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
 
     if (!id) throw new BadRequestError();
 
-    const device = await deviceGetById(id, userId);
+    const device = await deviceGetById(id, ownerId);
 
     if (!device) throw new NotFoundError();
 

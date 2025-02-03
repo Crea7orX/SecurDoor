@@ -7,9 +7,9 @@ import { type NextRequest, NextResponse } from "next/server";
 // get emergency state count
 export async function GET(request: NextRequest) {
   try {
-    const { userId } = authenticate(request);
+    const { ownerId } = authenticate(request);
 
-    const statesCount = await emergencyStatesGetCount(userId);
+    const statesCount = await emergencyStatesGetCount(ownerId);
 
     return NextResponse.json(
       emergencyCountResponseSchema.parse({

@@ -6,9 +6,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
-    const { userId } = authenticate(request);
+    const { ownerId } = authenticate(request);
 
-    const actors = await logsActorsGetAll(userId);
+    const actors = await logsActorsGetAll(ownerId);
 
     return NextResponse.json(logActorResponseSchema.array().parse(actors));
   } catch (error) {

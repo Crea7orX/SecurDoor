@@ -36,6 +36,7 @@ export function accessDeviceGetAll(deviceId: string, ownerId: string) {
 export async function accessDeviceUpdate(
   deviceId: string,
   cardIds: string[],
+  userId: string,
   ownerId: string,
 ) {
   // Ensure device ownership
@@ -133,7 +134,7 @@ export async function accessDeviceUpdate(
 
   // Insert logs
   if (logs.length > 0) {
-    void logInsertMultiple(ownerId, logs, ownerId);
+    void logInsertMultiple(ownerId, logs, userId);
   }
 
   return [newCardIds, toDelete];
@@ -161,6 +162,7 @@ export async function accessCardGetAll(cardId: string, ownerId: string) {
 export async function accessCardUpdate(
   cardId: string,
   deviceIds: string[],
+  userId: string,
   ownerId: string,
 ) {
   // Validate card ownership
@@ -260,7 +262,7 @@ export async function accessCardUpdate(
 
   // Insert logs
   if (logs.length > 0) {
-    void logInsertMultiple(ownerId, logs, ownerId);
+    void logInsertMultiple(ownerId, logs, userId);
   }
 
   return [newDeviceIds, toDelete];
