@@ -2,6 +2,7 @@ import { getSortingStateParser } from "@/lib/data-table-parsers";
 import { emergencyStateEnum } from "@/server/db/devices/schema";
 import {
   createSearchParamsCache,
+  parseAsArrayOf,
   parseAsInteger,
   parseAsNumberLiteral,
   parseAsString,
@@ -56,6 +57,7 @@ export const devicesSearchParamsCache = createSearchParamsCache({
     { id: "createdAt", desc: false },
   ]),
   name: parseAsString,
+  emergencyState: parseAsArrayOf(z.enum(emergencyStateEnum.enumValues)),
 });
 
 export type DevicesGetSchema = Awaited<
