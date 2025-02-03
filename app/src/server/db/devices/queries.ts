@@ -17,7 +17,7 @@ export async function deviceInsert(
   userId: string,
   ownerId: string,
 ) {
-  if (await deviceGetBySerialId(deviceCreate.serialId)) {
+  if (await deviceGetBySerialIdUnprotected(deviceCreate.serialId)) {
     throw new DeviceWithSameSerialIdError();
   }
 
@@ -109,7 +109,7 @@ export async function deviceGetById(id: string, ownerId: string) {
   );
 }
 
-export async function deviceGetBySerialId(serialId: string) {
+export async function deviceGetBySerialIdUnprotected(serialId: string) {
   return (
     (
       await db
