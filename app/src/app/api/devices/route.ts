@@ -12,14 +12,14 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
-    const { userId } = authenticate(request);
+    const { ownerId } = authenticate(request);
 
     const url = new URL(request.url);
     const searchParams = await devicesSearchParamsCache.parse(
       Promise.resolve(url.searchParams),
     );
 
-    const devices = await devicesGetAll(searchParams, userId);
+    const devices = await devicesGetAll(searchParams, ownerId);
 
     return NextResponse.json(devicesPaginatedResponseSchema.parse(devices));
   } catch (error) {
@@ -29,12 +29,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
     const json = (await request.json()) as DeviceCreate;
     const deviceCreate = deviceCreateSchema.parse(json);
 
-    const device = await deviceInsert(deviceCreate, userId);
+    const device = await deviceInsert(deviceCreate, userId, ownerId);
 
     return NextResponse.json(deviceResponseSchema.parse(device), {
       status: 201,

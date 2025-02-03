@@ -21,9 +21,9 @@ interface DevicesByIdProps {
 export async function GET(request: NextRequest, props: DevicesByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { ownerId } = authenticate(request);
 
-    const device = await deviceGetById(id, userId);
+    const device = await deviceGetById(id, ownerId);
 
     if (!device) throw new NotFoundError();
 
@@ -37,12 +37,12 @@ export async function GET(request: NextRequest, props: DevicesByIdProps) {
 export async function PUT(request: Request, props: DevicesByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
     const json = (await request.json()) as DeviceUpdate;
     const update = deviceUpdateSchema.parse(json);
 
-    const device = await deviceUpdate(id, update, userId);
+    const device = await deviceUpdate(id, update, userId, ownerId);
     if (!device) throw new NotFoundError();
 
     return NextResponse.json(deviceResponseSchema.parse(device));
@@ -55,12 +55,12 @@ export async function PUT(request: Request, props: DevicesByIdProps) {
 export async function DELETE(request: Request, props: DevicesByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
-    const device = await deviceDelete(id, userId);
+    const device = await deviceDelete(id, userId, ownerId);
     if (!device) throw new NotFoundError();
 
-    await deviceDelete(id, userId);
+    await deviceDelete(id, userId, ownerId);
 
     return NextResponse.json(deviceResponseSchema.parse(device));
   } catch (error) {
