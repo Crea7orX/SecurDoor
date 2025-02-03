@@ -20,9 +20,9 @@ interface EmergencyByIdProps {
 export async function GET(request: NextRequest, props: EmergencyByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { ownerId } = authenticate(request);
 
-    const device = await emergencyStateGetById(id, userId);
+    const device = await emergencyStateGetById(id, ownerId);
     if (!device) throw new NotFoundError();
 
     return NextResponse.json(
@@ -40,12 +40,17 @@ export async function GET(request: NextRequest, props: EmergencyByIdProps) {
 export async function POST(request: NextRequest, props: EmergencyByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
     const json = (await request.json()) as EmergencyUpdate;
     const update = emergencyUpdateSchema.parse(json);
 
-    const device = await emergencyStateSetDevice(id, update.state, userId);
+    const device = await emergencyStateSetDevice(
+      id,
+      update.state,
+      userId,
+      ownerId,
+    );
     if (!device) throw new NotFoundError();
 
     return NextResponse.json(

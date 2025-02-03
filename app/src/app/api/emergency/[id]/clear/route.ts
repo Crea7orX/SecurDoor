@@ -16,12 +16,13 @@ export async function POST(
 ) {
   try {
     const { id } = await props.params;
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
     const device = await emergencyStateSetDevice(
       id,
       null, // clear emergency state
       userId,
+      ownerId,
     );
     if (!device) throw new NotFoundError();
 
