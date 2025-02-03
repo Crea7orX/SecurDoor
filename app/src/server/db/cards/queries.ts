@@ -11,7 +11,11 @@ import { cards } from "@/server/db/cards/schema";
 import { logInsert } from "@/server/db/logs/queries";
 import { and, asc, count, desc, eq, ilike, inArray, sql } from "drizzle-orm";
 
-export async function cardInsert(create: CardCreate, ownerId: string) {
+export async function cardInsert(
+  create: CardCreate,
+  userId: string,
+  ownerId: string,
+) {
   if (await cardGetByFingerprint(create.fingerprint, ownerId)) {
     throw new CardWithSameFingerprintError();
   }
@@ -30,7 +34,7 @@ export async function cardInsert(create: CardCreate, ownerId: string) {
 
   if (card) {
     const reference = [card.fingerprint, card.active.toString()];
-    void logInsert(ownerId, "card.create", ownerId, card.id, reference);
+    void logInsert(ownerId, "card.create", userId, card.id, reference);
   }
 
   return card;
@@ -123,6 +127,7 @@ export async function cardGetByFingerprint(
 export async function cardUpdate(
   id: string,
   update: CardUpdate,
+  userId: string,
   ownerId: string,
 ) {
   const card = (
@@ -142,7 +147,7 @@ export async function cardUpdate(
   if (card) {
     if (typeof update.holder === "string") {
       const reference = [card.fingerprint, card.holder ?? "NULL"];
-      void logInsert(ownerId, "card.rename", ownerId, card.id, reference);
+      void logInsert(ownerId, "card.rename", userId, card.id, reference);
     }
 
     if (typeof update.active === "boolean") {
@@ -150,7 +155,7 @@ export async function cardUpdate(
       void logInsert(
         ownerId,
         card.active ? "card.activate" : "card.deactivate",
-        ownerId,
+        userId,
         card.id,
         reference,
       );
@@ -160,7 +165,7 @@ export async function cardUpdate(
   return card;
 }
 
-export async function cardDelete(id: string, ownerId: string) {
+export async function cardDelete(id: string, userId: string, ownerId: string) {
   const card = (
     await db
       .delete(cards)
@@ -174,7 +179,7 @@ export async function cardDelete(id: string, ownerId: string) {
       card.holder ?? "NULL",
       card.active.toString(),
     ];
-    void logInsert(ownerId, "card.delete", ownerId, card.id, reference);
+    void logInsert(ownerId, "card.delete", userId, card.id, reference);
   }
 
   return card;
