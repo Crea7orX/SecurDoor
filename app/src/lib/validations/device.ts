@@ -1,4 +1,5 @@
 import { getSortingStateParser } from "@/lib/data-table-parsers";
+import { emergencyStateEnum } from "@/server/db/devices/schema";
 import {
   createSearchParamsCache,
   parseAsInteger,
@@ -20,6 +21,7 @@ export const deviceResponseSchema = z.object({
   name: z.string(),
   serialId: z.string().uuid(),
   reLockDelay: z.number(),
+  emergencyState: z.enum(emergencyStateEnum.enumValues).nullable(),
   ownerId: z.string(),
   createdAt: z.number(),
   updatedAt: z.number().nullable(),
