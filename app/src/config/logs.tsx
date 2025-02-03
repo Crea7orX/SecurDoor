@@ -10,6 +10,7 @@ import {
   Microchip,
   OctagonMinus,
   ShieldCheck,
+  Siren,
 } from "lucide-react";
 
 export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
@@ -53,6 +54,12 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     title: "Device removed from card",
     text: "{actor} removed device from card",
     icon: IdCard,
+    color: "destructive",
+  },
+  "device.emergency_state": {
+    title: "Device emergency state updated",
+    text: "{actor} updated device emergency state",
+    icon: Siren,
     color: "destructive",
   },
 
