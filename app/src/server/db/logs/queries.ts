@@ -7,7 +7,7 @@ import { clerkClient } from "@clerk/nextjs/server";
 import { and, asc, count, desc, eq, inArray } from "drizzle-orm";
 
 export async function logInsert(
-  userId: string,
+  ownerId: string,
   action: string,
   actor: string,
   objectId?: string,
@@ -17,7 +17,7 @@ export async function logInsert(
   let actorEmail: string | undefined;
 
   if (actor.startsWith("user_")) {
-    const user = await clerkClient.users.getUser(userId);
+    const user = await clerkClient.users.getUser(actor);
 
     if (user) {
       actorName = `${user.firstName ?? ""}${user.lastName ? ` ${user.lastName}` : ""}`;
@@ -33,7 +33,7 @@ export async function logInsert(
       actorId: actor,
       objectId: objectId,
       reference: reference,
-      ownerId: userId,
+      ownerId,
     })
     .catch((error) => {
       console.error(error);
@@ -47,7 +47,7 @@ export type LogsInsertMultipleData = {
 };
 
 export async function logInsertMultiple(
-  userId: string,
+  ownerId: string,
   logsData: LogsInsertMultipleData[],
   actor: string,
 ) {
@@ -55,7 +55,7 @@ export async function logInsertMultiple(
   let actorEmail: string | undefined;
 
   if (actor.startsWith("user_")) {
-    const user = await clerkClient.users.getUser(userId);
+    const user = await clerkClient.users.getUser(actor);
     if (user) {
       actorName = `${user.firstName ?? ""}${user.lastName ? ` ${user.lastName}` : ""}`;
       actorEmail = user.primaryEmailAddress?.emailAddress;
@@ -64,13 +64,13 @@ export async function logInsertMultiple(
 
   // Prepare multiple values for bulk insert
   const values = logsData.map((log) => ({
-    ownerId: userId,
     action: log.action,
-    objectId: log.objectId,
-    reference: JSON.stringify(log.reference),
-    actorId: actor,
     actorName,
     actorEmail,
+    actorId: actor,
+    objectId: log.objectId,
+    reference: log.reference,
+    ownerId,
   }));
 
   // Insert all logs in one query
