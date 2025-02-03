@@ -9,15 +9,15 @@ import { and, asc, count, desc, eq, inArray } from "drizzle-orm";
 export async function logInsert(
   ownerId: string,
   action: string,
-  actor: string,
+  actorId: string,
   objectId?: string,
   reference?: string[],
 ) {
   let actorName: string | undefined;
   let actorEmail: string | undefined;
 
-  if (actor.startsWith("user_")) {
-    const user = await clerkClient.users.getUser(actor);
+  if (actorId.startsWith("user_")) {
+    const user = await clerkClient.users.getUser(actorId);
 
     if (user) {
       actorName = `${user.firstName ?? ""}${user.lastName ? ` ${user.lastName}` : ""}`;
@@ -30,7 +30,7 @@ export async function logInsert(
       action,
       actorName,
       actorEmail,
-      actorId: actor,
+      actorId,
       objectId: objectId,
       reference: reference,
       ownerId,
@@ -49,13 +49,13 @@ export type LogsInsertMultipleData = {
 export async function logInsertMultiple(
   ownerId: string,
   logsData: LogsInsertMultipleData[],
-  actor: string,
+  actorId: string,
 ) {
   let actorName: string | undefined;
   let actorEmail: string | undefined;
 
-  if (actor.startsWith("user_")) {
-    const user = await clerkClient.users.getUser(actor);
+  if (actorId.startsWith("user_")) {
+    const user = await clerkClient.users.getUser(actorId);
     if (user) {
       actorName = `${user.firstName ?? ""}${user.lastName ? ` ${user.lastName}` : ""}`;
       actorEmail = user.primaryEmailAddress?.emailAddress;
@@ -67,7 +67,7 @@ export async function logInsertMultiple(
     action: log.action,
     actorName,
     actorEmail,
-    actorId: actor,
+    actorId,
     objectId: log.objectId,
     reference: log.reference,
     ownerId,
