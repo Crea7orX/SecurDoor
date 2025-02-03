@@ -13,3 +13,12 @@ export const emergencyUpdateSchema = z.object({
 });
 
 export type EmergencyUpdate = z.infer<typeof emergencyUpdateSchema>;
+
+export const emergencyCountResponseSchema = z.object({
+  lockdownCount: z.number(),
+  evacuationCount: z.number(),
+});
+
+export type EmergencyCountResponse = z.infer<
+  typeof emergencyCountResponseSchema
+>;
