@@ -12,14 +12,14 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
-    const { userId } = authenticate(request);
+    const { ownerId } = authenticate(request);
 
     const url = new URL(request.url);
     const searchParams = await cardsSearchParamsCache.parse(
       Promise.resolve(url.searchParams),
     );
 
-    const cards = await cardsGetAll(searchParams, userId);
+    const cards = await cardsGetAll(searchParams, ownerId);
 
     return NextResponse.json(cardsPaginatedResponseSchema.parse(cards));
   } catch (error) {
@@ -29,12 +29,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { userId } = authenticate(request);
+    const { userId, ownerId } = authenticate(request);
 
     const json = (await request.json()) as CardCreate;
     const create = cardCreateSchema.parse(json);
 
-    const card = await cardInsert(create, userId);
+    const card = await cardInsert(create, userId, ownerId);
 
     return NextResponse.json(cardResponseSchema.parse(card), {
       status: 201,
