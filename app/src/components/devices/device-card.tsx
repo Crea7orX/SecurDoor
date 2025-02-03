@@ -5,7 +5,13 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
-import { Lock, LockOpen, Settings } from "lucide-react";
+import {
+  BellElectric,
+  Construction,
+  Lock,
+  LockOpen,
+  Settings,
+} from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -34,6 +40,19 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
               <LockOpen className="mr-1 size-4" />
               <span>UNLOCKED</span>
             </Badge>
+          )}
+          {device.emergencyState === "lockdown" ? (
+            <Badge variant="destructive" className="ring-4 ring-destructive/50">
+              <Construction className="mr-1 size-4" />
+              <span>LOCKDOWN</span>
+            </Badge>
+          ) : (
+            device.emergencyState === "evacuation" && (
+              <Badge variant="warning" className="ring-4 ring-warning/50">
+                <BellElectric className="mr-1 size-4" />
+                <span>EVACUATION</span>
+              </Badge>
+            )
           )}
         </CardHeader>
         <CardContent className="flex gap-2 pt-2">
