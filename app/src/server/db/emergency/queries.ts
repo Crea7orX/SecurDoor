@@ -2,7 +2,7 @@ import "server-only";
 import { db } from "@/server/db";
 import { devices, type emergencyStateEnum } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import { and, eq, sql } from "drizzle-orm";
+import { and, count, eq, isNotNull, sql } from "drizzle-orm";
 
 export async function emergencyStateGetById(deviceId: string, ownerId: string) {
   return (
@@ -49,4 +49,25 @@ export async function emergencyStateSetDevice(
   }
 
   return device;
+}
+
+export async function emergencyStatesGetCount(ownerId: string) {
+  return await db
+    .select({
+      state: devices.emergencyState,
+      count: count(),
+    })
+    .from(devices)
+    .groupBy(devices.emergencyState)
+    .where(and(eq(devices.ownerId, ownerId), isNotNull(devices.emergencyState)))
+    .then((res) =>
+      res.reduce(
+        (acc, { state, count }) => {
+          // filter out null state in where clause
+          acc[state!] = count;
+          return acc;
+        },
+        {} as Record<(typeof emergencyStateEnum.enumValues)[number], number>,
+      ),
+    );
 }
