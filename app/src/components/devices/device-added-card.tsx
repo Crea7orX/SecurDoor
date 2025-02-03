@@ -6,17 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { type DeviceResponse } from "@/lib/validations/device";
 import { CalendarClock } from "lucide-react";
 import * as React from "react";
 
 interface DeviceAddedCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  id: string;
+  device: DeviceResponse;
 }
 
 const DeviceAddedCard = React.forwardRef<HTMLDivElement, DeviceAddedCardProps>(
-  ({ className, id, ...props }, ref) => {
-    // todo: fetch data from api with id
-
+  ({ className, device, ...props }, ref) => {
     return (
       <Card className={className} ref={ref} {...props}>
         <CardHeader>
@@ -31,7 +30,7 @@ const DeviceAddedCard = React.forwardRef<HTMLDivElement, DeviceAddedCardProps>(
         <CardContent>
           <Badge variant="info" className="text-md">
             <CalendarClock className="mr-1 size-4" />
-            <span>2023-01-01 12:00:00</span>
+            <span>{new Date(device.createdAt * 1000).toLocaleString()}</span>
           </Badge>
         </CardContent>
       </Card>

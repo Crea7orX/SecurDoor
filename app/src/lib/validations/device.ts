@@ -1,4 +1,5 @@
 import { getSortingStateParser } from "@/lib/data-table-parsers";
+import { emergencyStateEnum } from "@/server/db/devices/schema";
 import {
   createSearchParamsCache,
   parseAsInteger,
@@ -10,6 +11,7 @@ import { z } from "zod";
 export const deviceCreateSchema = z.object({
   name: z.string().min(2).max(256),
   serialId: z.string().uuid(),
+  reLockDelay: z.number().min(0).max(120).optional(),
 });
 
 export type DeviceCreate = z.infer<typeof deviceCreateSchema>;
@@ -18,12 +20,21 @@ export const deviceResponseSchema = z.object({
   id: z.string(),
   name: z.string(),
   serialId: z.string().uuid(),
+  reLockDelay: z.number(),
+  emergencyState: z.enum(emergencyStateEnum.enumValues).nullable(),
   ownerId: z.string(),
   createdAt: z.number(),
   updatedAt: z.number().nullable(),
 });
 
 export type DeviceResponse = z.infer<typeof deviceResponseSchema>;
+
+export const deviceUpdateSchema = z.object({
+  name: z.string().min(2).max(256).optional(),
+  reLockDelay: z.number().min(0).max(120).optional(),
+});
+
+export type DeviceUpdate = z.infer<typeof deviceUpdateSchema>;
 
 export const deviceGetKeySchema = z.object({
   id: z.string(),

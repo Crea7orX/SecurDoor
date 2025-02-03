@@ -5,13 +5,17 @@ import { generateKey } from "@/lib/keys";
 import {
   type DeviceCreate,
   type DevicesGetSchema,
+  type DeviceUpdate,
 } from "@/lib/validations/device";
 import { db } from "@/server/db";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import { and, asc, count, desc, eq, ilike } from "drizzle-orm";
+import { and, asc, count, desc, eq, ilike, sql } from "drizzle-orm";
 
-export async function deviceInsert(deviceCreate: DeviceCreate, userId: string) {
+export async function deviceInsert(
+  deviceCreate: DeviceCreate,
+  ownerId: string,
+) {
   if (await deviceGetBySerialId(deviceCreate.serialId)) {
     throw new DeviceWithSameSerialIdError();
   }
@@ -23,14 +27,15 @@ export async function deviceInsert(deviceCreate: DeviceCreate, userId: string) {
         name: deviceCreate.name,
         serialId: deviceCreate.serialId,
         key: generateKey(),
-        ownerId: userId,
+        reLockDelay: deviceCreate.reLockDelay,
+        ownerId,
       })
       .returning()
   )[0];
 
   if (device) {
     const reference = [device.serialId, device.name];
-    void logInsert(userId, "device.create", userId, device.id, reference);
+    void logInsert(ownerId, "device.create", ownerId, device.id, reference);
   }
 
   return device;
@@ -88,13 +93,13 @@ export async function devicesGetAll(
   }
 }
 
-export async function deviceGetById(id: string, userId: string) {
+export async function deviceGetById(id: string, ownerId: string) {
   return (
     (
       await db
         .select()
         .from(devices)
-        .where(and(eq(devices.ownerId, userId), eq(devices.id, id)))
+        .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
         .limit(1)
     )[0] ?? null
   );
@@ -110,4 +115,62 @@ export async function deviceGetBySerialId(serialId: string) {
         .limit(1)
     )[0] ?? null
   );
+}
+
+export async function deviceUpdate(
+  id: string,
+  update: DeviceUpdate,
+  ownerId: string,
+) {
+  const device = (
+    await db
+      .update(devices)
+      .set({
+        ...(typeof update.name === "string" && {
+          name: update.name.trim(),
+        }),
+        ...(typeof update.reLockDelay === "number" && {
+          reLockDelay: update.reLockDelay,
+        }),
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .returning()
+  )[0];
+
+  if (device) {
+    if (typeof update.name === "string") {
+      const reference = [device.serialId, device.name];
+      void logInsert(ownerId, "device.rename", ownerId, device.id, reference);
+    }
+
+    if (typeof update.reLockDelay === "number") {
+      const reference = [device.serialId, device.reLockDelay.toString()];
+      void logInsert(
+        ownerId,
+        "device.re_lock_delay",
+        ownerId,
+        device.id,
+        reference,
+      );
+    }
+  }
+
+  return device;
+}
+
+export async function deviceDelete(id: string, ownerId: string) {
+  const device = (
+    await db
+      .delete(devices)
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .returning()
+  )[0];
+
+  if (device) {
+    const reference = [device.serialId, device.name];
+    void logInsert(ownerId, "device.delete", ownerId, device.id, reference);
+  }
+
+  return device;
 }

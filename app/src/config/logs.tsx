@@ -3,13 +3,14 @@ import {
   CircleHelp,
   CircleMinus,
   CirclePlus,
-  Diamond,
+  ClockAlert,
   DiamondMinus,
   DiamondPlus,
   IdCard,
   Microchip,
   OctagonMinus,
   ShieldCheck,
+  Siren,
 } from "lucide-react";
 
 export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
@@ -25,11 +26,17 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: DiamondMinus,
     color: "destructive",
   },
-  "device.update": {
-    title: "Device updated",
-    text: "{actor} updated device",
-    icon: Diamond,
+  "device.rename": {
+    title: "Device renamed",
+    text: "{actor} renamed device",
+    icon: Microchip,
     color: "info",
+  },
+  "device.re_lock_delay": {
+    title: "Device re-lock delay updated",
+    text: "{actor} updated device re-lock delay",
+    icon: ClockAlert,
+    color: "warning",
   },
   "device.access_update": {
     title: "Device access updated",
@@ -47,6 +54,12 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     title: "Device removed from card",
     text: "{actor} removed device from card",
     icon: IdCard,
+    color: "destructive",
+  },
+  "device.emergency_state": {
+    title: "Device emergency state updated",
+    text: "{actor} updated device emergency state",
+    icon: Siren,
     color: "destructive",
   },
 
