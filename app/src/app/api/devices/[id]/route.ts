@@ -60,8 +60,6 @@ export async function DELETE(request: Request, props: DevicesByIdProps) {
     const device = await deviceDelete(id, userId, ownerId);
     if (!device) throw new NotFoundError();
 
-    await deviceDelete(id, userId, ownerId);
-
     return NextResponse.json(deviceResponseSchema.parse(device));
   } catch (error) {
     return handleError(error);
