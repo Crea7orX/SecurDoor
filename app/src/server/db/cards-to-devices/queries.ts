@@ -24,11 +24,17 @@ export function accessDeviceGetAll(deviceId: string, ownerId: string) {
     .innerJoin(
       devices,
       and(
-        eq(devices.id, deviceId),
         eq(devices.ownerId, ownerId), // Ensure device ownership
+        eq(devices.id, deviceId),
       ),
     )
-    .innerJoin(cards, eq(cards.id, cardsToDevices.cardId)) // Join to get card details
+    .innerJoin(
+      cards,
+      and(
+        eq(cards.ownerId, ownerId), // Ensure card ownership
+        eq(cards.id, cardsToDevices.cardId),
+      ),
+    ) // Join to get card details
     .where(eq(cardsToDevices.deviceId, deviceId)) // Get cards only for the device
     .orderBy(asc(cards.holder), asc(cards.fingerprint), asc(cards.createdAt));
 }
@@ -150,11 +156,17 @@ export async function accessCardGetAll(cardId: string, ownerId: string) {
     .innerJoin(
       cards,
       and(
-        eq(cards.id, cardId),
         eq(cards.ownerId, ownerId), // Ensure card ownership
+        eq(cards.id, cardId),
       ),
     )
-    .innerJoin(devices, eq(devices.id, cardsToDevices.deviceId)) // Join to get device details
+    .innerJoin(
+      devices,
+      and(
+        eq(devices.ownerId, ownerId), // Ensure device ownership
+        eq(devices.id, cardsToDevices.deviceId),
+      ),
+    ) // Join to get device details
     .where(eq(cardsToDevices.cardId, cardId)) // Get devices only for the card
     .orderBy(asc(devices.name), asc(devices.createdAt));
 }
