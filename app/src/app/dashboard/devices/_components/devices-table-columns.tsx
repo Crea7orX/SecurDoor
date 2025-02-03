@@ -11,6 +11,11 @@ export function getColumns(): ColumnDef<DeviceResponse>[] {
       enableHiding: false,
     },
     {
+      accessorKey: "emergencyState",
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
       accessorKey: "createdAt",
       enableSorting: false,
       enableHiding: false,

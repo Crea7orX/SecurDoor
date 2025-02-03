@@ -9,13 +9,14 @@ import {
   DeviceCard,
   DeviceCardSkeleton,
 } from "@/components/devices/device-card";
+import { DeviceEmergencyCountAlert } from "@/components/devices/device-emergency-count-alert";
 import { Button } from "@/components/ui/button";
 import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-query";
 import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import type { DataTableFilterField, SearchParams } from "@/types/data-table";
-import { PlusCircle } from "lucide-react";
+import { BellElectric, Construction, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -36,6 +37,24 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
       label: "Name",
       placeholder: "Filter by name",
     },
+    {
+      id: "emergencyState",
+      label: "Emergency State",
+      options: [
+        {
+          label: "Lockdown",
+          value: "lockdown",
+          icon: Construction,
+          iconClassName: "text-destructive",
+        },
+        {
+          label: "Evacuation",
+          value: "evacuation",
+          icon: BellElectric,
+          iconClassName: "text-warning",
+        },
+      ],
+    },
   ];
 
   const { table } = useDataTable({
@@ -51,12 +70,23 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     clearOnDefault: true,
   });
 
+  const emergencyCountAlertOnViewClick = () => {
+    table.setColumnFilters([
+      {
+        id: "emergencyState",
+        value: ["lockdown", "evacuation"],
+      },
+    ]);
+  };
+
   if (isLoading) {
     return <DevicesLoading />;
   }
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-4">
+      <DeviceEmergencyCountAlert onViewClick={emergencyCountAlertOnViewClick} />
+
       <DataTableToolbar table={table} filterFields={filterFields}>
         <Button size="sm" asChild>
           <Link href="/dashboard/devices/add">
