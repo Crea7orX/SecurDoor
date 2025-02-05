@@ -1,6 +1,13 @@
 import IdPrefix, { generateId } from "@/lib/ids";
 import { sql } from "drizzle-orm";
-import { integer, pgEnum, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgEnum,
+  pgTable,
+  text,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 export const emergencyStateEnum = pgEnum("emergency_state", [
   "lockdown",
@@ -16,6 +23,7 @@ export const devices = pgTable("devices", {
   key: varchar("key", { length: 6 }).notNull(),
   reLockDelay: integer("re_lock_delay").notNull().default(5),
   emergencyState: emergencyStateEnum("emergency_state"),
+  publicKey: text("public_key"),
   ownerId: varchar("owner_id", { length: 256 }).notNull(),
   createdAt: integer("created_at")
     .default(sql`(EXTRACT(EPOCH FROM NOW()))`)
