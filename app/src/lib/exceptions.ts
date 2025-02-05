@@ -33,3 +33,9 @@ export class DeviceWithSameSerialIdError extends Error {
     super(message);
   }
 }
+
+export class PublicKeyAlreadySetError extends Error {
+  constructor(message = "Public key already set") {
+    super(message);
+  }
+}
