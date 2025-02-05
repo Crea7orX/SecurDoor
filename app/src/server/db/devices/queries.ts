@@ -2,15 +2,30 @@ import "server-only";
 
 import { DeviceWithSameSerialIdError } from "@/lib/exceptions";
 import { generateKey } from "@/lib/keys";
+import { formatPublicKeyForDB } from "@/lib/signatures";
 import {
   type DeviceCreate,
   type DevicesGetSchema,
   type DeviceUpdate,
 } from "@/lib/validations/device";
 import { db } from "@/server/db";
+import {
+  deviceStartAdoption,
+  deviceStateInsert,
+} from "@/server/db/devices-states/queries";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import { and, asc, count, desc, eq, ilike, inArray, sql } from "drizzle-orm";
+import {
+  and,
+  asc,
+  count,
+  desc,
+  eq,
+  ilike,
+  inArray,
+  isNull,
+  sql,
+} from "drizzle-orm";
 
 export async function deviceInsert(
   deviceCreate: DeviceCreate,
@@ -35,6 +50,8 @@ export async function deviceInsert(
   )[0];
 
   if (device) {
+    await deviceStateInsert({ deviceId: device.id, ownerId }); // todo: transaction
+
     const reference = [device.serialId, device.name];
     void logInsert(ownerId, "device.create", userId, device.id, reference);
   }
@@ -179,6 +196,36 @@ export async function deviceDelete(
   if (device) {
     const reference = [device.serialId, device.name];
     void logInsert(ownerId, "device.delete", userId, device.id, reference);
+  }
+
+  return device;
+}
+
+export async function deviceSetPublicKeyBySerialId(
+  serialId: string,
+  publicKey: string,
+) {
+  const device = (
+    await db
+      .update(devices)
+      .set({
+        publicKey: formatPublicKeyForDB(publicKey),
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(
+        and(
+          eq(devices.serialId, serialId),
+          isNull(devices.publicKey), // only set public key if it's not set yet
+        ),
+      )
+      .returning()
+  )[0];
+
+  if (device) {
+    await deviceStartAdoption({
+      deviceId: device.id,
+      ownerId: device.ownerId,
+    });
   }
 
   return device;
