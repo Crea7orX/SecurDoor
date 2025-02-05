@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getDeviceStatusDisplayInfo } from "@/config/device-statuses";
 import { useGetDeviceByIdStateQuery } from "@/hooks/api/devices-states/use-get-device-by-id-state-query";
 import { cn } from "@/lib/utils";
@@ -22,7 +23,10 @@ const DeviceStatusCard = React.forwardRef<
   HTMLDivElement,
   DeviceStatusCardProps
 >(({ className, id, ...props }, ref) => {
-  const { data } = useGetDeviceByIdStateQuery({ id });
+  const { data, isLoading } = useGetDeviceByIdStateQuery({
+    id,
+    refetchInterval: 5000,
+  });
 
   const deviceStatusDisplayInfo = getDeviceStatusDisplayInfo(
     data?.status ?? "",
@@ -55,9 +59,16 @@ const DeviceStatusCard = React.forwardRef<
             </Badge>
           )}
         </div>
-        <p>
-          Last seen: <span className="text-md">Never</span>
-        </p>
+        {isLoading ? (
+          <Skeleton className="h-6 w-48" />
+        ) : (
+          <p className="text-muted-foreground">
+            Last seen:{" "}
+            {data?.lastSeenAt
+              ? new Date(data?.lastSeenAt * 1000).toLocaleString()
+              : "Never"}
+          </p>
+        )}
       </CardContent>
     </Card>
   );
