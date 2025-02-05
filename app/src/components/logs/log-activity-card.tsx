@@ -33,7 +33,9 @@ const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
           <p>
             by{" "}
             <span className="font-semibold">
-              {log.actorName ?? log.actorEmail ?? "UNKNOWN"}
+              {log.actorId === "system"
+                ? "System"
+                : `${log.actorName ?? log.actorEmail ?? "UNKNOWN"}`}
             </span>
           </p>
           <p className="text-muted-foreground">
