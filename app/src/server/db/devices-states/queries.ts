@@ -123,6 +123,7 @@ export async function deviceStateGetByDeviceId({
         id: devicesStates.deviceId,
         status: devicesStates.status,
         isLocked: devicesStates.isLocked,
+        lastSeenAt: devicesStates.lastSeenAt,
         updatedAt: devicesStates.updatedAt,
       })
       .from(devicesStates)
