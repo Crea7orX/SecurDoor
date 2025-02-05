@@ -5,6 +5,7 @@ export const deviceStateResponseSchema = z.object({
   id: z.string(),
   status: z.enum(deviceStatusEnum.enumValues),
   isLocked: z.boolean(),
+  lastSeenAt: z.number().nullable(),
   updatedAt: z.number(),
 });
 
