@@ -2,6 +2,7 @@ import "server-only";
 import {
   BadRequestError,
   CardWithSameFingerprintError,
+  DeviceNotForAdoptionError,
   DeviceWithSameSerialIdError,
   ForbiddenError,
   NotFoundError,
@@ -42,6 +43,10 @@ export function handleError(error: unknown) {
   }
 
   if (error instanceof PublicKeyAlreadySetError) {
+    return NextResponse.json({ error: error.message }, { status: 409 });
+  }
+
+  if (error instanceof DeviceNotForAdoptionError) {
     return NextResponse.json({ error: error.message }, { status: 409 });
   }
 
