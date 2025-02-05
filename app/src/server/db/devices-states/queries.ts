@@ -93,6 +93,7 @@ export async function deviceAdopt({ deviceId, ownerId }: DeviceAdoptParams) {
       .update(devicesStates)
       .set({
         status: "adopted",
+        lastSeenAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
       .where(and(eq(devicesStates.deviceId, deviceId)))
