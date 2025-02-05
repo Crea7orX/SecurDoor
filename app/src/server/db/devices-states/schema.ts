@@ -24,6 +24,7 @@ export const devicesStates = pgTable("devices_states", {
     }),
   status: deviceStatusEnum("status").notNull().default("pending_adoption"),
   isLocked: boolean("is_locked").notNull().default(true),
+  lastSeenAt: integer("last_seen_at"),
   updatedAt: integer("updated_at")
     .default(sql`(EXTRACT(EPOCH FROM NOW()))`)
     .notNull(),
