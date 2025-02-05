@@ -39,3 +39,9 @@ export class PublicKeyAlreadySetError extends Error {
     super(message);
   }
 }
+
+export class DeviceNotForAdoptionError extends Error {
+  constructor(message = "Device is not for adoption") {
+    super(message);
+  }
+}
