@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetDeviceByIdStateQuery } from "@/hooks/api/devices-states/use-get-device-by-id-state-query";
 import { type DeviceResponse } from "@/lib/validations/device";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Activity,
   BellElectric,
@@ -25,6 +26,7 @@ import {
   Wrench,
 } from "lucide-react";
 import * as React from "react";
+import { toast } from "sonner";
 
 interface DeviceControlsCardProps extends React.HTMLAttributes<HTMLDivElement> {
   device: DeviceResponse;
@@ -34,9 +36,32 @@ const DeviceControlsCard = React.forwardRef<
   HTMLDivElement,
   DeviceControlsCardProps
 >(({ className, device, ...props }, ref) => {
+  const queryClient = useQueryClient();
+
   const { data, isLoading } = useGetDeviceByIdStateQuery({
     id: device.id,
   });
+
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+
+    const toastId = toast.loading("Refreshing device information...");
+
+    await queryClient.invalidateQueries({
+      queryKey: ["Devices", "Get", device.id],
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["DevicesState", "Get", device.id],
+    });
+
+    toast.success("Device information refreshed!", {
+      id: toastId,
+    });
+
+    setTimeout(() => setIsRefreshing(false), 5000); // disable button for 5 seconds
+  };
 
   return (
     <Card className={className} ref={ref} {...props}>
@@ -63,7 +88,11 @@ const DeviceControlsCard = React.forwardRef<
               <span>Lock</span>
             </Button>
           )}
-          <Button variant="info">
+          <Button
+            variant="info"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+          >
             <RotateCw />
             <span>Refresh</span>
           </Button>
