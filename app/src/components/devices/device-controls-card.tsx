@@ -11,12 +11,15 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGetDeviceByIdStateQuery } from "@/hooks/api/devices-states/use-get-device-by-id-state-query";
 import { type DeviceResponse } from "@/lib/validations/device";
 import {
   Activity,
   BellElectric,
   Construction,
   Lock,
+  LockOpen,
   RotateCw,
   Settings,
   Wrench,
@@ -31,6 +34,11 @@ const DeviceControlsCard = React.forwardRef<
   HTMLDivElement,
   DeviceControlsCardProps
 >(({ className, device, ...props }, ref) => {
+  const { data, isLoading } = useGetDeviceByIdStateQuery({
+    id: device.id,
+    refetchInterval: 5000,
+  });
+
   return (
     <Card className={className} ref={ref} {...props}>
       <CardHeader>
@@ -43,10 +51,19 @@ const DeviceControlsCard = React.forwardRef<
       <CardContent className="flex flex-col gap-2">
         <Label className="text-md">Basic</Label>
         <div className="flex gap-2 max-md:flex-col">
-          <Button variant="destructive">
-            <Lock />
-            <span>Lock</span>
-          </Button>
+          {isLoading || !data ? (
+            <Skeleton className="h-9 w-24" />
+          ) : data.isLocked ? (
+            <Button variant="success">
+              <LockOpen />
+              <span>Unlock</span>
+            </Button>
+          ) : (
+            <Button variant="destructive">
+              <Lock />
+              <span>Lock</span>
+            </Button>
+          )}
           <Button variant="info">
             <RotateCw />
             <span>Refresh</span>
