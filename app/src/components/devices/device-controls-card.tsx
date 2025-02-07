@@ -36,7 +36,6 @@ const DeviceControlsCard = React.forwardRef<
 >(({ className, device, ...props }, ref) => {
   const { data, isLoading } = useGetDeviceByIdStateQuery({
     id: device.id,
-    refetchInterval: 5000,
   });
 
   return (

@@ -27,7 +27,6 @@ const DeviceStatusCard = React.forwardRef<
 >(({ className, id, ...props }, ref) => {
   const { data, isLoading } = useGetDeviceByIdStateQuery({
     id,
-    refetchInterval: 5000,
   });
 
   const [now] = useNow(5000); // re-render every 5s for device status
