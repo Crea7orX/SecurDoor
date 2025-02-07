@@ -11,8 +11,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { getDeviceStatusDisplayInfo } from "@/config/device-statuses";
 import { useGetDeviceByIdStateQuery } from "@/hooks/api/devices-states/use-get-device-by-id-state-query";
+import { useNow } from "@/hooks/use-now";
 import { cn } from "@/lib/utils";
-import { CircleDotDashed, EthernetPort } from "lucide-react";
+import { formatDistance } from "date-fns";
+import { CircleDot, CircleDotDashed, EthernetPort } from "lucide-react";
 import * as React from "react";
 
 interface DeviceStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -27,6 +29,8 @@ const DeviceStatusCard = React.forwardRef<
     id,
     refetchInterval: 5000,
   });
+
+  const [now] = useNow(5000); // re-render every 5s for device status
 
   const deviceStatusDisplayInfo = getDeviceStatusDisplayInfo(
     data?.status ?? "",
@@ -43,10 +47,17 @@ const DeviceStatusCard = React.forwardRef<
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-wrap gap-2">
-          <Badge variant="destructive" className="text-md">
-            <CircleDotDashed className="mr-1 size-4" />
-            <span>Offline</span>
-          </Badge>
+          {now.getTime() - (data?.lastSeenAt ?? 0) * 1000 > 15000 ? (
+            <Badge variant="destructive" className="text-md">
+              <CircleDotDashed className="mr-1 size-4" />
+              <span>Offline</span>
+            </Badge>
+          ) : (
+            <Badge variant="success" className="text-md">
+              <CircleDot className="mr-1 size-4" />
+              <span>Online</span>
+            </Badge>
+          )}
           {data?.status && data?.status !== "adopted" && (
             <Badge variant={deviceStatusDisplayInfo.color} className="text-md">
               <deviceStatusDisplayInfo.icon
@@ -65,7 +76,10 @@ const DeviceStatusCard = React.forwardRef<
           <p className="text-muted-foreground">
             Last seen:{" "}
             {data?.lastSeenAt
-              ? new Date(data?.lastSeenAt * 1000).toLocaleString()
+              ? formatDistance(new Date(data.lastSeenAt * 1000), now, {
+                  includeSeconds: true,
+                  addSuffix: true,
+                })
               : "Never"}
           </p>
         )}
