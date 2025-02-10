@@ -97,14 +97,15 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
       </DataTableToolbar>
       <div className="relative flex w-full flex-wrap items-center justify-center gap-12 rounded-lg border bg-muted/60 px-2 py-4">
         {table.getRowModel().rows?.length ? (
-          table.getRowModel().rows.map((row, index) => (
-            <DeviceCard
-              className={cn(isPlaceholderData && "opacity-80")}
-              key={row.id}
-              device={row.original}
-              index={index} // todo
-            />
-          ))
+          table
+            .getRowModel()
+            .rows.map((row) => (
+              <DeviceCard
+                className={cn(isPlaceholderData && "opacity-80")}
+                key={row.id}
+                device={row.original}
+              />
+            ))
         ) : (
           <>
             <NoResultsLabel className="top-1/4 translate-y-1/4" />
