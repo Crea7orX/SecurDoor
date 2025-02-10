@@ -21,7 +21,10 @@ interface DevicePageProps {
 }
 
 export default function DevicePage({ params }: DevicePageProps) {
-  const { data, isLoading } = useGetDeviceByIdQuery({ id: params.id });
+  const { data, isLoading } = useGetDeviceByIdQuery({
+    id: params.id,
+    refetchInterval: 5000,
+  });
 
   if (isLoading) {
     return <DevicesLoading />;
@@ -65,7 +68,7 @@ export default function DevicePage({ params }: DevicePageProps) {
               <DeviceAccessCard id={params.id} />
             </div>
             <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
-              <DeviceStatusCard id={params.id} />
+              <DeviceStatusCard device={data} />
               <DeviceDangerZoneCard id={params.id} />
             </div>
           </div>
