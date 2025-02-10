@@ -13,6 +13,7 @@ import {
   deviceStartAdoption,
   deviceStateInsert,
 } from "@/server/db/devices-states/queries";
+import { devicesStates } from "@/server/db/devices-states/schema";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
 import {
@@ -87,6 +88,7 @@ export async function devicesGetAll(
       const data = await tx
         .select()
         .from(devices)
+        .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
         .limit(searchParams.perPage)
         .offset(offset)
         .where(where)
@@ -102,28 +104,46 @@ export async function devicesGetAll(
         .then((res) => res[0]?.count ?? 0);
 
       return {
-        data,
+        data: data.map((device) => ({
+          ...device.devices,
+          state: device.devices_states && {
+            id: device.devices_states.deviceId,
+            ...device.devices_states,
+          },
+        })),
         total,
       };
     });
 
     const pageCount = Math.ceil(total / searchParams.perPage);
-    return { data, pageCount };
+    return {
+      data,
+      pageCount,
+    };
   } catch (error) {
     return { data: [], pageCount: 0 };
   }
 }
 
 export async function deviceGetById(id: string, ownerId: string) {
-  return (
-    (
-      await db
-        .select()
-        .from(devices)
-        .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
-        .limit(1)
-    )[0] ?? null
-  );
+  const device = (
+    await db
+      .select()
+      .from(devices)
+      .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .limit(1)
+  )[0];
+
+  return device
+    ? {
+        ...device.devices,
+        state: device.devices_states && {
+          id: device.devices_states.deviceId,
+          ...device.devices_states,
+        },
+      }
+    : null;
 }
 
 export async function deviceGetBySerialIdUnprotected(serialId: string) {
