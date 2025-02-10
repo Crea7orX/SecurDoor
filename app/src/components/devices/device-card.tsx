@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
+import { type DeviceStateResponse } from "@/lib/validations/device-state";
 import {
   BellElectric,
   Construction,
@@ -15,14 +18,44 @@ import {
 import Link from "next/link";
 import * as React from "react";
 
+export const statusColorVariants = {
+  pendingAdoption: "bg-warning ring-warning/50",
+  adopting: "bg-info ring-info/50",
+  online: "bg-success ring-success/50",
+  offline: "bg-destructive ring-destructive/50",
+};
+
+function getStatusColor(deviceState: DeviceStateResponse, now: Date) {
+  if (deviceState.status === "pending_adoption")
+    return statusColorVariants.pendingAdoption;
+
+  if (deviceState.status === "adopting") return statusColorVariants.adopting;
+
+  if (now.getTime() - (deviceState.lastSeenAt ?? 0) * 1000 < 15000)
+    return statusColorVariants.online;
+
+  return statusColorVariants.offline;
+}
+
 interface DeviceCardProps extends React.HTMLAttributes<HTMLDivElement> {
   device: DeviceResponse;
+  now: Date;
 }
 
 const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
-  ({ className, device, ...props }, ref) => {
+  ({ className, device, now, ...props }, ref) => {
     return (
-      <Card className={cn("lg:min-w-[360px]", className)} ref={ref} {...props}>
+      <Card
+        className={cn("relative lg:min-w-[360px]", className)}
+        ref={ref}
+        {...props}
+      >
+        <div
+          className={cn(
+            "absolute -left-2 -top-2 size-4 rounded-full bg-success ring-4 ring-success/50",
+            getStatusColor(device.state!, now),
+          )}
+        />
         <CardHeader className="flex-row items-center gap-2 space-y-0 rounded-t-xl bg-border">
           <CardTitle>{device.name}</CardTitle>
           <Separator
