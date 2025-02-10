@@ -13,6 +13,7 @@ import { DeviceEmergencyCountAlert } from "@/components/devices/device-emergency
 import { Button } from "@/components/ui/button";
 import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-query";
 import { useDataTable } from "@/hooks/use-data-table";
+import { useNow } from "@/hooks/use-now";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import type { DataTableFilterField, SearchParams } from "@/types/data-table";
@@ -28,6 +29,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
   const { data, isLoading, isPlaceholderData } = useGetAllDevicesQuery({
     searchParams,
   });
+  const [now] = useNow(5000); // re-render every 5s for device status
 
   const columns = React.useMemo(() => getColumns(), []);
 
@@ -104,6 +106,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
                 className={cn(isPlaceholderData && "opacity-80")}
                 key={row.id}
                 device={row.original}
+                now={now}
               />
             ))
         ) : (
