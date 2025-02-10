@@ -17,11 +17,10 @@ import * as React from "react";
 
 interface DeviceCardProps extends React.HTMLAttributes<HTMLDivElement> {
   device: DeviceResponse;
-  index: number;
 }
 
 const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
-  ({ className, device, index, ...props }, ref) => {
+  ({ className, device, ...props }, ref) => {
     return (
       <Card className={cn("lg:min-w-[360px]", className)} ref={ref} {...props}>
         <CardHeader className="flex-row items-center gap-2 space-y-0 rounded-t-xl bg-border">
@@ -30,7 +29,9 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             orientation="vertical"
             className="h-6 bg-card-foreground"
           />
-          {index % 2 === 0 ? (
+          {!device.state ? (
+            <Skeleton className="h-6 w-24" />
+          ) : device.state.isLocked ? (
             <Badge variant="destructive">
               <Lock className="mr-1 size-4" />
               <span>LOCKED</span>
@@ -63,14 +64,16 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             </Link>
           </Button>
           {!device.emergencyState &&
-            (index % 2 === 0 ? (
+            (!device.state ? (
+              <Skeleton className="h-9 w-24" />
+            ) : device.state.isLocked ? (
               <Button variant="success">
-                <LockOpen className="size-4" />
+                <LockOpen />
                 <span>Unlock</span>
               </Button>
             ) : (
               <Button variant="destructive">
-                <Lock className="size-4" />
+                <Lock />
                 <span>Lock</span>
               </Button>
             ))}
