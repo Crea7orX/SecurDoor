@@ -12,7 +12,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetDeviceByIdStateQuery } from "@/hooks/api/devices-states/use-get-device-by-id-state-query";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -37,10 +36,6 @@ const DeviceControlsCard = React.forwardRef<
   DeviceControlsCardProps
 >(({ className, device, ...props }, ref) => {
   const queryClient = useQueryClient();
-
-  const { data, isLoading } = useGetDeviceByIdStateQuery({
-    id: device.id,
-  });
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
@@ -75,9 +70,9 @@ const DeviceControlsCard = React.forwardRef<
       <CardContent className="flex flex-col gap-2">
         <Label className="text-md">Basic</Label>
         <div className="flex gap-2 max-md:flex-col">
-          {isLoading || !data ? (
+          {!device.state ? (
             <Skeleton className="h-9 w-24" />
-          ) : data.isLocked ? (
+          ) : device.state.isLocked ? (
             <Button variant="success">
               <LockOpen />
               <span>Unlock</span>
