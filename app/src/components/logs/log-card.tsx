@@ -43,7 +43,7 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
             <h2 className="font-semibold">
               {logDisplayInfo.text.replace(
                 "{actor}",
-                `${log.actorName ?? ""}${log.actorEmail ? (log.actorName ? ` (${log.actorEmail})` : `${log.actorEmail}`) : ""}`,
+                `${log.actorId === "system" ? "System" : `${log.actorName ?? ""}${log.actorEmail ? (log.actorName ? ` (${log.actorEmail})` : `${log.actorEmail}`) : ""}`}`,
               )}
             </h2>
             <span className="text-muted-foreground">

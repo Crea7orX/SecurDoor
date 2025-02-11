@@ -14,6 +14,7 @@ import {
   type DataTableFilterField,
   type SearchParams,
 } from "@/types/data-table";
+import { MonitorCog } from "lucide-react";
 import * as React from "react";
 
 interface LogsPageProps {
@@ -43,12 +44,22 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
     {
       id: "actorId",
       label: "Actor",
-      options: actors?.map((actor) => ({
-        label:
-          `${actor.actorName ?? ""}${actor.actorEmail ? (actor.actorName ? ` (${actor.actorEmail})` : `${actor.actorEmail}`) : ""}` ||
-          actor.actorId,
-        value: actor.actorId,
-      })),
+      options: [
+        {
+          label: "System",
+          value: "system",
+          icon: MonitorCog,
+          iconClassName: "text-info",
+        },
+        ...(actors
+          ?.filter((actor) => actor.actorId !== "system")
+          .map((actor) => ({
+            label:
+              `${actor.actorName ?? ""}${actor.actorEmail ? (actor.actorName ? ` (${actor.actorEmail})` : `${actor.actorEmail}`) : ""}` ||
+              actor.actorId,
+            value: actor.actorId,
+          })) ?? []),
+      ],
     },
   ];
 

@@ -6,9 +6,14 @@ import {
   ClockAlert,
   DiamondMinus,
   DiamondPlus,
+  EthernetPort,
   IdCard,
+  LaptopMinimalCheck,
+  Lock,
+  LockOpen,
   Microchip,
   OctagonMinus,
+  RectangleEllipsis,
   ShieldCheck,
   Siren,
 } from "lucide-react";
@@ -56,11 +61,42 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: IdCard,
     color: "destructive",
   },
+  "device.lock": {
+    title: "Device locked",
+    text: "{actor} locked device",
+    icon: Lock,
+    color: "destructive",
+  },
+  "device.unlock": {
+    title: "Device unlocked",
+    text: "{actor} unlocked device",
+    icon: LockOpen,
+    color: "success",
+  },
   "device.emergency_state": {
     title: "Device emergency state updated",
     text: "{actor} updated device emergency state",
     icon: Siren,
     color: "destructive",
+  },
+
+  "device_status.pending_adoption": {
+    title: "Device pending adoption",
+    text: "{actor} set device in state pending adoption",
+    icon: RectangleEllipsis,
+    color: "warning",
+  },
+  "device_status.adopting": {
+    title: "Device adopting",
+    text: "{actor} set device in state adopting",
+    icon: EthernetPort,
+    color: "info",
+  },
+  "device_status.adopted": {
+    title: "Device adopted",
+    text: "{actor} set device in state adopted",
+    icon: LaptopMinimalCheck,
+    color: "success",
   },
 
   "card.create": {

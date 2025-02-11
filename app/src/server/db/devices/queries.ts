@@ -2,15 +2,31 @@ import "server-only";
 
 import { DeviceWithSameSerialIdError } from "@/lib/exceptions";
 import { generateKey } from "@/lib/keys";
+import { formatPublicKeyForDB } from "@/lib/signatures";
 import {
   type DeviceCreate,
   type DevicesGetSchema,
   type DeviceUpdate,
 } from "@/lib/validations/device";
 import { db } from "@/server/db";
+import {
+  deviceStartAdoption,
+  deviceStateInsert,
+} from "@/server/db/devices-states/queries";
+import { devicesStates } from "@/server/db/devices-states/schema";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import { and, asc, count, desc, eq, ilike, inArray, sql } from "drizzle-orm";
+import {
+  and,
+  asc,
+  count,
+  desc,
+  eq,
+  ilike,
+  inArray,
+  isNull,
+  sql,
+} from "drizzle-orm";
 
 export async function deviceInsert(
   deviceCreate: DeviceCreate,
@@ -35,6 +51,8 @@ export async function deviceInsert(
   )[0];
 
   if (device) {
+    await deviceStateInsert({ deviceId: device.id, ownerId }); // todo: transaction
+
     const reference = [device.serialId, device.name];
     void logInsert(ownerId, "device.create", userId, device.id, reference);
   }
@@ -70,6 +88,7 @@ export async function devicesGetAll(
       const data = await tx
         .select()
         .from(devices)
+        .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
         .limit(searchParams.perPage)
         .offset(offset)
         .where(where)
@@ -85,28 +104,46 @@ export async function devicesGetAll(
         .then((res) => res[0]?.count ?? 0);
 
       return {
-        data,
+        data: data.map((device) => ({
+          ...device.devices,
+          state: device.devices_states && {
+            id: device.devices_states.deviceId,
+            ...device.devices_states,
+          },
+        })),
         total,
       };
     });
 
     const pageCount = Math.ceil(total / searchParams.perPage);
-    return { data, pageCount };
+    return {
+      data,
+      pageCount,
+    };
   } catch (error) {
     return { data: [], pageCount: 0 };
   }
 }
 
 export async function deviceGetById(id: string, ownerId: string) {
-  return (
-    (
-      await db
-        .select()
-        .from(devices)
-        .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
-        .limit(1)
-    )[0] ?? null
-  );
+  const device = (
+    await db
+      .select()
+      .from(devices)
+      .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .limit(1)
+  )[0];
+
+  return device
+    ? {
+        ...device.devices,
+        state: device.devices_states && {
+          id: device.devices_states.deviceId,
+          ...device.devices_states,
+        },
+      }
+    : null;
 }
 
 export async function deviceGetBySerialIdUnprotected(serialId: string) {
@@ -179,6 +216,74 @@ export async function deviceDelete(
   if (device) {
     const reference = [device.serialId, device.name];
     void logInsert(ownerId, "device.delete", userId, device.id, reference);
+  }
+
+  return device;
+}
+
+export async function deviceSetPublicKeyBySerialId(
+  serialId: string,
+  publicKey: string,
+) {
+  const device = (
+    await db
+      .update(devices)
+      .set({
+        publicKey: formatPublicKeyForDB(publicKey),
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(
+        and(
+          eq(devices.serialId, serialId),
+          isNull(devices.publicKey), // only set public key if it's not set yet
+        ),
+      )
+      .returning()
+  )[0];
+
+  if (device) {
+    await deviceStartAdoption({
+      deviceId: device.id,
+      ownerId: device.ownerId,
+    });
+  }
+
+  return device;
+}
+
+interface DeviceSetLockedParams {
+  id: string;
+  userId: string;
+  ownerId: string;
+  isLocked: boolean;
+}
+
+export async function deviceSetLocked({
+  id,
+  userId,
+  ownerId,
+  isLocked,
+}: DeviceSetLockedParams) {
+  const device = (
+    await db
+      .update(devices)
+      .set({
+        isLocked: isLocked,
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .returning()
+  )[0];
+
+  if (device) {
+    const reference = [device.serialId, isLocked.toString()];
+    void logInsert(
+      ownerId,
+      isLocked ? "device.lock" : "device.unlock",
+      userId,
+      device.id,
+      reference,
+    );
   }
 
   return device;

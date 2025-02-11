@@ -2,9 +2,11 @@ import "server-only";
 import {
   BadRequestError,
   CardWithSameFingerprintError,
+  DeviceNotForAdoptionError,
   DeviceWithSameSerialIdError,
   ForbiddenError,
   NotFoundError,
+  PublicKeyAlreadySetError,
   UnauthorizedError,
 } from "@/lib/exceptions";
 import { NextResponse } from "next/server";
@@ -37,6 +39,14 @@ export function handleError(error: unknown) {
   }
 
   if (error instanceof DeviceWithSameSerialIdError) {
+    return NextResponse.json({ error: error.message }, { status: 409 });
+  }
+
+  if (error instanceof PublicKeyAlreadySetError) {
+    return NextResponse.json({ error: error.message }, { status: 409 });
+  }
+
+  if (error instanceof DeviceNotForAdoptionError) {
     return NextResponse.json({ error: error.message }, { status: 409 });
   }
 

@@ -20,3 +20,15 @@ export type LogDisplayInfo = {
     | "warning";
   description?: string; // todo
 };
+
+export type DeviceStatusDisplayInfo = {
+  text: string;
+  icon: LucideIcon;
+  color:
+    | "default"
+    | "destructive"
+    | "secondary"
+    | "success"
+    | "info"
+    | "warning";
+};
