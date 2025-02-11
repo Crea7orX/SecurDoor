@@ -1,8 +1,10 @@
 import "server-only";
 
 import { DeviceNotForAdoptionError, NotFoundError } from "@/lib/exceptions";
+import { type DeviceHeartbeat } from "@/lib/validations/device-heartbeat";
 import { db } from "@/server/db";
 import { devicesStates } from "@/server/db/devices-states/schema";
+import { deviceGetById } from "@/server/db/devices/queries";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
 import { and, eq, sql } from "drizzle-orm";
@@ -114,6 +116,11 @@ export async function deviceAdopt({ deviceId, ownerId }: DeviceAdoptParams) {
   return deviceStatusUpdated;
 }
 
+interface DeviceStateGetByDeviceIdParams {
+  deviceId: string;
+  ownerId: string;
+}
+
 export async function deviceStateGetByDeviceId({
   deviceId,
   ownerId,
@@ -124,6 +131,7 @@ export async function deviceStateGetByDeviceId({
         id: devicesStates.deviceId,
         status: devicesStates.status,
         isLocked: devicesStates.isLocked,
+        isLockedState: devicesStates.isLockedState,
         lastSeenAt: devicesStates.lastSeenAt,
         updatedAt: devicesStates.updatedAt,
       })
@@ -150,7 +158,36 @@ export async function deviceStateGetByDeviceIdUnprotected(deviceId: string) {
   )[0];
 }
 
-interface DeviceStateGetByDeviceIdParams {
+interface DeviceStateHeartbeatParams {
   deviceId: string;
   ownerId: string;
+  heartbeat: DeviceHeartbeat;
+}
+
+export async function deviceStateHeartbeat({
+  deviceId,
+  ownerId,
+  heartbeat,
+}: DeviceStateHeartbeatParams) {
+  const deviceStateUpdated = (
+    await db
+      .update(devicesStates)
+      .set({
+        isLockedState: heartbeat.isLockedState,
+        lastSeenAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(devicesStates.deviceId, deviceId)))
+      .returning()
+  )[0];
+
+  const device = await deviceGetById(deviceId, ownerId);
+  if (!device) {
+    throw new NotFoundError();
+  }
+
+  return {
+    ...device,
+    ...deviceStateUpdated,
+  };
 }
