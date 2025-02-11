@@ -9,6 +9,8 @@ import {
   EthernetPort,
   IdCard,
   LaptopMinimalCheck,
+  Lock,
+  LockOpen,
   Microchip,
   OctagonMinus,
   RectangleEllipsis,
@@ -58,6 +60,18 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     text: "{actor} removed device from card",
     icon: IdCard,
     color: "destructive",
+  },
+  "device.lock": {
+    title: "Device locked",
+    text: "{actor} locked device",
+    icon: Lock,
+    color: "destructive",
+  },
+  "device.unlock": {
+    title: "Device unlocked",
+    text: "{actor} unlocked device",
+    icon: LockOpen,
+    color: "success",
   },
   "device.emergency_state": {
     title: "Device emergency state updated",
