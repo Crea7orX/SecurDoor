@@ -72,7 +72,7 @@ const DeviceControlsCard = React.forwardRef<
         <div className="flex gap-2 max-md:flex-col">
           {!device.state ? (
             <Skeleton className="h-9 w-24" />
-          ) : device.state.isLocked ? (
+          ) : device.state.isLockedState ? (
             <Button variant="success">
               <LockOpen />
               <span>Unlock</span>
