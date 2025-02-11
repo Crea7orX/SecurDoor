@@ -1,6 +1,7 @@
 import IdPrefix, { generateId } from "@/lib/ids";
 import { sql } from "drizzle-orm";
 import {
+  boolean,
   integer,
   pgEnum,
   pgTable,
@@ -22,6 +23,7 @@ export const devices = pgTable("devices", {
   serialId: uuid("serial_id").notNull(),
   key: varchar("key", { length: 6 }).notNull(),
   reLockDelay: integer("re_lock_delay").notNull().default(5),
+  isLocked: boolean("is_locked").notNull().default(true),
   emergencyState: emergencyStateEnum("emergency_state"),
   publicKey: text("public_key"),
   ownerId: varchar("owner_id", { length: 256 }).notNull(),

@@ -25,7 +25,6 @@ export const devicesStates = pgTable("devices_states", {
       onDelete: "cascade",
     }),
   status: deviceStatusEnum("status").notNull().default("pending_adoption"),
-  isLocked: boolean("is_locked").notNull().default(true),
   isLockedState: boolean("is_locked_state").notNull().default(true),
   pendingCommands: pendingCommandEnum("pending_commands")
     .array()

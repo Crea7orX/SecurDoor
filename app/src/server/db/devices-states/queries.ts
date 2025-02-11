@@ -130,7 +130,6 @@ export async function deviceStateGetByDeviceId({
       .select({
         id: devicesStates.deviceId,
         status: devicesStates.status,
-        isLocked: devicesStates.isLocked,
         isLockedState: devicesStates.isLockedState,
         lastSeenAt: devicesStates.lastSeenAt,
         updatedAt: devicesStates.updatedAt,
