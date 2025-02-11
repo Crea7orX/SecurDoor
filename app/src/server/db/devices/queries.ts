@@ -250,3 +250,41 @@ export async function deviceSetPublicKeyBySerialId(
 
   return device;
 }
+
+interface DeviceSetLockedParams {
+  id: string;
+  userId: string;
+  ownerId: string;
+  isLocked: boolean;
+}
+
+export async function deviceSetLocked({
+  id,
+  userId,
+  ownerId,
+  isLocked,
+}: DeviceSetLockedParams) {
+  const device = (
+    await db
+      .update(devices)
+      .set({
+        isLocked: isLocked,
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .returning()
+  )[0];
+
+  if (device) {
+    const reference = [device.serialId, isLocked.toString()];
+    void logInsert(
+      ownerId,
+      isLocked ? "device.lock" : "device.unlock",
+      userId,
+      device.id,
+      reference,
+    );
+  }
+
+  return device;
+}
