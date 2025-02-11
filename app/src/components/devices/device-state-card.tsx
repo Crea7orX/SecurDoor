@@ -29,7 +29,7 @@ const DeviceStateCard = React.forwardRef<HTMLDivElement, DeviceStateCardProps>(
         <CardContent className="flex gap-2">
           {!device.state ? (
             <Skeleton className="h-8 w-32" />
-          ) : device.state.isLocked ? (
+          ) : device.state.isLockedState ? (
             <Badge variant="destructive" className="text-md">
               <Lock className="mr-1 size-4" />
               <span>Locked</span>
