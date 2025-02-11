@@ -46,17 +46,17 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
   ({ className, device, now, ...props }, ref) => {
     return (
       <Card
-        className={cn("relative lg:min-w-[360px]", className)}
+        className={cn("relative bg-border lg:min-w-[360px]", className)}
         ref={ref}
         {...props}
       >
         <div
           className={cn(
-            "absolute -left-2 -top-2 size-4 rounded-full bg-success ring-4 ring-success/50",
+            "absolute -left-2 -top-2 size-4 rounded-full ring-4",
             getStatusColor(device.state!, now),
           )}
         />
-        <CardHeader className="flex-row items-center gap-2 space-y-0 rounded-t-xl bg-border">
+        <CardHeader className="flex-row items-center gap-2 space-y-0">
           <CardTitle>{device.name}</CardTitle>
           <Separator
             orientation="vertical"
@@ -89,7 +89,7 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             )
           )}
         </CardHeader>
-        <CardContent className="flex gap-2 pt-2">
+        <CardContent className="flex gap-2 rounded-xl bg-card pt-6">
           <Button className="flex-1" asChild>
             <Link href={`/dashboard/devices/${device.id}`}>
               <Settings className="size-4" />
@@ -116,13 +116,18 @@ const DeviceCardSkeleton = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   return (
-    <Card className={cn("lg:min-w-[360px]", className)} ref={ref} {...props}>
-      <CardHeader className="flex-row items-center gap-2 space-y-0 rounded-t-xl bg-border">
+    <Card
+      className={cn("relative bg-border lg:min-w-[360px]", className)}
+      ref={ref}
+      {...props}
+    >
+      <div className="absolute -left-2 -top-2 size-4 rounded-full bg-border ring-4 ring-border/50" />
+      <CardHeader className="flex-row items-center gap-2 space-y-0">
         <Skeleton className="h-6 w-32" />
         <Separator orientation="vertical" className="h-6 bg-card-foreground" />
         <Skeleton className="h-6 w-24" />
       </CardHeader>
-      <CardContent className="flex gap-2 pt-2">
+      <CardContent className="flex gap-2 rounded-xl bg-card pt-6">
         <Skeleton className="h-9 flex-1" />
         <Skeleton className="h-9 w-24" />
       </CardContent>
