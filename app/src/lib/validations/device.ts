@@ -23,6 +23,7 @@ export const deviceResponseSchema = z.object({
   name: z.string(),
   serialId: z.string().uuid(),
   reLockDelay: z.number(),
+  isLocked: z.boolean(),
   emergencyState: z.enum(emergencyStateEnum.enumValues).nullable(),
   ownerId: z.string(),
   createdAt: z.number(),
