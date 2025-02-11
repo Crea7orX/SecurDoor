@@ -1,5 +1,5 @@
-"use client";
-
+import { DeviceLockButton } from "@/components/devices/access/device-lock-button";
+import { DeviceUnlockButton } from "@/components/devices/access/device-unlock-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -100,15 +100,9 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             (!device.state ? (
               <Skeleton className="h-9 w-24" />
             ) : device.state.isLockedState ? (
-              <Button variant="success">
-                <LockOpen />
-                <span>Unlock</span>
-              </Button>
+              <DeviceUnlockButton device={device} />
             ) : (
-              <Button variant="destructive">
-                <Lock />
-                <span>Lock</span>
-              </Button>
+              <DeviceLockButton device={device} />
             ))}
         </CardContent>
       </Card>
