@@ -64,7 +64,7 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
           />
           {!device.state ? (
             <Skeleton className="h-6 w-24" />
-          ) : device.state.isLocked ? (
+          ) : device.state.isLockedState ? (
             <Badge variant="destructive">
               <Lock className="mr-1 size-4" />
               <span>LOCKED</span>
@@ -99,7 +99,7 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
           {!device.emergencyState &&
             (!device.state ? (
               <Skeleton className="h-9 w-24" />
-            ) : device.state.isLocked ? (
+            ) : device.state.isLockedState ? (
               <Button variant="success">
                 <LockOpen />
                 <span>Unlock</span>
