@@ -1,3 +1,7 @@
+"use client";
+
+import { DeviceLockButton } from "@/components/devices/access/device-lock-button";
+import { DeviceUnlockButton } from "@/components/devices/access/device-unlock-button";
 import { DeviceEmergencyAlertDialog } from "@/components/devices/device-emergency-alert-dialog";
 import { DeviceEmergencyClearAlertDialog } from "@/components/devices/device-emergency-clear-alert-dialog";
 import { DeviceSettingsDialog } from "@/components/devices/device-settings-dialog";
@@ -18,8 +22,6 @@ import {
   Activity,
   BellElectric,
   Construction,
-  Lock,
-  LockOpen,
   RotateCw,
   Settings,
   Wrench,
@@ -73,15 +75,9 @@ const DeviceControlsCard = React.forwardRef<
           {!device.state ? (
             <Skeleton className="h-9 w-24" />
           ) : device.state.isLockedState ? (
-            <Button variant="success">
-              <LockOpen />
-              <span>Unlock</span>
-            </Button>
+            <DeviceUnlockButton device={device} />
           ) : (
-            <Button variant="destructive">
-              <Lock />
-              <span>Lock</span>
-            </Button>
+            <DeviceLockButton device={device} />
           )}
           <Button
             variant="info"
