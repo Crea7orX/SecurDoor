@@ -12,6 +12,8 @@ export function useGetAllAccessCardsQuery({
 }: UseGetAllAccessCardsQueryProps) {
   return useQuery<AccessCardResponse, AxiosError>({
     queryKey: ["Access", "Cards", "GetAll", id],
-    queryFn: async () => (await axiosInstance.get(`/access/cards/${id}`)).data,
+    queryFn: async () =>
+      (await axiosInstance.get(`/access/cards/${id}`))
+        .data as AccessCardResponse,
   });
 }
