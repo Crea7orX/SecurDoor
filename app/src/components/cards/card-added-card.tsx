@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CardResponse } from "@/lib/validations/card";
+import { type CardResponse } from "@/lib/validations/card";
 import { CalendarClock } from "lucide-react";
 import * as React from "react";
 
