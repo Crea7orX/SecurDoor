@@ -10,10 +10,8 @@ export default function SwitchActiveOrganizationPage() {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    return () => {
-      queryClient.clear();
-      router.replace("/dashboard");
-    };
+    queryClient.clear();
+    router.replace("/dashboard");
   }, []);
 
   return null;
