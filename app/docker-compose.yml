@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:17.2
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: securdoor
+      POSTGRES_USER: securdoor
+      POSTGRES_PASSWORD: securdoor
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  app:
+    build: .
+    container_name: app
+    restart: always
+    ports:
+      - '3000:3000'
+    env_file: .env
+    entrypoint: sh -c "corepack enable pnpm && pnpm run db:generate && pnpm run db:migrate && pnpm start"
+    depends_on:
+      - postgres
+    networks:
+      - internal
+
+volumes:
+  postgres-data:
+
+networks:
+  internal:
+    driver: bridge
