@@ -11,7 +11,7 @@ import { auth } from "@clerk/nextjs/server";
 import { type NextRequest } from "next/server";
 import { z } from "zod";
 
-export function authenticate(request: Request) {
+export function authenticate(request: NextRequest) {
   const authObject = auth();
 
   if (!authObject.userId) {
