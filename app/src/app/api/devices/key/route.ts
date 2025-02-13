@@ -5,6 +5,8 @@ import { deviceKeyResponseSchema } from "@/lib/validations/device";
 import { deviceGetById } from "@/server/db/devices/queries";
 import { type NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   try {
     const { ownerId } = authenticate(req);
