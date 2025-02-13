@@ -120,7 +120,7 @@ export async function devicesGetAll(
       data,
       pageCount,
     };
-  } catch (error) {
+  } catch {
     return { data: [], pageCount: 0 };
   }
 }
