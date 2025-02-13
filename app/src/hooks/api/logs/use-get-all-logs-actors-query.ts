@@ -6,6 +6,7 @@ import { type AxiosError } from "axios";
 export function useGetAllLogsActorsQuery() {
   return useQuery<LogActorResponse[], AxiosError>({
     queryKey: ["Logs", "Actors", "GetAll"],
-    queryFn: async () => (await axiosInstance.get("/logs/actors")).data,
+    queryFn: async () =>
+      (await axiosInstance.get("/logs/actors")).data as LogActorResponse[],
   });
 }
