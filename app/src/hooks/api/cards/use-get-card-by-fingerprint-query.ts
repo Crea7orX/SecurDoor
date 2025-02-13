@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
-import { CardResponse } from "@/lib/validations/card";
+import { type CardResponse } from "@/lib/validations/card";
 import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { type AxiosError } from "axios";
 
 interface useGetCardByFingerprintQueryProps {
   fingerprint: string;
@@ -14,6 +14,6 @@ export function useGetCardByFingerprintQuery({
     queryKey: ["Cards", "Get", "Fingerprint", fingerprint],
     queryFn: async () =>
       (await axiosInstance.get(`/cards/${fingerprint}?get_fingerprint=true`))
-        .data,
+        .data as CardResponse,
   });
 }
