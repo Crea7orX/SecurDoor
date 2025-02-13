@@ -1,8 +1,7 @@
+import { type SearchParams } from "@/types/data-table";
 import * as React from "react";
 
-export function useParseSearchParams<T extends { [key: string]: any }>(
-  searchParams: T,
-) {
+export function useParseSearchParams(searchParams: SearchParams) {
   React.useEffect(() => {
     const params = new URLSearchParams();
     for (const [key, value] of Object.entries(searchParams)) {
