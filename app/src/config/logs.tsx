@@ -147,6 +147,18 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: Microchip,
     color: "destructive",
   },
+  "card.lock": {
+    title: "Card locked device",
+    text: "{actor} locked device with card",
+    icon: Lock,
+    color: "destructive",
+  },
+  "card.unlock": {
+    title: "Card unlocked device",
+    text: "{actor} unlocked device with card",
+    icon: LockOpen,
+    color: "success",
+  },
 };
 
 export function getLogDisplayInfo(action: string) {

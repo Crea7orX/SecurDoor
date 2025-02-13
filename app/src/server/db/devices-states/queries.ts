@@ -190,3 +190,21 @@ export async function deviceStateHeartbeat({
     ...deviceStateUpdated,
   };
 }
+
+interface DeviceStateHeartbeatUpdateParams {
+  deviceId: string;
+}
+
+export async function deviceStateHeartbeatUpdate({
+  deviceId,
+}: DeviceStateHeartbeatUpdateParams) {
+  return (
+    await db
+      .update(devicesStates)
+      .set({
+        lastSeenAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(devicesStates.deviceId, deviceId)))
+      .returning()
+  )[0];
+}

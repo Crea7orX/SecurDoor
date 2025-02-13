@@ -28,6 +28,7 @@ interface DevicesPageProps {
 export default function DevicesPage({ searchParams }: DevicesPageProps) {
   const { data, isLoading, isPlaceholderData } = useGetAllDevicesQuery({
     searchParams,
+    refetchInterval: 5000,
   });
   const [now] = useNow(5000); // re-render every 5s for device status
 

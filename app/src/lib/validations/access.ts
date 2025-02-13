@@ -58,3 +58,23 @@ export const accessCardUpdateResponseSchema = z.object({
 export type AccessCardUpdateResponse = z.infer<
   typeof accessCardUpdateResponseSchema
 >;
+
+// CARD AUTHENTICATION
+
+export const accessCardAuthenticationSchema = z.object({
+  fingerprint: z.string(),
+});
+
+export type AccessCardAuthentication = z.infer<
+  typeof accessCardAuthenticationSchema
+>;
+
+export const accessCardAuthenticationResponseSchema = z.object({
+  isLocked: z.boolean(),
+  reLockDelay: z.number(),
+  holder: z.string().nullable(),
+});
+
+export type AccessCardAuthenticationResponse = z.infer<
+  typeof accessCardAuthenticationResponseSchema
+>;
