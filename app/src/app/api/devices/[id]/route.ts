@@ -34,7 +34,7 @@ export async function GET(request: NextRequest, props: DevicesByIdProps) {
 }
 
 // update device
-export async function PUT(request: Request, props: DevicesByIdProps) {
+export async function PUT(request: NextRequest, props: DevicesByIdProps) {
   try {
     const { id } = await props.params;
     const { userId, ownerId } = authenticate(request);
@@ -52,7 +52,7 @@ export async function PUT(request: Request, props: DevicesByIdProps) {
 }
 
 // delete device
-export async function DELETE(request: Request, props: DevicesByIdProps) {
+export async function DELETE(request: NextRequest, props: DevicesByIdProps) {
   try {
     const { id } = await props.params;
     const { userId, ownerId } = authenticate(request);

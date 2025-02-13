@@ -5,9 +5,9 @@ import {
   logsPaginatedResponseSchema,
 } from "@/lib/validations/log";
 import { logsGetAll } from "@/server/db/logs/queries";
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const { ownerId } = authenticate(request);
 

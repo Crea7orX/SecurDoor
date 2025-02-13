@@ -3,7 +3,7 @@ import { handleError } from "@/lib/errors";
 import { NotFoundError } from "@/lib/exceptions";
 import {
   cardResponseSchema,
-  CardUpdate,
+  type CardUpdate,
   cardUpdateSchema,
 } from "@/lib/validations/card";
 import {
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest, props: CardByIdProps) {
 }
 
 // update card
-export async function PUT(request: Request, props: CardByIdProps) {
+export async function PUT(request: NextRequest, props: CardByIdProps) {
   try {
     const { id } = await props.params;
     const { userId, ownerId } = authenticate(request);
@@ -58,7 +58,7 @@ export async function PUT(request: Request, props: CardByIdProps) {
 }
 
 // delete card
-export async function DELETE(request: Request, props: CardByIdProps) {
+export async function DELETE(request: NextRequest, props: CardByIdProps) {
   try {
     const { id } = await props.params;
     const { userId, ownerId } = authenticate(request);

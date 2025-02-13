@@ -8,9 +8,9 @@ import {
   cardsPaginatedResponseSchema,
 } from "@/lib/validations/card";
 import { cardInsert, cardsGetAll } from "@/server/db/cards/queries";
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const { ownerId } = authenticate(request);
 
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const { userId, ownerId } = authenticate(request);
 
