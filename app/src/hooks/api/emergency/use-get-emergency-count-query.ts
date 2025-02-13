@@ -6,6 +6,8 @@ import { type AxiosError } from "axios";
 export function useGetEmergencyCountQuery() {
   return useQuery<EmergencyCountResponse, AxiosError>({
     queryKey: ["Emergency", "Get", "Count"],
-    queryFn: async () => (await axiosInstance.get("/emergency/count")).data,
+    queryFn: async () =>
+      (await axiosInstance.get("/emergency/count"))
+        .data as EmergencyCountResponse,
   });
 }

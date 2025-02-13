@@ -23,7 +23,9 @@ export function useGetAllLogsQuery({
   return useQuery<LogsPaginatedResponse, AxiosError>({
     ...options,
     queryKey: ["Logs", "GetAll", searchParams],
-    queryFn: async () => (await axiosInstance.get(`/logs?${search}`)).data,
+    queryFn: async () =>
+      (await axiosInstance.get(`/logs?${search}`))
+        .data as LogsPaginatedResponse,
     placeholderData: keepPreviousData,
   });
 }

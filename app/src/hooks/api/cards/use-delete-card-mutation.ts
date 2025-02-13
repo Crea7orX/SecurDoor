@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
-import { CardResponse } from "@/lib/validations/card";
+import { type CardResponse } from "@/lib/validations/card";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosError, AxiosResponse } from "axios";
+import { type AxiosError, type AxiosResponse } from "axios";
 
 interface useDeleteCardMutationProps {
   id: string;

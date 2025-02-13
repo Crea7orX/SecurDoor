@@ -4,6 +4,8 @@ import { emergencyCountResponseSchema } from "@/lib/validations/emergency";
 import { emergencyStatesGetCount } from "@/server/db/emergency/queries";
 import { type NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 // get emergency state count
 export async function GET(request: NextRequest) {
   try {

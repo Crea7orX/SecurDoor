@@ -23,7 +23,9 @@ export function useGetAllCardsQuery({
   return useQuery<CardsPaginatedResponse, AxiosError>({
     ...options,
     queryKey: ["Cards", "GetAll", searchParams],
-    queryFn: async () => (await axiosInstance.get(`/cards?${search}`)).data,
+    queryFn: async () =>
+      (await axiosInstance.get(`/cards?${search}`))
+        .data as CardsPaginatedResponse,
     placeholderData: keepPreviousData,
   });
 }

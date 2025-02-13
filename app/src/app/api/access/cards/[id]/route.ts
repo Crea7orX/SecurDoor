@@ -38,7 +38,7 @@ export async function GET(request: NextRequest, props: AccessCardByIdProps) {
 }
 
 // update access to card
-export async function POST(request: Request, props: AccessCardByIdProps) {
+export async function POST(request: NextRequest, props: AccessCardByIdProps) {
   try {
     const { id } = await props.params;
     const { userId, ownerId } = authenticate(request);

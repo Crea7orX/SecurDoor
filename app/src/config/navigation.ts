@@ -1,4 +1,4 @@
-import { Navigation } from "@/types";
+import { type Navigation } from "@/types";
 import { IdCard, Microchip, ScrollText } from "lucide-react";
 
 export function getNavigationList(pathname: string): Navigation[] {

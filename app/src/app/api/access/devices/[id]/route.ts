@@ -39,7 +39,7 @@ export async function GET(request: NextRequest, props: AccessDeviceByIdProps) {
 }
 
 // update access to device
-export async function POST(request: Request, props: AccessDeviceByIdProps) {
+export async function POST(request: NextRequest, props: AccessDeviceByIdProps) {
   try {
     const { id } = await props.params;
     const { userId, ownerId } = authenticate(request);

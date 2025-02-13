@@ -1,7 +1,10 @@
 import { axiosInstance } from "@/lib/axios";
-import { DeviceCreate, DeviceResponse } from "@/lib/validations/device";
+import {
+  type DeviceCreate,
+  type DeviceResponse,
+} from "@/lib/validations/device";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosError, AxiosResponse } from "axios";
+import { type AxiosError, type AxiosResponse } from "axios";
 
 export function useCreateDeviceMutation() {
   const queryClient = useQueryClient();

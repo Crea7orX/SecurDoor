@@ -79,6 +79,8 @@ export function AccessCardsEditDialog({
   });
   form.watch("devices");
 
+  // Set devices value on devices update
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     form.setValue(
       "devices",

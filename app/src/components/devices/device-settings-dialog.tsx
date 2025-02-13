@@ -58,6 +58,7 @@ export function DeviceSettingsDialog({
   });
 
   // Set default values on device update
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     form.reset(
       {

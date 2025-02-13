@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useUpdateCardMutation } from "@/hooks/api/cards/use-update-card-mutation";
-import { CardResponse } from "@/lib/validations/card";
+import { type CardResponse } from "@/lib/validations/card";
 import { Hand, OctagonMinus, ShieldCheck } from "lucide-react";
 import * as React from "react";
 import { toast } from "sonner";

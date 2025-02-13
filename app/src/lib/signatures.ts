@@ -27,7 +27,7 @@ export function verifySignature({
       },
       signatureBuffer,
     );
-  } catch (error) {
+  } catch {
     return false;
   }
 }

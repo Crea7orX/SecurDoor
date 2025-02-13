@@ -56,7 +56,7 @@ export type DeviceKeyResponse = z.infer<typeof deviceKeyResponseSchema>;
 export const devicesSearchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
-  sort: getSortingStateParser<DeviceResponse>().withDefault([
+  sort: getSortingStateParser<Omit<DeviceResponse, "state">>().withDefault([
     { id: "createdAt", desc: false },
   ]),
   name: parseAsString,
