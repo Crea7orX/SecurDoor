@@ -13,6 +13,7 @@ export function useGetAllAccessDevicesQuery({
   return useQuery<AccessDeviceResponse, AxiosError>({
     queryKey: ["Access", "Devices", "GetAll", id],
     queryFn: async () =>
-      (await axiosInstance.get(`/access/devices/${id}`)).data,
+      (await axiosInstance.get(`/access/devices/${id}`))
+        .data as AccessDeviceResponse,
   });
 }
