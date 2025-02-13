@@ -15,6 +15,8 @@ export function useGetDeviceByIdStateQuery({
   return useQuery<DeviceStateResponse, AxiosError>({
     ...options,
     queryKey: ["DevicesState", "Get", id],
-    queryFn: async () => (await axiosInstance.get(`/devices/${id}/state`)).data,
+    queryFn: async () =>
+      (await axiosInstance.get(`/devices/${id}/state`))
+        .data as DeviceStateResponse,
   });
 }
