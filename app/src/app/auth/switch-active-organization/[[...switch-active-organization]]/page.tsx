@@ -8,6 +8,7 @@ export default function SwitchActiveOrganizationPage() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     return () => {
       queryClient.clear();
