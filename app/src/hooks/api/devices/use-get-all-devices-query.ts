@@ -23,7 +23,9 @@ export function useGetAllDevicesQuery({
   return useQuery<DevicesPaginatedResponse, AxiosError>({
     ...options,
     queryKey: ["Devices", "GetAll", searchParams],
-    queryFn: async () => (await axiosInstance.get(`/devices?${search}`)).data,
+    queryFn: async () =>
+      (await axiosInstance.get(`/devices?${search}`))
+        .data as DevicesPaginatedResponse,
     placeholderData: keepPreviousData,
   });
 }
