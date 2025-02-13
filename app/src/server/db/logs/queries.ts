@@ -132,7 +132,7 @@ export async function logsGetAll(searchParams: LogsGetSchema, ownerId: string) {
 
     const pageCount = Math.ceil(total / searchParams.perPage);
     return { data, pageCount };
-  } catch (error) {
+  } catch {
     return { data: [], pageCount: 0 };
   }
 }
