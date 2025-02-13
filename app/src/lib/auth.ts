@@ -57,6 +57,7 @@ export async function authenticateSigned(request: NextRequest) {
   }
 
   return {
+    device,
     deviceId: device.id,
     ownerId: device.ownerId,
     timestamp,
