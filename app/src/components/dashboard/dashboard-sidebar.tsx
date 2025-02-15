@@ -1,14 +1,13 @@
 "use client";
 
-import { DashboardSidebarNavigation } from "@/components/dashboard/dashboard-sidebar-navigation";
 import { DashboardSidebarFooter } from "@/components/dashboard/dashboard-sidebar-footer";
+import { DashboardSidebarNavigation } from "@/components/dashboard/dashboard-sidebar-navigation";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { getNavigationList } from "@/config/navigation";
 import { usePathname } from "next/navigation";
@@ -24,7 +23,7 @@ export function DashboardSidebar({
   );
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar className="border-r" collapsible="none" {...props}>
       <SidebarHeader className="h-12 items-end justify-center">
         <SidebarTrigger className="mr-0.5" />
       </SidebarHeader>
