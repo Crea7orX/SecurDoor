@@ -1,16 +1,8 @@
-"use client";
-
-import {
-  SidebarMenu,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
+import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import * as React from "react";
 
 export function DashboardSidebarFooter() {
-  const { state } = useSidebar();
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -24,11 +16,6 @@ export function DashboardSidebarFooter() {
             },
             elements: {
               rootBox: "w-full flex justify-center",
-              organizationSwitcherTrigger: "p-0 overflow-hidden",
-              userPreviewAvatarImage: "",
-              userPreviewTextContainer: state === "collapsed" && "hidden",
-              organizationSwitcherTriggerIcon:
-                state === "collapsed" && "hidden",
             },
           }}
         />
