@@ -1,16 +1,17 @@
 "use client";
 
-import { DashboardSidebarNavigation } from "@/components/dashboard/dashboard-sidebar-navigation";
+import { Logo } from "@/components/assets/logo";
 import { DashboardSidebarFooter } from "@/components/dashboard/dashboard-sidebar-footer";
+import { DashboardSidebarNavigation } from "@/components/dashboard/dashboard-sidebar-navigation";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { getNavigationList } from "@/config/navigation";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
@@ -24,9 +25,11 @@ export function DashboardSidebar({
   );
 
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className="h-12 items-end justify-center">
-        <SidebarTrigger className="mr-0.5" />
+    <Sidebar className="border-r" collapsible="none" {...props}>
+      <SidebarHeader className="h-12 items-center justify-center border-b">
+        <Link href="/">
+          <Logo className="h-10" />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <DashboardSidebarNavigation items={navigationItems} />
