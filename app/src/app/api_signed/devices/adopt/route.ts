@@ -1,5 +1,6 @@
 import { authenticateSigned } from "@/lib/auth";
 import { handleError } from "@/lib/errors";
+import { apiSignedResponseSchema } from "@/lib/validations/api-signed";
 import { deviceAdopt } from "@/server/db/devices-states/queries";
 import { type NextRequest, NextResponse } from "next/server";
 
@@ -15,6 +16,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       status: "ok",
+      ...apiSignedResponseSchema.parse({}),
     });
   } catch (error) {
     return handleError(error);

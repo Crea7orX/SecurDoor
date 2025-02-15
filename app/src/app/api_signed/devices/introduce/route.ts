@@ -1,6 +1,7 @@
 import { validateSignedSerialId } from "@/lib/auth";
 import { handleError } from "@/lib/errors";
 import { NotFoundError, PublicKeyAlreadySetError } from "@/lib/exceptions";
+import { apiSignedResponseSchema } from "@/lib/validations/api-signed";
 import {
   type DeviceIntroduce,
   deviceSignedIntroduceSchema,
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       status: "ok",
+      ...apiSignedResponseSchema.parse({}),
     });
   } catch (error) {
     return handleError(error);
