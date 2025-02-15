@@ -1,3 +1,4 @@
+import { apiSignedResponseSchema } from "@/lib/validations/api-signed";
 import { cardResponseSchema } from "@/lib/validations/card";
 import { deviceResponseSchema } from "@/lib/validations/device";
 import { z } from "zod";
@@ -73,6 +74,7 @@ export const accessCardAuthenticationResponseSchema = z.object({
   isLocked: z.boolean(),
   reLockDelay: z.number(),
   holder: z.string().nullable(),
+  ...apiSignedResponseSchema.shape,
 });
 
 export type AccessCardAuthenticationResponse = z.infer<
