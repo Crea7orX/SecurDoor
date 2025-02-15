@@ -1,4 +1,5 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
 import { UserButton } from "@clerk/nextjs";
 import * as React from "react";
@@ -21,7 +22,10 @@ const Header = React.forwardRef<
         <div>
           <SidebarTrigger className="-ml-1 md:hidden" />
         </div>
-        <UserButton />
+        <div className="flex items-center gap-2">
+          <ThemeToggle className="rounded-full" />
+          <UserButton />
+        </div>
       </nav>
     </header>
   );
