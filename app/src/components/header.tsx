@@ -27,8 +27,8 @@ const Header = React.forwardRef<
           <UserButton
             appearance={{
               elements: {
-                rootBox: "border rounded-full",
-                avatarBox: "size-9",
+                rootBox: "size-9 rounded-full border",
+                avatarBox: "size-full",
               },
             }}
           />
