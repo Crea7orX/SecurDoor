@@ -48,10 +48,10 @@ export default function DevicePage({ params }: DevicePageProps) {
 
       <div className="flex flex-1 flex-col gap-4">
         <Card className="w-full bg-border">
-          <CardHeader className="flex-row justify-center gap-2 space-y-0 p-2">
+          <CardHeader className="flex-row items-center justify-center gap-2 space-y-0 p-2">
             <span className="text-2xl font-bold">Device</span>
             <Badge variant="secondary" className="text-lg font-bold">
-              <Microchip className="mr-1" />
+              <Microchip className="mr-1 shrink-0" />
               {data.name}
             </Badge>
           </CardHeader>
