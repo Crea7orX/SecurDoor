@@ -1,4 +1,5 @@
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
+import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
@@ -17,6 +18,7 @@ export default function DashboardLayout({
           <SidebarInset className="bg-transparent">
             <Header />
             {children}
+            <Footer className="mt-auto" />
           </SidebarInset>
         </SidebarProvider>
       </SignedIn>
