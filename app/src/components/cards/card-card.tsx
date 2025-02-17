@@ -142,18 +142,21 @@ const CardCardSkeleton = React.forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <Card
-      className={cn("bg-border lg:min-w-[360px]", className)}
+      className={cn(
+        "w-full max-w-[360px] bg-border md:min-w-[360px]",
+        className,
+      )}
       ref={ref}
       {...props}
     >
       <CardHeader className="flex-row items-center gap-2 space-y-0">
-        <Skeleton className="h-6 w-40" />
+        <Skeleton className="h-6 w-full max-w-40" />
         <Separator orientation="vertical" className="h-6 bg-card-foreground" />
         <Skeleton className="h-6 w-24" />
       </CardHeader>
       <CardContent className="flex flex-col gap-3 rounded-xl bg-card pt-2">
         <div className="flex flex-col gap-2">
-          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-6 w-full max-w-32" />
           <Skeleton className="h-8" />
         </div>
         <Separator className="h-1 rounded-xl" />
