@@ -15,6 +15,7 @@ import {
   OctagonMinus,
   RectangleEllipsis,
   ShieldCheck,
+  ShieldX,
   Siren,
 } from "lucide-react";
 
@@ -77,6 +78,12 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     title: "Device emergency state updated",
     text: "{actor} updated device emergency state",
     icon: Siren,
+    color: "destructive",
+  },
+  "device.access_denied": {
+    title: "Device access denied",
+    text: "{actor} denied access to device",
+    icon: ShieldX,
     color: "destructive",
   },
 

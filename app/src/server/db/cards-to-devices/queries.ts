@@ -12,6 +12,7 @@ import {
 } from "@/server/db/devices/queries";
 import { devices } from "@/server/db/devices/schema";
 import {
+  logInsert,
   logInsertMultiple,
   type LogsInsertMultipleData,
 } from "@/server/db/logs/queries";
@@ -321,7 +322,18 @@ export async function accessCardTryAuthentication({
   )[0];
 
   // no access given to the device
-  if (!access) throw new ForbiddenError();
+  if (!access) {
+    const reference = [device.serialId, fingerprint];
+    void logInsert(
+      ownerId,
+      "device.access_denied",
+      "system",
+      deviceId,
+      reference,
+    );
+
+    throw new ForbiddenError();
+  }
 
   // device in emergency state
   if (device.emergencyState) throw new ForbiddenError();

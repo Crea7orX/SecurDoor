@@ -35,11 +35,17 @@ export function handleError(error: unknown) {
   }
 
   if (error instanceof CardWithSameFingerprintError) {
-    return NextResponse.json({ error: error.message }, { status: 409 });
+    return NextResponse.json(
+      { error: error.message, id: error.id },
+      { status: 409 },
+    );
   }
 
   if (error instanceof DeviceWithSameSerialIdError) {
-    return NextResponse.json({ error: error.message }, { status: 409 });
+    return NextResponse.json(
+      { error: error.message, id: error.id },
+      { status: 409 },
+    );
   }
 
   if (error instanceof PublicKeyAlreadySetError) {

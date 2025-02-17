@@ -24,7 +24,14 @@ const Header = React.forwardRef<
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle className="rounded-full" />
-          <UserButton />
+          <UserButton
+            appearance={{
+              elements: {
+                rootBox: "border rounded-full",
+                avatarBox: "size-9",
+              },
+            }}
+          />
         </div>
       </nav>
     </header>
