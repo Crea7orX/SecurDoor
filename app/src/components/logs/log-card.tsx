@@ -70,8 +70,8 @@ const LogCardSkeleton = React.forwardRef<
       <div className="flex items-center gap-4 p-4">
         <Skeleton className="size-8" />
         <div className="flex flex-1 flex-col gap-2">
-          <Skeleton className="h-6 w-96" />
-          <Skeleton className="h-4 w-48" />
+          <Skeleton className="h-6 w-full max-w-96" />
+          <Skeleton className="h-4 w-full max-w-48" />
         </div>
       </div>
       {children}
