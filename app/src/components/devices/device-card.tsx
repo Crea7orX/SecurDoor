@@ -46,7 +46,10 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
   ({ className, device, now, ...props }, ref) => {
     return (
       <Card
-        className={cn("relative bg-border lg:min-w-[360px]", className)}
+        className={cn(
+          "relative max-w-[360px] bg-border md:min-w-[360px]",
+          className,
+        )}
         ref={ref}
         {...props}
       >
@@ -62,32 +65,37 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             orientation="vertical"
             className="h-6 bg-card-foreground"
           />
-          {!device.state ? (
-            <Skeleton className="h-6 w-24" />
-          ) : device.state.isLockedState ? (
-            <Badge variant="destructive">
-              <Lock className="mr-1 size-4" />
-              <span>LOCKED</span>
-            </Badge>
-          ) : (
-            <Badge variant="success">
-              <LockOpen className="mr-1 size-4" />
-              <span>UNLOCKED</span>
-            </Badge>
-          )}
-          {device.emergencyState === "lockdown" ? (
-            <Badge variant="destructive" className="ring-4 ring-destructive/50">
-              <Construction className="mr-1 size-4" />
-              <span>LOCKDOWN</span>
-            </Badge>
-          ) : (
-            device.emergencyState === "evacuation" && (
-              <Badge variant="warning" className="ring-4 ring-warning/50">
-                <BellElectric className="mr-1 size-4" />
-                <span>EVACUATION</span>
+          <div className="flex w-full flex-wrap items-center gap-2">
+            {!device.state ? (
+              <Skeleton className="h-6 w-24" />
+            ) : device.state.isLockedState ? (
+              <Badge variant="destructive">
+                <Lock className="mr-1 size-4" />
+                <span>LOCKED</span>
               </Badge>
-            )
-          )}
+            ) : (
+              <Badge variant="success">
+                <LockOpen className="mr-1 size-4" />
+                <span>UNLOCKED</span>
+              </Badge>
+            )}
+            {device.emergencyState === "lockdown" ? (
+              <Badge
+                variant="destructive"
+                className="ring-4 ring-destructive/50"
+              >
+                <Construction className="mr-1 size-4" />
+                <span>LOCKDOWN</span>
+              </Badge>
+            ) : (
+              device.emergencyState === "evacuation" && (
+                <Badge variant="warning" className="ring-4 ring-warning/50">
+                  <BellElectric className="mr-1 size-4" />
+                  <span>EVACUATION</span>
+                </Badge>
+              )
+            )}
+          </div>
         </CardHeader>
         <CardContent className="flex gap-2 rounded-xl bg-card pt-6">
           <Button className="flex-1" asChild>
@@ -117,13 +125,16 @@ const DeviceCardSkeleton = React.forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <Card
-      className={cn("relative bg-border lg:min-w-[360px]", className)}
+      className={cn(
+        "relative w-full max-w-[360px] bg-border md:min-w-[360px]",
+        className,
+      )}
       ref={ref}
       {...props}
     >
       <div className="absolute -left-2 -top-2 size-4 rounded-full bg-border ring-4 ring-border/50" />
       <CardHeader className="flex-row items-center gap-2 space-y-0">
-        <Skeleton className="h-6 w-32" />
+        <Skeleton className="h-6 w-full max-w-32" />
         <Separator orientation="vertical" className="h-6 bg-card-foreground" />
         <Skeleton className="h-6 w-24" />
       </CardHeader>

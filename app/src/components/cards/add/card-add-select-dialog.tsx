@@ -111,7 +111,7 @@ export function CardAddSelectDialog({
               ))
             ) : (
               <>
-                <NoResultsLabel className="top-1/4 translate-y-1/4" />
+                <NoResultsLabel className="left-1/2 top-1/4 -translate-x-1/2 translate-y-1/4" />
                 {Array.from({ length: 3 }).map((_, index) => (
                   <CardAddLogButtonSkeleton key={index} />
                 ))}

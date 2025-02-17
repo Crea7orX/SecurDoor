@@ -54,10 +54,10 @@ const CardAddLogButtonSkeleton = React.forwardRef<
     <Card className={cn(className)} ref={ref} {...props}>
       <CardContent className="flex items-center justify-between p-4">
         <div className="flex flex-col gap-1">
+          <Skeleton className="h-6 w-28" />
           <Skeleton className="h-6 w-32" />
-          <Skeleton className="h-6 w-48" />
         </div>
-        <Skeleton className="h-9 w-28" />
+        <Skeleton className="h-9 w-24" />
       </CardContent>
     </Card>
   );

@@ -34,7 +34,7 @@ export function DashboardSidebar({
       <SidebarContent>
         <DashboardSidebarNavigation items={navigationItems} />
       </SidebarContent>
-      <SidebarFooter className="min-h-10 justify-center bg-sidebar-border">
+      <SidebarFooter className="h-12 justify-center bg-sidebar-border">
         <DashboardSidebarFooter />
       </SidebarFooter>
       <SidebarRail />

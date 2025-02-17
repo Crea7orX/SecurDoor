@@ -61,7 +61,7 @@ const CardAddDeviceCombobox = React.forwardRef<
             variant="outline"
             role="combobox"
             className={cn(
-              "w-full justify-between",
+              "h-fit w-full justify-between text-wrap",
               !selectedDevice && "text-muted-foreground",
               className,
             )}
@@ -72,7 +72,7 @@ const CardAddDeviceCombobox = React.forwardRef<
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[300px] p-0" align="start">
+        <PopoverContent className="w-[250px] p-0" align="start">
           <Command>
             <CommandInput placeholder="Search device..." className="h-9" />
             <CommandList>
