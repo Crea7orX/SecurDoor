@@ -24,7 +24,7 @@ export type LogResponse = z.infer<typeof logResponseSchema>;
 
 export const logsSearchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
-  perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
+  perPage: parseAsNumberLiteral([3, 10, 20, 30, 40, 50]).withDefault(10),
   sort: getSortingStateParser<LogResponse>().withDefault([
     { id: "createdAt", desc: true },
   ]),
