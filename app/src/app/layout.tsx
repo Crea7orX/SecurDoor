@@ -18,10 +18,7 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body className="relative min-h-screen bg-background">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ProvidersWithoutTheme>
-            <div className="absolute -z-50 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
-            {children}
-          </ProvidersWithoutTheme>
+          <ProvidersWithoutTheme>{children}</ProvidersWithoutTheme>
         </ThemeProvider>
       </body>
     </html>
