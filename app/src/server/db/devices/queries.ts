@@ -33,8 +33,11 @@ export async function deviceInsert(
   userId: string,
   ownerId: string,
 ) {
-  if (await deviceGetBySerialIdUnprotected(deviceCreate.serialId)) {
-    throw new DeviceWithSameSerialIdError();
+  const deviceBySerialId = await deviceGetBySerialIdUnprotected(
+    deviceCreate.serialId,
+  );
+  if (deviceBySerialId) {
+    throw new DeviceWithSameSerialIdError(deviceBySerialId.id);
   }
 
   const device = (
