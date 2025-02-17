@@ -16,8 +16,12 @@ export async function cardInsert(
   userId: string,
   ownerId: string,
 ) {
-  if (await cardGetByFingerprint(create.fingerprint, ownerId)) {
-    throw new CardWithSameFingerprintError();
+  const cardByFingerprint = await cardGetByFingerprint(
+    create.fingerprint,
+    ownerId,
+  );
+  if (cardByFingerprint) {
+    throw new CardWithSameFingerprintError(cardByFingerprint.id);
   }
 
   const card = (
