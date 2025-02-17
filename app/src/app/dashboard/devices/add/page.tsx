@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCreateDeviceMutation } from "@/hooks/api/devices/use-create-device-mutation";
+import { type DeviceWithSameSerialIdError } from "@/lib/exceptions";
 import {
   type DeviceCreate,
   deviceCreateSchema,
@@ -56,8 +57,20 @@ export default function DevicesAddPage() {
       .catch((error) => {
         if (error instanceof AxiosError) {
           if (error.response?.status === 409) {
+            const responseData = error.response
+              .data as DeviceWithSameSerialIdError;
+
             toast.error("Device with this Serial ID already exists!", {
               id: toastId,
+              ...(responseData.id && {
+                action: (
+                  <Button asChild>
+                    <Link href={`/dashboard/devices/${responseData.id}`}>
+                      View device
+                    </Link>
+                  </Button>
+                ),
+              }),
             });
             return;
           }
