@@ -19,11 +19,15 @@ export default getRequestConfig(async () => {
 export async function getMessages(locale: string) {
   const messagesArray = await Promise.all(
     namespaces.map(async (namespace) => {
-      const importedMessages = (await import(
-        `../messages/${locale}/${namespace}.json`
-      )) as { default: AbstractIntlMessages };
+      try {
+        const importedMessages = (await import(
+          `../messages/${locale}/${namespace}.json`
+        )) as { default: AbstractIntlMessages };
 
-      return importedMessages.default;
+        return importedMessages.default;
+      } catch {
+        return {};
+      }
     }),
   );
 
