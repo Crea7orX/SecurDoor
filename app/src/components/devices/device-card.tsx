@@ -65,7 +65,7 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             orientation="vertical"
             className="h-6 bg-card-foreground"
           />
-          <div className="flex w-full flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {!device.state ? (
               <Skeleton className="h-6 w-24" />
             ) : device.state.isLockedState ? (
