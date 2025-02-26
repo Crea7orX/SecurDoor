@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetAllAccessDevicesQuery } from "@/hooks/api/access/devices/use-get-all-access-devices-query";
 import { IdCard, SlidersHorizontal } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceAccessCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -25,6 +26,8 @@ const DeviceAccessCard = React.forwardRef<
   HTMLDivElement,
   DeviceAccessCardProps
 >(({ className, id, ...props }, ref) => {
+  const t = useTranslations("Device.access");
+
   const { data, isLoading } = useGetAllAccessDevicesQuery({ id });
 
   return (
@@ -32,11 +35,9 @@ const DeviceAccessCard = React.forwardRef<
       <CardHeader>
         <CardTitle className="inline-flex items-center gap-1">
           <IdCard className="size-6" />
-          <span>Access</span>
+          <span>{t("title")}</span>
         </CardTitle>
-        <CardDescription>
-          Number of people who have access to the door
-        </CardDescription>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -44,8 +45,7 @@ const DeviceAccessCard = React.forwardRef<
         ) : (
           <Badge variant="info" className="text-md">
             <IdCard className="mr-1 size-4" />
-            <span>{data?.cards.length} cards</span>
-            {/*todo: plural or singular*/}
+            <span>{t("cards", { count: data?.cards.length ?? 0 })}</span>
           </Badge>
         )}
         <Separator className="mt-6 h-1 rounded-xl" />
@@ -54,7 +54,7 @@ const DeviceAccessCard = React.forwardRef<
         <AccessDevicesEditDialog id={id} cards={data?.cards ?? []}>
           <Button variant="info" className="max-md:w-full" disabled={isLoading}>
             <SlidersHorizontal />
-            <span>Edit Cards</span>
+            <span>{t("edit_button")}</span>
           </Button>
         </AccessDevicesEditDialog>
       </CardFooter>
