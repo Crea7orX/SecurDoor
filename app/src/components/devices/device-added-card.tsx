@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { CalendarClock } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceAddedCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -18,6 +18,7 @@ interface DeviceAddedCardProps extends React.HTMLAttributes<HTMLDivElement> {
 const DeviceAddedCard = React.forwardRef<HTMLDivElement, DeviceAddedCardProps>(
   ({ className, device, ...props }, ref) => {
     const t = useTranslations("Device.added");
+    const format = useFormatter();
 
     return (
       <Card className={className} ref={ref} {...props}>
@@ -31,7 +32,12 @@ const DeviceAddedCard = React.forwardRef<HTMLDivElement, DeviceAddedCardProps>(
         <CardContent>
           <Badge variant="info" className="text-md">
             <CalendarClock className="mr-1 size-4" />
-            <span>{new Date(device.createdAt * 1000).toLocaleString()}</span>
+            <span>
+              {format.dateTime(new Date(device.createdAt * 1000), {
+                dateStyle: "medium",
+                timeStyle: "medium",
+              })}
+            </span>
           </Badge>
         </CardContent>
       </Card>
