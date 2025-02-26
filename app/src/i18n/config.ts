@@ -10,4 +10,5 @@ export const namespaces = [
   "device",
   "log",
   "navigation",
+  "zod",
 ];
