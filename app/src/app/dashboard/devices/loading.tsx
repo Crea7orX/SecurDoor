@@ -2,9 +2,12 @@ import { DeviceCardSkeleton } from "@/components/devices/device-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PlusCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function DevicesLoading() {
+  const t = useTranslations("Device.add");
+
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-4">
       <div className="flex w-full items-center justify-between gap-2 overflow-auto p-1">
@@ -15,7 +18,7 @@ export default function DevicesLoading() {
           <Button size="sm" asChild>
             <Link href="/dashboard/devices/add">
               <PlusCircle className="size-4" />
-              Add Device
+              {t("header")}
             </Link>
           </Button>
         </div>
