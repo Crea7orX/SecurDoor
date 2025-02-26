@@ -10,6 +10,11 @@
       "save_changes": "Save changes",
       "settings": "Settings",
       "submit": "Submit"
+    },
+    "not_found": {
+      "button": "Go Home",
+      "description": "Page not found",
+      "title": "404"
     }
   }
 }
