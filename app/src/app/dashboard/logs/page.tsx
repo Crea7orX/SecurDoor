@@ -17,6 +17,7 @@ import {
   type SearchParams,
 } from "@/types/data-table";
 import { MonitorCog } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface LogsPageProps {
@@ -24,6 +25,9 @@ interface LogsPageProps {
 }
 
 export default function LogsPage({ searchParams }: LogsPageProps) {
+  const _t = useTranslations();
+  const t = useTranslations("Log");
+
   const { data, isLoading } = useGetAllLogsQuery({
     searchParams,
   });
@@ -35,9 +39,9 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
   const filterFields: DataTableFilterField<LogResponse>[] = [
     {
       id: "action",
-      label: "Action",
+      label: t("filter.action.label"),
       options: Object.entries(LogDisplayInfos).map(([action, display]) => ({
-        label: display.title,
+        label: _t(display.title),
         value: action,
         icon: display.icon,
         iconClassName: `text-${display.color}`,
@@ -45,10 +49,10 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
     },
     {
       id: "actorId",
-      label: "Actor",
+      label: t("filter.actor.label"),
       options: [
         {
-          label: "System",
+          label: t("filter.actor.options.system"),
           value: "system",
           icon: MonitorCog,
           iconClassName: "text-info",
