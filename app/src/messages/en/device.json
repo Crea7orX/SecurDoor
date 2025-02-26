@@ -82,7 +82,7 @@
     },
     "emergency": {
       "alert": {
-        "description": "This will put the device in emergency mode ({state}). This will {action} the door and you will need to clear the emergency state manually in order to return to normal mode.",
+        "description": "This will put the device in emergency mode ({state, select, lockdown {LOCKDOWN} other {EVACUATION}}). This will {state, select, lockdown {lock} other {unlock}} the door and you will need to clear the emergency state manually in order to return to normal mode.",
         "title": "Are you absolutely sure?"
       },
       "button": {

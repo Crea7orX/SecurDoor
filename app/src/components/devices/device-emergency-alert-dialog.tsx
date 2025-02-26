@@ -69,8 +69,7 @@ export function DeviceEmergencyAlertDialog({
           <AlertDialogTitle>{t("alert.title")}</AlertDialogTitle>
           <AlertDialogDescription>
             {t("alert.description", {
-              state: t(`button.${state}`),
-              action: state === "lockdown" ? "lock" : "unlock",
+              state,
             })}
           </AlertDialogDescription>
         </AlertDialogHeader>
