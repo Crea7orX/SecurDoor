@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { useGetDeviceByIdQuery } from "@/hooks/api/devices/use-get-device-by-id-query";
 import { ArrowLeft, Microchip } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -21,6 +22,9 @@ interface DevicePageProps {
 }
 
 export default function DevicePage({ params }: DevicePageProps) {
+  const t = useTranslations("Device");
+  const tButton = useTranslations("Common.button");
+
   const { data, isLoading } = useGetDeviceByIdQuery({
     id: params.id,
     refetchInterval: 5000,
@@ -40,7 +44,7 @@ export default function DevicePage({ params }: DevicePageProps) {
         <Button className="self-start" disabled={isLoading} asChild>
           <Link href="/dashboard/devices">
             <ArrowLeft className="size-4" />
-            Go Back
+            {tButton("go_back")}
           </Link>
         </Button>
         <LogRecentActivitiesCard id={params.id} />
@@ -49,7 +53,7 @@ export default function DevicePage({ params }: DevicePageProps) {
       <div className="flex flex-1 flex-col gap-4">
         <Card className="w-full bg-border">
           <CardHeader className="flex-row items-center justify-center gap-2 space-y-0 p-2">
-            <span className="text-2xl font-bold">Device</span>
+            <span className="text-2xl font-bold">{t("label")}</span>
             <Badge variant="secondary" className="text-lg font-bold">
               <Microchip className="mr-1 shrink-0" />
               {data.name}
