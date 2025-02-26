@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { type VariantProps } from "class-variance-authority";
 import { Check, ChevronDown, CircleX, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 export interface MultiSelectOption {
@@ -63,6 +64,8 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
     },
     ref,
   ) => {
+    const t = useTranslations("Data_Table");
+
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [selectedOptions, setSelectedOptions] =
       React.useState<MultiSelectOption[]>(defaultOptions);
@@ -208,7 +211,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
               ref={inputRef}
             />
             <CommandList>
-              <CommandEmpty>No results</CommandEmpty>
+              <CommandEmpty>{t("no_results_label")}</CommandEmpty>
               <CommandGroup>
                 <CommandItem
                   key="all"
