@@ -14,6 +14,8 @@
         "enabled": "{selected} of {total, plural, =1 {# row} other {# rows}} selected."
       }
     },
+    "search": "Search",
+    "select_all": "Select All",
     "view_options": {
       "button": "View",
       "search": {
