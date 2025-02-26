@@ -2,6 +2,8 @@ name: Crowdin Download Action
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ development ]
 
 permissions: write-all
 
