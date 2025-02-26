@@ -19,6 +19,7 @@ import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-q
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface CardAddDeviceComboboxProps extends ButtonProps {
@@ -43,6 +44,8 @@ const CardAddDeviceCombobox = React.forwardRef<
     },
     ref,
   ) => {
+    const t = useTranslations("Card.add.combobox");
+
     const { data, isLoading } = useGetAllDevicesQuery({
       searchParams: {
         perPage: "50", // todo: maybe pagination
@@ -68,15 +71,15 @@ const CardAddDeviceCombobox = React.forwardRef<
             ref={ref}
             {...props}
           >
-            {selectedDevice?.name ?? "Select device"}
+            {selectedDevice?.name ?? t("label")}
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[250px] p-0" align="start">
           <Command>
-            <CommandInput placeholder="Search device..." className="h-9" />
+            <CommandInput placeholder={t("search")} className="h-9" />
             <CommandList>
-              <CommandEmpty>No devices found.</CommandEmpty>
+              <CommandEmpty>{t("empty")}</CommandEmpty>
               <CommandGroup>
                 {data?.data.map((device) => (
                   <CommandItem
