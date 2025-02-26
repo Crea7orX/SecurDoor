@@ -17,6 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { Table } from "@tanstack/react-table";
 import { Check, ChevronsUpDown, Settings2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DataTableViewOptionsProps<TData> {
@@ -26,6 +27,8 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  const t = useTranslations("Data_Table.view_options");
+
   const triggerRef = React.useRef<HTMLButtonElement>(null);
 
   return (
@@ -33,14 +36,13 @@ export function DataTableViewOptions<TData>({
       <PopoverTrigger asChild>
         <Button
           ref={triggerRef}
-          aria-label="Toggle columns"
           variant="outline"
           role="combobox"
           size="sm"
           className="ml-auto hidden h-8 gap-2 focus:outline-none focus:ring-1 focus:ring-ring focus-visible:ring-0 lg:flex"
         >
           <Settings2 className="size-4" />
-          View
+          {t("button")}
           <ChevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -50,9 +52,9 @@ export function DataTableViewOptions<TData>({
         onCloseAutoFocus={() => triggerRef.current?.focus()}
       >
         <Command>
-          <CommandInput placeholder="Search columns..." />
+          <CommandInput placeholder={t("search.placeholder")} />
           <CommandList>
-            <CommandEmpty>No columns found.</CommandEmpty>
+            <CommandEmpty>{t("no_results")}</CommandEmpty>
             <CommandGroup>
               {table
                 .getAllColumns()
