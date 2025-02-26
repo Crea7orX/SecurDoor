@@ -20,21 +20,36 @@ const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
 
     const logDisplayInfo = getLogDisplayInfo(log.action);
 
+    const badgeRef = React.useRef<HTMLDivElement>(null);
+    const [badgeHeight, setBadgeHeight] = React.useState(0);
+    /* eslint-disable react-hooks/exhaustive-deps */
+    React.useEffect(() => {
+      if (badgeRef.current) {
+        setBadgeHeight(badgeRef.current.offsetHeight);
+      }
+    }, [badgeRef.current]);
+
     return (
       <Card className={cn("relative", className)} ref={ref} {...props}>
-        <Badge
-          variant="outline"
-          className={cn(
-            "absolute -left-1 -top-3 w-fit bg-card p-1.5 ring-2",
-            `${logColorVariants[logDisplayInfo.color]}`,
-          )}
+        <div className="relative">
+          <Badge
+            variant="outline"
+            className={cn(
+              "absolute -left-1 -top-3 w-fit bg-card p-1.5 ring-2",
+              `${logColorVariants[logDisplayInfo.color]}`,
+            )}
+            ref={badgeRef}
+          >
+            <logDisplayInfo.icon
+              className={cn("mr-1 size-4", `fill-${logDisplayInfo.color}`)}
+            />
+            <span>{_t(logDisplayInfo.title)}</span>
+          </Badge>
+        </div>
+        <CardContent
+          className="p-4 pt-6"
+          style={{ marginTop: `calc(${badgeHeight}px - 1.8rem)` }}
         >
-          <logDisplayInfo.icon
-            className={cn("mr-1 size-4", `fill-${logDisplayInfo.color}`)}
-          />
-          <span>{_t(logDisplayInfo.title)}</span>
-        </Badge>
-        <CardContent className="p-4 pt-6">
           <p>
             {t.rich("by.text", {
               actor:
