@@ -21,6 +21,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { ArrowLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
@@ -28,6 +29,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function DevicesAddPage() {
+  const t = useTranslations("Device");
+  const tButton = useTranslations("Common.button");
+
   const router = useRouter();
 
   const { mutateAsync: add } = useCreateDeviceMutation();
@@ -44,11 +48,11 @@ export default function DevicesAddPage() {
 
   function onSubmit(data: DeviceCreate) {
     setIsLoading(true);
-    const toastId = toast.loading("Adding Device...");
+    const toastId = toast.loading(t("add.notification.loading"));
 
     add(data)
       .then((data) => {
-        toast.success("Device Added!", {
+        toast.success(t("add.notification.success"), {
           id: toastId,
         });
 
@@ -60,13 +64,13 @@ export default function DevicesAddPage() {
             const responseData = error.response
               .data as DeviceWithSameSerialIdError;
 
-            toast.error("Device with this Serial ID already exists!", {
+            toast.error(t("add.notification.error_already_exists"), {
               id: toastId,
               ...(responseData.id && {
                 action: (
                   <Button asChild>
                     <Link href={`/dashboard/devices/${responseData.id}`}>
-                      View device
+                      {t("add.notification.view")}
                     </Link>
                   </Button>
                 ),
@@ -76,7 +80,7 @@ export default function DevicesAddPage() {
           }
         }
 
-        toast.error("Failed to add device!", {
+        toast.error(t("add.notification.error"), {
           id: toastId,
         });
       })
@@ -90,12 +94,12 @@ export default function DevicesAddPage() {
       <Button className="md:self-start" disabled={isLoading} asChild>
         <Link href="/dashboard/devices">
           <ArrowLeft className="size-4" />
-          Go Back
+          {tButton("go_back")}
         </Link>
       </Button>
       <Card className="bg-border lg:min-w-[380px]">
         <CardHeader>
-          <CardTitle>Add Device</CardTitle>
+          <CardTitle>{t("add.header")}</CardTitle>
         </CardHeader>
         <CardContent className="rounded-xl bg-card pt-2">
           <Form {...form}>
@@ -106,12 +110,15 @@ export default function DevicesAddPage() {
                 disabled={isLoading}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>{t("field.name.label")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Door 1" {...field} />
+                      <Input
+                        placeholder={t("field.name.placeholder")}
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
-                      Display name for the device.
+                      {t("field.name.description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -123,15 +130,15 @@ export default function DevicesAddPage() {
                 disabled={isLoading}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Serial ID</FormLabel>
+                    <FormLabel>{t("field.serial_id.label")}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="abcdefgh-1234-5678-90ab-cdef12345678"
+                        placeholder={t("field.serial_id.placeholder")}
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      The identifier written on the back of the device.
+                      {t("field.serial_id.description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -139,7 +146,7 @@ export default function DevicesAddPage() {
               />
               <div className="flex gap-2 max-sm:flex-col">
                 <Button type="submit" className="flex-1" disabled={isLoading}>
-                  Submit
+                  {tButton("submit")}
                 </Button>
                 <Button
                   variant="outline"
@@ -147,7 +154,7 @@ export default function DevicesAddPage() {
                   disabled={isLoading}
                   onClick={() => form.reset()}
                 >
-                  Clear
+                  {tButton("clear")}
                 </Button>
               </div>
             </form>
