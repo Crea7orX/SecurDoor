@@ -139,8 +139,10 @@ export function AccessDevicesEditDialog({
         <DialogContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader>
-              <DialogTitle>{t("dialog.title")}</DialogTitle>
-              <DialogDescription>{t("dialog.description")}</DialogDescription>
+              <DialogTitle>{t("access.dialog.title")}</DialogTitle>
+              <DialogDescription>
+                {t("access.dialog.description")}
+              </DialogDescription>
             </DialogHeader>
             <FormField
               control={form.control}
