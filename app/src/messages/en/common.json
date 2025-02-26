@@ -1,0 +1,15 @@
+{
+  "Common": {
+    "button": {
+      "cancel": "Cancel",
+      "clear": "Clear",
+      "continue": "Continue",
+      "go_back": "Go Back",
+      "remove": "Remove",
+      "reset": "Reset",
+      "save_changes": "Save changes",
+      "settings": "Settings",
+      "submit": "Submit"
+    }
+  }
+}
