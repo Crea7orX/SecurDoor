@@ -40,7 +40,7 @@ export default function DevicePage({ params }: DevicePageProps) {
 
   return (
     <div className="flex flex-1 gap-6 p-4">
-      <div className="flex w-96 flex-col gap-8 max-lg:hidden">
+      <div className="flex w-full max-w-96 flex-col gap-8 max-lg:hidden">
         <Button className="self-start" disabled={isLoading} asChild>
           <Link href="/dashboard/devices">
             <ArrowLeft className="size-4" />
