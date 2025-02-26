@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getLogDisplayInfo } from "@/config/logs";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
 
 interface LogActivityCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,6 +16,7 @@ const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
   ({ className, log, ...props }, ref) => {
     const _t = useTranslations();
     const t = useTranslations("Log.activity_card");
+    const format = useFormatter();
 
     const logDisplayInfo = getLogDisplayInfo(log.action);
 
@@ -47,7 +48,10 @@ const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
           </p>
           <p className="text-muted-foreground">
             {t.rich("on", {
-              date: new Date(log.createdAt * 1000).toLocaleString(),
+              date: format.dateTime(log.createdAt * 1000, {
+                dateStyle: "medium",
+                timeStyle: "medium",
+              }),
               semibold: (chunks) => (
                 <span className="font-semibold">{chunks}</span>
               ),
