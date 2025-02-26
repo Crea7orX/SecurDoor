@@ -32,6 +32,7 @@ import {
   accessCardUpdateSchema,
 } from "@/lib/validations/access";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -48,6 +49,9 @@ export function AccessCardsEditDialog({
   devices,
   ...props
 }: AccessCardsEditDialogProps) {
+  const t = useTranslations("Card");
+  const tButton = useTranslations("Common.button");
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const { data, isLoading: isLoadingData } = useGetAllDevicesQuery({
@@ -106,17 +110,17 @@ export function AccessCardsEditDialog({
       return;
 
     setIsLoading(true);
-    const toastId = toast.loading("Updating access...");
+    const toastId = toast.loading(t("access.dialog.notification.loading"));
     await update(data)
       .then(() => {
-        toast.success("Access updated!", {
+        toast.success(t("access.dialog.notification.success"), {
           id: toastId,
         });
 
         setIsOpen(false);
       })
       .catch(() => {
-        toast.error("Failed to update access!", {
+        toast.error(t("access.dialog.notification.error"), {
           id: toastId,
         });
       });
@@ -131,9 +135,9 @@ export function AccessCardsEditDialog({
         <DialogContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader>
-              <DialogTitle>Edit Access</DialogTitle>
+              <DialogTitle>{t("access.dialog.title")}</DialogTitle>
               <DialogDescription>
-                Select the doors that the card can be used on
+                {t("access.dialog.description")}
               </DialogDescription>
             </DialogHeader>
             <FormField
@@ -141,7 +145,7 @@ export function AccessCardsEditDialog({
               name="devices"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Doors</FormLabel>
+                  <FormLabel>{t("field.devices.label")}</FormLabel>
                   {isLoadingData ? (
                     <Skeleton className="h-10 w-full" />
                   ) : (
@@ -155,8 +159,8 @@ export function AccessCardsEditDialog({
                         onChange={(options) => {
                           field.onChange(options.map((option) => option.key));
                         }}
-                        placeholder="Select doors"
-                        heading="Doors"
+                        placeholder={t("field.devices.placeholder")}
+                        heading={t("field.devices.label")}
                       />
                     </FormControl>
                   )}
@@ -177,7 +181,7 @@ export function AccessCardsEditDialog({
                   )
                 }
               >
-                Reset
+                {tButton("reset")}
               </Button>
               <Button
                 disabled={
@@ -188,7 +192,7 @@ export function AccessCardsEditDialog({
                   )
                 }
               >
-                Save changes
+                {tButton("save_changes")}
               </Button>
             </DialogFooter>
           </form>
