@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getLogDisplayInfo } from "@/config/logs";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface LogActivityCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -13,6 +14,9 @@ interface LogActivityCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
   ({ className, log, ...props }, ref) => {
+    const _t = useTranslations();
+    const t = useTranslations("Log.activity_card");
+
     const logDisplayInfo = getLogDisplayInfo(log.action);
 
     return (
@@ -27,22 +31,27 @@ const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
           <logDisplayInfo.icon
             className={cn("mr-1 size-4", `fill-${logDisplayInfo.color}`)}
           />
-          <span>{logDisplayInfo.title}</span>
+          <span>{_t(logDisplayInfo.title)}</span>
         </Badge>
         <CardContent className="p-4 pt-6">
           <p>
-            by{" "}
-            <span className="font-semibold">
-              {log.actorId === "system"
-                ? "System"
-                : `${log.actorName ?? log.actorEmail ?? "UNKNOWN"}`}
-            </span>
+            {t.rich("by.text", {
+              actor:
+                log.actorId === "system"
+                  ? t("by.system")
+                  : `${log.actorName ?? log.actorEmail ?? t("by.unknown")}`,
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
           </p>
           <p className="text-muted-foreground">
-            on{" "}
-            <span className="font-semibold">
-              {new Date(log.createdAt * 1000).toLocaleString()}
-            </span>
+            {t.rich("on", {
+              date: new Date(log.createdAt * 1000).toLocaleString(),
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
           </p>
         </CardContent>
       </Card>
