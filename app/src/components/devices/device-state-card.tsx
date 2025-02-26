@@ -9,6 +9,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { BellElectric, Construction, Hand, Lock, LockOpen } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceStateCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,14 +18,16 @@ interface DeviceStateCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const DeviceStateCard = React.forwardRef<HTMLDivElement, DeviceStateCardProps>(
   ({ className, device, ...props }, ref) => {
+    const t = useTranslations("Device.state");
+
     return (
       <Card className={className} ref={ref} {...props}>
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-1">
             <Hand className="size-6" />
-            <span>State</span>
+            <span>{t("title")}</span>
           </CardTitle>
-          <CardDescription>State of the door lock</CardDescription>
+          <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex gap-2">
           {!device.state ? (
@@ -32,12 +35,12 @@ const DeviceStateCard = React.forwardRef<HTMLDivElement, DeviceStateCardProps>(
           ) : device.state.isLockedState ? (
             <Badge variant="destructive" className="text-md">
               <Lock className="mr-1 size-4" />
-              <span>Locked</span>
+              <span>{t("state.locked")}</span>
             </Badge>
           ) : (
             <Badge variant="success" className="text-md">
               <LockOpen className="mr-1 size-4" />
-              <span>Unlocked</span>
+              <span>{t("state.unlocked")}</span>
             </Badge>
           )}
           {device.emergencyState === "lockdown" ? (
@@ -46,7 +49,7 @@ const DeviceStateCard = React.forwardRef<HTMLDivElement, DeviceStateCardProps>(
               className="text-md ring-4 ring-destructive/50"
             >
               <Construction className="mr-1 size-4" />
-              <span>LOCKDOWN</span>
+              <span>{t("emergency_state.lockdown")}</span>
             </Badge>
           ) : (
             device.emergencyState === "evacuation" && (
@@ -55,7 +58,7 @@ const DeviceStateCard = React.forwardRef<HTMLDivElement, DeviceStateCardProps>(
                 className="text-md ring-4 ring-warning/50"
               >
                 <BellElectric className="mr-1 size-4" />
-                <span>EVACUATION</span>
+                <span>{t("emergency_state.evacuation")}</span>
               </Badge>
             )
           )}
