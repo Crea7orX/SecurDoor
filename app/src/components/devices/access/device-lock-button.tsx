@@ -4,6 +4,7 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { useAccessStateLockMutation } from "@/hooks/api/access/state/use-access-state-lock-mutation";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { Lock } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -15,6 +16,8 @@ const DeviceLockButton = React.forwardRef<
   HTMLButtonElement,
   DeviceLockButtonProps
 >(({ className, device, ...props }, ref) => {
+  const t = useTranslations("Device.lock");
+
   const { mutateAsync: lock } = useAccessStateLockMutation({
     id: device.id,
   });
@@ -24,16 +27,16 @@ const DeviceLockButton = React.forwardRef<
   const handleClick = () => {
     setIsLoading(true);
 
-    const toastId = toast.loading("Locking door...");
+    const toastId = toast.loading(t("notification.loading"));
 
     lock()
       .then(() => {
-        toast.success("Lock command sent!", {
+        toast.success(t("notification.success"), {
           id: toastId,
         });
       })
       .catch(() => {
-        toast.error("Failed to lock device!", {
+        toast.error(t("notification.error"), {
           id: toastId,
         });
       })
@@ -56,7 +59,7 @@ const DeviceLockButton = React.forwardRef<
       }
     >
       <Lock />
-      <span>Lock</span>
+      <span>{t("button")}</span>
     </Button>
   );
 });
