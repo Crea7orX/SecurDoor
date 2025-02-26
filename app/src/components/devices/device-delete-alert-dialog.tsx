@@ -69,7 +69,9 @@ export function DeviceDeleteAlertDialog({
           <AlertDialogDescription>{t("description")}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>
+            {tButton("cancel")}
+          </AlertDialogCancel>
           <Button disabled={isLoading} onClick={() => handleDelete()}>
             {tButton("continue")}
           </Button>
