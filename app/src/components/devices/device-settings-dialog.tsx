@@ -27,6 +27,7 @@ import {
   deviceUpdateSchema,
 } from "@/lib/validations/device";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -41,6 +42,9 @@ export function DeviceSettingsDialog({
   device,
   ...props
 }: DeviceSettingsDialogProps) {
+  const t = useTranslations("Device");
+  const tButton = useTranslations("Common.button");
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const { mutateAsync: update } = useUpdateDeviceMutation({
@@ -88,17 +92,17 @@ export function DeviceSettingsDialog({
     }, {});
 
     setIsLoading(true);
-    const toastId = toast.loading("Updating device...");
+    const toastId = toast.loading(t("edit.notification.loading"));
     await update(updatedData)
       .then(() => {
-        toast.success("Device updated!", {
+        toast.success(t("edit.notification.success"), {
           id: toastId,
         });
 
         setIsOpen(false);
       })
       .catch(() => {
-        toast.error("Failed to update device!", {
+        toast.error(t("edit.notification.error"), {
           id: toastId,
         });
       });
@@ -113,17 +117,18 @@ export function DeviceSettingsDialog({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader>
-              <DialogTitle>Edit Device</DialogTitle>
-              <DialogDescription>Edit device settings</DialogDescription>
+              <DialogTitle>{t("edit.header")}</DialogTitle>
+              <DialogDescription>{t("edit.description")}</DialogDescription>
             </DialogHeader>
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("field.name.label")}</FormLabel>
                   <FormControl>
                     <Input
+                      placeholder={t("field.name.placeholder")}
                       maxLength={
                         deviceUpdateSchema.shape.name.unwrap().maxLength!
                       }
@@ -131,7 +136,7 @@ export function DeviceSettingsDialog({
                     />
                   </FormControl>
                   <FormDescription>
-                    Display name for the device.
+                    {t("field.name.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -142,7 +147,7 @@ export function DeviceSettingsDialog({
               name="reLockDelay"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Re-lock delay</FormLabel>
+                  <FormLabel>{t("field.re_lock_delay.label")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -157,7 +162,7 @@ export function DeviceSettingsDialog({
                     />
                   </FormControl>
                   <FormDescription>
-                    Re-lock delay in seconds. 0 to disable auto re-lock.
+                    {t("field.re_lock_delay.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -170,10 +175,10 @@ export function DeviceSettingsDialog({
                 onClick={resetForm}
                 disabled={isLoading || !form.formState.isDirty}
               >
-                Reset
+                {tButton("reset")}
               </Button>
               <Button disabled={isLoading || !form.formState.isDirty}>
-                Save changes
+                {tButton("save_changes")}
               </Button>
             </DialogFooter>
           </form>
