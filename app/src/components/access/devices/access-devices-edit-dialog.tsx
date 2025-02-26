@@ -63,7 +63,10 @@ export function AccessDevicesEditDialog({
   const cardOptions: MultiSelectOption[] | undefined = React.useMemo(() => {
     return data?.data.map((card) => {
       return {
-        label: `${card.holder ?? ""} (FID: ${card.fingerprint.slice(-8)})`,
+        label: t("access.dialog.card", {
+          holder: card.holder ?? "",
+          fingerprint: card.fingerprint.slice(-8),
+        }),
         value:
           ((card.holder && card.holder + "-") ?? "") +
           card.fingerprint +
