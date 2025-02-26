@@ -19,6 +19,7 @@ import { type CardCreate, cardCreateSchema } from "@/lib/validations/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { ArrowLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
@@ -26,6 +27,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function CardsAddPage() {
+  const t = useTranslations("Card");
+  const tButton = useTranslations("Common.button");
+
   const router = useRouter();
 
   const { mutateAsync: add } = useCreateCardMutation();
@@ -42,11 +46,11 @@ export default function CardsAddPage() {
 
   function onSubmit(data: CardCreate) {
     setIsLoading(true);
-    const toastId = toast.loading("Adding Card...");
+    const toastId = toast.loading(t("add.notification.loading"));
 
     add(data)
       .then((data) => {
-        toast.success("Card Added!", {
+        toast.success(t("add.notification.success"), {
           id: toastId,
         });
 
@@ -58,13 +62,13 @@ export default function CardsAddPage() {
             const responseData = error.response
               .data as CardWithSameFingerprintError;
 
-            toast.error("Card already exists!", {
+            toast.error(t("add.notification.error_already_exists"), {
               id: toastId,
               ...(responseData.id && {
                 action: (
                   <Button asChild>
                     <Link href={`/dashboard/cards/${responseData.id}`}>
-                      View card
+                      {tButton("view")}
                     </Link>
                   </Button>
                 ),
@@ -74,7 +78,7 @@ export default function CardsAddPage() {
           }
         }
 
-        toast.error("Failed to add card!", {
+        toast.error(t("add.notification.error"), {
           id: toastId,
         });
       })
@@ -88,12 +92,12 @@ export default function CardsAddPage() {
       <Button className="md:self-start" disabled={isLoading} asChild>
         <Link href="/dashboard/cards">
           <ArrowLeft className="size-4" />
-          Go Back
+          {tButton("go_back")}
         </Link>
       </Button>
       <Card className="bg-border lg:min-w-[380px]">
         <CardHeader>
-          <CardTitle>Add Card</CardTitle>
+          <CardTitle>{t("add.header")}</CardTitle>
         </CardHeader>
         <CardContent className="rounded-xl bg-card pt-2">
           <Form {...form}>
@@ -104,15 +108,17 @@ export default function CardsAddPage() {
                 disabled={isLoading}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Holder</FormLabel>
+                    <FormLabel>{t("field.holder.label")}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="John Doe"
+                        placeholder={t("field.holder.placeholder")}
                         {...field}
                         value={field.value ?? ""}
                       />
                     </FormControl>
-                    <FormDescription>Card holder name.</FormDescription>
+                    <FormDescription>
+                      {t("field.holder.description")}
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -123,7 +129,7 @@ export default function CardsAddPage() {
                 disabled={isLoading}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Card</FormLabel>
+                    <FormLabel>{t("field.fingerprint.label")}</FormLabel>
                     <FormControl>
                       <div className="flex items-center gap-2">
                         <Input
@@ -131,12 +137,12 @@ export default function CardsAddPage() {
                           className="cursor-not-allowed"
                         />
                         <CardAddSelectDialog {...field}>
-                          <Button>Select card</Button>
+                          <Button>{t("field.fingerprint.button")}</Button>
                         </CardAddSelectDialog>
                       </div>
                     </FormControl>
                     <FormDescription>
-                      Scan card with any device and select it.
+                      {t("field.fingerprint.description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -144,7 +150,7 @@ export default function CardsAddPage() {
               />
               <div className="flex gap-2 max-sm:flex-col">
                 <Button type="submit" className="flex-1" disabled={isLoading}>
-                  Submit
+                  {tButton("submit")}
                 </Button>
                 <Button
                   variant="outline"
@@ -152,7 +158,7 @@ export default function CardsAddPage() {
                   disabled={isLoading}
                   onClick={() => form.reset()}
                 >
-                  Clear
+                  {tButton("clear")}
                 </Button>
               </div>
             </form>
