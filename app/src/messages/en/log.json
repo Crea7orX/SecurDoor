@@ -13,6 +13,10 @@
         "system": "System"
       }
     },
+    "date_group": {
+      "today": "Today",
+      "yesterday": "Yesterday"
+    },
     "filter": {
       "action": {
         "label": "Action"
