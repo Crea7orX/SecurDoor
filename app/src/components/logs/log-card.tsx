@@ -5,6 +5,7 @@ import { getLogDisplayInfo } from "@/config/logs";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
 import { UserCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 export const logColorVariants = {
@@ -22,6 +23,9 @@ interface LogCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
   ({ className, log, ...props }, ref) => {
+    const _t = useTranslations();
+    const t = useTranslations("Log.card");
+
     const logDisplayInfo = getLogDisplayInfo(log.action);
 
     return (
@@ -41,10 +45,12 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
           <UserCircle className="size-8" />
           <div className="flex-1">
             <h2 className="font-semibold">
-              {logDisplayInfo.text.replace(
-                "{actor}",
-                `${log.actorId === "system" ? "System" : `${log.actorName ?? ""}${log.actorEmail ? (log.actorName ? ` (${log.actorEmail})` : `${log.actorEmail}`) : ""}`}`,
-              )}
+              {_t(logDisplayInfo.text, {
+                actor:
+                  log.actorId === "system"
+                    ? t("actor.system")
+                    : `${log.actorName ?? ""}${log.actorEmail ? (log.actorName ? ` (${log.actorEmail})` : `${log.actorEmail}`) : ""}`,
+              })}
             </h2>
             <span className="text-muted-foreground">
               {new Date(log.createdAt * 1000).toLocaleString()}
