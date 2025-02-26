@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { InputInline } from "@/components/ui/input-inline";
 import { useUpdateCardMutation } from "@/hooks/api/cards/use-update-card-mutation";
+import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
 import {
   type CardResponse,
   type CardUpdate,
@@ -41,6 +42,7 @@ const CardHolderCard = React.forwardRef<HTMLDivElement, CardHolderCardProps>(
     });
     const [isLoading, setIsLoading] = React.useState(false);
 
+    useI18nZodErrors();
     const form = useForm<CardUpdate>({
       resolver: zodResolver(cardUpdateSchema),
       defaultValues: {
