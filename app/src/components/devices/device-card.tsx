@@ -15,6 +15,7 @@ import {
   LockOpen,
   Settings,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
 
@@ -44,6 +45,9 @@ interface DeviceCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
   ({ className, device, now, ...props }, ref) => {
+    const t = useTranslations("Device.card");
+    const tButton = useTranslations("Common.button");
+
     return (
       <Card
         className={cn(
@@ -71,12 +75,12 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             ) : device.state.isLockedState ? (
               <Badge variant="destructive">
                 <Lock className="mr-1 size-4" />
-                <span>LOCKED</span>
+                <span>{t("state.locked")}</span>
               </Badge>
             ) : (
               <Badge variant="success">
                 <LockOpen className="mr-1 size-4" />
-                <span>UNLOCKED</span>
+                <span>{t("state.unlocked")}</span>
               </Badge>
             )}
             {device.emergencyState === "lockdown" ? (
@@ -85,13 +89,13 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
                 className="ring-4 ring-destructive/50"
               >
                 <Construction className="mr-1 size-4" />
-                <span>LOCKDOWN</span>
+                <span>{t("emergency_state.lockdown")}</span>
               </Badge>
             ) : (
               device.emergencyState === "evacuation" && (
                 <Badge variant="warning" className="ring-4 ring-warning/50">
                   <BellElectric className="mr-1 size-4" />
-                  <span>EVACUATION</span>
+                  <span>{t("emergency_state.evacuation")}</span>
                 </Badge>
               )
             )}
@@ -101,7 +105,7 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
           <Button className="flex-1" asChild>
             <Link href={`/dashboard/devices/${device.id}`}>
               <Settings className="size-4" />
-              Settings
+              {tButton("settings")}
             </Link>
           </Button>
           {!device.emergencyState &&
