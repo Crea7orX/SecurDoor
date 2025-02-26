@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUpdateDeviceMutation } from "@/hooks/api/devices/use-update-device-mutation";
+import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
 import {
   type DeviceResponse,
   type DeviceUpdate,
@@ -52,6 +53,7 @@ export function DeviceSettingsDialog({
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
+  useI18nZodErrors();
   const form = useForm<DeviceUpdate>({
     resolver: zodResolver(deviceUpdateSchema),
     defaultValues: {
