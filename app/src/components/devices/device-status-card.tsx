@@ -10,11 +10,10 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getDeviceStatusDisplayInfo } from "@/config/device-statuses";
-import { useNow } from "@/hooks/use-now";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { CircleDot, CircleDotDashed, EthernetPort } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter, useNow, useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -28,8 +27,9 @@ const DeviceStatusCard = React.forwardRef<
   const _t = useTranslations();
   const t = useTranslations("Device.status");
   const format = useFormatter();
-
-  const [now] = useNow(5000); // re-render every 5s for device status
+  const now = useNow({
+    updateInterval: 5000,
+  }); // re-render every 5s for device status
 
   const deviceStatusDisplayInfo = getDeviceStatusDisplayInfo(
     device.state?.status ?? "",
