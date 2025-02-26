@@ -45,7 +45,7 @@ const CardAddLogButton = React.forwardRef<
           onClick={() => setCardFingerprint(log.reference![1] as string)}
           disabled={cardFingerprint === log.reference![1]}
         >
-          {cardFingerprint === log.reference![1] ? "Selected" : "Select card"}
+          {cardFingerprint === log.reference![1] ? t("selected") : t("select")}
         </Button>
       </CardContent>
     </Card>
