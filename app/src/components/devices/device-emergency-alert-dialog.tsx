@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useUpdateEmergencyMutation } from "@/hooks/api/emergency/use-update-emergency-mutation";
 import { type emergencyUpdateSchema } from "@/lib/validations/emergency";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -28,6 +29,9 @@ export function DeviceEmergencyAlertDialog({
   children,
   ...props
 }: DeviceEmergencyAlertDialogProps) {
+  const t = useTranslations("Device.emergency");
+  const tButton = useTranslations("Common.button");
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const { mutateAsync: update } = useUpdateEmergencyMutation({
@@ -37,19 +41,19 @@ export function DeviceEmergencyAlertDialog({
 
   const handleUpdate = async () => {
     setIsLoading(true);
-    const toastId = toast.loading("Updating emergency state...");
+    const toastId = toast.loading(t("notification.loading"));
     await update({
       state,
     })
       .then(() => {
-        toast.warning("Emergency state updated successfully!", {
+        toast.warning(t("notification.success"), {
           id: toastId,
         });
 
         setIsOpen(false);
       })
       .catch(() => {
-        toast.error("Failed to update emergency state!", {
+        toast.error(t("notification.error"), {
           id: toastId,
         });
       });
@@ -62,19 +66,20 @@ export function DeviceEmergencyAlertDialog({
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>{t("alert.title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            This will put the device in emergency mode ({state}). This will{" "}
-            {state === "lockdown" ? "lock" : "unlock"} the door and you will
-            need to clear the emergency state manually in order to return to
-            normal mode.
-            {/*todo*/}
+            {t("alert.description", {
+              state: t(`button.${state}`),
+              action: state === "lockdown" ? "lock" : "unlock",
+            })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>
+            {tButton("cancel")}
+          </AlertDialogCancel>
           <Button disabled={isLoading} onClick={() => handleUpdate()}>
-            Continue
+            {tButton("continue")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
