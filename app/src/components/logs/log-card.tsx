@@ -5,7 +5,7 @@ import { getLogDisplayInfo } from "@/config/logs";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
 import { UserCircle } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
 
 export const logColorVariants = {
@@ -25,6 +25,7 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
   ({ className, log, ...props }, ref) => {
     const _t = useTranslations();
     const t = useTranslations("Log.card");
+    const format = useFormatter();
 
     const logDisplayInfo = getLogDisplayInfo(log.action);
 
@@ -53,7 +54,10 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
               })}
             </h2>
             <span className="text-muted-foreground">
-              {new Date(log.createdAt * 1000).toLocaleString()}
+              {format.dateTime(log.createdAt * 1000, {
+                dateStyle: "medium",
+                timeStyle: "medium",
+              })}
             </span>
           </div>
         </div>
