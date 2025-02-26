@@ -68,7 +68,7 @@ export default function CardsAddPage() {
                 action: (
                   <Button asChild>
                     <Link href={`/dashboard/cards/${responseData.id}`}>
-                      {tButton("view")}
+                      {t("add.notification.view")}
                     </Link>
                   </Button>
                 ),
