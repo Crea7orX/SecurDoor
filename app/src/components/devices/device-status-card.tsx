@@ -75,13 +75,10 @@ const DeviceStatusCard = React.forwardRef<
           <p className="text-muted-foreground">
             {t.rich("last_seen.text", {
               date: device.state?.lastSeenAt
-                ? format.relativeTime(
-                    new Date(device.state.lastSeenAt * 1000),
-                    {
-                      now,
-                      style: "long",
-                    },
-                  )
+                ? format.relativeTime(device.state.lastSeenAt * 1000, {
+                    now,
+                    style: "long",
+                  })
                 : t("last_seen.never"),
               semibold: (chunks) => (
                 <span className="font-semibold">{chunks}</span>

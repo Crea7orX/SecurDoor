@@ -33,7 +33,7 @@ const DeviceAddedCard = React.forwardRef<HTMLDivElement, DeviceAddedCardProps>(
           <Badge variant="info" className="text-md">
             <CalendarClock className="mr-1 size-4" />
             <span>
-              {format.dateTime(new Date(device.createdAt * 1000), {
+              {format.dateTime(device.createdAt * 1000, {
                 dateStyle: "medium",
                 timeStyle: "medium",
               })}
