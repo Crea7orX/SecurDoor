@@ -1,12 +1,15 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 const NoResultsLabel = React.forwardRef<
   HTMLSpanElement,
   React.HTMLAttributes<HTMLSpanElement>
 >(({ className, ...props }, ref) => {
+  const t = useTranslations("Data_Table.no_results_label");
+
   return (
     <span
       className={cn(
@@ -16,7 +19,7 @@ const NoResultsLabel = React.forwardRef<
       ref={ref}
       {...props}
     >
-      No results.
+      {t("no_results")}
     </span>
   );
 });
