@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCreateDeviceMutation } from "@/hooks/api/devices/use-create-device-mutation";
+import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
 import { type DeviceWithSameSerialIdError } from "@/lib/exceptions";
 import {
   type DeviceCreate,
@@ -38,6 +39,7 @@ export default function DevicesAddPage() {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
+  useI18nZodErrors();
   const form = useForm<DeviceCreate>({
     resolver: zodResolver(deviceCreateSchema),
     defaultValues: {
