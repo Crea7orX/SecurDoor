@@ -77,11 +77,11 @@ const DeviceControlsCard = React.forwardRef<
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <Label className="text-md">{t("controls.basic.header")}</Label>
-        <div className="flex gap-2 max-md:flex-col">
+        <div className="flex flex-wrap gap-2 max-md:flex-col">
           {!device.state ? (
             <Skeleton className="h-9 w-24" />
           ) : device.state.isLockedState ? (
-            <DeviceUnlockButton device={device} />
+            <DeviceUnlockButton className="flex-1" device={device} />
           ) : (
             <DeviceLockButton device={device} />
           )}
