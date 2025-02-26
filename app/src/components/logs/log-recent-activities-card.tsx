@@ -17,7 +17,7 @@ import { useGetAllLogsQuery } from "@/hooks/api/logs/use-get-all-logs-query";
 import { cn } from "@/lib/utils";
 import { type SearchParams } from "@/types/data-table";
 import { Eye, ScrollText } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
 
@@ -31,6 +31,7 @@ const LogRecentActivitiesCard = React.forwardRef<
   LogRecentActivitiesCardProps
 >(({ className, id, ...props }, ref) => {
   const t = useTranslations("Log.recent_activity");
+  const format = useFormatter();
 
   const searchParams: SearchParams = React.useMemo(
     () => ({
@@ -55,7 +56,9 @@ const LogRecentActivitiesCard = React.forwardRef<
             {dataUpdatedAt > 0 && (
               <span className="text-muted-foreground">
                 {t("last_updated", {
-                  date: new Date(dataUpdatedAt).toLocaleTimeString(),
+                  date: format.dateTime(dataUpdatedAt, {
+                    timeStyle: "medium",
+                  }),
                 })}
               </span>
             )}
