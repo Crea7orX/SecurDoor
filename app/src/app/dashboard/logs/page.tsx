@@ -10,7 +10,7 @@ import { LogDisplayInfos } from "@/config/logs";
 import { useGetAllLogsActorsQuery } from "@/hooks/api/logs/use-get-all-logs-actors-query";
 import { useGetAllLogsQuery } from "@/hooks/api/logs/use-get-all-logs-query";
 import { useDataTable } from "@/hooks/use-data-table";
-import { groupLogsByDay } from "@/lib/logs";
+import { useGroupedLogsByDay } from "@/hooks/use-grouped-logs-by-day";
 import { type LogResponse } from "@/lib/validations/log";
 import {
   type DataTableFilterField,
@@ -82,6 +82,10 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
     clearOnDefault: true,
   });
 
+  const groupedLogs = useGroupedLogsByDay(
+    table.getRowModel().rows.map((row) => row.original),
+  );
+
   if (isLoading || isLoadingActors) {
     return <LogsLoading />;
   }
@@ -92,17 +96,15 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
         <DataTableToolbar table={table} filterFields={filterFields} />
         {table.getRowModel().rows?.length ? (
           <>
-            {groupLogsByDay(
-              table.getRowModel().rows.map((row) => row.original),
-            ).map((group) => (
+            {groupedLogs.map((group) => (
               <div
                 key={group.dateString}
                 className="flex w-full flex-col gap-4"
               >
                 <div className="sticky top-0 z-10 inline-flex max-w-full items-center gap-2 rounded-md border bg-background px-3 py-1 text-muted-foreground">
-                  <div className="h-1 w-full rounded-full bg-border" />
-                  <span className="flex-grow">{group.label}</span>
-                  <div className="h-1 w-full rounded-full bg-border" />
+                  <div className="h-1 flex-1 rounded-full bg-border" />
+                  <span>{group.label}</span>
+                  <div className="h-1 flex-1 rounded-full bg-border" />
                 </div>
 
                 {group.logs.map((log) => (
