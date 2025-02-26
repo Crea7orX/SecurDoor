@@ -13,9 +13,8 @@ import { getDeviceStatusDisplayInfo } from "@/config/device-statuses";
 import { useNow } from "@/hooks/use-now";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
-import { formatDistance } from "date-fns";
 import { CircleDot, CircleDotDashed, EthernetPort } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -28,6 +27,7 @@ const DeviceStatusCard = React.forwardRef<
 >(({ className, device, ...props }, ref) => {
   const _t = useTranslations();
   const t = useTranslations("Device.status");
+  const format = useFormatter();
 
   const [now] = useNow(5000); // re-render every 5s for device status
 
@@ -75,12 +75,11 @@ const DeviceStatusCard = React.forwardRef<
           <p className="text-muted-foreground">
             {t.rich("last_seen.text", {
               date: device.state?.lastSeenAt
-                ? formatDistance(
+                ? format.relativeTime(
                     new Date(device.state.lastSeenAt * 1000),
-                    now,
                     {
-                      includeSeconds: true,
-                      addSuffix: true,
+                      now,
+                      style: "long",
                     },
                   )
                 : t("last_seen.never"),
