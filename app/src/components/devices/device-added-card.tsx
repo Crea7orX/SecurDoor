@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { CalendarClock } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceAddedCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,16 +17,16 @@ interface DeviceAddedCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const DeviceAddedCard = React.forwardRef<HTMLDivElement, DeviceAddedCardProps>(
   ({ className, device, ...props }, ref) => {
+    const t = useTranslations("Device.added");
+
     return (
       <Card className={className} ref={ref} {...props}>
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-1">
             <CalendarClock className="size-6" />
-            <span>Added</span>
+            <span>{t("title")}</span>
           </CardTitle>
-          <CardDescription>
-            The date and time when the device was added
-          </CardDescription>
+          <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Badge variant="info" className="text-md">
