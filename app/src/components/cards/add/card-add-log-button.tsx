@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
-import { useTranslations } from "next-intl";
+import { useFormatter, useNow, useTranslations } from "next-intl";
 import * as React from "react";
 
 interface CardAddLogButtonProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,6 +19,10 @@ const CardAddLogButton = React.forwardRef<
   CardAddLogButtonProps
 >(({ className, cardFingerprint, setCardFingerprint, log, ...props }, ref) => {
   const t = useTranslations("Card.add.log_button");
+  const format = useFormatter();
+  const now = useNow({
+    updateInterval: 1000,
+  });
 
   return (
     <Card className={cn(className)} ref={ref} {...props}>
@@ -34,7 +38,7 @@ const CardAddLogButton = React.forwardRef<
           </p>
           <p>
             {t.rich("date", {
-              date: new Date(log.createdAt * 1000).toLocaleString(),
+              date: format.relativeTime(log.createdAt * 1000, now),
               semibold: (chunks) => (
                 <span className="font-semibold">{chunks}</span>
               ),
