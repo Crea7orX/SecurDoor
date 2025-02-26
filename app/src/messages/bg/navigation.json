@@ -1,6 +1,7 @@
 {
   "Navigation": {
     "cards": "Карти",
+    "dashboard": "Табло",
     "devices": "Устройства",
     "logs": "Запис на одит"
   }

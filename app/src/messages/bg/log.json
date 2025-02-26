@@ -13,6 +13,10 @@
         "system": "Система"
       }
     },
+    "date_group": {
+      "today": "Днес",
+      "yesterday": "Вчера"
+    },
     "filter": {
       "action": {
         "label": "Действие"
