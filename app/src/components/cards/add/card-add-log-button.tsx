@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface CardAddLogButtonProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,21 +18,27 @@ const CardAddLogButton = React.forwardRef<
   HTMLDivElement,
   CardAddLogButtonProps
 >(({ className, cardFingerprint, setCardFingerprint, log, ...props }, ref) => {
+  const t = useTranslations("Card.add.log_button");
+
   return (
     <Card className={cn(className)} ref={ref} {...props}>
       <CardContent className="flex items-center justify-between p-4">
         <div>
           <p>
-            FID:{" "}
-            <span className="font-semibold">
-              {(log.reference![1] as string).slice(-8)}
-            </span>
+            {t.rich("fingerprint", {
+              fingerprint: (log.reference![1] as string).slice(-8),
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
           </p>
           <p>
-            Date:{" "}
-            <span className="font-semibold">
-              {new Date(log.createdAt * 1000).toLocaleString()}
-            </span>
+            {t.rich("date", {
+              date: new Date(log.createdAt * 1000).toLocaleString(),
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
           </p>
         </div>
         <Button
