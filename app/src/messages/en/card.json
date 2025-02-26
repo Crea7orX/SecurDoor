@@ -1,0 +1,136 @@
+{
+  "Card": {
+    "access": {
+      "description": "Number of doors that the card can be used on",
+      "devices": "{count, plural, =1 {# door} other {# doors}}",
+      "dialog": {
+        "description": "Select the doors that can be used on the door",
+        "notification": {
+          "error": "Failed to update access!",
+          "loading": "Updating access...",
+          "success": "Access updated!"
+        },
+        "title": "Edit Access"
+      },
+      "edit_button": "Edit Doors",
+      "title": "Access"
+    },
+    "add": {
+      "combobox": {
+        "empty": "No devices found.",
+        "label": "Select Device",
+        "search": "Search device..."
+      },
+      "header": "Add Card",
+      "log_button": {
+        "date": "Date: <semibold>{date}</semibold>",
+        "fingerprint": "FID: <semibold>{fingerprint}</semibold>",
+        "select": "Select Card",
+        "selected": "Selected"
+      },
+      "notification": {
+        "error": "Failed to add card!",
+        "error_already_exists": "Card already exists!",
+        "loading": "Adding Card...",
+        "success": "Card Added!",
+        "view": "View Card"
+      },
+      "select_dialog": {
+        "description": "Select the device from which you want to scan the card. Then place the card on the reader. After that you will see the recent attempt to unlock the device from which you can select the wanted card to add.",
+        "device": "Device",
+        "recent_access_attempts": "Recent access attempts",
+        "title": "Select card"
+      }
+    },
+    "added": {
+      "description": "The date and time when the card was added",
+      "title": "Added"
+    },
+    "card": {
+      "state": {
+        "active": "ACTIVE",
+        "disabled": "DISABLED"
+      },
+      "title": "Card <semibold>{fingerprint}</semibold>"
+    },
+    "danger_zone": {
+      "description": "Dangerous actions that can not be undone",
+      "title": "Danger Zone"
+    },
+    "delete": {
+      "alert": {
+        "description": "This action cannot be undone. This will permanently delete this card and remove its access to all doors.",
+        "notification": {
+          "error": "Failed to delete card!",
+          "loading": "Deleting card...",
+          "success": "Card deleted!"
+        },
+        "title": "Are you absolutely sure?"
+      }
+    },
+    "field": {
+      "devices": {
+        "label": "Doors",
+        "placeholder": "Select doors"
+      },
+      "fingerprint": {
+        "button": "Select card",
+        "description": "Scan card with any device and select it.",
+        "label": "Card"
+      },
+      "holder": {
+        "description": "Card holder name.",
+        "label": "Holder",
+        "placeholder": "John Doe",
+        "unknown": "Unknown"
+      }
+    },
+    "filter": {
+      "active": {
+        "label": "Active",
+        "options": {
+          "active": "Active",
+          "disabled": "Disabled"
+        }
+      },
+      "holder": {
+        "label": "Holder",
+        "placeholder": "Filter by holder"
+      }
+    },
+    "holder": {
+      "description": "Holder of the card",
+      "notification": {
+        "error": "Failed to rename card!",
+        "loading": "Renaming card...",
+        "success": "Card renamed!"
+      },
+      "title": "Holder"
+    },
+    "label": "Card",
+    "status": {
+      "button": {
+        "activate": "Activate",
+        "disable": "Disable"
+      },
+      "description": "Access status of the card",
+      "notification": {
+        "activate": {
+          "error": "Failed to activate card!",
+          "loading": "Activating card...",
+          "success": "Card activated!"
+        },
+        "disable": {
+          "error": "Failed to disable card!",
+          "loading": "Disabling card...",
+          "success": "Card disabled!"
+        }
+      },
+      "state": {
+        "active": "Active",
+        "disabled": "Disabled"
+      },
+      "title": "Status"
+    }
+  }
+}
