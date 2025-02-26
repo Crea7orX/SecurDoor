@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { formatDistance } from "date-fns";
 import { CircleDot, CircleDotDashed, EthernetPort } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -25,6 +26,9 @@ const DeviceStatusCard = React.forwardRef<
   HTMLDivElement,
   DeviceStatusCardProps
 >(({ className, device, ...props }, ref) => {
+  const _t = useTranslations();
+  const t = useTranslations("Device.status");
+
   const [now] = useNow(5000); // re-render every 5s for device status
 
   const deviceStatusDisplayInfo = getDeviceStatusDisplayInfo(
@@ -36,21 +40,21 @@ const DeviceStatusCard = React.forwardRef<
       <CardHeader>
         <CardTitle className="inline-flex items-center gap-1">
           <EthernetPort className="size-6" />
-          <span>Status</span>
+          <span>{t("title")}</span>
         </CardTitle>
-        <CardDescription>Device online status</CardDescription>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-wrap gap-2">
           {now.getTime() - (device.state?.lastSeenAt ?? 0) * 1000 > 15000 ? (
             <Badge variant="destructive" className="text-md">
               <CircleDotDashed className="mr-1 size-4" />
-              <span>Offline</span>
+              <span>{t("state.offline")}</span>
             </Badge>
           ) : (
             <Badge variant="success" className="text-md">
               <CircleDot className="mr-1 size-4" />
-              <span>Online</span>
+              <span>{t("state.online")}</span>
             </Badge>
           )}
           {device.state?.status && device.state?.status !== "adopted" && (
@@ -61,7 +65,7 @@ const DeviceStatusCard = React.forwardRef<
                   `fill-${deviceStatusDisplayInfo.color}`,
                 )}
               />
-              <span>{deviceStatusDisplayInfo.text}</span>
+              <span>{_t(deviceStatusDisplayInfo.text)}</span>
             </Badge>
           )}
         </div>
@@ -69,13 +73,21 @@ const DeviceStatusCard = React.forwardRef<
           <Skeleton className="h-6 w-48" />
         ) : (
           <p className="text-muted-foreground">
-            Last seen:{" "}
-            {device.state?.lastSeenAt
-              ? formatDistance(new Date(device.state.lastSeenAt * 1000), now, {
-                  includeSeconds: true,
-                  addSuffix: true,
-                })
-              : "Never"}
+            {t.rich("last_seen.text", {
+              date: device.state?.lastSeenAt
+                ? formatDistance(
+                    new Date(device.state.lastSeenAt * 1000),
+                    now,
+                    {
+                      includeSeconds: true,
+                      addSuffix: true,
+                    },
+                  )
+                : t("last_seen.never"),
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
           </p>
         )}
       </CardContent>
