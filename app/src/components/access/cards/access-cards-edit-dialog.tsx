@@ -25,6 +25,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUpdateAccessCardMutation } from "@/hooks/api/access/cards/use-update-access-card-mutation";
 import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-query";
+import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
 import { arraysEquals } from "@/lib/utils";
 import {
   type AccessCardResponse,
@@ -75,6 +76,7 @@ export function AccessCardsEditDialog({
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
+  useI18nZodErrors();
   const form = useForm<AccessCardUpdate>({
     resolver: zodResolver(accessCardUpdateSchema),
     defaultValues: {
