@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import type { DataTableFilterField, SearchParams } from "@/types/data-table";
 import { BellElectric, Construction, PlusCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
 
@@ -26,6 +27,8 @@ interface DevicesPageProps {
 }
 
 export default function DevicesPage({ searchParams }: DevicesPageProps) {
+  const t = useTranslations("Device");
+
   const { data, isLoading, isPlaceholderData } = useGetAllDevicesQuery({
     searchParams,
     refetchInterval: 5000,
@@ -37,21 +40,21 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
   const filterFields: DataTableFilterField<DeviceResponse>[] = [
     {
       id: "name",
-      label: "Name",
-      placeholder: "Filter by name",
+      label: t("filter.name.label"),
+      placeholder: t("filter.name.placeholder"),
     },
     {
       id: "emergencyState",
-      label: "Emergency State",
+      label: t("filter.emergency_state.label"),
       options: [
         {
-          label: "Lockdown",
+          label: t("filter.emergency_state.options.lockdown"),
           value: "lockdown",
           icon: Construction,
           iconClassName: "text-destructive",
         },
         {
-          label: "Evacuation",
+          label: t("filter.emergency_state.options.evacuation"),
           value: "evacuation",
           icon: BellElectric,
           iconClassName: "text-warning",
@@ -94,7 +97,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
         <Button size="sm" asChild>
           <Link href="/dashboard/devices/add">
             <PlusCircle className="size-4" />
-            Add Device
+            {t("add.header")}
           </Link>
         </Button>
       </DataTableToolbar>
