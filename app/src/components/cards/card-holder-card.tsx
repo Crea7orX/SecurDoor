@@ -23,6 +23,7 @@ import {
 } from "@/lib/validations/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -33,6 +34,8 @@ interface CardHolderCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const CardHolderCard = React.forwardRef<HTMLDivElement, CardHolderCardProps>(
   ({ className, card, ...props }, ref) => {
+    const t = useTranslations("Card");
+
     const { mutateAsync: update } = useUpdateCardMutation({
       id: card.id,
     });
@@ -63,19 +66,19 @@ const CardHolderCard = React.forwardRef<HTMLDivElement, CardHolderCardProps>(
       if (!form.formState.isValid) return resetForm();
 
       setIsLoading(true);
-      const toastId = toast.loading("Renaming card...");
+      const toastId = toast.loading(t("holder.notification.loading"));
       await update({
         holder: value,
       })
         .then(() => {
-          toast.success("Card renamed!", {
+          toast.success(t("holder.notification.success"), {
             id: toastId,
           });
         })
         .catch(() => {
           resetForm(); // Reset to original value
 
-          toast.error("Failed to rename card!", {
+          toast.error(t("holder.notification.error"), {
             id: toastId,
           });
         });
@@ -88,9 +91,9 @@ const CardHolderCard = React.forwardRef<HTMLDivElement, CardHolderCardProps>(
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-1">
             <User className="size-6" />
-            <span>Holder</span>
+            <span>{t("holder.title")}</span>
           </CardTitle>
-          <CardDescription>Holder of the card</CardDescription>
+          <CardDescription>{t("holder.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           <Form {...form}>
@@ -103,7 +106,11 @@ const CardHolderCard = React.forwardRef<HTMLDivElement, CardHolderCardProps>(
                     <FormControl>
                       <InputInline
                         className="bg-secondary text-secondary-foreground"
-                        placeholder={!card.holder ? "Unknown" : "Holder"}
+                        placeholder={
+                          !card.holder
+                            ? t("field.holder.unknown")
+                            : t("field.holder.label")
+                        }
                         disabled={isLoading}
                         onUpdate={handleUpdate}
                         {...field}
