@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCreateCardMutation } from "@/hooks/api/cards/use-create-card-mutation";
+import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
 import { type CardWithSameFingerprintError } from "@/lib/exceptions";
 import { type CardCreate, cardCreateSchema } from "@/lib/validations/card";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,6 +37,7 @@ export default function CardsAddPage() {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
+  useI18nZodErrors();
   const form = useForm<CardCreate>({
     resolver: zodResolver(cardCreateSchema),
     defaultValues: {
