@@ -8,7 +8,7 @@ const NoResultsLabel = React.forwardRef<
   HTMLSpanElement,
   React.HTMLAttributes<HTMLSpanElement>
 >(({ className, ...props }, ref) => {
-  const t = useTranslations("Data_Table.no_results_label");
+  const t = useTranslations("Data_Table");
 
   return (
     <span
@@ -19,7 +19,7 @@ const NoResultsLabel = React.forwardRef<
       ref={ref}
       {...props}
     >
-      {t("no_results")}
+      {t("no_results_label")}
     </span>
   );
 });
