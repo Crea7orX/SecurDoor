@@ -20,7 +20,7 @@ export function DashboardSidebarNavigation({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+      <SidebarGroupLabel>{_t("Navigation.dashboard")}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item, index) => (
           <SidebarMenuItem key={index}>
