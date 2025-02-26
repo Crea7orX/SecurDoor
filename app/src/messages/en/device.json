@@ -4,6 +4,7 @@
       "cards": "{count, plural, =1 {# card} other {# cards}}",
       "description": "Number of people who have access to the door",
       "dialog": {
+        "card": "{holder} (FID: {fingerprint})",
         "description": "Select the cards that can be used on the door",
         "notification": {
           "error": "Failed to update access!",
