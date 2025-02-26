@@ -206,7 +206,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
         <PopoverContent className="w-auto p-0" align="start">
           <Command>
             <CommandInput
-              placeholder="Search"
+              placeholder={t("search")}
               onKeyDown={handleInputKeyDown}
               ref={inputRef}
             />
@@ -228,7 +228,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                   >
                     <CheckIcon className="h-4 w-4" />
                   </div>
-                  <span>(Select All)</span>
+                  <span>({t("select_all")})</span>
                 </CommandItem>
               </CommandGroup>
               <CommandSeparator />
