@@ -14,6 +14,8 @@
         "enabled": "{selected} от {total, plural, =1 {# ред} other {# реда}} {selected, plural, =1 {# избран} other {# избрани}}."
       }
     },
+    "search": "Потърсете",
+    "select_all": "Избор на всичко",
     "view_options": {
       "button": "Вижте",
       "search": {

@@ -1,0 +1,125 @@
+{
+  "Zod": {
+    "errors": {
+      "custom": "Невалиден вход",
+      "invalid_arguments": "Невалидни аргументи на функцията",
+      "invalid_date": "Невалидна дата",
+      "invalid_enum_value": "Невалидна стойност на енумерация. Очаквани {options}, получена ''{received}''",
+      "invalid_intersection_types": "Резултатите от пресичане не можаха да бъдат обединени",
+      "invalid_literal": "Невалидна литерална стойност, очаква се {expected}",
+      "invalid_return_type": "Невалиден тип връщане на функцията",
+      "invalid_string": {
+        "cuid": "Невалидно {validation}",
+        "datetime": "Невалидна {validation}",
+        "email": "Невалиден {validation}",
+        "endsWith": "Невалиден вход: трябва да завършва с \"{endsWith}\"",
+        "regex": "Невалиден",
+        "startsWith": "Невалиден вход: трябва да започва с \"{startsWith}\"",
+        "url": "Невалиден {validation}",
+        "uuid": "Невалидно {validation}"
+      },
+      "invalid_type": "Очаквано {expected}, получено {received}",
+      "invalid_type_received_undefined": "Задължително",
+      "invalid_type_with_path": "{path} се очаква да бъде {expected}, но е получен {received}",
+      "invalid_union": "Невалиден вход",
+      "invalid_union_discriminator": "Невалидна стойност на дискриминатора. Очаквана {options}",
+      "not_finite": "Числото трябва да е броимо",
+      "not_multiple_of": "Числото трябва да е кратно на {multipleOf}",
+      "too_big": {
+        "array": {
+          "exact": "Масивът трябва да съдържа точно {maximum} елемент(а)",
+          "inclusive": "Масивът трябва да съдържа най-много {maximum} {count, plural, =1 {елемент} other {елемента}}",
+          "not_inclusive": "Масивът трябва да съдържа по-малко от {maximum} {count, plural, =1 {елемент} other {елемента}}"
+        },
+        "date": {
+          "exact": "Датата трябва да е точно {maximum}, {datetime}",
+          "inclusive": "Датата трябва да е по-малка или равна на {maximum}, {datetime}",
+          "not_inclusive": "Датата трябва да е по-малка от {maximum}, {datetime}"
+        },
+        "number": {
+          "exact": "Числото трябва да е точно {maximum}",
+          "inclusive": "Числото трябва да е по-малко или равно на {maximum}",
+          "inclusive_with_path": "{path} трябва да е по-малъко или равно на {maximum}",
+          "not_inclusive": "Числото трябва да е по-малко от {maximum}",
+          "not_inclusive_with_path": "{path} трябва да е по-малко от {maximum}"
+        },
+        "set": {
+          "exact": "Невалиден вход",
+          "inclusive": "Невалиден вход",
+          "not_inclusive": "Невалиден вход"
+        },
+        "string": {
+          "exact": "Низът трябва да съдържа точно {maximum} символ(а)",
+          "inclusive": "Низът трябва да съдържа най-много {maximum} {count, plural, =1 {символ} other {символа}}",
+          "inclusive_with_path": "{path} трябва да съдържа най-много {maximum} {count, plural, =1 {символ} other {символа}}",
+          "not_inclusive": "Низът трябва да съдържа под {maximum} {count, plural, =1 {символ} other {символа}}",
+          "not_inclusive_with_path": "{path} трябва да съдържа под {maximum} {count, plural, =1 {символ} other {символа}}"
+        }
+      },
+      "too_small": {
+        "array": {
+          "exact": "Масивът трябва да съдържа точно {minimum} елемент(а)",
+          "inclusive": "Масивът трябва да съдържа поне {minimum} {count, plural, =1 {елемент} other {елемента}}",
+          "not_inclusive": "Масивът трябва да съдържа повече от {minimum} {count, plural, =1 {елемент} other {елемента}}"
+        },
+        "date": {
+          "exact": "Датата трябва да е точно {minimum}, {datetime}",
+          "inclusive": "Датата трябва да е по-голяма или равна на {minimum}, {datetime}",
+          "not_inclusive": "Датата трябва да е по-голяма от {minimum}, {datetime}"
+        },
+        "number": {
+          "exact": "Числото трябва да е точно {minimum}",
+          "exact_with_path": "{path} трябва да е точно {minimum}",
+          "inclusive": "Числото трябва да е по-голямо или равно на {minimum}",
+          "inclusive_with_path": "{path} трябва да е по-голямо или равен на {minimum}",
+          "not_inclusive": "Числото трябва да е по-голямо от {minimum}",
+          "not_inclusive_with_path": "{path} трябва да е по-голямо от {minimum}"
+        },
+        "set": {
+          "exact": "Невалиден вход",
+          "inclusive": "Невалиден вход",
+          "not_inclusive": "Невалиден вход"
+        },
+        "string": {
+          "exact": "Низът трябва да съдържа точно {minimum} символ(а)",
+          "exact_with_path": "{path} трябва да съдържа точно {minimum} {count, plural, =1 {символ} other {символа}}",
+          "inclusive": "Низът трябва да съдържа поне {minimum} {count, plural, =1 {символ} other {символа}}",
+          "inclusive_with_path": "{path} трябва да съдържа поне {minimum} {count, plural, =1 {символ} other {символа}}",
+          "not_inclusive": "Низът трябва да съдържа над {minimum} {count, plural, =1 {символ} other {символа}}",
+          "not_inclusive_with_path": "{path} трябва да съдържа над {minimum} {count, plural, =1 {символ} other {символа}}"
+        }
+      },
+      "unrecognized_keys": "Неразпознат {count, plural, =1 {ключ} other {ключове}} в обект: {keys}"
+    },
+    "types": {
+      "array": "масив",
+      "bigint": "голямо цяло число",
+      "boolean": "булева",
+      "date": "дата",
+      "float": "число с плаваща запетая",
+      "function": "функция",
+      "integer": "цяло число",
+      "map": "map",
+      "nan": "nan",
+      "never": "never",
+      "null": "null",
+      "number": "число",
+      "object": "обект",
+      "promise": "обещание",
+      "set": "set",
+      "string": "низ",
+      "symbol": "символ",
+      "undefined": "недефинирано",
+      "unknown": "неизвестено",
+      "void": "void"
+    },
+    "validations": {
+      "cuid": "cuid",
+      "datetime": "дата и час",
+      "email": "имейл",
+      "regex": "регулярен израз",
+      "url": "URL адрес",
+      "uuid": "uuid"
+    }
+  }
+}
