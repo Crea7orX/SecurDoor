@@ -258,7 +258,7 @@ export async function accessCardUpdate(
       logs.push({
         action: "device.add_card",
         objectId: id,
-        reference: [cardId, card.holder ?? "NULL", card.fingerprint],
+        reference: [cardId, card.fingerprint, card.holder ?? "NULL"],
       });
     });
   }
@@ -279,7 +279,7 @@ export async function accessCardUpdate(
       logs.push({
         action: "device.remove_card",
         objectId: id,
-        reference: [cardId, card.holder ?? "NULL", card.fingerprint],
+        reference: [cardId, card.fingerprint, card.holder ?? "NULL"],
       });
     });
   }
