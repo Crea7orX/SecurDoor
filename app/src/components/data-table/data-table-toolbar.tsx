@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import type { DataTableFilterField } from "@/types/data-table";
 import type { Table } from "@tanstack/react-table";
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DataTableToolbarProps<TData>
@@ -45,6 +46,8 @@ export function DataTableToolbar<TData>({
   className,
   ...props
 }: DataTableToolbarProps<TData>) {
+  const tButton = useTranslations("Common.button");
+
   const isFiltered = table.getState().columnFilters.length > 0;
 
   // Memoize computation of searchableColumns and filterableColumns
@@ -99,12 +102,11 @@ export function DataTableToolbar<TData>({
           )}
         {isFiltered && (
           <Button
-            aria-label="Reset filters"
             variant="ghost"
             className="h-8 px-2 lg:px-3"
             onClick={() => table.resetColumnFilters()}
           >
-            Reset
+            {tButton("reset")}
             <X className="ml-2 size-4" aria-hidden="true" />
           </Button>
         )}

@@ -4,6 +4,7 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { useAccessStateUnlockMutation } from "@/hooks/api/access/state/use-access-state-unlock-mutation";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { LockOpen } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -15,6 +16,8 @@ const DeviceUnlockButton = React.forwardRef<
   HTMLButtonElement,
   DeviceUnlockButtonProps
 >(({ className, device, ...props }, ref) => {
+  const t = useTranslations("Device.unlock");
+
   const { mutateAsync: unlock } = useAccessStateUnlockMutation({
     id: device.id,
   });
@@ -24,16 +27,16 @@ const DeviceUnlockButton = React.forwardRef<
   const handleClick = () => {
     setIsLoading(true);
 
-    const toastId = toast.loading("Unlocking door...");
+    const toastId = toast.loading(t("notification.loading"));
 
     unlock()
       .then(() => {
-        toast.success("Unlock command sent!", {
+        toast.success(t("notification.success"), {
           id: toastId,
         });
       })
       .catch(() => {
-        toast.error("Failed to unlock device!", {
+        toast.error(t("notification.error"), {
           id: toastId,
         });
       })
@@ -56,7 +59,7 @@ const DeviceUnlockButton = React.forwardRef<
       }
     >
       <LockOpen />
-      <span>Unlock</span>
+      <span>{t("button")}</span>
     </Button>
   );
 });

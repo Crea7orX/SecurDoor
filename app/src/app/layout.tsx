@@ -3,6 +3,8 @@ import { ProvidersWithoutTheme } from "@/components/providers/providers-without-
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import * as React from "react";
 
 export const metadata: Metadata = {
@@ -11,14 +13,21 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang={locale} className={`${GeistSans.variable}`}>
       <body className="relative min-h-screen bg-background">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ProvidersWithoutTheme>{children}</ProvidersWithoutTheme>
+          <ProvidersWithoutTheme>
+            <NextIntlClientProvider messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </ProvidersWithoutTheme>
         </ThemeProvider>
       </body>
     </html>

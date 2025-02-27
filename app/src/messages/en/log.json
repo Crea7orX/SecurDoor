@@ -1,0 +1,145 @@
+{
+  "Log": {
+    "activity_card": {
+      "by": {
+        "system": "System",
+        "text": "by <semibold>{actor}</semibold>",
+        "unknown": "UNKNOWN"
+      },
+      "on": "on <semibold>{date}</semibold>"
+    },
+    "card": {
+      "actor": {
+        "system": "System"
+      }
+    },
+    "date_group": {
+      "today": "Today",
+      "yesterday": "Yesterday"
+    },
+    "filter": {
+      "action": {
+        "label": "Action"
+      },
+      "actor": {
+        "label": "Actor",
+        "options": {
+          "system": "System"
+        }
+      }
+    },
+    "logs": {
+      "card": {
+        "access_update": {
+          "text": "{actor} updated card access",
+          "title": "Card access updated"
+        },
+        "activate": {
+          "text": "{actor} activated card",
+          "title": "Card activated"
+        },
+        "add_device": {
+          "text": "{actor} added card to device",
+          "title": "Card added to device"
+        },
+        "create": {
+          "text": "{actor} created card",
+          "title": "Card created"
+        },
+        "deactivate": {
+          "text": "{actor} deactivated card",
+          "title": "Card deactivated"
+        },
+        "delete": {
+          "text": "{actor} deleted card",
+          "title": "Card deleted"
+        },
+        "lock": {
+          "text": "{actor} locked device with card",
+          "title": "Card locked device"
+        },
+        "remove_device": {
+          "text": "{actor} removed card from device",
+          "title": "Card removed from device"
+        },
+        "rename": {
+          "text": "{actor} renamed card",
+          "title": "Card renamed"
+        },
+        "unlock": {
+          "text": "{actor} unlocked device with card",
+          "title": "Card unlocked device"
+        }
+      },
+      "device": {
+        "access_denied": {
+          "text": "{actor} denied access to device",
+          "title": "Device access denied"
+        },
+        "access_update": {
+          "text": "{actor} updated device access",
+          "title": "Device access updated"
+        },
+        "add_card": {
+          "text": "{actor} added device to card",
+          "title": "Device added to card"
+        },
+        "create": {
+          "text": "{actor} created device",
+          "title": "Device created"
+        },
+        "delete": {
+          "text": "{actor} deleted device",
+          "title": "Device deleted"
+        },
+        "emergency_state": {
+          "text": "{actor} updated device emergency state",
+          "title": "Device emergency state updated"
+        },
+        "lock": {
+          "text": "{actor} locked device",
+          "title": "Device locked"
+        },
+        "re_lock_delay": {
+          "text": "{actor} updated device re-lock delay",
+          "title": "Device re-lock delay updated"
+        },
+        "remove_card": {
+          "text": "{actor} removed device from card",
+          "title": "Device removed from card"
+        },
+        "rename": {
+          "text": "{actor} renamed device",
+          "title": "Device renamed"
+        },
+        "unlock": {
+          "text": "{actor} unlocked device",
+          "title": "Device unlocked"
+        }
+      },
+      "device_status": {
+        "adopted": {
+          "text": "{actor} set device in state adopted",
+          "title": "Device adopted"
+        },
+        "adopting": {
+          "text": "{actor} set device in state adopting",
+          "title": "Device adopting"
+        },
+        "pending_adoption": {
+          "text": "{actor} set device in state pending adoption",
+          "title": "Device pending adoption"
+        }
+      },
+      "unknown": {
+        "text": "Unknown",
+        "title": "Unknown"
+      }
+    },
+    "recent_activity": {
+      "last_updated": "Last updated: {date}",
+      "title": "Recent Activity",
+      "view_all": "View all Logs"
+    }
+  }
+}

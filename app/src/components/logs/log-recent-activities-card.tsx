@@ -17,6 +17,7 @@ import { useGetAllLogsQuery } from "@/hooks/api/logs/use-get-all-logs-query";
 import { cn } from "@/lib/utils";
 import { type SearchParams } from "@/types/data-table";
 import { Eye, ScrollText } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
 
@@ -29,6 +30,9 @@ const LogRecentActivitiesCard = React.forwardRef<
   HTMLDivElement,
   LogRecentActivitiesCardProps
 >(({ className, id, ...props }, ref) => {
+  const t = useTranslations("Log.recent_activity");
+  const format = useFormatter();
+
   const searchParams: SearchParams = React.useMemo(
     () => ({
       perPage: "10",
@@ -48,10 +52,14 @@ const LogRecentActivitiesCard = React.forwardRef<
         <CardTitle className="inline-flex items-center gap-2 font-bold">
           <ScrollText className="size-6" />
           <div className="flex flex-col gap-1">
-            <span>Recent Activity</span>
+            <span>{t("title")}</span>
             {dataUpdatedAt > 0 && (
               <span className="text-muted-foreground">
-                {`(Last updated: ${new Date(dataUpdatedAt).toLocaleTimeString()})`}
+                {t("last_updated", {
+                  date: format.dateTime(dataUpdatedAt, {
+                    timeStyle: "medium",
+                  }),
+                })}
               </span>
             )}
           </div>
@@ -78,7 +86,7 @@ const LogRecentActivitiesCard = React.forwardRef<
         <Button variant="info" className="max-md:w-full" asChild>
           <Link href={`/dashboard/logs?objectId=${id}`}>
             <Eye />
-            <span>View all Logs</span>
+            <span>{t("view_all")}</span>
           </Link>
         </Button>
       </CardFooter>

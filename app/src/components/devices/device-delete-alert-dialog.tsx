@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useDeleteDeviceMutation } from "@/hooks/api/devices/use-delete-device-mutation";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { toast } from "sonner";
@@ -26,6 +27,9 @@ export function DeviceDeleteAlertDialog({
   children,
   ...props
 }: DeviceDeleteAlertDialogProps) {
+  const t = useTranslations("Device.delete.alert");
+  const tButton = useTranslations("Common.button");
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const router = useRouter();
@@ -37,10 +41,10 @@ export function DeviceDeleteAlertDialog({
 
   const handleDelete = async () => {
     setIsLoading(true);
-    const toastId = toast.loading("Deleting device...");
+    const toastId = toast.loading(t("notification.loading"));
     await doDelete()
       .then(() => {
-        toast.warning("Device deleted successfully!", {
+        toast.warning(t("notification.success"), {
           id: toastId,
         });
 
@@ -48,7 +52,7 @@ export function DeviceDeleteAlertDialog({
         router.push("/dashboard/devices");
       })
       .catch(() => {
-        toast.error("Failed to delete device!", {
+        toast.error(t("notification.error"), {
           id: toastId,
         });
       });
@@ -61,16 +65,15 @@ export function DeviceDeleteAlertDialog({
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this
-            device and it will no longer be accessible.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{t("title")}</AlertDialogTitle>
+          <AlertDialogDescription>{t("description")}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>
+            {tButton("cancel")}
+          </AlertDialogCancel>
           <Button disabled={isLoading} onClick={() => handleDelete()}>
-            Continue
+            {tButton("continue")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

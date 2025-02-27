@@ -25,6 +25,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUpdateAccessDeviceMutation } from "@/hooks/api/access/devices/use-update-access-device-mutation";
 import { useGetAllCardsQuery } from "@/hooks/api/cards/use-get-all-cards-query";
+import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
 import { arraysEquals } from "@/lib/utils";
 import {
   type AccessDeviceResponse,
@@ -32,6 +33,7 @@ import {
   accessDeviceUpdateSchema,
 } from "@/lib/validations/access";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -48,6 +50,9 @@ export function AccessDevicesEditDialog({
   cards,
   ...props
 }: AccessDevicesEditDialogProps) {
+  const t = useTranslations("Device");
+  const tButton = useTranslations("Common.button");
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const { data, isLoading: isLoadingData } = useGetAllCardsQuery({
@@ -59,7 +64,10 @@ export function AccessDevicesEditDialog({
   const cardOptions: MultiSelectOption[] | undefined = React.useMemo(() => {
     return data?.data.map((card) => {
       return {
-        label: `${card.holder ?? ""} (FID: ${card.fingerprint.slice(-8)})`,
+        label: t("access.dialog.card", {
+          holder: card.holder ?? "",
+          fingerprint: card.fingerprint.slice(-8),
+        }),
         value:
           ((card.holder && card.holder + "-") ?? "") +
           card.fingerprint +
@@ -75,6 +83,7 @@ export function AccessDevicesEditDialog({
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
+  useI18nZodErrors();
   const form = useForm<AccessDeviceUpdate>({
     resolver: zodResolver(accessDeviceUpdateSchema),
     defaultValues: {
@@ -110,17 +119,17 @@ export function AccessDevicesEditDialog({
       return;
 
     setIsLoading(true);
-    const toastId = toast.loading("Updating access...");
+    const toastId = toast.loading(t("dialog.notification.loading"));
     await update(data)
       .then(() => {
-        toast.success("Access updated!", {
+        toast.success(t("dialog.notification.success"), {
           id: toastId,
         });
 
         setIsOpen(false);
       })
       .catch(() => {
-        toast.error("Failed to update access!", {
+        toast.error(t("dialog.notification.error"), {
           id: toastId,
         });
       });
@@ -135,9 +144,9 @@ export function AccessDevicesEditDialog({
         <DialogContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader>
-              <DialogTitle>Edit Access</DialogTitle>
+              <DialogTitle>{t("access.dialog.title")}</DialogTitle>
               <DialogDescription>
-                Select the cards that can be used on the door
+                {t("access.dialog.description")}
               </DialogDescription>
             </DialogHeader>
             <FormField
@@ -145,7 +154,7 @@ export function AccessDevicesEditDialog({
               name="cards"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cards</FormLabel>
+                  <FormLabel>{t("field.cards.label")}</FormLabel>
                   {isLoadingData ? (
                     <Skeleton className="h-10 w-full" />
                   ) : (
@@ -159,8 +168,8 @@ export function AccessDevicesEditDialog({
                         onChange={(options) => {
                           field.onChange(options.map((option) => option.key));
                         }}
-                        placeholder="Select cards"
-                        heading="Cards"
+                        placeholder={t("field.cards.placeholder")}
+                        heading={t("field.cards.label")}
                       />
                     </FormControl>
                   )}
@@ -181,7 +190,7 @@ export function AccessDevicesEditDialog({
                   )
                 }
               >
-                Reset
+                {tButton("reset")}
               </Button>
               <Button
                 disabled={
@@ -192,7 +201,7 @@ export function AccessDevicesEditDialog({
                   )
                 }
               >
-                Save changes
+                {tButton("save_changes")}
               </Button>
             </DialogFooter>
           </form>

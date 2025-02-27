@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useGetEmergencyCountQuery } from "@/hooks/api/emergency/use-get-emergency-count-query";
 import { cn } from "@/lib/utils";
 import { Microchip, Siren } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceEmergencyCountAlertProps
@@ -16,6 +17,8 @@ const DeviceEmergencyCountAlert = React.forwardRef<
   HTMLDivElement,
   DeviceEmergencyCountAlertProps
 >(({ className, onViewClick, ...props }, ref) => {
+  const t = useTranslations("Device.emergency_count_alert");
+
   const { data } = useGetEmergencyCountQuery();
 
   if (!data || (data.lockdownCount === 0 && data.evacuationCount === 0)) {
@@ -32,16 +35,19 @@ const DeviceEmergencyCountAlert = React.forwardRef<
       <div>
         <AlertTitle className="inline-flex items-center text-lg">
           <Siren className="mr-1 size-6" />
-          Warning!
+          {t("title")}
         </AlertTitle>
         <AlertDescription>
-          You have <b>{data.lockdownCount}</b> devices in <b>LOCKDOWN</b> mode
-          and <b>{data.evacuationCount}</b> devices in <b>EVACUATION</b> mode.
+          {t.rich("description", {
+            lockdownCount: data.lockdownCount,
+            evacuationCount: data.evacuationCount,
+            b: (chunks) => <b>{chunks}</b>,
+          })}
         </AlertDescription>
       </div>
       <Button onClick={onViewClick}>
         <Microchip className="size-4" />
-        View Devices
+        {t("view")}
       </Button>
     </Alert>
   );

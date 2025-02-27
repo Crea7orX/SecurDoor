@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { type CardResponse } from "@/lib/validations/card";
 import type { DataTableFilterField, SearchParams } from "@/types/data-table";
 import { OctagonMinus, PlusCircle, ShieldCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
 
@@ -21,6 +22,8 @@ interface CardsPageProps {
 }
 
 export default function CardsPage({ searchParams }: CardsPageProps) {
+  const t = useTranslations("Card");
+
   const { data, isLoading, isPlaceholderData } = useGetAllCardsQuery({
     searchParams,
   });
@@ -30,21 +33,21 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
   const filterFields: DataTableFilterField<CardResponse>[] = [
     {
       id: "holder",
-      label: "Holder",
-      placeholder: "Filter by holder",
+      label: t("filter.holder.label"),
+      placeholder: t("filter.holder.placeholder"),
     },
     {
       id: "active",
-      label: "Status",
+      label: t("filter.active.label"),
       options: [
         {
-          label: "Active",
+          label: t("filter.active.options.active"),
           value: "true",
           icon: ShieldCheck,
           iconClassName: "text-success",
         },
         {
-          label: "Disabled",
+          label: t("filter.active.options.disabled"),
           value: "false",
           icon: OctagonMinus,
           iconClassName: "text-destructive",
@@ -76,7 +79,7 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
         <Button size="sm" asChild>
           <Link href="/dashboard/cards/add">
             <PlusCircle className="size-4" />
-            Add Card
+            {t("add.header")}
           </Link>
         </Button>
       </DataTableToolbar>

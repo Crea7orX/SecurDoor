@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { useGetAllLogsQuery } from "@/hooks/api/logs/use-get-all-logs-query";
 import type { DeviceResponse } from "@/lib/validations/device";
 import type { SearchParams } from "@/types/data-table";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface CardAddSelectDialogProps
@@ -32,6 +33,8 @@ export function CardAddSelectDialog({
   onChange,
   ...props
 }: CardAddSelectDialogProps) {
+  const t = useTranslations("Card.add.select_dialog");
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const [device, setDevice] = React.useState<DeviceResponse>();
@@ -75,17 +78,12 @@ export function CardAddSelectDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Select card</DialogTitle>
-          <DialogDescription>
-            Select the device from which you want to scan the card. Then place
-            the card on the reader. After that you will see the recent attempt
-            to unlock the device from which you can select the wanted card to
-            add.
-          </DialogDescription>
+          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-2">
-          <Label>Device</Label>
+          <Label>{t("device")}</Label>
           <CardAddDeviceCombobox
             selectedDevice={device}
             setSelectedDevice={setDevice}
@@ -95,7 +93,7 @@ export function CardAddSelectDialog({
 
         {device && (
           <div className="relative space-y-2">
-            <Label>Recent access attempts</Label>
+            <Label>{t("recent_access_attempts")}</Label>
             {isLoadingLogs || isPlaceholderData ? (
               Array.from({ length: 3 }).map((_, index) => (
                 <CardAddLogButtonSkeleton key={index} />

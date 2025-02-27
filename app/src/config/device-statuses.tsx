@@ -9,17 +9,17 @@ import {
 export const DeviceStatusDisplayInfos: Record<string, DeviceStatusDisplayInfo> =
   {
     pending_adoption: {
-      text: "Pending adoption",
+      text: "Device.status.state.pending_adoption",
       icon: RectangleEllipsis,
       color: "warning",
     },
     adopting: {
-      text: "Adopting",
+      text: "Device.status.state.adopting",
       icon: EthernetPort,
       color: "info",
     },
     adopted: {
-      text: "Adopted",
+      text: "Device.status.state.adopted",
       icon: LaptopMinimalCheck,
       color: "success",
     },
@@ -28,7 +28,7 @@ export const DeviceStatusDisplayInfos: Record<string, DeviceStatusDisplayInfo> =
 export function getDeviceStatusDisplayInfo(action: string) {
   return (
     DeviceStatusDisplayInfos[action] ?? {
-      text: "Unknown",
+      text: "Device.status.state.unknown",
       icon: CircleHelp,
       color: "warning",
     }

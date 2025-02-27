@@ -1,0 +1,24 @@
+{
+  "Common": {
+    "button": {
+      "cancel": "Cancel",
+      "clear": "Clear",
+      "continue": "Continue",
+      "go_back": "Go Back",
+      "remove": "Remove",
+      "reset": "Reset",
+      "save_changes": "Save changes",
+      "settings": "Settings",
+      "submit": "Submit"
+    },
+    "languages": {
+      "bg": "Bulgarian",
+      "en": "English"
+    },
+    "not_found": {
+      "button": "Go Home",
+      "description": "Page not found",
+      "title": "404"
+    }
+  }
+}

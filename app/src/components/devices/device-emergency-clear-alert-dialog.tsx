@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useUpdateEmergencyClearMutation } from "@/hooks/api/emergency/use-update-emergency-clear-mutation";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -25,6 +26,9 @@ export function DeviceEmergencyClearAlertDialog({
   children,
   ...props
 }: DeviceEmergencyClearAlertDialogProps) {
+  const t = useTranslations("Device.emergency.clear");
+  const tButton = useTranslations("Common.button");
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const { mutateAsync: update } = useUpdateEmergencyClearMutation({
@@ -34,17 +38,17 @@ export function DeviceEmergencyClearAlertDialog({
 
   const handleUpdate = async () => {
     setIsLoading(true);
-    const toastId = toast.loading("Clearing emergency state...");
+    const toastId = toast.loading(t("notification.loading"));
     await update()
       .then(() => {
-        toast.info("Emergency state cleared successfully!", {
+        toast.info(t("notification.success"), {
           id: toastId,
         });
 
         setIsOpen(false);
       })
       .catch(() => {
-        toast.error("Failed to clear emergency state!", {
+        toast.error(t("notification.error"), {
           id: toastId,
         });
       });
@@ -57,15 +61,17 @@ export function DeviceEmergencyClearAlertDialog({
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>{t("alert.title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            This will return the device to normal mode.
+            {t("alert.description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>
+            {tButton("cancel")}
+          </AlertDialogCancel>
           <Button disabled={isLoading} onClick={() => handleUpdate()}>
-            Continue
+            {tButton("continue")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

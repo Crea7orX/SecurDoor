@@ -6,6 +6,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { type Navigation } from "@/types";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 interface DashboardSidebarNavigationProps {
@@ -15,20 +16,22 @@ interface DashboardSidebarNavigationProps {
 export function DashboardSidebarNavigation({
   items,
 }: DashboardSidebarNavigationProps) {
+  const _t = useTranslations();
+
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+      <SidebarGroupLabel>{_t("Navigation.dashboard")}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item, index) => (
           <SidebarMenuItem key={index}>
             <SidebarMenuButton
-              tooltip={item.title}
+              tooltip={_t(item.title)}
               isActive={item.active}
               asChild
             >
               <Link href={item.url}>
                 {item.icon && <item.icon />}
-                <span>{item.title}</span>
+                <span>{_t(item.title)}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

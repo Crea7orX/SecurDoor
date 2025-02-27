@@ -2,9 +2,12 @@ import { CardCardSkeleton } from "@/components/cards/card-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PlusCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function CardsLoading() {
+  const t = useTranslations("Card.add");
+
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-4">
       <div className="flex w-full items-center justify-between gap-2 overflow-auto p-1">
@@ -16,7 +19,7 @@ export default function CardsLoading() {
           <Button size="sm" asChild>
             <Link href="/dashboard/cards/add">
               <PlusCircle className="size-4" />
-              Add Card
+              {t("header")}
             </Link>
           </Button>
         </div>

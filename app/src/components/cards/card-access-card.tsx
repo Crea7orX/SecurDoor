@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetAllAccessCardsQuery } from "@/hooks/api/access/cards/use-get-all-access-cards-query";
 import { DoorOpen, IdCard, SlidersHorizontal } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface CardAccessCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -23,6 +24,8 @@ interface CardAccessCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const CardAccessCard = React.forwardRef<HTMLDivElement, CardAccessCardProps>(
   ({ className, id, ...props }, ref) => {
+    const t = useTranslations("Card.access");
+
     const { data, isLoading } = useGetAllAccessCardsQuery({ id });
 
     return (
@@ -30,11 +33,9 @@ const CardAccessCard = React.forwardRef<HTMLDivElement, CardAccessCardProps>(
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-1">
             <IdCard className="size-6" />
-            <span>Access</span>
+            <span>{t("title")}</span>
           </CardTitle>
-          <CardDescription>
-            Number of doors that the card can be used on
-          </CardDescription>
+          <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -42,8 +43,7 @@ const CardAccessCard = React.forwardRef<HTMLDivElement, CardAccessCardProps>(
           ) : (
             <Badge variant="info" className="text-md">
               <DoorOpen className="mr-1 size-4" />
-              <span>{data?.devices.length} doors</span>
-              {/*todo: plural or singular*/}
+              <span>{t("devices", { count: data?.devices.length ?? 0 })}</span>
             </Badge>
           )}
           <Separator className="mt-6 h-1 rounded-xl" />
@@ -56,7 +56,7 @@ const CardAccessCard = React.forwardRef<HTMLDivElement, CardAccessCardProps>(
               disabled={isLoading}
             >
               <SlidersHorizontal />
-              <span>Edit Doors</span>
+              <span>{t("edit_button")}</span>
             </Button>
           </AccessCardsEditDialog>
         </CardFooter>

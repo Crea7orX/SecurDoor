@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import type { Option } from "@/types/data-table";
 import type { Column } from "@tanstack/react-table";
 import { Check, PlusCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -31,6 +32,8 @@ export function DataTableFacetedFilter<TData, TValue>({
   title,
   options,
 }: DataTableFacetedFilterProps<TData, TValue>) {
+  const t = useTranslations("Data_Table.faceted_filter");
+
   const unknownValue = column?.getFilterValue();
   const selectedValues = new Set(
     Array.isArray(unknownValue) ? unknownValue : [],
@@ -57,7 +60,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"
                   >
-                    {selectedValues.size} selected
+                    {t("selected", { size: selectedValues.size })}
                   </Badge>
                 ) : (
                   options
@@ -81,7 +84,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Command>
           <CommandInput placeholder={title} />
           <CommandList className="max-h-full">
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty>{t("no_results")}</CommandEmpty>
             <CommandGroup className="max-h-[18.75rem] overflow-y-auto overflow-x-hidden">
               {options.map((option) => {
                 const isSelected = selectedValues.has(option.value);
@@ -138,7 +141,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     onSelect={() => column?.setFilterValue(undefined)}
                     className="justify-center text-center"
                   >
-                    Clear filters
+                    {t("clear_filters")}
                   </CommandItem>
                 </CommandGroup>
               </>

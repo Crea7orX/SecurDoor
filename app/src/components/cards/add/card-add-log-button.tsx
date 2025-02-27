@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
+import { useFormatter, useNow, useTranslations } from "next-intl";
 import * as React from "react";
 
 interface CardAddLogButtonProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,28 +18,38 @@ const CardAddLogButton = React.forwardRef<
   HTMLDivElement,
   CardAddLogButtonProps
 >(({ className, cardFingerprint, setCardFingerprint, log, ...props }, ref) => {
+  const t = useTranslations("Card.add.log_button");
+  const format = useFormatter();
+  const now = useNow({
+    updateInterval: 1000,
+  });
+
   return (
     <Card className={cn(className)} ref={ref} {...props}>
       <CardContent className="flex items-center justify-between p-4">
         <div>
           <p>
-            FID:{" "}
-            <span className="font-semibold">
-              {(log.reference![1] as string).slice(-8)}
-            </span>
+            {t.rich("fingerprint", {
+              fingerprint: (log.reference![1] as string).slice(-8),
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
           </p>
           <p>
-            Date:{" "}
-            <span className="font-semibold">
-              {new Date(log.createdAt * 1000).toLocaleString()}
-            </span>
+            {t.rich("date", {
+              date: format.relativeTime(log.createdAt * 1000, now),
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
           </p>
         </div>
         <Button
           onClick={() => setCardFingerprint(log.reference![1] as string)}
           disabled={cardFingerprint === log.reference![1]}
         >
-          {cardFingerprint === log.reference![1] ? "Selected" : "Select card"}
+          {cardFingerprint === log.reference![1] ? t("selected") : t("select")}
         </Button>
       </CardContent>
     </Card>

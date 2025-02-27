@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { useGetCardByIdQuery } from "@/hooks/api/cards/use-get-card-by-id-query";
 import { ArrowLeft, IdCard } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -20,6 +21,9 @@ interface CardPageProps {
 }
 
 export default function CardPage({ params }: CardPageProps) {
+  const t = useTranslations("Card");
+  const tButton = useTranslations("Common.button");
+
   const { data, isLoading } = useGetCardByIdQuery({ id: params.id });
 
   if (isLoading) {
@@ -36,7 +40,7 @@ export default function CardPage({ params }: CardPageProps) {
         <Button className="self-start" disabled={isLoading} asChild>
           <Link href="/dashboard/cards">
             <ArrowLeft className="size-4" />
-            Go Back
+            {tButton("go_back")}
           </Link>
         </Button>
         <LogRecentActivitiesCard id={params.id} />
@@ -45,7 +49,7 @@ export default function CardPage({ params }: CardPageProps) {
       <div className="flex flex-1 flex-col gap-4">
         <Card className="w-full bg-border">
           <CardHeader className="flex-row items-center justify-center gap-2 space-y-0 p-2">
-            <span className="text-2xl font-bold">Card</span>
+            <span className="text-2xl font-bold">{t("label")}</span>
             <Badge variant="secondary" className="text-lg font-bold">
               <IdCard className="mr-1 shrink-0" />
               {data.fingerprint.slice(-8)}

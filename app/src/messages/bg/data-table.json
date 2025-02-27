@@ -1,0 +1,27 @@
+{
+  "Data_Table": {
+    "faceted_filter": {
+      "clear_filters": "Изчистване на филтрите",
+      "no_results": "Няма намерени резултати.",
+      "selected": "{size} избрани"
+    },
+    "no_results_label": "Няма резултати.",
+    "pagination": {
+      "page": "Страница {page} от {total}",
+      "rows_per_page": "Редове на страница:",
+      "selection": {
+        "disabled": "{total, plural, =1 {Показан # ред} other {Показани # реда}}.",
+        "enabled": "{selected} от {total, plural, =1 {# ред} other {# реда}} {selected, plural, =1 {# избран} other {# избрани}}."
+      }
+    },
+    "search": "Потърсете",
+    "select_all": "Избор на всичко",
+    "view_options": {
+      "button": "Вижте",
+      "search": {
+        "no_results": "Няма намерени колони.",
+        "placeholder": "Потърсете колони..."
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "Data_Table": {
+    "faceted_filter": {
+      "clear_filters": "Clear filters",
+      "no_results": "No results found.",
+      "selected": "{size} selected"
+    },
+    "no_results_label": "No results.",
+    "pagination": {
+      "page": "Page {page} of {total}",
+      "rows_per_page": "Rows per page:",
+      "selection": {
+        "disabled": "Shown {total, plural, =1 {# row} other {# rows}}.",
+        "enabled": "{selected} of {total, plural, =1 {# row} other {# rows}} selected."
+      }
+    },
+    "search": "Search",
+    "select_all": "Select All",
+    "view_options": {
+      "button": "View",
+      "search": {
+        "no_results": "No columns found.",
+        "placeholder": "Search columns..."
+      }
+    }
+  }
+}

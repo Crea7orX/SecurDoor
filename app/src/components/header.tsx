@@ -1,3 +1,4 @@
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
@@ -23,6 +24,7 @@ const Header = React.forwardRef<
           <SidebarTrigger className="-ml-1 md:hidden" />
         </div>
         <div className="flex items-center gap-2">
+          <LanguageSwitcher className="rounded-full" />
           <ThemeToggle className="rounded-full" />
           <UserButton
             appearance={{

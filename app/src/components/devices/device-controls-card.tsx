@@ -26,6 +26,7 @@ import {
   Settings,
   Wrench,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -37,6 +38,9 @@ const DeviceControlsCard = React.forwardRef<
   HTMLDivElement,
   DeviceControlsCardProps
 >(({ className, device, ...props }, ref) => {
+  const t = useTranslations("Device");
+  const tButton = useTranslations("Common.button");
+
   const queryClient = useQueryClient();
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
@@ -44,7 +48,9 @@ const DeviceControlsCard = React.forwardRef<
   const handleRefresh = async () => {
     setIsRefreshing(true);
 
-    const toastId = toast.loading("Refreshing device information...");
+    const toastId = toast.loading(
+      t("controls.basic.refresh.notification.loading"),
+    );
 
     await queryClient.invalidateQueries({
       queryKey: ["Devices", "Get", device.id],
@@ -53,7 +59,7 @@ const DeviceControlsCard = React.forwardRef<
       queryKey: ["DevicesState", "Get", device.id],
     });
 
-    toast.success("Device information refreshed!", {
+    toast.success(t("controls.basic.refresh.notification.success"), {
       id: toastId,
     });
 
@@ -65,17 +71,17 @@ const DeviceControlsCard = React.forwardRef<
       <CardHeader>
         <CardTitle className="inline-flex items-center gap-1">
           <Wrench className="size-6" />
-          <span>Controls</span>
+          <span>{t("controls.header")}</span>
         </CardTitle>
-        <CardDescription>Controls for the device</CardDescription>
+        <CardDescription>{t("controls.description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <Label className="text-md">Basic</Label>
-        <div className="flex gap-2 max-md:flex-col">
+        <Label className="text-md">{t("controls.basic.header")}</Label>
+        <div className="flex flex-wrap gap-2 max-md:flex-col">
           {!device.state ? (
             <Skeleton className="h-9 w-24" />
           ) : device.state.isLockedState ? (
-            <DeviceUnlockButton device={device} />
+            <DeviceUnlockButton className="flex-1" device={device} />
           ) : (
             <DeviceLockButton device={device} />
           )}
@@ -85,17 +91,17 @@ const DeviceControlsCard = React.forwardRef<
             disabled={isRefreshing}
           >
             <RotateCw />
-            <span>Refresh</span>
+            <span>{t("controls.basic.refresh.button")}</span>
           </Button>
           <DeviceSettingsDialog device={device}>
             <Button className="flex-1">
               <Settings />
-              <span>Settings</span>
+              <span>{tButton("settings")}</span>
             </Button>
           </DeviceSettingsDialog>
         </div>
         <Separator className="h-1 rounded-xl" />
-        <Label className="text-md">Emergency</Label>
+        <Label className="text-md">{t("controls.emergency.header")}</Label>
         <div className="flex gap-2 max-md:flex-col">
           <DeviceEmergencyAlertDialog id={device.id} state="lockdown">
             <Button
@@ -104,7 +110,7 @@ const DeviceControlsCard = React.forwardRef<
               disabled={device.emergencyState === "lockdown"}
             >
               <Construction />
-              <span>LOCKDOWN</span>
+              <span>{t("emergency.button.lockdown")}</span>
             </Button>
           </DeviceEmergencyAlertDialog>
           <DeviceEmergencyAlertDialog id={device.id} state="evacuation">
@@ -114,7 +120,7 @@ const DeviceControlsCard = React.forwardRef<
               disabled={device.emergencyState === "evacuation"}
             >
               <BellElectric />
-              <span>EVACUATION</span>
+              <span>{t("emergency.button.evacuation")}</span>
             </Button>
           </DeviceEmergencyAlertDialog>
         </div>
@@ -122,7 +128,7 @@ const DeviceControlsCard = React.forwardRef<
           <DeviceEmergencyClearAlertDialog id={device.id}>
             <Button variant="info" className="w-full">
               <Activity />
-              <span>CLEAR</span>
+              <span>{t("emergency.button.clear")}</span>
             </Button>
           </DeviceEmergencyClearAlertDialog>
         )}

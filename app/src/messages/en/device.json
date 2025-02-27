@@ -1,0 +1,198 @@
+{
+  "Device": {
+    "access": {
+      "cards": "{count, plural, =1 {# card} other {# cards}}",
+      "description": "Number of people who have access to the door",
+      "dialog": {
+        "card": "{holder} (FID: {fingerprint})",
+        "description": "Select the cards that can be used on the door",
+        "notification": {
+          "error": "Failed to update access!",
+          "loading": "Updating access...",
+          "success": "Access updated!"
+        },
+        "title": "Edit Access"
+      },
+      "edit_button": "Edit Cards",
+      "title": "Access"
+    },
+    "add": {
+      "header": "Add Device",
+      "notification": {
+        "error": "Failed to add device!",
+        "error_already_exists": "Device with this Serial ID already exists!",
+        "loading": "Adding Device...",
+        "success": "Device Added!",
+        "view": "View Device"
+      }
+    },
+    "added": {
+      "description": "The date and time when the device was added",
+      "title": "Added"
+    },
+    "card": {
+      "emergency_state": {
+        "evacuation": "EVACUATION",
+        "lockdown": "LOCKDOWN"
+      },
+      "state": {
+        "locked": "LOCKED",
+        "unlocked": "UNLOCKED"
+      }
+    },
+    "controls": {
+      "basic": {
+        "header": "Basic",
+        "refresh": {
+          "button": "Refresh",
+          "notification": {
+            "loading": "Refreshing device information...",
+            "success": "Device information refreshed!"
+          }
+        }
+      },
+      "description": "Controls for the device",
+      "emergency": {
+        "header": "Emergency"
+      },
+      "header": "Controls"
+    },
+    "danger_zone": {
+      "description": "Dangerous actions that can not be undone",
+      "title": "Danger Zone"
+    },
+    "delete": {
+      "alert": {
+        "description": "This action cannot be undone. This will permanently delete this device and it will no longer be accessible.",
+        "notification": {
+          "error": "Failed to delete device!",
+          "loading": "Deleting device...",
+          "success": "Device deleted!"
+        },
+        "title": "Are you absolutely sure?"
+      }
+    },
+    "edit": {
+      "description": "Edit device settings",
+      "header": "Edit Device",
+      "notification": {
+        "error": "Failed to update device!",
+        "loading": "Updating device...",
+        "success": "Device updated!"
+      }
+    },
+    "emergency": {
+      "alert": {
+        "description": "This will put the device in emergency mode ({state, select, lockdown {LOCKDOWN} other {EVACUATION}}). This will {state, select, lockdown {lock} other {unlock}} the door and you will need to clear the emergency state manually in order to return to normal mode.",
+        "title": "Are you absolutely sure?"
+      },
+      "button": {
+        "clear": "CLEAR",
+        "evacuation": "EVACUATION",
+        "lockdown": "LOCKDOWN"
+      },
+      "clear": {
+        "alert": {
+          "description": "This will clear the emergency state. This will return the device to normal mode.",
+          "title": "Are you absolutely sure?"
+        },
+        "notification": {
+          "error": "Failed to clear emergency state!",
+          "loading": "Clearing emergency state...",
+          "success": "Emergency state cleared successfully!"
+        }
+      },
+      "notification": {
+        "error": "Failed to update emergency state!",
+        "loading": "Updating emergency state...",
+        "success": "Emergency state updated successfully!"
+      }
+    },
+    "emergency_count_alert": {
+      "description": "You have <b>{lockdownCount}</b> {lockdownCount, plural, =1 {device} other {devices}} in <b>LOCKDOWN</b> mode and <b>{evacuationCount}</b> {evacuationCount, plural, =1 {device} other {devices}} in <b>EVACUATION</b> mode.",
+      "title": "Warning!",
+      "view": "View Devices"
+    },
+    "field": {
+      "cards": {
+        "label": "Cards",
+        "placeholder": "Select cards"
+      },
+      "name": {
+        "description": "Display name for the device.",
+        "label": "Name",
+        "placeholder": "Door 1"
+      },
+      "re_lock_delay": {
+        "description": "Re-lock delay in seconds. 0 to disable auto re-lock.",
+        "label": "Re-lock delay"
+      },
+      "serial_id": {
+        "description": "The identifier written on the back of the device.",
+        "label": "Serial ID",
+        "placeholder": "abcdef12-3456-7890-abcd-ef1234567890"
+      }
+    },
+    "filter": {
+      "emergency_state": {
+        "label": "Emergency State",
+        "options": {
+          "evacuation": "Evacuation",
+          "lockdown": "Lockdown"
+        }
+      },
+      "name": {
+        "label": "Name",
+        "placeholder": "Filter by name"
+      }
+    },
+    "label": "Device",
+    "lock": {
+      "button": "Lock",
+      "notification": {
+        "error": "Failed to lock device!",
+        "loading": "Locking door...",
+        "success": "Lock command sent!"
+      }
+    },
+    "reboot": {
+      "button": "Reboot"
+    },
+    "state": {
+      "description": "State of the door lock",
+      "emergency_state": {
+        "evacuation": "EVACUATION",
+        "lockdown": "LOCKDOWN"
+      },
+      "state": {
+        "locked": "Locked",
+        "unlocked": "Unlocked"
+      },
+      "title": "State"
+    },
+    "status": {
+      "description": "Device online status",
+      "last_seen": {
+        "never": "Never",
+        "text": "Last seen: <semibold>{date}</semibold>"
+      },
+      "state": {
+        "adopted": "Adopted",
+        "adopting": "Adopting",
+        "offline": "Offline",
+        "online": "Online",
+        "pending_adoption": "Pending adoption",
+        "unknown": "Unknown"
+      },
+      "title": "Status"
+    },
+    "unlock": {
+      "button": "Unlock",
+      "notification": {
+        "error": "Failed to unlock device!",
+        "loading": "Unlocking door...",
+        "success": "Unlock command sent!"
+      }
+    }
+  }
+}

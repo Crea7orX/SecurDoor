@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { useUpdateCardMutation } from "@/hooks/api/cards/use-update-card-mutation";
 import { type CardResponse } from "@/lib/validations/card";
 import { Hand, OctagonMinus, ShieldCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -23,6 +24,8 @@ interface CardStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
   ({ className, card, ...props }, ref) => {
+    const t = useTranslations("Card.status");
+
     const { mutateAsync: update } = useUpdateCardMutation({
       id: card.id,
     });
@@ -31,25 +34,29 @@ const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
     const handleUpdate = async (value: boolean) => {
       setIsLoading(true);
       const toastId = toast.loading(
-        value ? "Activating card..." : "Disabling card...",
+        value
+          ? t("notification.activate.loading")
+          : t("notification.disable.loading"),
       );
       await update({
         active: value,
       })
         .then(() => {
           if (value) {
-            toast.success("Card activated!", {
+            toast.success(t("notification.activate.success"), {
               id: toastId,
             });
           } else {
-            toast.warning("Card disabled!", {
+            toast.warning(t("notification.disable.success"), {
               id: toastId,
             });
           }
         })
         .catch(() => {
           toast.error(
-            value ? "Failed to activate card!" : "Failed to disable card!",
+            value
+              ? t("notification.activate.error")
+              : t("notification.disable.error"),
             {
               id: toastId,
             },
@@ -64,20 +71,20 @@ const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-1">
             <Hand className="size-6" />
-            <span>Status</span>
+            <span>{t("title")}</span>
           </CardTitle>
-          <CardDescription>Access status of the card</CardDescription>
+          <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
           {card.active ? (
             <Badge variant="success" className="text-md">
               <ShieldCheck className="mr-1 size-4" />
-              <span>Active</span>
+              <span>{t("state.active")}</span>
             </Badge>
           ) : (
             <Badge variant="destructive" className="text-md">
               <OctagonMinus className="mr-1 size-4" />
-              <span>Disabled</span>
+              <span>{t("state.disabled")}</span>
             </Badge>
           )}
           <Separator className="mt-6 h-1 rounded-xl" />
@@ -91,7 +98,7 @@ const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
               onClick={() => handleUpdate(false)}
             >
               <OctagonMinus />
-              <span>Disable</span>
+              <span>{t("button.disable")}</span>
             </Button>
           ) : (
             <Button
@@ -101,7 +108,7 @@ const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
               onClick={() => handleUpdate(true)}
             >
               <ShieldCheck />
-              <span>Activate</span>
+              <span>{t("button.activate")}</span>
             </Button>
           )}
         </CardFooter>

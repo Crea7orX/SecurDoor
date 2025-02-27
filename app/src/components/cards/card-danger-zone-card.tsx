@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/card";
 import { useDeleteCardMutation } from "@/hooks/api/cards/use-delete-card-mutation";
 import { Trash, TriangleAlert } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { toast } from "sonner";
@@ -31,6 +32,9 @@ const CardDangerZoneCard = React.forwardRef<
   HTMLDivElement,
   CardDangerZoneCardProps
 >(({ className, id, ...props }, ref) => {
+  const t = useTranslations("Card");
+  const tButton = useTranslations("Common.button");
+
   const router = useRouter();
 
   const { mutateAsync: doDelete } = useDeleteCardMutation({
@@ -41,10 +45,10 @@ const CardDangerZoneCard = React.forwardRef<
 
   const handleDelete = async () => {
     setIsLoading(true);
-    const toastId = toast.loading("Deleting card...");
+    const toastId = toast.loading(t("delete.notification.loading"));
     await doDelete()
       .then(() => {
-        toast.warning("Card deleted successfully!", {
+        toast.warning(t("delete.notification.success"), {
           id: toastId,
         });
 
@@ -52,7 +56,7 @@ const CardDangerZoneCard = React.forwardRef<
         router.push("/dashboard/cards");
       })
       .catch(() => {
-        toast.error("Failed to delete card!", {
+        toast.error(t("delete.notification.error"), {
           id: toastId,
         });
       });
@@ -66,11 +70,9 @@ const CardDangerZoneCard = React.forwardRef<
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-1 text-destructive">
             <TriangleAlert className="size-6" />
-            <span>Danger Zone</span>
+            <span>{t("danger_zone.title")}</span>
           </CardTitle>
-          <CardDescription>
-            Dangerous actions that can not be undone
-          </CardDescription>
+          <CardDescription>{t("danger_zone.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex items-stretch gap-2 max-md:flex-col">
           <Button
@@ -79,23 +81,24 @@ const CardDangerZoneCard = React.forwardRef<
             onClick={() => setIsOpen(true)}
           >
             <Trash />
-            <span>Remove</span>
+            <span>{tButton("remove")}</span>
           </Button>
         </CardContent>
       </Card>
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("delete.alert.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this
-              card and remove its access to all doors.
+              {t("delete.alert.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isLoading}>
+              {tButton("cancel")}
+            </AlertDialogCancel>
             <Button disabled={isLoading} onClick={() => handleDelete()}>
-              Continue
+              {tButton("continue")}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

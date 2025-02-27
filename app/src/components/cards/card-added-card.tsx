@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { type CardResponse } from "@/lib/validations/card";
 import { CalendarClock } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
 
 interface CardAddedCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,21 +17,27 @@ interface CardAddedCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const CardAddedCard = React.forwardRef<HTMLDivElement, CardAddedCardProps>(
   ({ className, card, ...props }, ref) => {
+    const t = useTranslations("Card.added");
+    const format = useFormatter();
+
     return (
       <Card className={className} ref={ref} {...props}>
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-1">
             <CalendarClock className="size-6" />
-            <span>Added</span>
+            <span>{t("title")}</span>
           </CardTitle>
-          <CardDescription>
-            The date and time when the card was added
-          </CardDescription>
+          <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Badge variant="info" className="text-md">
             <CalendarClock className="mr-1 size-4" />
-            <span>{new Date(card.createdAt * 1000).toLocaleString()}</span>
+            <span>
+              {format.dateTime(card.createdAt * 1000, {
+                dateStyle: "medium",
+                timeStyle: "medium",
+              })}
+            </span>
           </Badge>
         </CardContent>
       </Card>
