@@ -113,7 +113,7 @@ export async function accessDeviceUpdate(
 
     // Log for each card with the device
     newCardIds.forEach((id) => {
-      const reference = [deviceId];
+      const reference = [deviceId, device.serialId, device.name];
       logs.push({
         action: "card.add_device",
         objectId: id,
@@ -135,7 +135,7 @@ export async function accessDeviceUpdate(
 
     // Log for each card with the device
     toDelete.forEach((id) => {
-      const reference = [deviceId];
+      const reference = [deviceId, device.serialId, device.name];
       logs.push({
         action: "card.remove_device",
         objectId: id,
@@ -235,7 +235,12 @@ export async function accessCardUpdate(
     logs.push({
       action: "card.access_update",
       objectId: cardId,
-      reference: [[...newDeviceIds], [...toDelete]],
+      reference: [
+        card.fingerprint,
+        card.holder ?? "NULL",
+        [...newDeviceIds],
+        [...toDelete],
+      ],
     });
   }
 
@@ -378,6 +383,7 @@ export async function accessCardTryAuthentication({
           access.cards.fingerprint,
           access.cards.holder ?? "NULL",
           device.serialId,
+          device.name,
         ],
       },
     ];
@@ -418,6 +424,7 @@ export async function accessCardTryAuthentication({
           access.cards.fingerprint,
           access.cards.holder ?? "NULL",
           device.serialId,
+          device.name,
         ],
       },
     ];
