@@ -15,6 +15,10 @@
       "bg": "Български",
       "en": "English"
     },
+    "metadata": {
+      "description": "SecurDoor - нещо невероятно в индустрията на сигурността.",
+      "title": "SecurDoor"
+    },
     "not_found": {
       "button": "Към началото",
       "description": "Страницата не е намерена",
