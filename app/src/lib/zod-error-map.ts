@@ -69,7 +69,7 @@ export const makeZodI18nMap: MakeZodI18nMap = (option) => (issue, ctx) => {
 
   const path =
     issue.path.length > 0 && !!tForm
-      ? { path: tForm(issue.path.join(".") as any) }
+      ? { path: tForm(issue.path.join(".") as never) }
       : {};
 
   switch (issue.code) {
@@ -202,7 +202,7 @@ export const makeZodI18nMap: MakeZodI18nMap = (option) => (issue, ctx) => {
         "errors.custom",
       );
 
-      message = (tCustom || t)(key as Parameters<typeof t>[0], {
+      message = (tCustom ?? t)(key as Parameters<typeof t>[0], {
         ...values,
         ...path,
       });
