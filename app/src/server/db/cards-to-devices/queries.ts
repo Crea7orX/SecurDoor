@@ -51,7 +51,8 @@ export async function accessDeviceUpdate(
   ownerId: string,
 ) {
   // Ensure device ownership
-  if (!(await deviceGetById(deviceId, ownerId))) {
+  const device = await deviceGetById(deviceId, ownerId);
+  if (!device) {
     throw new NotFoundError();
   }
 
@@ -97,7 +98,7 @@ export async function accessDeviceUpdate(
     logs.push({
       action: "device.access_update",
       objectId: deviceId,
-      reference: [[...newCardIds], [...toDelete]],
+      reference: [device.serialId, device.name, [...newCardIds], [...toDelete]],
     });
   }
 
@@ -183,7 +184,8 @@ export async function accessCardUpdate(
   ownerId: string,
 ) {
   // Validate card ownership
-  if (!(await cardGetById(cardId, ownerId))) {
+  const card = await cardGetById(cardId, ownerId);
+  if (!card) {
     throw new NotFoundError();
   }
 
@@ -251,7 +253,7 @@ export async function accessCardUpdate(
       logs.push({
         action: "device.add_card",
         objectId: id,
-        reference: [cardId],
+        reference: [cardId, card.holder ?? "NULL", card.fingerprint],
       });
     });
   }
@@ -272,7 +274,7 @@ export async function accessCardUpdate(
       logs.push({
         action: "device.remove_card",
         objectId: id,
-        reference: [cardId],
+        reference: [cardId, card.holder ?? "NULL", card.fingerprint],
       });
     });
   }
@@ -323,7 +325,7 @@ export async function accessCardTryAuthentication({
 
   // no access given to the device
   if (!access) {
-    const reference = [device.serialId, fingerprint];
+    const reference = [device.serialId, device.name, fingerprint];
     void logInsert(
       ownerId,
       "device.access_denied",
@@ -363,6 +365,8 @@ export async function accessCardTryAuthentication({
         objectId: deviceId,
         reference: [
           device.serialId,
+          device.name,
+          "true",
           access.cards.fingerprint,
           access.cards.holder ?? "NULL",
         ],
@@ -401,6 +405,8 @@ export async function accessCardTryAuthentication({
         objectId: deviceId,
         reference: [
           device.serialId,
+          device.name,
+          "true",
           access.cards.fingerprint,
           access.cards.holder ?? "NULL",
         ],
