@@ -31,43 +31,43 @@
     "logs": {
       "card": {
         "access_update": {
-          "text": "{actor} updated card access",
+          "text": "\"{actor}\" updated card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\") access, adding {newCount, plural, =1 {# device} other {# devices}} and removing {deleteCount, plural, =1 {# device} other {# devices}}.",
           "title": "Card access updated"
         },
         "activate": {
-          "text": "{actor} activated card",
+          "text": "\"{actor}\" activated card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\").",
           "title": "Card activated"
         },
         "add_device": {
-          "text": "{actor} added card to device",
+          "text": "\"{actor}\" added card to device \"{deviceName}\" (SN: \"{serialId}\").",
           "title": "Card added to device"
         },
         "create": {
-          "text": "{actor} created card",
+          "text": "\"{actor}\" created card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\").",
           "title": "Card created"
         },
         "deactivate": {
-          "text": "{actor} deactivated card",
+          "text": "\"{actor}\" deactivated card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\").",
           "title": "Card deactivated"
         },
         "delete": {
-          "text": "{actor} deleted card",
+          "text": "\"{actor}\" deleted card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\").",
           "title": "Card deleted"
         },
         "lock": {
-          "text": "{actor} locked device with card",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") using card with fingerprint \"{fingerprint}\".",
           "title": "Card locked device"
         },
         "remove_device": {
-          "text": "{actor} removed card from device",
+          "text": "\"{actor}\" removed card from device \"{deviceName}\" (SN: \"{serialId}\").",
           "title": "Card removed from device"
         },
         "rename": {
-          "text": "{actor} renamed card",
-          "title": "Card renamed"
+          "text": "\"{actor}\" renamed card holder to \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\").",
+          "title": "Card holder renamed"
         },
         "unlock": {
-          "text": "{actor} unlocked device with card",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") using card with fingerprint \"{fingerprint}\".",
           "title": "Card unlocked device"
         }
       },
