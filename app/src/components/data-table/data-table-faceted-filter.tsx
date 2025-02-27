@@ -80,7 +80,10 @@ export function DataTableFacetedFilter<TData, TValue>({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[12.5rem] p-0" align="start">
+      <PopoverContent
+        className="w-full max-w-[12.5rem] p-0 md:max-w-64"
+        align="start"
+      >
         <Command>
           <CommandInput placeholder={title} />
           <CommandList className="max-h-full">
@@ -123,7 +126,9 @@ export function DataTableFacetedFilter<TData, TValue>({
                         aria-hidden="true"
                       />
                     )}
-                    <span>{option.label}</span>
+                    <span className="overflow-hidden text-ellipsis">
+                      {option.label}
+                    </span>
                     {option.count && (
                       <span className="ml-auto flex size-4 items-center justify-center font-mono text-xs">
                         {option.count}
