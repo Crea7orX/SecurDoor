@@ -73,47 +73,47 @@
       },
       "device": {
         "access_denied": {
-          "text": "Someone tried to access device \"{deviceName}\" using card with fingerprint \"{fingerprint}\" but it was denied.",
+          "text": "Someone tried to access device \"{deviceName}\" (SN: \"{serialId}\") using card with fingerprint \"{fingerprint}\" but it was denied.",
           "title": "Device access denied"
         },
         "access_update": {
-          "text": "{actor} updated device \"{deviceName}\" access, adding {newCount, plural, =1 {# card} other {# cards}} and removing {deleteCount, plural, =1 {# card} other {# cards}}.",
+          "text": "\"{actor}\" updated device \"{deviceName}\" (SN: \"{serialId}\") access, adding {newCount, plural, =1 {# card} other {# cards}} and removing {deleteCount, plural, =1 {# card} other {# cards}}.",
           "title": "Device access updated"
         },
         "add_card": {
-          "text": "{actor} added device to card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" and fingerprint \"{fingerprint}\".",
+          "text": "\"{actor}\" added device to card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\").",
           "title": "Device added to card"
         },
         "create": {
-          "text": "\"{actor}\" created device with name \"{deviceName}\"",
+          "text": "\"{actor}\" created device with name \"{deviceName}\" (SN: \"{serialId}\").",
           "title": "Device created"
         },
         "delete": {
-          "text": "\"{actor}\" deleted device with name \"{deviceName}\"",
+          "text": "\"{actor}\" deleted device with name \"{deviceName}\" (SN: \"{serialId}\").",
           "title": "Device deleted"
         },
         "emergency_state": {
-          "text": "{actor} updated device \"{deviceName}\" emergency state to \"{emergencyState, select, lockdown {LOCKDOWN} evacuation {EVACUATION} other {CLEAR}}\".",
+          "text": "\"{actor}\" updated device \"{deviceName}\" (SN: \"{serialId}\") emergency state to \"{emergencyState, select, lockdown {LOCKDOWN} evacuation {EVACUATION} other {CLEAR}}\".",
           "title": "Device emergency state updated"
         },
         "lock": {
-          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
           "title": "Device locked"
         },
         "re_lock_delay": {
-          "text": "{actor} updated device \"{deviceName}\" re-lock delay to \"{reLockDelay, select, 0 {never} other {{reLockDelay} {reLockDelay, plural, one {second} other {seconds}}}}\".",
+          "text": "\"{actor}\" updated device \"{deviceName}\" (SN: \"{serialId}\") re-lock delay to \"{reLockDelay, select, 0 {never} other {{reLockDelay} {reLockDelay, plural, one {second} other {seconds}}}}\".",
           "title": "Device re-lock delay updated"
         },
         "remove_card": {
-          "text": "{actor} removed device from card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" and fingerprint \"{fingerprint}\".",
+          "text": "\"{actor}\" removed device from card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\").",
           "title": "Device removed from card"
         },
         "rename": {
-          "text": "\"{actor}\" renamed device to \"{deviceName}\"",
+          "text": "\"{actor}\" renamed device to \"{deviceName}\" (SN: \"{serialId}\").",
           "title": "Device renamed"
         },
         "unlock": {
-          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
           "title": "Device unlocked"
         }
       },
