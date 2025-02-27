@@ -11,7 +11,7 @@ export async function logInsert(
   action: string,
   actorId: string,
   objectId?: string,
-  reference?: string[],
+  reference?: object,
 ) {
   let actorName: string | undefined;
   let actorEmail: string | undefined;
@@ -43,7 +43,7 @@ export async function logInsert(
 export type LogsInsertMultipleData = {
   action: string;
   objectId?: string;
-  reference?: string[] | string[][];
+  reference?: object;
 };
 
 export async function logInsertMultiple(

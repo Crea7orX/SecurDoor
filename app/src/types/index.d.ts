@@ -1,4 +1,7 @@
+import { type LogResponse } from "@/lib/validations/log";
 import type { LucideIcon } from "lucide-react";
+import { type useTranslations } from "next-intl";
+import type * as React from "react";
 
 export type Navigation = {
   title: string;
@@ -9,7 +12,15 @@ export type Navigation = {
 
 export type LogDisplayInfo = {
   title: string;
-  text: string;
+  text: ({
+    t,
+    log,
+    actionActor,
+  }: {
+    t: ReturnType<typeof useTranslations>;
+    log: LogResponse;
+    actionActor: string;
+  }) => React.ReactNode;
   icon: LucideIcon;
   color:
     | "default"
@@ -18,7 +29,6 @@ export type LogDisplayInfo = {
     | "success"
     | "info"
     | "warning";
-  description?: string; // todo
 };
 
 export type DeviceStatusDisplayInfo = {

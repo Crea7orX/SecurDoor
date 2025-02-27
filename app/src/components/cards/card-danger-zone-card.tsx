@@ -48,7 +48,7 @@ const CardDangerZoneCard = React.forwardRef<
     const toastId = toast.loading(t("delete.notification.loading"));
     await doDelete()
       .then(() => {
-        toast.warning(t("delete.notification.success"), {
+        toast.warning(t("delete.alert.notification.success"), {
           id: toastId,
         });
 
@@ -56,7 +56,7 @@ const CardDangerZoneCard = React.forwardRef<
         router.push("/dashboard/cards");
       })
       .catch(() => {
-        toast.error(t("delete.notification.error"), {
+        toast.error(t("delete.alert.notification.error"), {
           id: toastId,
         });
       });

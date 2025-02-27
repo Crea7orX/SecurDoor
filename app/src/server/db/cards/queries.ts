@@ -37,7 +37,7 @@ export async function cardInsert(
   )[0];
 
   if (card) {
-    const reference = [card.fingerprint, card.active.toString()];
+    const reference = [card.fingerprint, card.holder ?? "NULL", card.active];
     void logInsert(ownerId, "card.create", userId, card.id, reference);
   }
 
@@ -149,13 +149,12 @@ export async function cardUpdate(
   )[0];
 
   if (card) {
+    const reference = [card.fingerprint, card.holder ?? "NULL"];
     if (typeof update.holder === "string") {
-      const reference = [card.fingerprint, card.holder ?? "NULL"];
       void logInsert(ownerId, "card.rename", userId, card.id, reference);
     }
 
     if (typeof update.active === "boolean") {
-      const reference = [card.fingerprint, card.active.toString()];
       void logInsert(
         ownerId,
         card.active ? "card.activate" : "card.deactivate",
@@ -178,11 +177,7 @@ export async function cardDelete(id: string, userId: string, ownerId: string) {
   )[0];
 
   if (card) {
-    const reference = [
-      card.fingerprint,
-      card.holder ?? "NULL",
-      card.active.toString(),
-    ];
+    const reference = [card.fingerprint, card.holder ?? "NULL", card.active];
     void logInsert(ownerId, "card.delete", userId, card.id, reference);
   }
 

@@ -33,13 +33,18 @@ export async function emergencyStateSetDevice(
       .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)))
       .returning({
         id: devices.id,
+        name: devices.name,
         serialId: devices.serialId,
         emergencyState: devices.emergencyState,
       })
   )[0];
 
   if (device) {
-    const reference = [device.serialId, device.emergencyState ?? "clear"];
+    const reference = [
+      device.serialId,
+      device.name,
+      device.emergencyState ?? "clear",
+    ];
     void logInsert(
       ownerId,
       "device.emergency_state",

@@ -190,7 +190,7 @@ export async function deviceUpdate(
     }
 
     if (typeof update.reLockDelay === "number") {
-      const reference = [device.serialId, device.reLockDelay.toString()];
+      const reference = [device.serialId, device.name, device.reLockDelay];
       void logInsert(
         ownerId,
         "device.re_lock_delay",
@@ -279,7 +279,7 @@ export async function deviceSetLocked({
   )[0];
 
   if (device) {
-    const reference = [device.serialId, isLocked.toString()];
+    const reference = [device.serialId, device.name, "false"];
     void logInsert(
       ownerId,
       isLocked ? "device.lock" : "device.unlock",

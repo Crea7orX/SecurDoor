@@ -2,7 +2,7 @@ import { logColorVariants } from "@/components/logs/log-card";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getLogDisplayInfo } from "@/config/logs";
+import { useLog } from "@/hooks/use-log";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
 import { useFormatter, useTranslations } from "next-intl";
@@ -18,7 +18,7 @@ const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
     const t = useTranslations("Log.activity_card");
     const format = useFormatter();
 
-    const logDisplayInfo = getLogDisplayInfo(log.action);
+    const logDisplayInfo = useLog(log);
 
     const badgeRef = React.useRef<HTMLDivElement>(null);
     const [badgeHeight, setBadgeHeight] = React.useState(0);

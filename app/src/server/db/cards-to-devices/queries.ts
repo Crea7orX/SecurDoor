@@ -51,7 +51,8 @@ export async function accessDeviceUpdate(
   ownerId: string,
 ) {
   // Ensure device ownership
-  if (!(await deviceGetById(deviceId, ownerId))) {
+  const device = await deviceGetById(deviceId, ownerId);
+  if (!device) {
     throw new NotFoundError();
   }
 
@@ -97,7 +98,7 @@ export async function accessDeviceUpdate(
     logs.push({
       action: "device.access_update",
       objectId: deviceId,
-      reference: [[...newCardIds], [...toDelete]],
+      reference: [device.serialId, device.name, [...newCardIds], [...toDelete]],
     });
   }
 
@@ -112,7 +113,7 @@ export async function accessDeviceUpdate(
 
     // Log for each card with the device
     newCardIds.forEach((id) => {
-      const reference = [deviceId];
+      const reference = [deviceId, device.serialId, device.name];
       logs.push({
         action: "card.add_device",
         objectId: id,
@@ -134,7 +135,7 @@ export async function accessDeviceUpdate(
 
     // Log for each card with the device
     toDelete.forEach((id) => {
-      const reference = [deviceId];
+      const reference = [deviceId, device.serialId, device.name];
       logs.push({
         action: "card.remove_device",
         objectId: id,
@@ -183,7 +184,8 @@ export async function accessCardUpdate(
   ownerId: string,
 ) {
   // Validate card ownership
-  if (!(await cardGetById(cardId, ownerId))) {
+  const card = await cardGetById(cardId, ownerId);
+  if (!card) {
     throw new NotFoundError();
   }
 
@@ -233,7 +235,12 @@ export async function accessCardUpdate(
     logs.push({
       action: "card.access_update",
       objectId: cardId,
-      reference: [[...newDeviceIds], [...toDelete]],
+      reference: [
+        card.fingerprint,
+        card.holder ?? "NULL",
+        [...newDeviceIds],
+        [...toDelete],
+      ],
     });
   }
 
@@ -251,7 +258,7 @@ export async function accessCardUpdate(
       logs.push({
         action: "device.add_card",
         objectId: id,
-        reference: [cardId],
+        reference: [cardId, card.fingerprint, card.holder ?? "NULL"],
       });
     });
   }
@@ -272,7 +279,7 @@ export async function accessCardUpdate(
       logs.push({
         action: "device.remove_card",
         objectId: id,
-        reference: [cardId],
+        reference: [cardId, card.fingerprint, card.holder ?? "NULL"],
       });
     });
   }
@@ -323,7 +330,7 @@ export async function accessCardTryAuthentication({
 
   // no access given to the device
   if (!access) {
-    const reference = [device.serialId, fingerprint];
+    const reference = [device.serialId, device.name, fingerprint];
     void logInsert(
       ownerId,
       "device.access_denied",
@@ -363,6 +370,8 @@ export async function accessCardTryAuthentication({
         objectId: deviceId,
         reference: [
           device.serialId,
+          device.name,
+          "true",
           access.cards.fingerprint,
           access.cards.holder ?? "NULL",
         ],
@@ -374,6 +383,7 @@ export async function accessCardTryAuthentication({
           access.cards.fingerprint,
           access.cards.holder ?? "NULL",
           device.serialId,
+          device.name,
         ],
       },
     ];
@@ -401,6 +411,8 @@ export async function accessCardTryAuthentication({
         objectId: deviceId,
         reference: [
           device.serialId,
+          device.name,
+          "true",
           access.cards.fingerprint,
           access.cards.holder ?? "NULL",
         ],
@@ -412,6 +424,7 @@ export async function accessCardTryAuthentication({
           access.cards.fingerprint,
           access.cards.holder ?? "NULL",
           device.serialId,
+          device.name,
         ],
       },
     ];
