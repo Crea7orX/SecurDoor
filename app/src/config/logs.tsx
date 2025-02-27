@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
+  // Reference: [serialId, name]
   "device.create": {
     title: "Log.logs.device.create.title",
     text: ({ t, log, actionActor }) =>
@@ -31,6 +32,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: DiamondPlus,
     color: "success",
   },
+
+  // Reference: [serialId, name]
   "device.delete": {
     title: "Log.logs.device.delete.title",
     text: ({ t, log, actionActor }) =>
@@ -42,6 +45,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: DiamondMinus,
     color: "destructive",
   },
+
+  // Reference: [serialId, name]
   "device.rename": {
     title: "Log.logs.device.rename.title",
     text: ({ t, log, actionActor }) =>
@@ -53,6 +58,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: Microchip,
     color: "info",
   },
+
+  // Reference: [serialId, name, reLockDelay]
   "device.re_lock_delay": {
     title: "Log.logs.device.re_lock_delay.title",
     text: ({ t, log, actionActor }) =>
@@ -65,6 +72,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: ClockAlert,
     color: "warning",
   },
+
+  // Reference: [serialId, name, [...newCardIds], [...toDelete]]
   "device.access_update": {
     title: "Log.logs.device.access_update.title",
     text: ({ t, log, actionActor }) =>
@@ -78,6 +87,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: IdCard,
     color: "info",
   },
+
+  // Reference: [cardId, cardFingerprint, cardHolder]
   "device.add_card": {
     title: "Log.logs.device.add_card.title",
     text: ({ t, log, actionActor }) =>
@@ -89,6 +100,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: IdCard,
     color: "success",
   },
+
+  // Reference: [cardId, cardFingerprint, cardHolder]
   "device.remove_card": {
     title: "Log.logs.device.remove_card.title",
     text: ({ t, log, actionActor }) =>
@@ -100,6 +113,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: IdCard,
     color: "destructive",
   },
+
+  // Reference: [serialId, name, isCard, cardFingerprint?, cardHolder?]
   "device.lock": {
     title: "Log.logs.device.lock.text",
     text: ({ t, log, actionActor }) => {
@@ -118,6 +133,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: Lock,
     color: "destructive",
   },
+
+  // Reference: [serialId, name, isCard, cardFingerprint?, cardHolder?]
   "device.unlock": {
     title: "Log.logs.device.unlock.title",
     text: ({ t, log, actionActor }) => {
@@ -136,6 +153,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: LockOpen,
     color: "success",
   },
+
+  // Reference: [serialId, name, emergencyState]
   "device.emergency_state": {
     title: "Log.logs.device.emergency_state.title",
     text: ({ t, log, actionActor }) =>
@@ -148,6 +167,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: Siren,
     color: "destructive",
   },
+
+  // Reference: [serialId, name, fingerprint]
   "device.access_denied": {
     title: "Log.logs.device.access_denied.title",
     text: ({ t, log, actionActor }) =>
@@ -161,6 +182,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
+  // Reference: [serialId]
   "device_status.pending_adoption": {
     title: "Log.logs.device_status.pending_adoption.title",
     text: ({ t, actionActor }) =>
@@ -170,6 +192,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: RectangleEllipsis,
     color: "warning",
   },
+
+  // Reference: [serialId]
   "device_status.adopting": {
     title: "Log.logs.device_status.adopting.title",
     text: ({ t, actionActor }) =>
@@ -179,6 +203,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: EthernetPort,
     color: "info",
   },
+
+  // Reference: [serialId]
   "device_status.adopted": {
     title: "Log.logs.device_status.adopted.title",
     text: ({ t, actionActor }) =>
@@ -189,6 +215,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "success",
   },
 
+  // Reference: [fingerprint, holder, active]
   "card.create": {
     title: "Log.logs.card.create.title",
     text: ({ t, log, actionActor }) =>
@@ -200,6 +227,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: CirclePlus,
     color: "success",
   },
+
+  // Reference: [fingerprint, holder, active]
   "card.delete": {
     title: "Log.logs.card.delete.title",
     text: ({ t, log, actionActor }) =>
@@ -211,6 +240,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: CircleMinus,
     color: "destructive",
   },
+
+  // Reference: [fingerprint, holder]
   "card.rename": {
     title: "Log.logs.card.rename.title",
     text: ({ t, log, actionActor }) =>
@@ -222,6 +253,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: IdCard,
     color: "info",
   },
+
+  // Reference: [fingerprint, holder]
   "card.activate": {
     title: "Log.logs.card.activate.title",
     text: ({ t, log, actionActor }) =>
@@ -233,6 +266,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: ShieldCheck,
     color: "success",
   },
+
+  // Reference: [fingerprint, holder]
   "card.deactivate": {
     title: "Log.logs.card.deactivate.title",
     text: ({ t, log, actionActor }) =>
@@ -244,6 +279,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: OctagonMinus,
     color: "warning",
   },
+
+  // Reference: [fingerprint, holder, [...newDeviceIds], [...toDelete]]
   "card.access_update": {
     title: "Log.logs.card.access_update.title",
     text: ({ t, log, actionActor }) =>
@@ -257,6 +294,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: IdCard,
     color: "info",
   },
+
+  // Reference: [deviceId, deviceSerialId, deviceName]
   "card.add_device": {
     title: "Log.logs.card.add_device.title",
     text: ({ t, log, actionActor }) =>
@@ -268,6 +307,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: Microchip,
     color: "success",
   },
+
+  // Reference: [deviceId, deviceSerialId, deviceName]
   "card.remove_device": {
     title: "Log.logs.card.remove_device.title",
     text: ({ t, log, actionActor }) =>
@@ -279,6 +320,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: Microchip,
     color: "destructive",
   },
+
+  // Reference: [fingerprint, holder, deviceSerialId, deviceName]
   "card.lock": {
     title: "Log.logs.card.lock.title",
     text: ({ t, log }) =>
@@ -291,6 +334,8 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     icon: Lock,
     color: "destructive",
   },
+
+  // Reference: [fingerprint, holder, deviceSerialId, deviceName]
   "card.unlock": {
     title: "Log.logs.card.unlock.title",
     text: ({ t, log }) =>
