@@ -13,7 +13,7 @@ const NoResultsLabel = React.forwardRef<
   return (
     <span
       className={cn(
-        "absolute z-10 rounded-xl border border-border bg-secondary p-4 text-xl text-secondary-foreground ring ring-primary/20",
+        "absolute z-10 rounded-xl border border-border bg-secondary p-4 text-center text-xl text-secondary-foreground ring ring-primary/20",
         className,
       )}
       ref={ref}
