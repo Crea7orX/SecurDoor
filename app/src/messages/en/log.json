@@ -119,15 +119,15 @@
       },
       "device_status": {
         "adopted": {
-          "text": "{actor} set device in state adopted",
+          "text": "\"{actor}\" set device in state adopted.",
           "title": "Device adopted"
         },
         "adopting": {
-          "text": "{actor} set device in state adopting",
+          "text": "\"{actor}\" set device in state adopting.",
           "title": "Device adopting"
         },
         "pending_adoption": {
-          "text": "{actor} set device in state pending adoption",
+          "text": "\"{actor}\" set device in state pending adoption.",
           "title": "Device pending adoption"
         }
       },
