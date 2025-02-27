@@ -1,11 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getLogDisplayInfo } from "@/config/logs";
+import { useLog } from "@/hooks/use-log";
 import { cn } from "@/lib/utils";
 import { type LogResponse } from "@/lib/validations/log";
 import { UserCircle } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter } from "next-intl";
 import * as React from "react";
 
 export const logColorVariants = {
@@ -23,11 +23,9 @@ interface LogCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
   ({ className, log, ...props }, ref) => {
-    const _t = useTranslations();
-    const t = useTranslations("Log.card");
     const format = useFormatter();
 
-    const logDisplayInfo = getLogDisplayInfo(log.action);
+    const logDisplayInfo = useLog(log);
 
     return (
       <Card className={cn("relative", className)} ref={ref} {...props}>
@@ -45,14 +43,7 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
         <div className="{/*pb-2*/} flex items-center gap-4 p-4">
           <UserCircle className="size-8" />
           <div className="flex-1">
-            <h2 className="font-semibold">
-              {_t(logDisplayInfo.text, {
-                actor:
-                  log.actorId === "system"
-                    ? t("actor.system")
-                    : `${log.actorName ?? ""}${log.actorEmail ? (log.actorName ? ` (${log.actorEmail})` : `${log.actorEmail}`) : ""}`,
-              })}
-            </h2>
+            <h2 className="font-semibold">{logDisplayInfo.text}</h2>
             <span className="text-muted-foreground">
               {format.dateTime(log.createdAt * 1000, {
                 dateStyle: "medium",
