@@ -15,6 +15,10 @@
       "bg": "Български",
       "en": "English"
     },
+    "metadata": {
+      "description": "SecurDoor - something amazing in the security industry.",
+      "title": "SecurDoor"
+    },
     "not_found": {
       "button": "Go Home",
       "description": "Page not found",
