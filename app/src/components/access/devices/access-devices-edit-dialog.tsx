@@ -119,17 +119,17 @@ export function AccessDevicesEditDialog({
       return;
 
     setIsLoading(true);
-    const toastId = toast.loading(t("dialog.notification.loading"));
+    const toastId = toast.loading(t("access.dialog.notification.loading"));
     await update(data)
       .then(() => {
-        toast.success(t("dialog.notification.success"), {
+        toast.success(t("access.dialog.notification.success"), {
           id: toastId,
         });
 
         setIsOpen(false);
       })
       .catch(() => {
-        toast.error(t("dialog.notification.error"), {
+        toast.error(t("access.dialog.notification.error"), {
           id: toastId,
         });
       });
