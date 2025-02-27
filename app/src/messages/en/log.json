@@ -73,47 +73,47 @@
       },
       "device": {
         "access_denied": {
-          "text": "{actor} denied access to device",
+          "text": "Someone tried to access device \"{deviceName}\" using card with fingerprint \"{fingerprint}\" but it was denied.",
           "title": "Device access denied"
         },
         "access_update": {
-          "text": "{actor} updated device access",
+          "text": "{actor} updated device \"{deviceName}\" access, adding {newCount, plural, =1 {# card} other {# cards}} and removing {deleteCount, plural, =1 {# card} other {# cards}}.",
           "title": "Device access updated"
         },
         "add_card": {
-          "text": "{actor} added device to card",
+          "text": "{actor} added device to card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" and fingerprint \"{fingerprint}\".",
           "title": "Device added to card"
         },
         "create": {
-          "text": "{actor} created device",
+          "text": "\"{actor}\" created device with name \"{deviceName}\"",
           "title": "Device created"
         },
         "delete": {
-          "text": "{actor} deleted device",
+          "text": "\"{actor}\" deleted device with name \"{deviceName}\"",
           "title": "Device deleted"
         },
         "emergency_state": {
-          "text": "{actor} updated device emergency state",
+          "text": "{actor} updated device \"{deviceName}\" emergency state to \"{emergencyState, select, lockdown {LOCKDOWN} evacuation {EVACUATION} other {CLEAR}}\".",
           "title": "Device emergency state updated"
         },
         "lock": {
-          "text": "{actor} locked device",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
           "title": "Device locked"
         },
         "re_lock_delay": {
-          "text": "{actor} updated device re-lock delay",
+          "text": "{actor} updated device \"{deviceName}\" re-lock delay to \"{reLockDelay, select, 0 {never} other {{reLockDelay} {reLockDelay, plural, one {second} other {seconds}}}}\".",
           "title": "Device re-lock delay updated"
         },
         "remove_card": {
-          "text": "{actor} removed device from card",
+          "text": "{actor} removed device from card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" and fingerprint \"{fingerprint}\".",
           "title": "Device removed from card"
         },
         "rename": {
-          "text": "{actor} renamed device",
+          "text": "\"{actor}\" renamed device to \"{deviceName}\"",
           "title": "Device renamed"
         },
         "unlock": {
-          "text": "{actor} unlocked device",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
           "title": "Device unlocked"
         }
       },
