@@ -31,103 +31,103 @@
     "logs": {
       "card": {
         "access_update": {
-          "text": "{actor} актуализира достъпа на карта",
+          "text": "\"{actor}\" актуализира достъпа на карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\"), добавяйки {newCount, plural, =1 {# устройство} other {# устройства}} и премахвайки {deleteCount, plural, =1 {# устройство} other {# устройства}}.",
           "title": "Актуализиран достъп на карта"
         },
         "activate": {
-          "text": "{actor} активира карта",
+          "text": "\"{actor}\" активира карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\").",
           "title": "Активирана карта"
         },
         "add_device": {
-          "text": "{actor} добави карта към устройство",
+          "text": "\"{actor}\" добави карта към устройство \"{deviceName}\" (СН: \"{serialId}\").",
           "title": "Карта добавена към устройство"
         },
         "create": {
-          "text": "{actor} създаде карта",
+          "text": "\"{actor}\" създаде карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\").",
           "title": "Създадена карта"
         },
         "deactivate": {
-          "text": "{actor} деактивира карта",
+          "text": "\"{actor}\" деактивира карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\").",
           "title": "Деактивирана карта"
         },
         "delete": {
-          "text": "{actor} изтри карта",
+          "text": "\"{actor}\" изтри карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\").",
           "title": "Изтрита карта"
         },
         "lock": {
-          "text": "{actor} заключи устройство с карта",
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки карта с отпечатък \"{fingerprint}\".",
           "title": "Заключено устройство с карта"
         },
         "remove_device": {
-          "text": "{actor} премахна карта от устройство",
+          "text": "\"{actor}\" премахна карта от устройство \"{deviceName}\" (СН: \"{serialId}\").",
           "title": "Карта премахната от устройство"
         },
         "rename": {
-          "text": "{actor} преименува карта",
-          "title": "Преименувана карта"
+          "text": "\"{actor}\" преименува притежателя на карта на \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\").",
+          "title": "Преименуван притежател на карта"
         },
         "unlock": {
-          "text": "{actor} отключи устройство с карта",
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки карта с отпечатък \"{fingerprint}\".",
           "title": "Отключено устройство с карта"
         }
       },
       "device": {
         "access_denied": {
-          "text": "На {actor} беше отказан достъп до устройство",
+          "text": "Някой се опита да достъпи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки карта с отпечатък \"{fingerprint}\", но достъпа беше отказан.",
           "title": "Отказан достъп до устройство"
         },
         "access_update": {
-          "text": "{actor} актуализира достъпа на устройство",
+          "text": "\"{actor}\" актуализира достъпа на устройство \"{deviceName}\" (СН: \"{serialId}\"), добавяйки {newCount, plural, =1 {# карта} other {# карти}} и премахвайки {deleteCount, plural, =1 {# карта} other {# карти}}.",
           "title": "Актуализиран достъп на устройство"
         },
         "add_card": {
-          "text": "{actor} добави устройство към карта",
+          "text": "\"{actor}\" добави устройство към карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\").",
           "title": "Устройство добавено към карта"
         },
         "create": {
-          "text": "{actor} създаде устройство",
+          "text": "\"{actor}\" създаде устройство с име \"{deviceName}\" (СН: \"{serialId}\").",
           "title": "Създадено устройство"
         },
         "delete": {
-          "text": "{actor} изтри устройство",
+          "text": "\"{actor}\" изтри устройство с име \"{deviceName}\" (СН: \"{serialId}\").",
           "title": "Изтрито устройство"
         },
         "emergency_state": {
-          "text": "{actor} обнови аварийното състояние на устройство",
+          "text": "\"{actor}\" обнови аварийното състояние на устройство \"{deviceName}\" (СН: \"{serialId}\") на \"{emergencyState, select, lockdown {ЗАКЛЮЧВАНЕ} evacuation {ЕВАКУАЦИЯ} other {ИЗЧИСТЕНО}}\".",
           "title": "Обновено аварийно състояние на устройство"
         },
         "lock": {
-          "text": "{actor} заключи устройство",
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") {isCard, select, true {използвайки карта с отпечатък \"{fingerprint}\"} other {използвайки таблото}}.",
           "title": "Заключено устройство"
         },
         "re_lock_delay": {
-          "text": "{actor} обнови времето за повторно заключване на устройство",
+          "text": "\"{actor}\" обнови времето за повторно заключване на устройство \"{deviceName}\" (СН: \"{serialId}\") на \"{reLockDelay, select, 0 {никога} other {{reLockDelay} {reLockDelay, plural, one {секунда} other {секунди}}}}\".",
           "title": "Обновено време за повторно заключване на устройство"
         },
         "remove_card": {
-          "text": "{actor} премахна устройство от карта",
+          "text": "\"{actor}\" премахна устройство от карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\").",
           "title": "Устройство премахнато от карта"
         },
         "rename": {
-          "text": "{actor} преименува устройство",
+          "text": "\"{actor}\" преименува устройство на \"{deviceName}\" (СН: \"{serialId}\").",
           "title": "Преименувано устройство"
         },
         "unlock": {
-          "text": "{actor} отключи устройство",
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") {isCard, select, true {използвайки карта с отпечатък \"{fingerprint}\"} other {използвайки таблото}}.",
           "title": "Отключено устройство"
         }
       },
       "device_status": {
         "adopted": {
-          "text": "{actor} зададе устройство в състояние на осиновено",
+          "text": "\"{actor}\" зададе устройство в състояние на осиновено.",
           "title": "Осиновено устройство"
         },
         "adopting": {
-          "text": "{actor} зададе устройство в състояние на осиновяване",
+          "text": "\"{actor}\" зададе устройство в състояние на осиновяване.",
           "title": "Осиновяване на устройство"
         },
         "pending_adoption": {
-          "text": "{actor} зададе устройство в състояние на предстоящо осиновяване",
+          "text": "\"{actor}\" зададе устройство в състояние на предстоящо осиновяване.",
           "title": "Предстоящо за осиновяване устройство"
         }
       },
