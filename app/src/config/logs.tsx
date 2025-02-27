@@ -349,14 +349,3 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "success",
   },
 };
-
-export function getLogDisplayInfo(action: string) {
-  return (
-    LogDisplayInfos[action] ?? {
-      title: "Log.logs.unknown.title",
-      text: "Log.logs.unknown.text",
-      icon: CircleHelp,
-      color: "warning",
-    }
-  );
-}
