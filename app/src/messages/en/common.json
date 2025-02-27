@@ -11,6 +11,10 @@
       "settings": "Settings",
       "submit": "Submit"
     },
+    "languages": {
+      "bg": "Bulgarian",
+      "en": "English"
+    },
     "not_found": {
       "button": "Go Home",
       "description": "Page not found",
