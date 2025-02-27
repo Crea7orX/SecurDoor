@@ -58,6 +58,7 @@ const LogRecentActivitiesCard = React.forwardRef<
                 {t("last_updated", {
                   date: format.dateTime(dataUpdatedAt, {
                     timeStyle: "medium",
+                    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
                   }),
                 })}
               </span>

@@ -36,6 +36,7 @@ const CardAddedCard = React.forwardRef<HTMLDivElement, CardAddedCardProps>(
               {format.dateTime(card.createdAt * 1000, {
                 dateStyle: "medium",
                 timeStyle: "medium",
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
               })}
             </span>
           </Badge>

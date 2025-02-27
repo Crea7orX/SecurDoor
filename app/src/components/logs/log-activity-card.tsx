@@ -66,6 +66,7 @@ const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
               date: format.dateTime(log.createdAt * 1000, {
                 dateStyle: "medium",
                 timeStyle: "medium",
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
               }),
               semibold: (chunks) => (
                 <span className="font-semibold">{chunks}</span>

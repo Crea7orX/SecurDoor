@@ -13,6 +13,7 @@ export function useGroupedLogsByDay(logs: LogResponse[]) {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       });
 
       if (!acc.has(dateString)) {
@@ -33,7 +34,10 @@ export function useGroupedLogsByDay(logs: LogResponse[]) {
             ? t("today")
             : isYesterday(date)
               ? t("yesterday")
-              : format.dateTime(date, { dateStyle: "medium" }),
+              : format.dateTime(date, {
+                  dateStyle: "medium",
+                  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                }),
           logs,
         };
       });
