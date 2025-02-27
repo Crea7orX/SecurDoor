@@ -48,6 +48,7 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
               {format.dateTime(log.createdAt * 1000, {
                 dateStyle: "medium",
                 timeStyle: "medium",
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
               })}
             </span>
           </div>
