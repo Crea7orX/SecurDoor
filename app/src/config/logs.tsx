@@ -116,7 +116,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
 
   // Reference: [serialId, name, isCard, cardFingerprint?, cardHolder?]
   "device.lock": {
-    title: "Log.logs.device.lock.text",
+    title: "Log.logs.device.lock.title",
     text: ({ t, log, actionActor }) => {
       const isCard = log.reference?.[2] === "true";
 
