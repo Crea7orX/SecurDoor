@@ -76,7 +76,7 @@ export function AccessDevicesEditDialog({
         key: card.id,
       };
     });
-  }, [data]);
+  }, [data, t]);
 
   const { mutateAsync: update } = useUpdateAccessDeviceMutation({
     id,
