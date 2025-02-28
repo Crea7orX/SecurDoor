@@ -65,7 +65,7 @@ interface UseDataTableProps<TData>
    *     label: "Status",
    *     value: "status",
    *     options: [
-   *       { label: "Todo", value: "todo" },
+   *       { label: "To-do", value: "to-do" },
    *       { label: "In Progress", value: "in-progress" },
    *     ]
    *   }

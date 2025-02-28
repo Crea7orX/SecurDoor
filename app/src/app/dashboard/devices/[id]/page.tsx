@@ -35,7 +35,7 @@ export default function DevicePage({ params }: DevicePageProps) {
   }
 
   if (!data) {
-    return notFound(); // todo: i18n 404 page
+    return notFound();
   }
 
   return (
@@ -62,16 +62,16 @@ export default function DevicePage({ params }: DevicePageProps) {
         </Card>
 
         <Card className="h-full w-full bg-border px-2 py-4">
-          <div className="sticky top-0 flex flex-wrap justify-center">
-            <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
+          <div className="sticky top-0 flex flex-wrap justify-center gap-4">
+            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
               <DeviceControlsCard device={data} />
               <DeviceAddedCard device={data} />
             </div>
-            <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
+            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
               <DeviceStateCard device={data} />
               <DeviceAccessCard id={params.id} />
             </div>
-            <div className="flex w-full flex-col gap-4 p-2 2xl:w-1/2 min-[1920px]:w-1/3">
+            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
               <DeviceStatusCard device={data} />
               <DeviceDangerZoneCard id={params.id} />
             </div>
