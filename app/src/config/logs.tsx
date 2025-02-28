@@ -129,8 +129,13 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         fingerprint: (log.reference?.[3] as string) ?? "",
       });
     },
-    actor: ({ t, log }) => {
+    actor: ({ t, log, actionActor }) => {
       const actor = log.reference?.[4] as string;
+
+      // from dashboard
+      if (log.reference?.[2] === "false") {
+        return actionActor;
+      }
 
       if (actor === "NULL") {
         return t("Log.activity_card.by.unknown");
@@ -158,8 +163,14 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         fingerprint: (log.reference?.[3] as string) ?? "",
       });
     },
-    actor: ({ t, log }) => {
+    actor: ({ t, log, actionActor }) => {
+      console.log(log.action, log.reference?.toString());
       const actor = log.reference?.[4] as string;
+
+      // from dashboard
+      if (log.reference?.[2] === "false") {
+        return actionActor;
+      }
 
       if (actor === "NULL") {
         return t("Log.activity_card.by.unknown");

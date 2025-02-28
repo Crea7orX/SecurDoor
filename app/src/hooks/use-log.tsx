@@ -29,7 +29,7 @@ export function useLog(log: LogResponse) {
       ...logDisplayInfo,
       text: logDisplayInfo.text({ t, log, actionActor }),
       actor: logDisplayInfo.actor
-        ? logDisplayInfo.actor({ t, log })
+        ? logDisplayInfo.actor({ t, log, actionActor: actionShortActor })
         : actionShortActor,
     };
   }, [log, t]);
