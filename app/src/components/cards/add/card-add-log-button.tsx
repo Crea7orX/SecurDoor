@@ -30,7 +30,7 @@ const CardAddLogButton = React.forwardRef<
         <div>
           <p>
             {t.rich("fingerprint", {
-              fingerprint: (log.reference![1] as string).slice(-8),
+              fingerprint: (log.reference![0] as string).slice(-8),
               semibold: (chunks) => (
                 <span className="font-semibold">{chunks}</span>
               ),
@@ -46,10 +46,10 @@ const CardAddLogButton = React.forwardRef<
           </p>
         </div>
         <Button
-          onClick={() => setCardFingerprint(log.reference![1] as string)}
-          disabled={cardFingerprint === log.reference![1]}
+          onClick={() => setCardFingerprint(log.reference![0] as string)}
+          disabled={cardFingerprint === log.reference![0]}
         >
-          {cardFingerprint === log.reference![1] ? t("selected") : t("select")}
+          {cardFingerprint === log.reference![0] ? t("selected") : t("select")}
         </Button>
       </CardContent>
     </Card>

@@ -10,17 +10,16 @@ export type Navigation = {
   active?: boolean;
 };
 
+interface LogDataProduceProps {
+  t: ReturnType<typeof useTranslations>;
+  log: LogResponse;
+  actionActor: string;
+}
+
 export type LogDisplayInfo = {
   title: string;
-  text: ({
-    t,
-    log,
-    actionActor,
-  }: {
-    t: ReturnType<typeof useTranslations>;
-    log: LogResponse;
-    actionActor: string;
-  }) => React.ReactNode;
+  text: ({ t, log, actionActor }: LogDataProduceProps) => React.ReactNode;
+  actor?: ({ t, log }: Omit<LogDataProduceProps, "actionActor">) => string;
   icon: LucideIcon;
   color:
     | "default"

@@ -1,8 +1,8 @@
 "use client";
 
 import { Logo } from "@/components/assets/logo";
-import { DashboardSidebarFooter } from "@/components/dashboard/dashboard-sidebar-footer";
-import { DashboardSidebarNavigation } from "@/components/dashboard/dashboard-sidebar-navigation";
+import { DashboardSidebarFooter } from "@/components/dashboard/sidebar/dashboard-sidebar-footer";
+import { DashboardSidebarNavigation } from "@/components/dashboard/sidebar/dashboard-sidebar-navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -27,7 +27,7 @@ export function DashboardSidebar({
   return (
     <Sidebar className="border-r" collapsible="none" {...props}>
       <SidebarHeader className="h-12 items-center justify-center border-b">
-        <Link href="/">
+        <Link href="/app/public">
           <Logo className="h-10" />
         </Link>
       </SidebarHeader>

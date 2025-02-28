@@ -1,4 +1,4 @@
-import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
+import { DashboardSidebar } from "@/components/dashboard/sidebar/dashboard-sidebar";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
