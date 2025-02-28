@@ -1,6 +1,5 @@
 import { type LogDisplayInfo } from "@/types";
 import {
-  CircleHelp,
   CircleMinus,
   CirclePlus,
   ClockAlert,
@@ -130,6 +129,15 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         fingerprint: (log.reference?.[3] as string) ?? "",
       });
     },
+    actor: ({ t, log }) => {
+      const actor = log.reference?.[4] as string;
+
+      if (actor === "NULL") {
+        return t("Log.activity_card.by.unknown");
+      }
+
+      return actor ?? t("Log.activity_card.by.unknown");
+    },
     icon: Lock,
     color: "destructive",
   },
@@ -149,6 +157,15 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         isCard,
         fingerprint: (log.reference?.[3] as string) ?? "",
       });
+    },
+    actor: ({ t, log }) => {
+      const actor = log.reference?.[4] as string;
+
+      if (actor === "NULL") {
+        return t("Log.activity_card.by.unknown");
+      }
+
+      return actor ?? t("Log.activity_card.by.unknown");
     },
     icon: LockOpen,
     color: "success",
@@ -331,6 +348,15 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         serialId: (log.reference?.[2] as string) ?? "",
         deviceName: (log.reference?.[3] as string) ?? "",
       }),
+    actor: ({ t, log }) => {
+      const actor = log.reference?.[1] as string;
+
+      if (actor === "NULL") {
+        return t("Log.activity_card.by.unknown");
+      }
+
+      return actor ?? t("Log.activity_card.by.unknown");
+    },
     icon: Lock,
     color: "destructive",
   },
@@ -345,6 +371,15 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         serialId: (log.reference?.[2] as string) ?? "",
         deviceName: (log.reference?.[3] as string) ?? "",
       }),
+    actor: ({ t, log }) => {
+      const actor = log.reference?.[1] as string;
+
+      if (actor === "NULL") {
+        return t("Log.activity_card.by.unknown");
+      }
+
+      return actor ?? t("Log.activity_card.by.unknown");
+    },
     icon: LockOpen,
     color: "success",
   },
