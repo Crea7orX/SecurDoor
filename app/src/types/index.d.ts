@@ -19,7 +19,7 @@ interface LogDataProduceProps {
 export type LogDisplayInfo = {
   title: string;
   text: ({ t, log, actionActor }: LogDataProduceProps) => React.ReactNode;
-  actor?: ({ t, log }: Omit<LogDataProduceProps, "actionActor">) => string;
+  actor?: ({ t, log, actionActor }: LogDataProduceProps) => string;
   icon: LucideIcon;
   color:
     | "default"
