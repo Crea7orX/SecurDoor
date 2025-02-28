@@ -52,10 +52,7 @@ const LogActivityCard = React.forwardRef<HTMLDivElement, LogActivityCardProps>(
         >
           <p>
             {t.rich("by.text", {
-              actor:
-                log.actorId === "system"
-                  ? t("by.system")
-                  : `${log.actorName ?? log.actorEmail ?? t("by.unknown")}`,
+              actor: logDisplayInfo.actor,
               semibold: (chunks) => (
                 <span className="font-semibold">{chunks}</span>
               ),
