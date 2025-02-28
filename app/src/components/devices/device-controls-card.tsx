@@ -83,7 +83,7 @@ const DeviceControlsCard = React.forwardRef<
           ) : device.state.isLockedState ? (
             <DeviceUnlockButton className="flex-1" device={device} />
           ) : (
-            <DeviceLockButton device={device} />
+            <DeviceLockButton className="flex-1" device={device} />
           )}
           <Button
             variant="info"
