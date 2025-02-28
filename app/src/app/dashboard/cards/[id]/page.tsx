@@ -31,7 +31,7 @@ export default function CardPage({ params }: CardPageProps) {
   }
 
   if (!data) {
-    return notFound(); // todo: i18n 404 page
+    return notFound();
   }
 
   return (

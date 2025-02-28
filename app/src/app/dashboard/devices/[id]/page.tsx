@@ -35,7 +35,7 @@ export default function DevicePage({ params }: DevicePageProps) {
   }
 
   if (!data) {
-    return notFound(); // todo: i18n 404 page
+    return notFound();
   }
 
   return (
