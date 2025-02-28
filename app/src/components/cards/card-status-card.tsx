@@ -1,7 +1,8 @@
 "use client";
 
+import { CardActivateButton } from "@/components/cards/access/card-activate-button";
+import { CardDisableButton } from "@/components/cards/access/card-disable-button";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,12 +12,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useUpdateCardMutation } from "@/hooks/api/cards/use-update-card-mutation";
 import { type CardResponse } from "@/lib/validations/card";
 import { Hand, OctagonMinus, ShieldCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
-import { toast } from "sonner";
 
 interface CardStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
   card: CardResponse;
@@ -25,46 +24,6 @@ interface CardStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
 const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
   ({ className, card, ...props }, ref) => {
     const t = useTranslations("Card.status");
-
-    const { mutateAsync: update } = useUpdateCardMutation({
-      id: card.id,
-    });
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    const handleUpdate = async (value: boolean) => {
-      setIsLoading(true);
-      const toastId = toast.loading(
-        value
-          ? t("notification.activate.loading")
-          : t("notification.disable.loading"),
-      );
-      await update({
-        active: value,
-      })
-        .then(() => {
-          if (value) {
-            toast.success(t("notification.activate.success"), {
-              id: toastId,
-            });
-          } else {
-            toast.warning(t("notification.disable.success"), {
-              id: toastId,
-            });
-          }
-        })
-        .catch(() => {
-          toast.error(
-            value
-              ? t("notification.activate.error")
-              : t("notification.disable.error"),
-            {
-              id: toastId,
-            },
-          );
-        });
-
-      setIsLoading(false);
-    };
 
     return (
       <Card className={className} ref={ref} {...props}>
@@ -91,25 +50,9 @@ const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
         </CardContent>
         <CardFooter className="justify-end gap-2 max-md:flex-col">
           {card.active ? (
-            <Button
-              variant="destructive"
-              disabled={isLoading}
-              className="max-md:w-full"
-              onClick={() => handleUpdate(false)}
-            >
-              <OctagonMinus />
-              <span>{t("button.disable")}</span>
-            </Button>
+            <CardDisableButton id={card.id} />
           ) : (
-            <Button
-              variant="success"
-              disabled={isLoading}
-              className="max-md:w-full"
-              onClick={() => handleUpdate(true)}
-            >
-              <ShieldCheck />
-              <span>{t("button.activate")}</span>
-            </Button>
+            <CardActivateButton id={card.id} />
           )}
         </CardFooter>
       </Card>
