@@ -8,10 +8,10 @@
     "no_results_label": "Няма резултати.",
     "pagination": {
       "page": "Страница {page} от {total}",
-      "rows_per_page": "Редове на страница:",
+      "rows_per_page": "Записи на страница:",
       "selection": {
-        "disabled": "{total, plural, =1 {Показан # ред} other {Показани # реда}}.",
-        "enabled": "{selected} от {total, plural, =1 {# ред} other {# реда}} {selected, plural, =1 {# избран} other {# избрани}}."
+        "disabled": "{total, plural, =1 {Показан # запис} other {Показани # записа}}.",
+        "enabled": "{selected} от {total, plural, =1 {# запис} other {# записа}} {selected, plural, =1 {# избран} other {# избрани}}."
       }
     },
     "search": "Потърсете",
