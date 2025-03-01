@@ -18,7 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { Option } from "@/types/data-table";
 import type { Column } from "@tanstack/react-table";
-import { Check, PlusCircle } from "lucide-react";
+import { Check, Filter, PlusCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
@@ -43,7 +43,7 @@ export function DataTableFacetedFilter<TData, TValue>({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <PlusCircle className="mr-2 size-4" />
+          <Filter className="mr-2 size-4" />
           {title}
           {selectedValues?.size > 0 && (
             <>
