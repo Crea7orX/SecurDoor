@@ -65,7 +65,7 @@ const LogCardSkeleton = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => {
   return (
-    <Card className={cn("relative", className)} ref={ref} {...props}>
+    <Card className={cn("relative ml-3.5", className)} ref={ref} {...props}>
       <div className="absolute -left-3 -top-3 size-8 bg-card">
         <Skeleton className="h-full w-full" />
       </div>
