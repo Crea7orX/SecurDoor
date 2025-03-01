@@ -164,7 +164,6 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
       });
     },
     actor: ({ t, log, actionActor }) => {
-      console.log(log.action, log.reference?.toString());
       const actor = log.reference?.[4] as string;
 
       // from dashboard
