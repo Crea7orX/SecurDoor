@@ -28,7 +28,7 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
     const logDisplayInfo = useLog(log);
 
     return (
-      <Card className={cn("relative", className)} ref={ref} {...props}>
+      <Card className={cn("relative ml-3.5", className)} ref={ref} {...props}>
         <Badge
           variant="outline"
           className={cn(
