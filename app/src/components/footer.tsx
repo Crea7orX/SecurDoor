@@ -9,7 +9,7 @@ const Footer = React.forwardRef<
   return (
     <footer
       className={cn(
-        "flex h-12 w-full items-center justify-between border-t border-sidebar-border bg-sidebar p-2 px-4",
+        "flex min-h-12 w-full items-center justify-between gap-2 border-t border-sidebar-border bg-sidebar p-2 px-4",
         className,
       )}
       ref={ref}
