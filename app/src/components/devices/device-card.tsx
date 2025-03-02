@@ -51,7 +51,7 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
     return (
       <Card
         className={cn(
-          "relative max-w-[360px] bg-border md:min-w-[360px]",
+          "relative w-full max-w-[360px] bg-border md:min-w-[360px]",
           className,
         )}
         ref={ref}
@@ -63,13 +63,15 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             getStatusColor(device.state!, now),
           )}
         />
-        <CardHeader className="flex-row items-center gap-2 space-y-0">
-          <CardTitle>{device.name}</CardTitle>
+        <CardHeader className="items-center gap-2 space-y-0 md:flex-row">
+          <CardTitle className="w-full max-w-fit truncate">
+            {device.name}
+          </CardTitle>
           <Separator
             orientation="vertical"
-            className="h-6 bg-card-foreground"
+            className="h-6 bg-card-foreground max-md:hidden"
           />
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 max-md:justify-center">
             {!device.state ? (
               <Skeleton className="h-6 w-24" />
             ) : device.state.isLockedState ? (
@@ -101,7 +103,7 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             )}
           </div>
         </CardHeader>
-        <CardContent className="flex gap-2 rounded-xl bg-card pt-6">
+        <CardContent className="flex flex-wrap gap-2 rounded-xl bg-card pt-6">
           <Button className="flex-1" asChild>
             <Link href={`/dashboard/devices/${device.id}`}>
               <Settings className="size-4" />
@@ -112,9 +114,9 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
             (!device.state ? (
               <Skeleton className="h-9 w-24" />
             ) : device.state.isLockedState ? (
-              <DeviceUnlockButton device={device} />
+              <DeviceUnlockButton className="flex-1" device={device} />
             ) : (
-              <DeviceLockButton device={device} />
+              <DeviceLockButton className="flex-1" device={device} />
             ))}
         </CardContent>
       </Card>
@@ -137,14 +139,17 @@ const DeviceCardSkeleton = React.forwardRef<
       {...props}
     >
       <div className="absolute -left-2 -top-2 size-4 rounded-full bg-border ring-4 ring-border/50" />
-      <CardHeader className="flex-row items-center gap-2 space-y-0">
-        <Skeleton className="h-6 w-full max-w-32" />
-        <Separator orientation="vertical" className="h-6 bg-card-foreground" />
-        <Skeleton className="h-6 w-24" />
+      <CardHeader className="items-center gap-2 space-y-0 overflow-hidden md:flex-row">
+        <Skeleton className="h-6 w-full max-w-48" />
+        <Separator
+          orientation="vertical"
+          className="h-6 bg-card-foreground max-md:hidden"
+        />
+        <Skeleton className="h-6 w-32" />
       </CardHeader>
-      <CardContent className="flex gap-2 rounded-xl bg-card pt-6">
-        <Skeleton className="h-9 flex-1" />
-        <Skeleton className="h-9 w-24" />
+      <CardContent className="flex flex-wrap gap-2 rounded-xl bg-card pt-6">
+        <Skeleton className="h-9 min-w-40 flex-1" />
+        <Skeleton className="h-9 min-w-32 flex-1" />
       </CardContent>
     </Card>
   );

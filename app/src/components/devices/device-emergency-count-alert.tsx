@@ -45,7 +45,7 @@ const DeviceEmergencyCountAlert = React.forwardRef<
           })}
         </AlertDescription>
       </div>
-      <Button onClick={onViewClick}>
+      <Button className="max-sm:hidden" onClick={onViewClick}>
         <Microchip className="size-4" />
         {t("view")}
       </Button>

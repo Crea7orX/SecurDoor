@@ -102,9 +102,9 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
                 className="flex w-full flex-col gap-4"
               >
                 <div className="sticky top-0 z-10 inline-flex max-w-full items-center gap-2 rounded-md border bg-background px-3 py-1 text-muted-foreground">
-                  <div className="h-1 flex-1 rounded-full bg-border" />
+                  <div className="h-1 flex-1 rounded-full bg-accent-foreground" />
                   <span>{group.label}</span>
-                  <div className="h-1 flex-1 rounded-full bg-border" />
+                  <div className="h-1 flex-1 rounded-full bg-accent-foreground" />
                 </div>
 
                 {group.logs.map((log) => (

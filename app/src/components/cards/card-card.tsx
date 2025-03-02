@@ -32,11 +32,14 @@ const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
 
     return (
       <Card
-        className={cn("bg-border lg:min-w-[360px]", className)}
+        className={cn(
+          "w-full max-w-[360px] bg-border lg:min-w-[360px]",
+          className,
+        )}
         ref={ref}
         {...props}
       >
-        <CardHeader className="flex-row items-center gap-2 space-y-0">
+        <CardHeader className="items-center gap-2 space-y-0 md:flex-row">
           <CardTitle>
             {t.rich("card.title", {
               fingerprint: card.fingerprint.slice(-8),
@@ -47,7 +50,7 @@ const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
           </CardTitle>
           <Separator
             orientation="vertical"
-            className="h-6 bg-card-foreground"
+            className="h-6 bg-card-foreground max-md:hidden"
           />
           {card.active ? (
             <Badge variant="success">
@@ -65,19 +68,19 @@ const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
           <div className="flex flex-col gap-2">
             <Label className="text-md">{t("field.holder.label")}</Label>
             {card.holder ? (
-              <Badge variant="info" className="text-md h-8">
-                <User className="mr-1" />
+              <Badge variant="info" className="text-md gap-1">
+                <User className="shrink-0" />
                 <span>{card.holder}</span>
               </Badge>
             ) : (
-              <Badge variant="warning" className="text-md h-8">
-                <ShieldQuestion className="mr-1" />
+              <Badge variant="warning" className="text-md gap-1">
+                <ShieldQuestion className="shrink-0" />
                 <span>{t("field.holder.unknown")}</span>
               </Badge>
             )}
           </div>
           <Separator className="h-1 rounded-xl" />
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button className="flex-1" asChild>
               <Link href={`/dashboard/cards/${card.id}`}>
                 <Settings className="size-4" />
@@ -85,9 +88,9 @@ const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
               </Link>
             </Button>
             {card.active ? (
-              <CardDisableButton id={card.id} />
+              <CardDisableButton className="flex-1" id={card.id} />
             ) : (
-              <CardActivateButton id={card.id} />
+              <CardActivateButton className="flex-1" id={card.id} />
             )}
           </div>
         </CardContent>
@@ -110,9 +113,12 @@ const CardCardSkeleton = React.forwardRef<
       ref={ref}
       {...props}
     >
-      <CardHeader className="flex-row items-center gap-2 space-y-0">
+      <CardHeader className="items-center gap-2 space-y-0 md:flex-row">
         <Skeleton className="h-6 w-full max-w-40" />
-        <Separator orientation="vertical" className="h-6 bg-card-foreground" />
+        <Separator
+          orientation="vertical"
+          className="h-6 bg-card-foreground max-md:hidden"
+        />
         <Skeleton className="h-6 w-24" />
       </CardHeader>
       <CardContent className="flex flex-col gap-3 rounded-xl bg-card pt-2">
@@ -121,9 +127,9 @@ const CardCardSkeleton = React.forwardRef<
           <Skeleton className="h-8" />
         </div>
         <Separator className="h-1 rounded-xl" />
-        <div className="flex gap-2">
-          <Skeleton className="h-9 flex-1" />
-          <Skeleton className="h-9 w-24" />
+        <div className="flex flex-wrap gap-2">
+          <Skeleton className="h-9 min-w-40 flex-1" />
+          <Skeleton className="h-9 min-w-24 flex-1" />
         </div>
       </CardContent>
     </Card>

@@ -28,7 +28,7 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
     const logDisplayInfo = useLog(log);
 
     return (
-      <Card className={cn("relative", className)} ref={ref} {...props}>
+      <Card className={cn("relative ml-3.5", className)} ref={ref} {...props}>
         <Badge
           variant="outline"
           className={cn(
@@ -37,13 +37,13 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
           )}
         >
           <logDisplayInfo.icon
-            className={cn("size-4", `fill-${logDisplayInfo.color}`)}
+            className={cn("size-4 shrink-0", `fill-${logDisplayInfo.color}`)}
           />
         </Badge>
         <div className="{/*pb-2*/} flex items-center gap-4 p-4">
-          <UserCircle className="size-8" />
-          <div className="flex-1">
-            <h2 className="font-semibold">{logDisplayInfo.text}</h2>
+          <UserCircle className="size-8 shrink-0" />
+          <div className="flex-1 overflow-hidden">
+            <h2 className="break-words font-semibold">{logDisplayInfo.text}</h2>
             <span className="text-muted-foreground">
               {format.dateTime(log.createdAt * 1000, {
                 dateStyle: "medium",
@@ -65,7 +65,7 @@ const LogCardSkeleton = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => {
   return (
-    <Card className={cn("relative", className)} ref={ref} {...props}>
+    <Card className={cn("relative ml-3.5", className)} ref={ref} {...props}>
       <div className="absolute -left-3 -top-3 size-8 bg-card">
         <Skeleton className="h-full w-full" />
       </div>

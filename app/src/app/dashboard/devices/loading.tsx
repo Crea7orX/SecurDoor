@@ -9,10 +9,11 @@ export default function DevicesLoading() {
   const t = useTranslations("Device.add");
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6 p-4">
+    <div className="flex flex-col items-center justify-center gap-6 p-1 sm:p-4">
       <div className="flex w-full items-center justify-between gap-2 overflow-auto p-1">
         <div className="flex flex-1 items-center gap-2">
           <Skeleton className="h-8 w-40 lg:w-64" />
+          <Skeleton className="h-8 w-40" />
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" asChild>

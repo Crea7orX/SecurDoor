@@ -8,10 +8,10 @@
     "no_results_label": "No results.",
     "pagination": {
       "page": "Page {page} of {total}",
-      "rows_per_page": "Rows per page:",
+      "rows_per_page": "Records per page:",
       "selection": {
-        "disabled": "Shown {total, plural, =1 {# row} other {# rows}}.",
-        "enabled": "{selected} of {total, plural, =1 {# row} other {# rows}} selected."
+        "disabled": "Shown {total, plural, =1 {# record} other {# records}}.",
+        "enabled": "{selected} of {total, plural, =1 {# record} other {# records}} selected."
       }
     },
     "search": "Search",

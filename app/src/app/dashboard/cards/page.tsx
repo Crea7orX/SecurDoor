@@ -74,7 +74,7 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6 p-4">
+    <div className="flex flex-col items-center justify-center gap-6 p-1 sm:p-4">
       <DataTableToolbar table={table} filterFields={filterFields}>
         <Button size="sm" asChild>
           <Link href="/dashboard/cards/add">
@@ -83,7 +83,7 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
           </Link>
         </Button>
       </DataTableToolbar>
-      <div className="relative flex w-full flex-wrap items-center justify-center gap-12 rounded-lg border bg-muted/60 px-2 py-4">
+      <div className="relative flex w-full flex-wrap items-center justify-center gap-12 overflow-hidden rounded-lg border bg-muted/60 px-2 py-4">
         {table.getRowModel().rows?.length ? (
           table
             .getRowModel()

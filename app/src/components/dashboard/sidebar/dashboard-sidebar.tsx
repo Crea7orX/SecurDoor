@@ -8,7 +8,6 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar";
 import { getNavigationList } from "@/config/navigation";
 import Link from "next/link";
@@ -37,7 +36,6 @@ export function DashboardSidebar({
       <SidebarFooter className="h-12 justify-center bg-sidebar-border">
         <DashboardSidebarFooter />
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   );
 }
