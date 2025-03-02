@@ -19,7 +19,7 @@ const Header = React.forwardRef<
       {...props}
     >
       <nav className="flex h-full w-full items-center justify-between gap-4 p-2 px-4">
-        {/*Required div when is sidebar trigger is hidden*/}
+        {/*Required div when sidebar trigger is hidden*/}
         <div>
           <SidebarTrigger className="-ml-1 md:hidden" />
         </div>
