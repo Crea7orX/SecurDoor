@@ -50,13 +50,16 @@ export default function DevicePage({ params }: DevicePageProps) {
         <LogRecentActivitiesCard id={params.id} />
       </div>
 
-      <div className="flex flex-1 flex-col gap-4">
+      <div className="flex w-full flex-1 flex-col gap-4">
         <Card className="w-full bg-border">
-          <CardHeader className="flex-row items-center justify-center gap-2 space-y-0 p-2">
+          <CardHeader className="flex-row flex-wrap items-center justify-center gap-2 space-y-0 p-2">
             <span className="text-2xl font-bold">{t("label")}</span>
-            <Badge variant="secondary" className="text-lg font-bold">
+            <Badge
+              variant="secondary"
+              className="max-w-full text-lg font-bold md:max-w-96"
+            >
               <Microchip className="mr-1 shrink-0" />
-              {data.name}
+              <span className="truncate">{data.name}</span>
             </Badge>
           </CardHeader>
         </Card>
