@@ -43,7 +43,7 @@ const LogCard = React.forwardRef<HTMLDivElement, LogCardProps>(
         <div className="{/*pb-2*/} flex items-center gap-4 p-4">
           <UserCircle className="size-8 shrink-0" />
           <div className="flex-1 overflow-hidden">
-            <h2 className="break-words font-semibold">{logDisplayInfo.text}</h2>
+            <h2 className="font-semibold">{logDisplayInfo.text}</h2>
             <span className="text-muted-foreground">
               {format.dateTime(log.createdAt * 1000, {
                 dateStyle: "medium",

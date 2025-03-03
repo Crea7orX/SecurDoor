@@ -9,34 +9,36 @@ const Footer = React.forwardRef<
   return (
     <footer
       className={cn(
-        "flex min-h-12 w-full items-center justify-between gap-2 border-t border-sidebar-border bg-sidebar p-2 px-4",
+        "h-auto w-full border-t border-sidebar-border bg-sidebar",
         className,
       )}
       ref={ref}
       {...props}
     >
-      <span>
-        <span className="font-bold">SecurDoor</span> by{" "}
-        <Link
-          href="https://github.com/Crea7orX"
-          target="_blank"
-          className="font-bold underline"
-        >
-          Hristiyan Dimitrov
-        </Link>{" "}
-        and{" "}
-        <Link
-          href="https://github.com/DeyanVNikolov"
-          target="_blank"
-          className="font-bold underline"
-        >
-          Deyan Nikolov
-        </Link>{" "}
-        &copy; {new Date().getFullYear()}
-      </span>
-      <Link href="https://github.com/Crea7orX/SecurDoor" target="_blank">
-        GitHub
-      </Link>
+      <div className="flex min-h-[calc(3rem-1px)] items-center justify-between gap-2 p-2 px-4">
+        <span>
+          <span className="font-bold">SecurDoor</span> by{" "}
+          <Link
+            href="https://github.com/Crea7orX"
+            target="_blank"
+            className="font-bold underline"
+          >
+            Hristiyan Dimitrov
+          </Link>{" "}
+          and{" "}
+          <Link
+            href="https://github.com/DeyanVNikolov"
+            target="_blank"
+            className="font-bold underline"
+          >
+            Deyan Nikolov
+          </Link>{" "}
+          &copy; {new Date().getFullYear()}
+        </span>
+        <Link href="https://github.com/Crea7orX/SecurDoor" target="_blank">
+          GitHub
+        </Link>
+      </div>
     </footer>
   );
 });
