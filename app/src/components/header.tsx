@@ -1,5 +1,6 @@
+import { DashboardSidebar } from "@/components/dashboard/sidebar/dashboard-sidebar";
 import { LanguageSwitcher } from "@/components/language-switcher";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarSheet } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
 import { UserButton } from "@clerk/nextjs";
@@ -21,7 +22,9 @@ const Header = React.forwardRef<
       <nav className="flex h-full w-full items-center justify-between gap-4 p-2 px-4">
         {/*Required div when sidebar trigger is hidden*/}
         <div>
-          <SidebarTrigger className="-ml-1 md:hidden" />
+          <SidebarSheet triggerClassName="-ml-1 md:hidden">
+            <DashboardSidebar className="max-md:flex" />
+          </SidebarSheet>
         </div>
         <div className="flex items-center gap-2">
           <LanguageSwitcher className="rounded-full" />
