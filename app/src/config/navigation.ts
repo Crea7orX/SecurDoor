@@ -1,8 +1,14 @@
 import { type Navigation } from "@/types";
-import { IdCard, Microchip, ScrollText } from "lucide-react";
+import { House, IdCard, Microchip, ScrollText } from "lucide-react";
 
 export function getNavigationList(pathname: string): Navigation[] {
   return [
+    {
+      title: "Navigation.home",
+      url: "/dashboard",
+      icon: House,
+      active: pathname.endsWith("/dashboard"),
+    },
     {
       title: "Navigation.devices",
       url: "/dashboard/devices",
