@@ -1,0 +1,20 @@
+{
+  "Dashboard": {
+    "chart": {
+      "access": {
+        "label": {
+          "locks": "Locks",
+          "unlocks": "Unlocks"
+        },
+        "card": {
+          "title": "Access with card",
+          "description": "Showing total access with card for the last week"
+        },
+        "dashboard": {
+          "title": "Access from dashboard",
+          "description": "Showing total access from the dashboard for the last week"
+        }
+      }
+    }
+  }
+}
