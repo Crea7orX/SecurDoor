@@ -136,6 +136,11 @@
         "title": "Unknown"
       }
     },
+    "recent_access": {
+      "last_updated": "Last updated: {date}",
+      "title": "Recent Access",
+      "view_all": "View all Logs"
+    },
     "recent_activity": {
       "last_updated": "Last updated: {date}",
       "title": "Recent Activity",
