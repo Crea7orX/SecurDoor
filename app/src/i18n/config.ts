@@ -6,6 +6,7 @@ export const defaultLocale: Locale = "en";
 export const namespaces = [
   "card",
   "common",
+  "dashboard",
   "data-table",
   "device",
   "log",
