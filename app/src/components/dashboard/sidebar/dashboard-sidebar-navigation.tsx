@@ -24,11 +24,7 @@ export function DashboardSidebarNavigation({
       <SidebarMenu>
         {items.map((item, index) => (
           <SidebarMenuItem key={index}>
-            <SidebarMenuButton
-              tooltip={_t(item.title)}
-              isActive={item.active}
-              asChild
-            >
+            <SidebarMenuButton isActive={item.active} asChild>
               <Link href={item.url}>
                 {item.icon && <item.icon />}
                 <span>{_t(item.title)}</span>
