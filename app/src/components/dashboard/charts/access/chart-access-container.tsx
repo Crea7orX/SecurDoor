@@ -21,7 +21,7 @@ const ChartAccessContainer = React.forwardRef<
   React.ElementRef<typeof ChartContainer>,
   ChartAccessContainerProps
 >(({ className, data, activeChart, ...props }, ref) => {
-  const _t = useTranslations();
+  const t = useTranslations();
   const format = useFormatter();
 
   return (
@@ -59,7 +59,7 @@ const ChartAccessContainer = React.forwardRef<
             <ChartTooltipContent
               className="w-[150px]"
               nameFormatter={(value) => {
-                return _t(value);
+                return t(value);
               }}
               labelFormatter={(value: string) => {
                 return format.dateTime(new Date(value), {
