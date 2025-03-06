@@ -20,3 +20,13 @@ export const chartActiveUsersForWeekResponseSchema = z.object({
 export type ChartActiveUsersForWeekResponse = z.infer<
   typeof chartActiveUsersForWeekResponseSchema
 >;
+
+export const chartEmergencyForWeekResponseSchema = z.object({
+  date: z.string().date(),
+  lockdowns: z.number(),
+  evacuations: z.number(),
+});
+
+export type ChartEmergencyForWeekResponse = z.infer<
+  typeof chartEmergencyForWeekResponseSchema
+>;
