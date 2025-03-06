@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 
 export default function DashboardPage() {
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex h-full flex-col gap-4 p-4">
       <DeviceEmergencyCountAlert href="/dashboard/devices?emergencyState=lockdown,evacuation" />
       <div className="flex h-full flex-1 gap-6">
         <DashboardRecentAccessCard className="w-full max-w-96 max-lg:hidden" />
