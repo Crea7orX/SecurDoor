@@ -19,11 +19,11 @@ import * as React from "react";
 
 const chartConfig = {
   unlocks: {
-    label: "Unlocks",
+    label: "Dashboard.chart.access.label.unlocks",
     color: "hsl(var(--success))",
   },
   locks: {
-    label: "Locks",
+    label: "Dashboard.chart.access.label.locks",
     color: "hsl(var(--destructive))",
   },
 } satisfies ChartConfig;
