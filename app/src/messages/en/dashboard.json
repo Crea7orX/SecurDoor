@@ -30,6 +30,14 @@
           "title": "Active dashboard users",
           "description": "Showing TOP 10 active dashboard users for the last week"
         }
+      },
+      "emergency": {
+        "label": {
+          "lockdowns": "Lockdowns",
+          "evacuations": "Evacuations"
+        },
+        "title": "Emergency states",
+        "description": "Showing total devices put into emergency state for the last week"
       }
     }
   }
