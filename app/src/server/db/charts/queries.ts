@@ -65,10 +65,7 @@ export async function chartGetAccessForWeek({
     .orderBy(sql`date`);
 
   // Initialize chart data map with default values for all days
-  const dataMap = new Map<
-    string,
-    { date: string; unlocks: number; locks: number }
-  >(
+  const dataMap = new Map<string, ChartAccessForWeekResponse>(
     last7Days.map((date) => [
       date,
       { date, unlocks: 0, locks: 0 }, // Default to 0 unlocks and locks for each day
