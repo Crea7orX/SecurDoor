@@ -2,6 +2,7 @@ import { ChartAccessForWeek } from "@/components/dashboard/charts/access/chart-a
 import { ChartDashboardAccessForWeek } from "@/components/dashboard/charts/access/chart-dashboard-access-for-week";
 import { ChartActiveUsersForWeek } from "@/components/dashboard/charts/active-users/chart-active-users-for-week";
 import { ChartDashboardActiveUsersForWeek } from "@/components/dashboard/charts/active-users/chart-dashboard-active-users-for-week";
+import { ChartEmergencyForWeek } from "@/components/dashboard/charts/emergency/chart-emergency-for-week";
 import { DashboardRecentAccessCard } from "@/components/dashboard/dashboard-recent-access-card";
 import { DeviceEmergencyCountAlert } from "@/components/devices/device-emergency-count-alert";
 import { Card } from "@/components/ui/card";
@@ -20,6 +21,7 @@ export default function DashboardPage() {
               <ChartAccessForWeek className="2xl:w-[49%]" />
               <ChartDashboardActiveUsersForWeek className="2xl:w-[49%]" />
               <ChartActiveUsersForWeek className="2xl:w-[49%]" />
+              <ChartEmergencyForWeek />
             </div>
           </Card>
 
