@@ -71,7 +71,7 @@ const CardAddDeviceCombobox = React.forwardRef<
             ref={ref}
             {...props}
           >
-            <span className="max-w-96 overflow-hidden truncate max-sm:max-w-52">
+            <span className="max-w-96 truncate max-sm:max-w-52">
               {selectedDevice?.name ?? t("label")}
             </span>
             <ChevronsUpDown className="opacity-50" />
