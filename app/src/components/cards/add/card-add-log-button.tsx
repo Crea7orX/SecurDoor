@@ -26,7 +26,7 @@ const CardAddLogButton = React.forwardRef<
 
   return (
     <Card className={cn(className)} ref={ref} {...props}>
-      <CardContent className="flex items-center justify-between p-4">
+      <CardContent className="flex items-center justify-between gap-2 p-4 max-sm:flex-col max-sm:items-start">
         <div>
           <p>
             {t.rich("fingerprint", {
@@ -48,6 +48,7 @@ const CardAddLogButton = React.forwardRef<
         <Button
           onClick={() => setCardFingerprint(log.reference![2] as string)}
           disabled={cardFingerprint === log.reference![2]}
+          className="max-sm:w-full"
         >
           {cardFingerprint === log.reference![2] ? t("selected") : t("select")}
         </Button>
