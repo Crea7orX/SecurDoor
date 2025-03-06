@@ -14,6 +14,22 @@
           "title": "Access from dashboard",
           "description": "Showing total access from the dashboard for the last week"
         }
+      },
+      "active_users": {
+        "label": {
+          "locks": "Locks",
+          "unlocks": "Unlocks",
+          "total": "Total",
+          "interactions": "Interactions"
+        },
+        "card": {
+          "title": "Active card users",
+          "description": "Showing TOP 10 active card users for the last week"
+        },
+        "dashboard": {
+          "title": "Active dashboard users",
+          "description": "Showing TOP 10 active dashboard users for the last week"
+        }
       }
     }
   }
