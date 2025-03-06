@@ -133,13 +133,15 @@ export default function CardsAddPage() {
                   <FormItem>
                     <FormLabel>{t("field.fingerprint.label")}</FormLabel>
                     <FormControl>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 max-sm:flex-col">
                         <Input
                           value={field.value}
                           className="cursor-not-allowed"
                         />
                         <CardAddSelectDialog {...field}>
-                          <Button>{t("field.fingerprint.button")}</Button>
+                          <Button className="max-sm:w-full">
+                            {t("field.fingerprint.button")}
+                          </Button>
                         </CardAddSelectDialog>
                       </div>
                     </FormControl>
