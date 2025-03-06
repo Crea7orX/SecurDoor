@@ -113,7 +113,7 @@ const ChartActiveUsersContainer = React.forwardRef<
             );
           }}
         />
-        <Pie data={data} dataKey="total" innerRadius={50} strokeWidth={5}>
+        <Pie data={data} dataKey="total" innerRadius={64} strokeWidth={5}>
           {data.map((_, index) => (
             <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
