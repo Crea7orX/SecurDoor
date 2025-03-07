@@ -1,11 +1,10 @@
 import { Logo } from "@/components/assets/logo";
+import { LandingNavbarSheet } from "@/components/landing/landing-navbar-sheet";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
@@ -43,19 +42,7 @@ const LandingNavbar = React.forwardRef<
         <div className="flex gap-2 md:hidden">
           <LanguageSwitcher />
           <ThemeToggle />
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="size-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="top" className="flex flex-col gap-6 p-6">
-              <nav className="flex flex-col space-y-4">
-                <LandingNavbarLinks />
-              </nav>
-              <LandingNavbarDashboardButton />
-            </SheetContent>
-          </Sheet>
+          <LandingNavbarSheet />
         </div>
       </div>
     </header>
@@ -63,24 +50,41 @@ const LandingNavbar = React.forwardRef<
 });
 LandingNavbar.displayName = "LandingNavbar";
 
-const LandingNavbarLinks = () => {
+interface LandingNavbarLinksProps {
+  onClick?: () => void;
+}
+
+const LandingNavbarLinks = ({ onClick }: LandingNavbarLinksProps) => {
   const t = useTranslations("Landing.header.link");
 
   return (
     <>
-      <Link href="/#features" className="text-sm font-medium hover:text-info">
+      <Link
+        href="/#features"
+        className="text-sm font-medium hover:text-info"
+        onClick={onClick}
+      >
         {t("features")}
       </Link>
       <Link
         href="/#testimonials"
         className="text-sm font-medium hover:text-info"
+        onClick={onClick}
       >
         {t("testimonials")}
       </Link>
-      <Link href="/#pricing" className="text-sm font-medium hover:text-info">
+      <Link
+        href="/#pricing"
+        className="text-sm font-medium hover:text-info"
+        onClick={onClick}
+      >
         {t("pricing")}
       </Link>
-      <Link href="/#contact" className="text-sm font-medium hover:text-info">
+      <Link
+        href="/#contact"
+        className="text-sm font-medium hover:text-info"
+        onClick={onClick}
+      >
         {t("contact")}
       </Link>
     </>
@@ -100,4 +104,4 @@ const LandingNavbarDashboardButton = () => {
   );
 };
 
-export { LandingNavbar };
+export { LandingNavbar, LandingNavbarLinks, LandingNavbarDashboardButton };
