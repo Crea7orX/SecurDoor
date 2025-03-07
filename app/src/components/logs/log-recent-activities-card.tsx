@@ -43,7 +43,7 @@ const LogRecentActivitiesCard = React.forwardRef<
 
   const { data, isLoading, dataUpdatedAt } = useGetAllLogsQuery({
     searchParams,
-    refetchInterval: 5000,
+    refetchInterval: 2500,
   });
 
   return (
