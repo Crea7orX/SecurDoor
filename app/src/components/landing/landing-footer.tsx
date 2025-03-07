@@ -96,7 +96,7 @@ const LandingFooter = React.forwardRef<
                   target="_blank"
                   className="text-muted-foreground hover:text-info"
                 >
-                  {t("links.github")}
+                  GitHub
                 </Link>
               </li>
             </ul>
