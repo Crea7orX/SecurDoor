@@ -27,7 +27,7 @@ export default function DevicePage({ params }: DevicePageProps) {
 
   const { data, isLoading } = useGetDeviceByIdQuery({
     id: params.id,
-    refetchInterval: 5000,
+    refetchInterval: 2500,
   });
 
   if (isLoading) {
@@ -39,7 +39,7 @@ export default function DevicePage({ params }: DevicePageProps) {
   }
 
   return (
-    <div className="flex flex-1 gap-6 p-4">
+    <div className="flex h-full gap-6 p-4">
       <div className="flex w-full max-w-96 flex-col gap-8 max-lg:hidden">
         <Button className="self-start" disabled={isLoading} asChild>
           <Link href="/dashboard/devices">

@@ -136,6 +136,11 @@
         "title": "Неизвестно"
       }
     },
+    "recent_access": {
+      "last_updated": "Последно обновен: {date}",
+      "title": "Скорошен достъп",
+      "view_all": "Вижте запис на одит"
+    },
     "recent_activity": {
       "last_updated": "Последно обновена: {date}",
       "title": "Последна активност",

@@ -51,7 +51,7 @@
         "active": "ACTIVE",
         "disabled": "DISABLED"
       },
-      "title": "Card <semibold>{fingerprint}</semibold>"
+      "title": "Card: <semibold>{fingerprint}</semibold>"
     },
     "danger_zone": {
       "description": "Dangerous actions that can not be undone",
@@ -107,7 +107,7 @@
       },
       "title": "Holder"
     },
-    "label": "Card",
+    "label": "Card:",
     "status": {
       "button": {
         "activate": "Activate",

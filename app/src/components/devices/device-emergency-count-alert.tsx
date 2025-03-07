@@ -6,18 +6,22 @@ import { useGetEmergencyCountQuery } from "@/hooks/api/emergency/use-get-emergen
 import { cn } from "@/lib/utils";
 import { Microchip, Siren } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 interface DeviceEmergencyCountAlertProps
   extends React.ComponentPropsWithoutRef<typeof Alert> {
-  onViewClick: () => void;
+  onViewClick?: () => void;
+  href?: string;
 }
 
 const DeviceEmergencyCountAlert = React.forwardRef<
   HTMLDivElement,
   DeviceEmergencyCountAlertProps
->(({ className, onViewClick, ...props }, ref) => {
+>(({ className, onViewClick, href, ...props }, ref) => {
   const t = useTranslations("Device.emergency_count_alert");
+
+  const router = useRouter();
 
   const { data } = useGetEmergencyCountQuery();
 
@@ -45,7 +49,19 @@ const DeviceEmergencyCountAlert = React.forwardRef<
           })}
         </AlertDescription>
       </div>
-      <Button className="max-sm:hidden" onClick={onViewClick}>
+      <Button
+        className="max-sm:hidden"
+        onClick={() => {
+          if (onViewClick) {
+            onViewClick();
+            return;
+          }
+
+          if (href) {
+            router.push(href);
+          }
+        }}
+      >
         <Microchip className="size-4" />
         {t("view")}
       </Button>

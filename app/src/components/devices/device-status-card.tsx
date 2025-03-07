@@ -28,8 +28,8 @@ const DeviceStatusCard = React.forwardRef<
   const t = useTranslations("Device.status");
   const format = useFormatter();
   const now = useNow({
-    updateInterval: 5000,
-  }); // re-render every 5s for device status
+    updateInterval: 1000,
+  }); // re-render every 1s for device status
 
   const deviceStatusDisplayInfo = getDeviceStatusDisplayInfo(
     device.state?.status ?? "",

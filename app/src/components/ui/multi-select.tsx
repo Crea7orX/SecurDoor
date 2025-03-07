@@ -153,11 +153,15 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                   {selectedOptions.slice(0, maxCount).map((option) => {
                     const IconComponent = option?.icon;
                     return (
-                      <Badge key={option.key} className="m-1" variant={variant}>
+                      <Badge
+                        key={option.key}
+                        className="m-1 max-w-64 max-sm:max-w-48"
+                        variant={variant}
+                      >
                         {IconComponent && (
                           <IconComponent className="mr-2 h-4 w-4" />
                         )}
-                        {option.label}
+                        <span className="truncate">{option.label}</span>
                         <CircleX
                           className="ml-2 h-4 w-4 cursor-pointer"
                           onClick={(event) => {
@@ -203,7 +207,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="p-0" align="start">
           <Command>
             <CommandInput
               placeholder={t("search")}
@@ -255,7 +259,9 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                       {option.icon && (
                         <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                       )}
-                      <span>{option.label}</span>
+                      <span className="overflow-hidden text-ellipsis">
+                        {option.label}
+                      </span>
                     </CommandItem>
                   );
                 })}

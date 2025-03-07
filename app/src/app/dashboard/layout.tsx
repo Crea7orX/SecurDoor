@@ -13,9 +13,9 @@ export default function DashboardLayout({
     <>
       <SignedIn>
         <DashboardSidebar />
-        <div className="relative flex min-w-0 flex-1 flex-col overflow-auto">
+        <div className="relative flex h-dvh min-w-0 flex-1 flex-col overflow-auto">
           <Header />
-          <main className="relative break-words">{children}</main>
+          <main className="relative flex-1 break-words">{children}</main>
           <Footer className="mt-auto" />
         </div>
       </SignedIn>

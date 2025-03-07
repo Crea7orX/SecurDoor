@@ -28,8 +28,8 @@ interface DevicesPageProps {
 export default function DevicesPage({ searchParams }: DevicesPageProps) {
   const t = useTranslations("Device");
   const now = useNow({
-    updateInterval: 5000,
-  }); // re-render every 5s for device status
+    updateInterval: 1000,
+  }); // re-render every 1s for device status
 
   const { data, isLoading, isPlaceholderData } = useGetAllDevicesQuery({
     searchParams,

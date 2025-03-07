@@ -26,11 +26,11 @@ const CardAddLogButton = React.forwardRef<
 
   return (
     <Card className={cn(className)} ref={ref} {...props}>
-      <CardContent className="flex items-center justify-between p-4">
+      <CardContent className="flex items-center justify-between gap-2 p-4 max-sm:flex-col max-sm:items-start">
         <div>
           <p>
             {t.rich("fingerprint", {
-              fingerprint: (log.reference![0] as string).slice(-8),
+              fingerprint: (log.reference![2] as string).slice(-8),
               semibold: (chunks) => (
                 <span className="font-semibold">{chunks}</span>
               ),
@@ -46,10 +46,11 @@ const CardAddLogButton = React.forwardRef<
           </p>
         </div>
         <Button
-          onClick={() => setCardFingerprint(log.reference![0] as string)}
-          disabled={cardFingerprint === log.reference![0]}
+          onClick={() => setCardFingerprint(log.reference![2] as string)}
+          disabled={cardFingerprint === log.reference![2]}
+          className="max-sm:w-full"
         >
-          {cardFingerprint === log.reference![0] ? t("selected") : t("select")}
+          {cardFingerprint === log.reference![2] ? t("selected") : t("select")}
         </Button>
       </CardContent>
     </Card>

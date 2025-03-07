@@ -25,7 +25,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className={`${GeistSans.variable}`}>
-      <body className="flex h-dvh bg-background">
+      <body className="flex min-h-dvh bg-background">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ProvidersWithoutTheme>
             <NextIntlClientProvider messages={messages}>

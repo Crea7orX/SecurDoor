@@ -26,7 +26,7 @@ export function DashboardSidebar({
   return (
     <Sidebar className="border-r" {...props}>
       <SidebarHeader className="h-12 items-center justify-center border-b">
-        <Link href="/">
+        <Link href="/dashboard">
           <Logo className="h-10" />
         </Link>
       </SidebarHeader>

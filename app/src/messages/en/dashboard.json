@@ -1,0 +1,44 @@
+{
+  "Dashboard": {
+    "chart": {
+      "access": {
+        "label": {
+          "locks": "Locks",
+          "unlocks": "Unlocks"
+        },
+        "card": {
+          "title": "Access with card",
+          "description": "Showing total access with card for the last week"
+        },
+        "dashboard": {
+          "title": "Access from dashboard",
+          "description": "Showing total access from the dashboard for the last week"
+        }
+      },
+      "active_users": {
+        "label": {
+          "locks": "Locks",
+          "unlocks": "Unlocks",
+          "total": "Total",
+          "interactions": "Interactions"
+        },
+        "card": {
+          "title": "Active card users",
+          "description": "Showing TOP 10 active card users for the last week"
+        },
+        "dashboard": {
+          "title": "Active dashboard users",
+          "description": "Showing TOP 10 active dashboard users for the last week"
+        }
+      },
+      "emergency": {
+        "label": {
+          "lockdowns": "Lockdowns",
+          "evacuations": "Evacuations"
+        },
+        "title": "Emergency states",
+        "description": "Showing total devices put into emergency state for the last week"
+      }
+    }
+  }
+}

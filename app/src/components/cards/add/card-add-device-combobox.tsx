@@ -71,7 +71,9 @@ const CardAddDeviceCombobox = React.forwardRef<
             ref={ref}
             {...props}
           >
-            {selectedDevice?.name ?? t("label")}
+            <span className="max-w-96 truncate max-sm:max-w-52">
+              {selectedDevice?.name ?? t("label")}
+            </span>
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -89,7 +91,9 @@ const CardAddDeviceCombobox = React.forwardRef<
                       setSelectedDevice(device);
                     }}
                   >
-                    {device.name}
+                    <span className="overflow-hidden text-ellipsis">
+                      {device.name}
+                    </span>
                     <Check
                       className={cn(
                         "ml-auto",

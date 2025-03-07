@@ -12,7 +12,7 @@ export default function NotFoundPage() {
   const t = useTranslations("Common.not_found");
 
   return (
-    <div className="flex h-dvh flex-col items-center justify-center p-4">
+    <div className="flex flex-1 flex-col items-center justify-center p-4">
       <Card className="min-w-[280px]">
         <CardHeader className="text-center">
           <CardTitle className="text-6xl font-bold">{t("title")}</CardTitle>
