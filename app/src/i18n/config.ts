@@ -9,6 +9,7 @@ export const namespaces = [
   "dashboard",
   "data-table",
   "device",
+  "landing",
   "log",
   "navigation",
   "zod",
