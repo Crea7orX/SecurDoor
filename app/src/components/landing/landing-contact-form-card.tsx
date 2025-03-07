@@ -10,7 +10,7 @@ import { CheckCircle, LoaderCircle, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 
-const LandingContactForm = React.forwardRef<
+const LandingContactFormCard = React.forwardRef<
   React.ElementRef<typeof Card>,
   React.ComponentProps<typeof Card>
 >(({ className, ...props }, ref) => {
@@ -147,6 +147,6 @@ const LandingContactForm = React.forwardRef<
     </Card>
   );
 });
-LandingContactForm.displayName = "LandingContactForm";
+LandingContactFormCard.displayName = "LandingContactFormCard";
 
-export { LandingContactForm };
+export { LandingContactFormCard };

@@ -1,4 +1,4 @@
-import { LandingContactForm } from "@/components/landing/landing-contact-form";
+import { LandingContactFormCard } from "@/components/landing/landing-contact-form-card";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import * as React from "react";
@@ -28,7 +28,7 @@ const LandingContactSection = React.forwardRef<
           </p>
         </div>
 
-        <LandingContactForm />
+        <LandingContactFormCard />
       </div>
     </section>
   );
