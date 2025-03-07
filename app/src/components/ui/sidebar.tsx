@@ -16,7 +16,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
     return (
       <aside
         className={cn(
-          "z-10 flex h-full w-64 flex-col bg-sidebar text-sidebar-foreground max-md:hidden",
+          "z-10 flex h-dvh w-64 flex-col bg-sidebar text-sidebar-foreground max-md:hidden",
           className,
         )}
         ref={ref}
