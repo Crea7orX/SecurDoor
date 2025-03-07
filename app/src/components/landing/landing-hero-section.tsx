@@ -16,7 +16,7 @@ const LandingHeroSection = React.forwardRef<
     <section
       id="hero"
       className={cn(
-        "container flex min-h-[60dvh] flex-col items-center justify-center gap-8 overflow-hidden p-4",
+        "container flex flex-col items-center justify-center gap-8 overflow-hidden p-4 py-20",
         className,
       )}
       ref={ref}
