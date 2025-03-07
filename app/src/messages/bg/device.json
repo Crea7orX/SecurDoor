@@ -146,7 +146,7 @@
         "placeholder": "Филтриране по име"
       }
     },
-    "label": "Устройство",
+    "label": "Устройство:",
     "lock": {
       "button": "Заключване",
       "notification": {

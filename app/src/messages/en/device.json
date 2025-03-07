@@ -146,7 +146,7 @@
         "placeholder": "Filter by name"
       }
     },
-    "label": "Device",
+    "label": "Device:",
     "lock": {
       "button": "Lock",
       "notification": {
