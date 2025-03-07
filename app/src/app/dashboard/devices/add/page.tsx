@@ -99,7 +99,7 @@ export default function DevicesAddPage() {
           {tButton("go_back")}
         </Link>
       </Button>
-      <Card className="bg-border lg:min-w-[380px]">
+      <Card className="bg-border max-sm:w-full lg:min-w-[380px]">
         <CardHeader>
           <CardTitle>{t("add.header")}</CardTitle>
         </CardHeader>
