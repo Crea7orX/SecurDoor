@@ -27,7 +27,7 @@ export default function DevicePage({ params }: DevicePageProps) {
 
   const { data, isLoading } = useGetDeviceByIdQuery({
     id: params.id,
-    refetchInterval: 5000,
+    refetchInterval: 2500,
   });
 
   if (isLoading) {
