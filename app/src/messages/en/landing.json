@@ -1,0 +1,189 @@
+{
+  "Landing": {
+    "call_to_action": {
+      "button": "Get Started",
+      "description": "Join many individuals and organizations that trust <strong>SecurDoor</strong> for their most critical security needs.",
+      "title": "Ready to transform your access control?"
+    },
+    "contact": {
+      "description": "Have questions about <strong>SecurDoor</strong>? Our team is here to help you find the right solution for your needs.",
+      "form": {
+        "button": "Send Message",
+        "field": {
+          "email": {
+            "label": "Email",
+            "placeholder": "john@example.com"
+          },
+          "message": {
+            "label": "Message",
+            "placeholder": "Tell us more about your inquiry..."
+          },
+          "name": {
+            "label": "Full Name",
+            "placeholder": "John Doe"
+          },
+          "subject": {
+            "label": "Subject",
+            "placeholder": "How can we help?"
+          }
+        },
+        "success": {
+          "button": "Send Another Message",
+          "description": "Thank you for reaching out. Our team will get back to you as soon as possible.",
+          "title": "Message Sent!"
+        }
+      },
+      "title": "Get in Touch"
+    },
+    "features": {
+      "description": "<strong>SecurDoor</strong> combines cutting-edge technology with user-friendly features to provide comprehensive access control.",
+      "feature": {
+        "1": {
+          "description": "Multi-layered encryption and security measures that exceed industry standards to keep your premises secure.",
+          "title": "Advanced Security Protocols"
+        },
+        "2": {
+          "description": "Manage access seamlessly from anywhere with our web dashboard for both administrators and users.",
+          "title": "Remote Access Control"
+        },
+        "3": {
+          "description": "Set specific access windows for visitors, contractors, and employees based on schedules and requirements.",
+          "title": "Time-based Permissions"
+        },
+        "4": {
+          "description": "Customize access levels for different user roles, ensuring the right people have the right level of access.",
+          "title": "Role-based Access Management"
+        },
+        "5": {
+          "description": "Monitor access events in real-time with instant notifications for suspicious activities.",
+          "title": "Real-time Monitoring"
+        },
+        "6": {
+          "description": "Create custom alert rules for specific events, time periods, or access points.",
+          "title": "Customizable Alerts"
+        },
+        "7": {
+          "description": "Automatically track and generate logs for access events.",
+          "title": "Logs"
+        },
+        "8": {
+          "description": "Seamlessly integrate with your existing CCTV systems for synchronized security monitoring.",
+          "title": "Integrated Video Surveillance"
+        },
+        "9": {
+          "description": "Implement immediate lockdown/evacuation procedures across all access points with a single command.",
+          "title": "Emergency Lockdown/Evacuation"
+        },
+        "coming_soon": "Coming Soon"
+      },
+      "title": "Intelligent Features for Complete Control"
+    },
+    "footer": {
+      "authors": {
+        "author_1": "Hristiyan Dimitrov",
+        "author_2": "Deyan Nikolov",
+        "contact": "Contact",
+        "label": "Authors"
+      },
+      "copyright": "© {year} SecurDoor. All rights reserved.",
+      "description": "Intelligent access control solutions for modern enterprises. Securing your premises with advanced technology.",
+      "links": {
+        "github": "GitHub",
+        "label": "Links"
+      },
+      "product": {
+        "features": "Features",
+        "label": "Product",
+        "pricing": "Pricing",
+        "testimonials": "Testimonials"
+      }
+    },
+    "header": {
+      "button": {
+        "dashboard": "Dashboard",
+        "login": "Log In"
+      },
+      "link": {
+        "contact": "Contact",
+        "features": "Features",
+        "pricing": "Pricing",
+        "testimonials": "Testimonials"
+      }
+    },
+    "hero": {
+      "button": "Get Started",
+      "description": "<strong>SecurDoor</strong> transforms how you protect your premises with advanced access management that evolves with your security needs.",
+      "tag": {
+        "1": "Enterprise-grade",
+        "2": "Easy Control",
+        "3": "Biometric Authentication",
+        "coming_soon": "Coming Soon"
+      },
+      "title": "Intelligent Access Control for the Modern Era"
+    },
+    "pricing": {
+      "description": "Choose the plan that matches your organization&apos;s security needs and budget.",
+      "enterprise": {
+        "button": "Get Started",
+        "description": "Ideal for large organizations with complex security needs",
+        "features": {
+          "1": "Everything in Standard plan",
+          "2": "Unlimited access points",
+          "3": "Full API access",
+          "4": "Earlier access to new features",
+          "5": "Biometric authentication (Coming Soon)",
+          "6": "Integration with 3rd party systems",
+          "7": "Priority email & phone support",
+          "8": "30-day activity log retention",
+          "9": "Custom alerts and notifications (Coming Soon)"
+        },
+        "name": "Enterprise",
+        "period": "/month",
+        "price": "99.90 lv."
+      },
+      "popular": "Most Popular",
+      "standard": {
+        "button": "Get Started",
+        "description": "Perfect for personal use, small businesses and single locations",
+        "features": {
+          "1": "Lifetime access",
+          "2": "Lifetime software updates",
+          "3": "Security updates",
+          "4": "Low priority email support",
+          "5": "7-day activity log retention"
+        },
+        "name": "Standard",
+        "period": "",
+        "price": "Free"
+      },
+      "title": "Security Solutions for Every Scale"
+    },
+    "testimonials": {
+      "description": "Discover how <strong>SecurDoor</strong> has transformed access control for organizations worldwide.",
+      "disclaimer": "DISCLAIMER: The testimonials are fictitious and do not represent the actual opinions or experiences of the individuals and companies mentioned.",
+      "testimonial": {
+        "1": {
+          "author": "Ivan Petrov",
+          "position": "Building Control Manager, TechnoCorp Ltd.",
+          "quote": "SecurDoor completely changed the security of our building. Biometric authentication and real-time monitoring give us peace of mind like never before."
+        },
+        "2": {
+          "author": "Mariya Georgieva",
+          "position": "Security Director, Global Enterprise AD",
+          "quote": "We implemented SecurDoor in our organization and saw immediate improvements in staff access management and visitor tracking. The emergency protocols are particularly impressive."
+        },
+        "3": {
+          "author": "Dimitar Stoyanov",
+          "position": "IT Security Specialist, SafeHaven Solutions",
+          "quote": "The ability to remotely control access and receive instant notifications has completely changed our approach to security. SecurDoor is a must-have tool for any modern access control system."
+        },
+        "4": {
+          "author": "Elena Vasileva",
+          "position": "Operations Manager, Business Center Sofia",
+          "quote": "Advanced encryption and multi-layered security features ensure that our premises are always safe. SecurDoor is the best investment in security we've ever made."
+        }
+      },
+      "title": "Trusted by Security Professionals"
+    }
+  }
+}
