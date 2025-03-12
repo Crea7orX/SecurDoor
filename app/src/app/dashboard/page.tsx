@@ -19,12 +19,6 @@ export default function DashboardPage() {
 
         <div className="flex flex-1 flex-col gap-4">
           <Card className="h-full w-full bg-border px-2 py-4">
-            <div className="sticky top-0 flex flex-wrap justify-center gap-4">
-              <ChartDashboardAccessForWeek className="2xl:w-[49%]" />
-              <ChartAccessForWeek className="2xl:w-[49%]" />
-              <ChartDashboardActiveUsersForWeek className="2xl:w-[49%]" />
-              <ChartActiveUsersForWeek className="2xl:w-[49%]" />
-              <ChartEmergencyForWeek />
             <div className="sticky top-0 grid justify-center gap-4 2xl:grid-cols-2">
               <ChartDashboardAccessForWeek />
               <ChartAccessForWeek />
