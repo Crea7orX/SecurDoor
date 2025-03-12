@@ -25,6 +25,12 @@ export default function DashboardPage() {
               <ChartDashboardActiveUsersForWeek className="2xl:w-[49%]" />
               <ChartActiveUsersForWeek className="2xl:w-[49%]" />
               <ChartEmergencyForWeek />
+            <div className="sticky top-0 grid justify-center gap-4 2xl:grid-cols-2">
+              <ChartDashboardAccessForWeek />
+              <ChartAccessForWeek />
+              <ChartDashboardActiveUsersForWeek />
+              <ChartActiveUsersForWeek />
+              <ChartEmergencyForWeek className="2xl:col-span-2" />
             </div>
           </Card>
 
