@@ -6,6 +6,7 @@ import { CardCard, CardCardSkeleton } from "@/components/cards/card-card";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { NoResultsLabel } from "@/components/data-table/no-results-label";
+import { DemoAlert } from "@/components/demo/demo-alert";
 import { Button } from "@/components/ui/button";
 import { useGetAllCardsQuery } from "@/hooks/api/cards/use-get-all-cards-query";
 import { useDataTable } from "@/hooks/use-data-table";
@@ -75,6 +76,8 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-1 sm:p-4">
+      <DemoAlert />
+
       <DataTableToolbar table={table} filterFields={filterFields}>
         <Button size="sm" asChild>
           <Link href="/dashboard/cards/add">

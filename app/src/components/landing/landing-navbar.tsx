@@ -95,7 +95,7 @@ const LandingNavbarDashboardButton = () => {
   const t = useTranslations("Landing.header.button");
 
   return (
-    <Button>
+    <Button asChild>
       <Link href="/dashboard">
         <SignedIn>{t("dashboard")}</SignedIn>
         <SignedOut>{t("login")}</SignedOut>

@@ -2,43 +2,51 @@
   "Dashboard": {
     "chart": {
       "access": {
+        "card": {
+          "description": "Showing total access with card for the last week",
+          "title": "Access with card"
+        },
+        "dashboard": {
+          "description": "Showing total access from the dashboard for the last week",
+          "title": "Access from dashboard"
+        },
         "label": {
           "locks": "Locks",
           "unlocks": "Unlocks"
-        },
-        "card": {
-          "title": "Access with card",
-          "description": "Showing total access with card for the last week"
-        },
-        "dashboard": {
-          "title": "Access from dashboard",
-          "description": "Showing total access from the dashboard for the last week"
         }
       },
       "active_users": {
-        "label": {
-          "locks": "Locks",
-          "unlocks": "Unlocks",
-          "total": "Total",
-          "interactions": "Interactions"
-        },
         "card": {
-          "title": "Active card users",
-          "description": "Showing TOP 10 active card users for the last week"
+          "description": "Showing TOP 10 active card users for the last week",
+          "title": "Active card users"
         },
         "dashboard": {
-          "title": "Active dashboard users",
-          "description": "Showing TOP 10 active dashboard users for the last week"
+          "description": "Showing TOP 10 active dashboard users for the last week",
+          "title": "Active dashboard users"
+        },
+        "label": {
+          "interactions": "Interactions",
+          "locks": "Locks",
+          "total": "Total",
+          "unlocks": "Unlocks"
         }
       },
       "emergency": {
+        "description": "Showing total devices put into emergency state for the last week",
         "label": {
-          "lockdowns": "Lockdowns",
-          "evacuations": "Evacuations"
+          "evacuations": "Evacuations",
+          "lockdowns": "Lockdowns"
         },
-        "title": "Emergency states",
-        "description": "Showing total devices put into emergency state for the last week"
+        "title": "Emergency states"
       }
+    },
+    "demo": {
+      "alert": {
+        "description": "Dear National Committee of the 22nd National Olympiad of Information Technologies, due to the inability to fully test the system, as you do not have a prototype device, we have prepared a special video for you, which shows the main functionalities of the system!",
+        "title": "TO THE NATIONAL COMMITTEE!",
+        "view": "To the video"
+      },
+      "not_playing": "If video is not playing, please click <link>here</link>."
     }
   }
 }

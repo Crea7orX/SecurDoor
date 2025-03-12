@@ -5,6 +5,7 @@ import LogsLoading from "@/app/dashboard/logs/loading";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { NoResultsLabel } from "@/components/data-table/no-results-label";
+import { DemoAlert } from "@/components/demo/demo-alert";
 import { LogCard, LogCardSkeleton } from "@/components/logs/log-card";
 import { LogDisplayInfos } from "@/config/logs";
 import { useGetAllLogsActorsQuery } from "@/hooks/api/logs/use-get-all-logs-actors-query";
@@ -92,6 +93,8 @@ export default function LogsPage({ searchParams }: LogsPageProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-4">
+      <DemoAlert />
+
       <div className="relative flex w-full flex-col items-center justify-center gap-4">
         <DataTableToolbar table={table} filterFields={filterFields} />
         {table.getRowModel().rows?.length ? (
