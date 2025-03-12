@@ -31,7 +31,10 @@ const DeviceEmergencyCountAlert = React.forwardRef<
 
   return (
     <Alert
-      className={cn("flex items-center justify-between gap-2", className)}
+      className={cn(
+        "flex items-center justify-between gap-6 max-sm:flex-col",
+        className,
+      )}
       ref={ref}
       variant="warning"
       {...props}
@@ -50,7 +53,7 @@ const DeviceEmergencyCountAlert = React.forwardRef<
         </AlertDescription>
       </div>
       <Button
-        className="max-sm:hidden"
+        className="max-sm:self-end"
         onClick={() => {
           if (onViewClick) {
             onViewClick();
