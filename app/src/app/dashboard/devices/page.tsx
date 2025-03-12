@@ -5,6 +5,7 @@ import DevicesLoading from "@/app/dashboard/devices/loading";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { NoResultsLabel } from "@/components/data-table/no-results-label";
+import { DemoAlert } from "@/components/demo/demo-alert";
 import {
   DeviceCard,
   DeviceCardSkeleton,
@@ -92,6 +93,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-1 sm:p-4">
+      <DemoAlert />
       <DeviceEmergencyCountAlert onViewClick={emergencyCountAlertOnViewClick} />
 
       <DataTableToolbar table={table} filterFields={filterFields}>
