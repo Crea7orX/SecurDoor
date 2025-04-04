@@ -16,16 +16,14 @@ export function useBulkEmergencyClearMutation() {
     mutationFn: (update) => axiosInstance.post("/emergency/bulk/clear", update),
     onSuccess: (_, update) =>
       Promise.all([
-        update.deviceIds.map((id) =>
-          Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: ["Emergency", "Get", id],
-            }),
-            queryClient.invalidateQueries({
-              queryKey: ["Devices", "Get", id],
-            }),
-          ]),
-        ),
+        ...update.deviceIds.flatMap((id) => [
+          queryClient.invalidateQueries({
+            queryKey: ["Emergency", "Get", id],
+          }),
+          queryClient.invalidateQueries({
+            queryKey: ["Devices", "Get", id],
+          }),
+        ]),
         queryClient.invalidateQueries({
           queryKey: ["Emergency", "Get", "Count"],
         }),
