@@ -4,6 +4,8 @@ import { chartActiveUsersForWeekResponseSchema } from "@/lib/validations/chart";
 import { chartGetActiveUsersForWeek } from "@/server/db/charts/queries";
 import { type NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const { ownerId } = authenticate(request);

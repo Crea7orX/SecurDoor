@@ -1,3 +1,4 @@
+import { deviceBulkSchema } from "@/lib/validations/device";
 import { emergencyStateEnum } from "@/server/db/devices/schema";
 import { z } from "zod";
 
@@ -13,6 +14,13 @@ export const emergencyUpdateSchema = z.object({
 });
 
 export type EmergencyUpdate = z.infer<typeof emergencyUpdateSchema>;
+
+export const emergencyBulkUpdateSchema = z.object({
+  ...deviceBulkSchema.shape,
+  ...emergencyUpdateSchema.shape,
+});
+
+export type EmergencyBulkUpdate = z.infer<typeof emergencyBulkUpdateSchema>;
 
 export const emergencyCountResponseSchema = z.object({
   lockdownCount: z.number(),

@@ -23,6 +23,9 @@ export function useUpdateEmergencyClearMutation({
         queryClient.invalidateQueries({
           queryKey: ["Devices", "Get", id],
         }),
+        queryClient.invalidateQueries({
+          queryKey: ["Emergency", "Get", "Count"],
+        }),
       ]),
   });
 }

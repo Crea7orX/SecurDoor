@@ -30,6 +30,36 @@
       "description": "The date and time when the device was added",
       "title": "Added"
     },
+    "bulk": {
+      "action": {
+        "emergency": {
+          "clear": "Clear",
+          "evacuation": "Evacuation",
+          "label": "Emergency",
+          "lockdown": "Lockdown"
+        }
+      },
+      "button": "Control Multiple Devices",
+      "dialog": {
+        "description": "Select the devices to control",
+        "notification": {
+          "error": "Failed to update multiple devices!",
+          "loading": "Updating multiple devices...",
+          "success": "Multiple devices updated!"
+        },
+        "title": "Control Multiple Devices"
+      },
+      "field": {
+        "action": {
+          "description": "Action to perform on the selected devices.",
+          "label": "Action"
+        },
+        "devices": {
+          "label": "Devices",
+          "placeholder": "Select devices"
+        }
+      }
+    },
     "card": {
       "emergency_state": {
         "evacuation": "EVACUATION",

@@ -30,6 +30,9 @@ export function useUpdateEmergencyMutation({
         queryClient.invalidateQueries({
           queryKey: ["Devices", "Get", id],
         }),
+        queryClient.invalidateQueries({
+          queryKey: ["Emergency", "Get", "Count"],
+        }),
       ]),
   });
 }

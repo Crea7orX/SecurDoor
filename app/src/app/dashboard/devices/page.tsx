@@ -6,6 +6,7 @@ import { DataTablePagination } from "@/components/data-table/data-table-paginati
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { NoResultsLabel } from "@/components/data-table/no-results-label";
 import { DemoAlert } from "@/components/demo/demo-alert";
+import { DeviceBulkControlDialog } from "@/components/devices/bulk/device-bulk-control-dialog";
 import {
   DeviceCard,
   DeviceCardSkeleton,
@@ -17,7 +18,12 @@ import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import type { DataTableFilterField, SearchParams } from "@/types/data-table";
-import { BellElectric, Construction, PlusCircle } from "lucide-react";
+import {
+  BellElectric,
+  Construction,
+  PlusCircle,
+  SquareStack,
+} from "lucide-react";
 import { useNow, useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
@@ -97,6 +103,12 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
       <DeviceEmergencyCountAlert onViewClick={emergencyCountAlertOnViewClick} />
 
       <DataTableToolbar table={table} filterFields={filterFields}>
+        <DeviceBulkControlDialog>
+          <Button variant="outline" size="sm">
+            <SquareStack className="size-4" />
+            {t("bulk.button")}
+          </Button>
+        </DeviceBulkControlDialog>
         <Button size="sm" asChild>
           <Link href="/dashboard/devices/add">
             <PlusCircle className="size-4" />
