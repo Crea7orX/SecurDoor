@@ -75,3 +75,9 @@ export const devicesPaginatedResponseSchema = z.object({
 export type DevicesPaginatedResponse = z.infer<
   typeof devicesPaginatedResponseSchema
 >;
+
+export const deviceBulkSchema = z.object({
+  deviceIds: z.array(z.string()).min(1),
+});
+
+export type DeviceBulk = z.infer<typeof deviceBulkSchema>;
