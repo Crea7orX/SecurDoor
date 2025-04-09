@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    container_name: securdoor
+    restart: always
+    env_file: .env
+    ports:
+      - '${DOCKER_PORT:-3000}:3000'
+    entrypoint: sh -c "corepack enable pnpm && pnpm run db:generate && pnpm run db:migrate && pnpm start"
