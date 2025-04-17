@@ -2,16 +2,17 @@
 
 import { ApiKeyDeleteAlertDialog } from "@/components/api-keys/api-key-delete-alert-dialog";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { type ApiKeyResponse } from "@/lib/validations/api-key";
 import { Clipboard, Eye, EyeOff, Trash } from "lucide-react";
 import * as React from "react";
 import { toast } from "sonner";
 
-interface ApiKeyCardProps {
+interface ApiKeyCardProps extends React.ComponentProps<"div"> {
   apiKey: ApiKeyResponse;
 }
 
-export function ApiKeyCard({ apiKey }: ApiKeyCardProps) {
+export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
   const keyRef = React.useRef<HTMLDivElement>(null);
   const [isShown, setIsShown] = React.useState<boolean>(false);
 
@@ -37,7 +38,13 @@ export function ApiKeyCard({ apiKey }: ApiKeyCardProps) {
   }, [apiKey.key]);
 
   return (
-    <div className="group flex flex-col justify-between gap-4 overflow-hidden rounded-md border-b-2 p-4 last:border-0 hover:bg-muted lg:flex-row">
+    <div
+      className={cn(
+        "group flex flex-col justify-between gap-4 overflow-hidden rounded-md border-b-2 p-4 last:border-0 hover:bg-muted lg:flex-row",
+        className,
+      )}
+      {...props}
+    >
       <div className="flex flex-col">
         <p className="font-semibold">{apiKey.name}</p>
         <p className="text-muted-foreground">
