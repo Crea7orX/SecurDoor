@@ -7,7 +7,7 @@ export function ApiKeysList() {
   const { data, isLoading } = useGetAllApiKeysQuery({});
 
   return (
-    <div className="">
+    <div className="flex flex-col gap-1">
       {data?.map((apiKey) => <ApiKeyCard apiKey={apiKey} key={apiKey.id} />)}
     </div>
   );
