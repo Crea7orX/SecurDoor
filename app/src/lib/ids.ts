@@ -1,7 +1,9 @@
 enum IdPrefix {
+  API_KEY = "api_",
   CARD = "card_",
   DEVICE = "dvc_",
   LOG = "log_",
+  PRIVATE_KEY = "pk_",
 }
 
 export default IdPrefix;
