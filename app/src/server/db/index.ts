@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
 // Schemas
+import * as apiKeys from "./api-keys/schema";
 import * as cards from "./cards/schema";
 import * as devices from "./devices/schema";
 import * as logs from "./logs/schema";
@@ -21,6 +22,7 @@ if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 
 export const db = drizzle(conn, {
   schema: {
+    ...apiKeys,
     ...cards,
     ...devices,
     ...logs,
