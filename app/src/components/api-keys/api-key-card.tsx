@@ -1,5 +1,6 @@
 "use client";
 
+import { ApiKeyDeleteAlertDialog } from "@/components/api-keys/api-key-delete-alert-dialog";
 import { Button } from "@/components/ui/button";
 import { type ApiKeyResponse } from "@/lib/validations/api-key";
 import { Clipboard, Eye, EyeOff, Trash } from "lucide-react";
@@ -84,13 +85,15 @@ export function ApiKeyCard({ apiKey }: ApiKeyCardProps) {
           >
             {isShown ? <EyeOff /> : <Eye />}
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="rounded-l-none border-0 !text-destructive shadow-none group-hover:visible lg:invisible"
-          >
-            <Trash />
-          </Button>
+          <ApiKeyDeleteAlertDialog id={apiKey.id}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-l-none border-0 !text-destructive shadow-none group-hover:visible lg:invisible"
+            >
+              <Trash />
+            </Button>
+          </ApiKeyDeleteAlertDialog>
         </div>
       </div>
     </div>
