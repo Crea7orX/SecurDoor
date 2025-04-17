@@ -22,7 +22,7 @@ interface CardByIdProps {
 export async function GET(request: NextRequest, props: CardByIdProps) {
   try {
     const { id } = await props.params;
-    const { ownerId } = authenticate(request);
+    const { ownerId } = await authenticate(request);
 
     const url = new URL(request.url);
     const getFingerprint = url.searchParams.get("get_fingerprint");
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest, props: CardByIdProps) {
 export async function PUT(request: NextRequest, props: CardByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId, ownerId } = authenticate(request);
+    const { userId, ownerId } = await authenticate(request);
 
     const json = (await request.json()) as CardUpdate;
     const update = cardUpdateSchema.parse(json);
@@ -61,7 +61,7 @@ export async function PUT(request: NextRequest, props: CardByIdProps) {
 export async function DELETE(request: NextRequest, props: CardByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId, ownerId } = authenticate(request);
+    const { userId, ownerId } = await authenticate(request);
 
     const card = await cardDelete(id, userId, ownerId);
     if (!card) throw new NotFoundError();

@@ -13,7 +13,7 @@ interface DevicesStateByIdProps {
 export async function GET(request: NextRequest, props: DevicesStateByIdProps) {
   try {
     const { id } = await props.params;
-    const { ownerId } = authenticate(request);
+    const { ownerId } = await authenticate(request);
 
     const deviceState = await deviceStateGetByDeviceId({
       deviceId: id,

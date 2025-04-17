@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 // get emergency state count
 export async function GET(request: NextRequest) {
   try {
-    const { ownerId } = authenticate(request);
+    const { ownerId } = await authenticate(request);
 
     const statesCount = await emergencyStatesGetCount(ownerId);
 

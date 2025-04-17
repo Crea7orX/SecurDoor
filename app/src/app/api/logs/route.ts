@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   try {
-    const { ownerId } = authenticate(request);
+    const { ownerId } = await authenticate(request);
 
     const url = new URL(request.url);
     const searchParams = await logsSearchParamsCache.parse(
