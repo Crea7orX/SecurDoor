@@ -5,7 +5,7 @@ import { type ApiKeyCreate } from "@/lib/validations/api-key";
 import { db } from "@/server/db";
 import { apiKeys } from "@/server/db/api-keys/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import { asc, desc, eq, sql } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 
 interface ApiKeyInsertProps {
   create: ApiKeyCreate;
@@ -49,6 +49,33 @@ export async function apiKeysGetAll({ ownerId }: ApiKeysGetAllProps) {
       eq(apiKeys.ownerId, ownerId), // Ensure ownership
     )
     .orderBy(asc(apiKeys.name), desc(apiKeys.createdAt));
+}
+
+interface ApiKeyDeleteProps {
+  id: string;
+  userId: string;
+  ownerId: string;
+}
+
+export async function apiKeyDelete({ id, userId, ownerId }: ApiKeyDeleteProps) {
+  const apiKey = (
+    await db
+      .delete(apiKeys)
+      .where(
+        and(
+          eq(apiKeys.ownerId, ownerId), // Ensure ownership
+          eq(apiKeys.id, id),
+        ),
+      )
+      .returning()
+  )[0];
+
+  if (apiKey) {
+    const reference = [apiKey.name, apiKey.lastUsedAt ?? "NULL"];
+    void logInsert(ownerId, "api_key.delete", userId, apiKey.id, reference);
+  }
+
+  return apiKey;
 }
 
 interface ApiKeyVerifyProps {
