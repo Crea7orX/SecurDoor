@@ -55,7 +55,7 @@ interface ApiKeyVerifyProps {
   apiKey: string;
 }
 
-export async function apiKeysVerify({ apiKey }: ApiKeyVerifyProps) {
+export async function apiKeyVerify({ apiKey }: ApiKeyVerifyProps) {
   const apiKeyRecord = (
     await db
       .update(apiKeys)

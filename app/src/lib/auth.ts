@@ -6,7 +6,7 @@ import {
 } from "@/lib/exceptions";
 import { verifySignature } from "@/lib/signatures";
 import { apiSignedSchema } from "@/lib/validations/api-signed";
-import { apiKeysVerify } from "@/server/db/api-keys/queries";
+import { apiKeyVerify } from "@/server/db/api-keys/queries";
 import { deviceGetBySerialIdUnprotected } from "@/server/db/devices/queries";
 import { auth } from "@clerk/nextjs/server";
 import { type NextRequest } from "next/server";
@@ -82,7 +82,7 @@ export async function verifyApiKeyFromHeader(request: Request) {
     return false;
   }
 
-  return apiKeysVerify({ apiKey });
+  return apiKeyVerify({ apiKey });
 }
 
 export function validateSignedSerialId(request: Request) {
