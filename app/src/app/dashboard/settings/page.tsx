@@ -27,7 +27,7 @@ export default function SettingsPage() {
             delete the compromised key.
           </CardDescription>
         </CardHeader>
-        <CardContent className="px-0.5">
+        <CardContent className="px-0.5 pb-0.5">
           <Card>
             <CardContent className="flex flex-col gap-2 p-2">
               <ApiKeysList />
