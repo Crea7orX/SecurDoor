@@ -5,7 +5,7 @@ import {
   apiKeyCreateSchema,
   apiKeyResponseSchema,
 } from "@/lib/validations/api-key";
-import { apiKeysGetAll, apiKeysInsert } from "@/server/db/api-keys/queries";
+import { apiKeysGetAll, apiKeyInsert } from "@/server/db/api-keys/queries";
 import { type NextRequest, NextResponse } from "next/server";
 
 // get api keys
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     const json = (await request.json()) as ApiKeyCreate;
     const create = apiKeyCreateSchema.parse(json);
 
-    const apiKey = await apiKeysInsert({ create, userId, ownerId });
+    const apiKey = await apiKeyInsert({ create, userId, ownerId });
 
     return NextResponse.json(apiKeyResponseSchema.parse(apiKey), {
       status: 201,

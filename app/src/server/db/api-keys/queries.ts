@@ -13,7 +13,7 @@ interface ApiKeyInsertProps {
   ownerId: string;
 }
 
-export async function apiKeysInsert({
+export async function apiKeyInsert({
   create,
   userId,
   ownerId,
