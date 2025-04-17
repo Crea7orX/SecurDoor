@@ -6,12 +6,24 @@ import {
 } from "@/lib/exceptions";
 import { verifySignature } from "@/lib/signatures";
 import { apiSignedSchema } from "@/lib/validations/api-signed";
+import { apiKeysVerify } from "@/server/db/api-keys/queries";
 import { deviceGetBySerialIdUnprotected } from "@/server/db/devices/queries";
 import { auth } from "@clerk/nextjs/server";
 import { type NextRequest } from "next/server";
 import { z } from "zod";
 
-export function authenticate(_request: NextRequest) {
+export async function authenticate(request: NextRequest) {
+  // make a copy so we can read the body without interfering request handlers
+  const requestClone = request.clone();
+
+  const apiKey = await verifyApiKeyFromHeader(requestClone);
+  if (apiKey) {
+    return {
+      userId: apiKey.id,
+      ownerId: apiKey.ownerId,
+    };
+  }
+
   const authObject = auth();
 
   if (!authObject.userId) {
@@ -62,6 +74,15 @@ export async function authenticateSigned(request: NextRequest) {
     ownerId: device.ownerId,
     timestamp,
   };
+}
+
+export async function verifyApiKeyFromHeader(request: Request) {
+  const apiKey = request.headers.get("X-API-KEY");
+  if (!apiKey) {
+    return false;
+  }
+
+  return apiKeysVerify({ apiKey });
 }
 
 export function validateSignedSerialId(request: Request) {
