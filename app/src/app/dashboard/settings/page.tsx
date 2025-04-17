@@ -1,5 +1,7 @@
+import { ApiKeyCreateDialog } from "@/components/api-keys/api-key-create-dialog";
 import { ApiKeysList } from "@/components/api-keys/api-keys-list";
 import { DemoAlert } from "@/components/demo/demo-alert";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Plus } from "lucide-react";
 import * as React from "react";
 
 export default function SettingsPage() {
@@ -26,8 +29,14 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="px-0.5">
           <Card>
-            <CardContent className="p-2">
+            <CardContent className="flex flex-col gap-2 p-2">
               <ApiKeysList />
+              <ApiKeyCreateDialog>
+                <Button variant="secondary" className="w-fit">
+                  <Plus />
+                  Add new key
+                </Button>
+              </ApiKeyCreateDialog>
             </CardContent>
           </Card>
         </CardContent>
