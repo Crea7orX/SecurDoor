@@ -7,6 +7,7 @@ import { type ApiKeyResponse } from "@/lib/validations/api-key";
 import { Clipboard, Eye, EyeOff, Trash } from "lucide-react";
 import * as React from "react";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ApiKeyCardProps extends React.ComponentProps<"div"> {
   apiKey: ApiKeyResponse;
@@ -102,6 +103,31 @@ export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
             </Button>
           </ApiKeyDeleteAlertDialog>
         </div>
+      </div>
+    </div>
+  );
+}
+
+export function ApiKeyCardSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "flex w-full flex-col justify-between gap-4 overflow-hidden rounded-md border-b-2 p-4 last:border-0 hover:bg-muted lg:flex-row",
+        className,
+      )}
+      {...props}
+    >
+      <div className="flex w-full flex-col gap-1">
+        <Skeleton className="h-6 w-full max-w-32" />
+        <Skeleton className="h-5 w-full max-w-64" />
+        <Skeleton className="h-5 w-full max-w-64" />
+      </div>
+      <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center lg:justify-end">
+        <Skeleton className="h-9 w-full sm:w-[16.5rem]" />
+        <Skeleton className="h-9 w-[6.75rem]" />
       </div>
     </div>
   );
