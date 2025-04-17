@@ -41,7 +41,7 @@ export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
   return (
     <div
       className={cn(
-        "group flex flex-col justify-between gap-4 overflow-hidden rounded-md border-b-2 p-4 last:border-0 hover:bg-muted lg:flex-row",
+        "group flex w-full flex-col justify-between gap-4 overflow-hidden rounded-md border-b-2 p-4 last:border-0 hover:bg-muted lg:flex-row",
         className,
       )}
       {...props}
