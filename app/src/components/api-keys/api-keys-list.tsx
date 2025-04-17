@@ -15,9 +15,26 @@ export function ApiKeysList({
 }: React.ComponentProps<"div">) {
   const { data, isLoading } = useGetAllApiKeysQuery({});
 
+  if (isLoading) return <ApiKeysListSkeleton className={className} />;
+
   return (
-    <div className={cn("flex flex-col gap-1", className)} {...props}>
-      {data?.map((apiKey) => <ApiKeyCard apiKey={apiKey} key={apiKey.id} />)}
+    <div
+      className={cn(
+        "relative flex flex-col items-center justify-center gap-1",
+        className,
+      )}
+      {...props}
+    >
+      {data?.length ? (
+        data.map((apiKey) => <ApiKeyCard apiKey={apiKey} key={apiKey.id} />)
+      ) : (
+        <>
+          <NoResultsLabel className="top-1/2 -translate-y-1/2" />
+          {Array.from({ length: 3 }).map((_, index) => (
+            <ApiKeyCardSkeleton key={index} className="opacity-50" />
+          ))}
+        </>
+      )}
     </div>
   );
 }
