@@ -26,6 +26,7 @@ export function ApiKeyDeleteAlertDialog({
   children,
   ...props
 }: ApiKeyDeleteAlertDialogProps) {
+  const t = useTranslations("ApiKey.delete.alert");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -37,17 +38,17 @@ export function ApiKeyDeleteAlertDialog({
 
   const handleDelete = async () => {
     setIsLoading(true);
-    const toastId = toast.loading("Deleting secret key...");
+    const toastId = toast.loading(t("notification.loading"));
     await doDelete()
       .then(() => {
-        toast.warning("Secret key deleted!", {
+        toast.warning(t("notification.success"), {
           id: toastId,
         });
 
         setIsOpen(false);
       })
       .catch(() => {
-        toast.error("Failed to delete secret key!", {
+        toast.error(t("notification.error"), {
           id: toastId,
         });
       });
@@ -60,11 +61,8 @@ export function ApiKeyDeleteAlertDialog({
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this
-            secret key and remove its access to all devices.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{t("title")}</AlertDialogTitle>
+          <AlertDialogDescription>{t("description")}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading}>
