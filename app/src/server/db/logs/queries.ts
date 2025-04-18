@@ -104,7 +104,7 @@ export async function logsGetAll(searchParams: LogsGetSchema, ownerId: string) {
         ? searchParams.sort.map((item) =>
             item.desc ? desc(logs[item.id]) : asc(logs[item.id]),
           )
-        : [asc(logs.createdAt)];
+        : [desc(logs.createdAt)];
 
     const { data, total } = await db.transaction(async (tx) => {
       const data = await tx
