@@ -10,22 +10,20 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 export function ApiKeysCard({
   className,
   ...props
 }: React.ComponentProps<typeof Card>) {
+  const t = useTranslations("ApiKey.all_card");
+
   return (
     <Card className={cn("w-full bg-muted", className)} {...props}>
       <CardHeader>
-        <CardTitle>Secret Keys</CardTitle>
-        <CardDescription>
-          Securely manage these sensitive keys. Do not share them with anyone.
-          If you suspect that one of your secret keys has been compromised, you
-          should create a new key, change the key in your code, then delete the
-          compromised key.
-        </CardDescription>
+        <CardTitle>{t("title")}</CardTitle>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent className="px-0.5 pb-0.5">
         <Card>
@@ -34,7 +32,7 @@ export function ApiKeysCard({
             <ApiKeyCreateDialog>
               <Button variant="secondary" className="w-fit">
                 <Plus />
-                Add new key
+                {t("button.create")}
               </Button>
             </ApiKeyCreateDialog>
           </CardContent>
