@@ -7,6 +7,7 @@ import {
   DiamondPlus,
   EthernetPort,
   IdCard,
+  Key,
   LaptopMinimalCheck,
   Lock,
   LockOpen,
@@ -392,5 +393,29 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     },
     icon: LockOpen,
     color: "success",
+  },
+
+  // Reference: [name]
+  "api_key.create": {
+    title: "Log.logs.api_key.create.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.api_key.create.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+      }),
+    icon: Key,
+    color: "success",
+  },
+
+  // Reference: [name, lastUsedAt]
+  "api_key.delete": {
+    title: "Log.logs.api_key.delete.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.api_key.delete.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+      }),
+    icon: Key,
+    color: "destructive",
   },
 };
