@@ -29,6 +29,16 @@
       }
     },
     "logs": {
+      "api_key": {
+        "create": {
+          "text": "\"{actor}\" created API key with name \"{name}\".",
+          "title": "API key created"
+        },
+        "delete": {
+          "text": "\"{actor}\" deleted API key with name \"{name}\".",
+          "title": "API key deleted"
+        }
+      },
       "card": {
         "access_update": {
           "text": "\"{actor}\" updated card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\") access, adding {newCount, plural, =1 {# device} other {# devices}} and removing {deleteCount, plural, =1 {# device} other {# devices}}.",
@@ -129,16 +139,6 @@
         "pending_adoption": {
           "text": "\"{actor}\" set device in state pending adoption.",
           "title": "Device pending adoption"
-        }
-      },
-      "api_key": {
-        "create": {
-          "text": "\"{actor}\" created API key \"{name}\".",
-          "title": "API key created"
-        },
-        "delete": {
-          "text": "\"{actor}\" deleted API key \"{name}\".",
-          "title": "API key deleted"
         }
       },
       "unknown": {
