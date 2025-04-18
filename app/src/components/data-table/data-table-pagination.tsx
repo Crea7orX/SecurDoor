@@ -6,6 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import { type Table } from "@tanstack/react-table";
 import {
   ChevronLeft,
@@ -14,22 +16,31 @@ import {
   ChevronsRight,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import * as React from "react";
 
-interface DataTablePaginationProps<TData> {
+interface DataTablePaginationProps<TData> extends React.ComponentProps<"div"> {
   table: Table<TData>;
   pageSizeOptions?: number[];
   enableSelection?: boolean;
 }
 
 export function DataTablePagination<TData>({
+  className,
   table,
   pageSizeOptions = [10, 20, 30, 40, 50],
   enableSelection = true,
+  ...props
 }: DataTablePaginationProps<TData>) {
   const t = useTranslations("Data_Table.pagination");
 
   return (
-    <div className="flex w-full flex-col-reverse items-center justify-between gap-4 overflow-auto p-1 sm:flex-row sm:gap-8">
+    <div
+      className={cn(
+        "flex w-full flex-col-reverse items-center justify-between gap-4 overflow-auto p-1 sm:flex-row sm:gap-8",
+        className,
+      )}
+      {...props}
+    >
       <div className="flex-1 whitespace-nowrap text-sm text-muted-foreground">
         {enableSelection ? (
           <>
@@ -111,6 +122,35 @@ export function DataTablePagination<TData>({
           >
             <ChevronsRight className="size-4" aria-hidden="true" />
           </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function DataTablePaginationSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "flex w-full flex-col-reverse items-center justify-between gap-4 overflow-auto p-1 sm:flex-row sm:gap-8",
+        className,
+      )}
+      {...props}
+    >
+      <div className="flex-1 whitespace-nowrap text-sm text-muted-foreground">
+        <Skeleton className="h-6 w-36" />
+      </div>
+      <div className="flex flex-col-reverse items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
+        <Skeleton className="h-8 w-52" />
+        <Skeleton className="h-6 w-28" />
+        <div className="flex items-center space-x-2">
+          <Skeleton className="hidden size-8 lg:flex" />
+          <Skeleton className="size-8" />
+          <Skeleton className="size-8" />
+          <Skeleton className="hidden size-8 lg:flex" />
         </div>
       </div>
     </div>
