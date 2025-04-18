@@ -4,6 +4,7 @@ enum IdPrefix {
   DEVICE = "dvc_",
   LOG = "log_",
   PRIVATE_KEY = "pk_",
+  TAG = "tag_",
 }
 
 export default IdPrefix;
