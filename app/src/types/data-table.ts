@@ -1,6 +1,6 @@
 import { type DataTableConfig } from "@/config/data-table";
 import { type filterSchema } from "@/lib/data-table-parsers";
-import type { ColumnSort, Row } from "@tanstack/react-table";
+import type { ColumnSort, Row, RowData } from "@tanstack/react-table";
 import { type SQL } from "drizzle-orm";
 import type * as React from "react";
 import { type z } from "zod";
@@ -61,4 +61,10 @@ export interface QueryBuilderOpts {
   orderBy?: SQL;
   distinct?: boolean;
   nullish?: boolean;
+}
+
+declare module "@tanstack/react-table" {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    headerName: string;
+  }
 }
