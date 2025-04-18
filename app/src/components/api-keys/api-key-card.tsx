@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type ApiKeyResponse } from "@/lib/validations/api-key";
 import { Clipboard, Eye, EyeOff, Trash } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -16,6 +16,7 @@ interface ApiKeyCardProps extends React.ComponentProps<"div"> {
 
 export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
   const t = useTranslations("ApiKey.card");
+  const format = useFormatter();
 
   const keyRef = React.useRef<HTMLDivElement>(null);
   const [isShown, setIsShown] = React.useState<boolean>(false);
@@ -54,7 +55,11 @@ export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
         <p className="font-semibold">{apiKey.name}</p>
         <p className="text-muted-foreground">
           {t.rich("created_at", {
-            date: new Date(apiKey.createdAt * 1000).toLocaleString(),
+            date: format.dateTime(apiKey.createdAt * 1000, {
+              dateStyle: "medium",
+              timeStyle: "medium",
+              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            }),
             semibold: (chunks) => (
               <span className="font-semibold">{chunks}</span>
             ),
@@ -63,7 +68,11 @@ export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
         <p className="text-muted-foreground">
           {apiKey.lastUsedAt ? (
             t.rich("last_used_at.text", {
-              date: new Date(apiKey.lastUsedAt * 1000).toLocaleString(),
+              date: format.dateTime(apiKey.lastUsedAt * 1000, {
+                dateStyle: "medium",
+                timeStyle: "medium",
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+              }),
               semibold: (chunks) => (
                 <span className="font-semibold">{chunks}</span>
               ),
