@@ -29,14 +29,14 @@ export function accessDeviceGetAll(deviceId: string, ownerId: string) {
     .innerJoin(
       devices,
       and(
-        eq(devices.ownerId, ownerId), // Ensure device ownership
+        eq(devices.ownerId, ownerId), // Ensure ownership
         eq(devices.id, deviceId),
       ),
     )
     .innerJoin(
       cards,
       and(
-        eq(cards.ownerId, ownerId), // Ensure card ownership
+        eq(cards.ownerId, ownerId), // Ensure ownership
         eq(cards.id, cardsToDevices.cardId),
       ),
     ) // Join to get card details
@@ -162,14 +162,14 @@ export async function accessCardGetAll(cardId: string, ownerId: string) {
     .innerJoin(
       cards,
       and(
-        eq(cards.ownerId, ownerId), // Ensure card ownership
+        eq(cards.ownerId, ownerId), // Ensure ownership
         eq(cards.id, cardId),
       ),
     )
     .innerJoin(
       devices,
       and(
-        eq(devices.ownerId, ownerId), // Ensure device ownership
+        eq(devices.ownerId, ownerId), // Ensure ownership
         eq(devices.id, cardsToDevices.deviceId),
       ),
     ) // Join to get device details
@@ -183,7 +183,7 @@ export async function accessCardUpdate(
   userId: string,
   ownerId: string,
 ) {
-  // Validate card ownership
+  // Ensure card ownership
   const card = await cardGetById(cardId, ownerId);
   if (!card) {
     throw new NotFoundError();
@@ -192,7 +192,7 @@ export async function accessCardUpdate(
   // Remove duplicate device IDs from input
   const uniqueDeviceIds = [...new Set(deviceIds)];
 
-  // Validate provided devices ownership
+  // Ensure provided devices ownership
   const ownedDevices = await db
     .select({ id: devices.id })
     .from(devices)
@@ -316,7 +316,7 @@ export async function accessCardTryAuthentication({
       .innerJoin(
         cards,
         and(
-          eq(cards.ownerId, ownerId), // Ensure card ownership
+          eq(cards.ownerId, ownerId), // Ensure ownership
           eq(cards.id, cardsToDevices.cardId),
         ),
       )
@@ -358,7 +358,7 @@ export async function accessCardTryAuthentication({
       })
       .where(
         and(
-          eq(devices.ownerId, ownerId), // Ensure device ownership
+          eq(devices.ownerId, ownerId), // Ensure ownership
           eq(devices.id, deviceId),
         ),
       );
@@ -399,7 +399,7 @@ export async function accessCardTryAuthentication({
       })
       .where(
         and(
-          eq(devices.ownerId, ownerId), // Ensure device ownership
+          eq(devices.ownerId, ownerId), // Ensure ownership
           eq(devices.id, deviceId),
         ),
       );
