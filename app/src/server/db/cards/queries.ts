@@ -105,7 +105,9 @@ export async function cardGetById(id: string, ownerId: string) {
       await db
         .select()
         .from(cards)
-        .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
+        .where(and(
+          eq(cards.ownerId, ownerId), // Ensure ownership
+          eq(cards.id, id)))
         .limit(1)
     )[0] ?? null
   );
@@ -121,7 +123,9 @@ export async function cardGetByFingerprint(
         .select()
         .from(cards)
         .where(
-          and(eq(cards.ownerId, ownerId), eq(cards.fingerprint, fingerprint)),
+          and(
+            eq(cards.ownerId, ownerId), // Ensure ownership
+            eq(cards.fingerprint, fingerprint)),
         )
         .limit(1)
     )[0] ?? null
@@ -144,7 +148,9 @@ export async function cardUpdate(
         ...(typeof update.active === "boolean" && { active: update.active }),
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
+      .where(and(
+        eq(cards.ownerId, ownerId), // Ensure ownership
+        eq(cards.id, id)))
       .returning()
   )[0];
 
@@ -172,7 +178,9 @@ export async function cardDelete(id: string, userId: string, ownerId: string) {
   const card = (
     await db
       .delete(cards)
-      .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
+      .where(and(
+        eq(cards.ownerId, ownerId), // Ensure ownership
+        eq(cards.id, id)))
       .returning()
   )[0];
 
