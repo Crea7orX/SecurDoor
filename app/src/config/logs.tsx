@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   ShieldX,
   Siren,
+  Tag,
 } from "lucide-react";
 
 export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
@@ -393,6 +394,42 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     },
     icon: LockOpen,
     color: "success",
+  },
+
+  // Reference: [name]
+  "tag.create": {
+    title: "Log.logs.tag.create.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.tag.create.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+      }),
+    icon: Tag,
+    color: "success",
+  },
+
+  // Reference: [name]
+  "tag.delete": {
+    title: "Log.logs.tag.delete.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.tag.delete.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+      }),
+    icon: Tag,
+    color: "destructive",
+  },
+
+  // Reference: [name]
+  "tag.rename": {
+    title: "Log.logs.tag.rename.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.tag.rename.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+      }),
+    icon: Tag,
+    color: "info",
   },
 
   // Reference: [name]
