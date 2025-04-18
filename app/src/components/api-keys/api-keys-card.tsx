@@ -17,7 +17,7 @@ export function ApiKeysCard({
   className,
   ...props
 }: React.ComponentProps<typeof Card>) {
-  const t = useTranslations("ApiKey.all_card");
+  const t = useTranslations("Api_Key.all_card");
 
   return (
     <Card className={cn("w-full bg-muted", className)} {...props}>

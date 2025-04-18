@@ -34,7 +34,7 @@ export function ApiKeyCreateDialog({
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof Dialog>) {
-  const t = useTranslations("ApiKey");
+  const t = useTranslations("Api_Key");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);
