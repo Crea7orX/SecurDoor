@@ -29,6 +29,7 @@ export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
     const handleCopy = (e: ClipboardEvent) => {
       e.preventDefault();
       e.clipboardData?.setData("text/plain", apiKey.key);
+      toast.success(t("copy.notification"));
     };
 
     const element = keyRef.current;
@@ -39,7 +40,7 @@ export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
         element.removeEventListener("copy", handleCopy);
       };
     }
-  }, [apiKey.key]);
+  }, [apiKey.key, t]);
 
   return (
     <div
