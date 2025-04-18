@@ -1,0 +1,46 @@
+{
+  "ApiKey": {
+    "add": {
+      "notification": {
+        "error": "Failed to add API key!",
+        "loading": "Adding API key...",
+        "success": "API key added!"
+      },
+      "title": "Add API key"
+    },
+    "all_card": {
+      "button": {
+        "create": "Add new key"
+      },
+      "description": "Securely manage these sensitive keys. Do not share them with anyone. If you suspect that one of your API keys has been compromised, you should create a new key, change the compromised key in your code, then delete the compromised key.",
+      "title": "API keys"
+    },
+    "card": {
+      "copy": {
+        "notification": "Secret key copied to clipboard!"
+      },
+      "created_at": "Created at <semibold>{date}</semibold>",
+      "last_used_at": {
+        "never": "Never used",
+        "text": "Last used at: <semibold>{date}</semibold>"
+      }
+    },
+    "delete": {
+      "alert": {
+        "description": "This action cannot be undone. This will permanently delete this API key and remove its access to all devices.",
+        "notification": {
+          "error": "Failed to delete API key!",
+          "loading": "Deleting API key...",
+          "success": "API key deleted!"
+        },
+        "title": "Are you absolutely sure?"
+      }
+    },
+    "field": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Home Assistant"
+      }
+    }
+  }
+}
