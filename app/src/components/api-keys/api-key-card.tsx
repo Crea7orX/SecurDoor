@@ -2,24 +2,27 @@
 
 import { ApiKeyDeleteAlertDialog } from "@/components/api-keys/api-key-delete-alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type ApiKeyResponse } from "@/lib/validations/api-key";
 import { Clipboard, Eye, EyeOff, Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface ApiKeyCardProps extends React.ComponentProps<"div"> {
   apiKey: ApiKeyResponse;
 }
 
 export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
+  const t = useTranslations("ApiKey.card");
+
   const keyRef = React.useRef<HTMLDivElement>(null);
   const [isShown, setIsShown] = React.useState<boolean>(false);
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(apiKey.key);
-    toast.success("Secret key copied to clipboard!");
+    toast.success(t("copy.notification"));
   };
 
   React.useEffect(() => {
@@ -49,15 +52,23 @@ export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
       <div className="flex flex-col">
         <p className="font-semibold">{apiKey.name}</p>
         <p className="text-muted-foreground">
-          Created at {new Date(apiKey.createdAt * 1000).toLocaleString()}
+          {t.rich("created_at", {
+            date: new Date(apiKey.createdAt * 1000).toLocaleString(),
+            semibold: (chunks) => (
+              <span className="font-semibold">{chunks}</span>
+            ),
+          })}
         </p>
         <p className="text-muted-foreground">
           {apiKey.lastUsedAt ? (
-            <>
-              Last used at {new Date(apiKey.lastUsedAt * 1000).toLocaleString()}
-            </>
+            t.rich("last_used_at.text", {
+              date: new Date(apiKey.lastUsedAt * 1000).toLocaleString(),
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })
           ) : (
-            <span className="text-destructive">Never used</span>
+            <span className="text-destructive">{t("last_used_at.never")}</span>
           )}
         </p>
       </div>
