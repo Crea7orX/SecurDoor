@@ -19,7 +19,7 @@ export async function authenticate(request: NextRequest) {
   const apiKey = await verifyApiKeyFromHeader(requestClone);
   if (apiKey) {
     return {
-      userId: apiKey.id,
+      userId: "system",
       ownerId: apiKey.ownerId,
     };
   }
