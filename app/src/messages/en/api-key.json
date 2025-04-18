@@ -17,7 +17,7 @@
     },
     "card": {
       "copy": {
-        "notification": "Secret key copied to clipboard!"
+        "notification": "API key copied to clipboard!"
       },
       "created_at": "Created at <semibold>{date}</semibold>",
       "last_used_at": {
