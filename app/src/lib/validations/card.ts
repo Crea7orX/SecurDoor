@@ -40,7 +40,7 @@ export const cardsSearchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
   sort: getSortingStateParser<CardResponse>().withDefault([
-    { id: "createdAt", desc: false },
+    { id: "createdAt", desc: true },
   ]),
   holder: parseAsString,
   active: parseAsArrayOf(parseAsBoolean),

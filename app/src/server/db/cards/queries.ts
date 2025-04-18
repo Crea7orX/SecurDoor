@@ -52,7 +52,7 @@ export async function cardsGetAll(
     const offset = (searchParams.page - 1) * searchParams.perPage;
 
     const where = and(
-      eq(cards.ownerId, ownerId), // Only show cards for the organization
+      eq(cards.ownerId, ownerId), // Ensure ownership
       searchParams.holder && searchParams.holder.trim() !== ""
         ? ilike(cards.holder, `%${searchParams.holder.trim()}%`)
         : undefined,
@@ -66,7 +66,7 @@ export async function cardsGetAll(
         ? searchParams.sort.map((item) =>
             item.desc ? desc(cards[item.id]) : asc(cards[item.id]),
           )
-        : [asc(cards.createdAt)];
+        : [desc(cards.createdAt)];
 
     const { data, total } = await db.transaction(async (tx) => {
       const data = await tx
