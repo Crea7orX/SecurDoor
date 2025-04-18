@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -35,6 +34,7 @@ export function ApiKeyCreateDialog({
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof Dialog>) {
+  const t = useTranslations("ApiKey");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -53,10 +53,10 @@ export function ApiKeyCreateDialog({
 
   const onSubmit = async (data: ApiKeyCreate) => {
     setIsLoading(true);
-    const toastId = toast.loading("Adding secret key...");
+    const toastId = toast.loading(t("add.notification.loading"));
     await create(data)
       .then(() => {
-        toast.success("Secret key added!", {
+        toast.success(t("add.notification.success"), {
           id: toastId,
         });
 
@@ -64,7 +64,7 @@ export function ApiKeyCreateDialog({
         form.reset();
       })
       .catch(() => {
-        toast.error("Failed to add secret key!", {
+        toast.error(t("add.notification.error"), {
           id: toastId,
         });
       });
@@ -79,20 +79,19 @@ export function ApiKeyCreateDialog({
         <DialogContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader>
-              <DialogTitle>Add Secret Key</DialogTitle>
-              <DialogDescription>
-                Create a new secret key to securely manage your devices from
-                third parties.
-              </DialogDescription>
+              <DialogTitle>{t("add.title")}</DialogTitle>
             </DialogHeader>
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("field.name.label")}</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      placeholder={t("field.name.placeholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
