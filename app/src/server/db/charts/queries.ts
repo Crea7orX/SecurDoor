@@ -2,7 +2,7 @@ import "server-only";
 import {
   type ChartAccessForWeekResponse,
   type ChartActiveUsersForWeekResponse,
-  ChartEmergencyForWeekResponse,
+  type ChartEmergencyForWeekResponse,
 } from "@/lib/validations/chart";
 import { db } from "@/server/db";
 import { logs } from "@/server/db/logs/schema";

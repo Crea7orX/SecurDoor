@@ -12,7 +12,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const { ownerId } = authenticate(request);
+    const { ownerId } = await authenticate(request);
 
     const url = new URL(request.url);
     const searchParams = await cardsSearchParamsCache.parse(
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { userId, ownerId } = authenticate(request);
+    const { userId, ownerId } = await authenticate(request);
 
     const json = (await request.json()) as CardCreate;
     const create = cardCreateSchema.parse(json);

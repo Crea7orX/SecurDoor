@@ -16,7 +16,7 @@ export async function POST(
 ) {
   try {
     const { id } = await props.params;
-    const { userId, ownerId } = authenticate(request);
+    const { userId, ownerId } = await authenticate(request);
 
     const device = await emergencyStateSetDevice(
       id,

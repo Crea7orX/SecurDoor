@@ -4,6 +4,7 @@
     "dashboard": "Dashboard",
     "devices": "Devices",
     "home": "Home",
-    "logs": "Logs"
+    "logs": "Logs",
+    "settings": "Settings"
   }
 }

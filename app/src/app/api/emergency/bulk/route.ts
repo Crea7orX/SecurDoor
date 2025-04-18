@@ -12,7 +12,7 @@ import { type NextRequest, NextResponse } from "next/server";
 // update devices emergency states
 export async function POST(request: NextRequest) {
   try {
-    const { userId, ownerId } = authenticate(request);
+    const { userId, ownerId } = await authenticate(request);
 
     const json = (await request.json()) as EmergencyBulkUpdate;
     const update = emergencyBulkUpdateSchema.parse(json);

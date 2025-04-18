@@ -21,7 +21,7 @@ interface DevicesByIdProps {
 export async function GET(request: NextRequest, props: DevicesByIdProps) {
   try {
     const { id } = await props.params;
-    const { ownerId } = authenticate(request);
+    const { ownerId } = await authenticate(request);
 
     const device = await deviceGetById(id, ownerId);
 
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest, props: DevicesByIdProps) {
 export async function PUT(request: NextRequest, props: DevicesByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId, ownerId } = authenticate(request);
+    const { userId, ownerId } = await authenticate(request);
 
     const json = (await request.json()) as DeviceUpdate;
     const update = deviceUpdateSchema.parse(json);
@@ -55,7 +55,7 @@ export async function PUT(request: NextRequest, props: DevicesByIdProps) {
 export async function DELETE(request: NextRequest, props: DevicesByIdProps) {
   try {
     const { id } = await props.params;
-    const { userId, ownerId } = authenticate(request);
+    const { userId, ownerId } = await authenticate(request);
 
     const device = await deviceDelete(id, userId, ownerId);
     if (!device) throw new NotFoundError();

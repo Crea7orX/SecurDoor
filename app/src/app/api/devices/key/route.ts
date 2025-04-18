@@ -7,11 +7,11 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const { ownerId } = authenticate(req);
+    const { ownerId } = await authenticate(request);
 
-    const url = new URL(req.url);
+    const url = new URL(request.url);
     const id = url.searchParams.get("id");
 
     if (!id) throw new BadRequestError();

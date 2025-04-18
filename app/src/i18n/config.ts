@@ -4,6 +4,7 @@ export const locales = ["en", "bg"] as const;
 export const defaultLocale: Locale = "en";
 
 export const namespaces = [
+  "api-key",
   "card",
   "common",
   "dashboard",
