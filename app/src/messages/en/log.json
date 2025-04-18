@@ -141,6 +141,20 @@
           "title": "Device pending adoption"
         }
       },
+      "tag": {
+        "create": {
+          "text": "\"{actor}\" created tag with name \"{name}\".",
+          "title": "Tag created"
+        },
+        "delete": {
+          "text": "\"{actor}\" deleted tag with name \"{name}\".",
+          "title": "Tag deleted"
+        },
+        "rename": {
+          "text": "\"{actor}\" renamed tag to \"{name}\".",
+          "title": "Tag renamed"
+        }
+      },
       "unknown": {
         "text": "Unknown",
         "title": "Unknown"
