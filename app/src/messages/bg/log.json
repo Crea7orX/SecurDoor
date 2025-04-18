@@ -29,6 +29,16 @@
       }
     },
     "logs": {
+      "api_key": {
+        "create": {
+          "text": "\"{actor}\" създаде API ключ с име \"{name}\".",
+          "title": "Създаден API ключ"
+        },
+        "delete": {
+          "text": "\"{actor}\" изтри API ключ с име \"{name}\".",
+          "title": "Изтрит API ключ"
+        }
+      },
       "card": {
         "access_update": {
           "text": "\"{actor}\" актуализира достъпа на карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\"), добавяйки {newCount, plural, =1 {# устройство} other {# устройства}} и премахвайки {deleteCount, plural, =1 {# устройство} other {# устройства}}.",
