@@ -57,7 +57,7 @@ export const devicesSearchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
   sort: getSortingStateParser<Omit<DeviceResponse, "state">>().withDefault([
-    { id: "createdAt", desc: false },
+    { id: "createdAt", desc: true },
   ]),
   name: parseAsString,
   emergencyState: parseAsArrayOf(z.enum(emergencyStateEnum.enumValues)),

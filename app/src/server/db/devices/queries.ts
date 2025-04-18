@@ -71,7 +71,7 @@ export async function devicesGetAll(
     const offset = (searchParams.page - 1) * searchParams.perPage;
 
     const where = and(
-      eq(devices.ownerId, ownerId), // Only show devices for the organization
+      eq(devices.ownerId, ownerId), // Ensure ownership
       searchParams.name && searchParams.name.trim() !== ""
         ? ilike(devices.name, `%${searchParams.name.trim()}%`)
         : undefined,
@@ -85,7 +85,7 @@ export async function devicesGetAll(
         ? searchParams.sort.map((item) =>
             item.desc ? desc(devices[item.id]) : asc(devices[item.id]),
           )
-        : [asc(devices.createdAt)];
+        : [desc(devices.createdAt)];
 
     const { data, total } = await db.transaction(async (tx) => {
       const data = await tx
