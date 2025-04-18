@@ -134,7 +134,12 @@ export async function deviceGetById(id: string, ownerId: string) {
       .select()
       .from(devices)
       .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
       .limit(1)
   )[0];
 
@@ -179,7 +184,12 @@ export async function deviceUpdate(
         }),
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
       .returning()
   )[0];
 
@@ -212,7 +222,12 @@ export async function deviceDelete(
   const device = (
     await db
       .delete(devices)
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
       .returning()
   )[0];
 
@@ -274,7 +289,12 @@ export async function deviceSetLocked({
         isLocked: isLocked,
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
       .returning()
   )[0];
 
