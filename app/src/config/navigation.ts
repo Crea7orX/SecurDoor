@@ -1,5 +1,12 @@
 import { type Navigation } from "@/types";
-import { House, IdCard, Microchip, ScrollText, Settings } from "lucide-react";
+import {
+  House,
+  IdCard,
+  Microchip,
+  ScrollText,
+  Settings,
+  Tag,
+} from "lucide-react";
 
 export function getNavigationList(pathname: string): Navigation[] {
   return [
@@ -20,6 +27,12 @@ export function getNavigationList(pathname: string): Navigation[] {
       url: "/dashboard/cards",
       icon: IdCard,
       active: pathname.includes("/cards"),
+    },
+    {
+      title: "Navigation.tags",
+      url: "/dashboard/tags",
+      icon: Tag,
+      active: pathname.includes("/tags"),
     },
     {
       title: "Navigation.logs",
