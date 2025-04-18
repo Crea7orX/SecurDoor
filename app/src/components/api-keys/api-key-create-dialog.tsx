@@ -90,6 +90,7 @@ export function ApiKeyCreateDialog({
                   <FormControl>
                     <Input
                       placeholder={t("field.name.placeholder")}
+                      maxLength={apiKeyCreateSchema.shape.name.maxLength!}
                       {...field}
                     />
                   </FormControl>
