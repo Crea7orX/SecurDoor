@@ -10,6 +10,7 @@
           "loading": "Updating access...",
           "success": "Access updated!"
         },
+        "tag": "{name}",
         "title": "Edit Access"
       },
       "edit_button": "Edit Access",
