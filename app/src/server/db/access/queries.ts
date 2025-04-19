@@ -3,8 +3,10 @@ import "server-only";
 import { ForbiddenError } from "@/lib/exceptions";
 import { db } from "@/server/db";
 import { cardsToDevices } from "@/server/db/cards-to-devices/schema";
+import { cardsToTags } from "@/server/db/cards-to-tags/schema";
 import { cards } from "@/server/db/cards/schema";
 import { deviceStateHeartbeatUpdate } from "@/server/db/devices-states/queries";
+import { devicesToTags } from "@/server/db/devices-to-tags/schema";
 import { type deviceGetBySerialIdUnprotected } from "@/server/db/devices/queries";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert, logInsertMultiple } from "@/server/db/logs/queries";
@@ -25,28 +27,44 @@ export async function accessCardTryAuthentication({
   deviceId,
   fingerprint,
 }: AccessCardTryAuthentication) {
-  void deviceStateHeartbeatUpdate({ deviceId }); // update device heartbeat
+  void deviceStateHeartbeatUpdate({ deviceId }); // Update device heartbeat
 
-  const access = (
+  // Try direct access
+  const directAccess = (
     await db
       .select()
-      .from(cardsToDevices)
-      .innerJoin(
-        cards,
-        and(
-          eq(cards.ownerId, ownerId), // Ensure ownership
-          eq(cards.id, cardsToDevices.cardId),
-        ),
-      )
+      .from(cards)
+      .innerJoin(cardsToDevices, eq(cards.id, cardsToDevices.cardId))
       .where(
         and(
-          eq(cardsToDevices.deviceId, deviceId),
+          eq(cards.ownerId, ownerId), // Ensure ownership
           eq(cards.fingerprint, fingerprint),
+          eq(cardsToDevices.deviceId, deviceId),
         ),
       )
+      .limit(1)
   )[0];
 
-  // no access given to the device
+  // Try tag-based access
+  const tagBasedAccess = (
+    await db
+      .select()
+      .from(cards)
+      .innerJoin(cardsToTags, eq(cards.id, cardsToTags.cardId))
+      .innerJoin(devicesToTags, eq(cardsToTags.tagId, devicesToTags.tagId))
+      .where(
+        and(
+          eq(cards.ownerId, ownerId), // Ensure ownership
+          eq(cards.fingerprint, fingerprint),
+          eq(devicesToTags.deviceId, deviceId),
+        ),
+      )
+      .limit(1)
+  )[0];
+
+  // Get the card info from either access method
+  const access = directAccess ?? tagBasedAccess;
+
   if (!access) {
     const reference = [device.serialId, device.name, fingerprint];
     void logInsert(
@@ -56,17 +74,29 @@ export async function accessCardTryAuthentication({
       deviceId,
       reference,
     );
-
     throw new ForbiddenError();
   }
 
-  // device in emergency state
-  if (device.emergencyState) throw new ForbiddenError();
+  const card = access.cards;
 
-  // card is deactivated
-  if (!access.cards.active) throw new ForbiddenError();
+  if (device.emergencyState || !card.active) throw new ForbiddenError();
 
-  // unlock
+  const cardRef = [
+    card.fingerprint,
+    card.holder ?? "NULL",
+    device.serialId,
+    device.name,
+  ];
+
+  const deviceRef = [
+    device.serialId,
+    device.name,
+    "true",
+    card.fingerprint,
+    card.holder ?? "NULL",
+  ];
+
+  // Update device locked state
   if (device.isLocked) {
     await db
       .update(devices)
@@ -74,84 +104,38 @@ export async function accessCardTryAuthentication({
         isLocked: false,
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(
-        and(
-          eq(devices.ownerId, ownerId), // Ensure ownership
-          eq(devices.id, deviceId),
-        ),
-      );
-
-    // log
-    const logs = [
-      {
-        action: "device.unlock",
-        objectId: deviceId,
-        reference: [
-          device.serialId,
-          device.name,
-          "true",
-          access.cards.fingerprint,
-          access.cards.holder ?? "NULL",
-        ],
-      },
-      {
-        action: "card.unlock",
-        objectId: access.cards.id,
-        reference: [
-          access.cards.fingerprint,
-          access.cards.holder ?? "NULL",
-          device.serialId,
-          device.name,
-        ],
-      },
-    ];
-    void logInsertMultiple(ownerId, logs, "system");
-  }
-  // lock
-  else {
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)));
+  } else {
     await db
       .update(devices)
       .set({
         isLocked: true,
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(
-        and(
-          eq(devices.ownerId, ownerId), // Ensure ownership
-          eq(devices.id, deviceId),
-        ),
-      );
-
-    // log
-    const logs = [
-      {
-        action: "device.lock",
-        objectId: deviceId,
-        reference: [
-          device.serialId,
-          device.name,
-          "true",
-          access.cards.fingerprint,
-          access.cards.holder ?? "NULL",
-        ],
-      },
-      {
-        action: "card.lock",
-        objectId: access.cards.id,
-        reference: [
-          access.cards.fingerprint,
-          access.cards.holder ?? "NULL",
-          device.serialId,
-          device.name,
-        ],
-      },
-    ];
-    void logInsertMultiple(ownerId, logs, "system");
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)));
   }
+
+  // Log access
+  void logInsertMultiple(
+    ownerId,
+    [
+      {
+        action: device.isLocked ? "device.unlock" : "device.lock",
+        objectId: deviceId,
+        reference: deviceRef,
+      },
+      {
+        action: device.isLocked ? "card.unlock" : "card.lock",
+        objectId: card.id,
+        reference: cardRef,
+      },
+    ],
+    "system",
+  );
 
   return {
     isLocked: !device.isLocked,
     reLockDelay: device.reLockDelay,
-    holder: access.cards.holder,
+    holder: card.holder,
   };
 }
