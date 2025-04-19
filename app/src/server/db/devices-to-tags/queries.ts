@@ -9,12 +9,12 @@ import { logInsert } from "@/server/db/logs/queries";
 import { tags } from "@/server/db/tags/schema";
 import { and, asc, eq, inArray } from "drizzle-orm";
 
-interface DeviceTagsGetAll {
+interface DeviceTagsGetAllProps {
   id: string;
   ownerId: string;
 }
 
-export function deviceTagsGetAll({ id, ownerId }: DeviceTagsGetAll) {
+export function deviceTagsGetAll({ id, ownerId }: DeviceTagsGetAllProps) {
   return db
     .select({
       id: tags.id,
@@ -39,7 +39,7 @@ export function deviceTagsGetAll({ id, ownerId }: DeviceTagsGetAll) {
     .orderBy(asc(tags.name), asc(tags.createdAt));
 }
 
-interface DeviceTagsUpdate {
+interface DeviceTagsUpdateProps {
   id: string;
   tagIds: string[];
   userId: string;
@@ -51,7 +51,7 @@ export async function deviceTagsUpdate({
   tagIds,
   userId,
   ownerId,
-}: DeviceTagsUpdate) {
+}: DeviceTagsUpdateProps) {
   // Ensure device ownership
   const device = await deviceGetById(id, ownerId);
   if (!device) {
