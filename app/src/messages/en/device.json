@@ -161,6 +161,10 @@
         "description": "The identifier written on the back of the device.",
         "label": "Serial ID",
         "placeholder": "abcdef12-3456-7890-abcd-ef1234567890"
+      },
+      "tags": {
+        "label": "Tags",
+        "placeholder": "Select tags"
       }
     },
     "filter": {
@@ -215,6 +219,21 @@
         "unknown": "Unknown"
       },
       "title": "Status"
+    },
+    "tags": {
+      "description": "Assigned tags for easier access control",
+      "dialog": {
+        "notification": {
+          "error": "Failed to update tags!",
+          "loading": "Updating tags...",
+          "success": "Tags updated!"
+        },
+        "tag": "{name}",
+        "title": "Edit Tags"
+      },
+      "edit_button": "Edit Tags",
+      "none": "None",
+      "title": "Tags"
     },
     "unlock": {
       "button": "Unlock",
