@@ -1,10 +1,10 @@
 {
   "Card": {
     "access": {
-      "description": "Number of doors that the card can be used on",
+      "description": "Number of doors and tags that the card can be used on",
       "devices": "{count, plural, =1 {# door} other {# doors}}",
       "dialog": {
-        "description": "Select the doors that can be used on the door",
+        "description": "Select the doors and tags that the card can be used on",
         "notification": {
           "error": "Failed to update access!",
           "loading": "Updating access...",
@@ -12,7 +12,8 @@
         },
         "title": "Edit Access"
       },
-      "edit_button": "Edit Doors",
+      "edit_button": "Edit Access",
+      "tags": "{count, plural, =1 {# tag} other {# tags}}",
       "title": "Access"
     },
     "add": {
@@ -83,6 +84,10 @@
         "label": "Holder",
         "placeholder": "John Doe",
         "unknown": "Unknown"
+      },
+      "tags": {
+        "label": "Tags",
+        "placeholder": "Select tags"
       }
     },
     "filter": {
