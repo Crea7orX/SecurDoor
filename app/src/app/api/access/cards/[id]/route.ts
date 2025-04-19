@@ -27,8 +27,7 @@ export async function GET(request: NextRequest, props: AccessCardByIdProps) {
     return NextResponse.json(
       accessCardResponseSchema.parse({
         devices: devices.map((device) => ({
-          id: device.id,
-          name: device.name,
+          ...device,
         })),
       }),
     );
