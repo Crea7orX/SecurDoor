@@ -13,6 +13,7 @@ import {
   LockOpen,
   Microchip,
   OctagonMinus,
+  Pin,
   RectangleEllipsis,
   ShieldCheck,
   ShieldX,
@@ -211,6 +212,21 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
+  // Reference: [serialId, name, [...newTagIds], [...toDelete]]
+  "device.tags_update": {
+    title: "Log.logs.device.tags_update.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.device.tags_update.text", {
+        actor: actionActor,
+        serialId: (log.reference?.[0] as string) ?? "",
+        deviceName: (log.reference?.[1] as string) ?? "",
+        newCount: ((log.reference?.[2] as string[]) ?? []).length ?? 0,
+        deleteCount: ((log.reference?.[3] as string[]) ?? []).length ?? 0,
+      }),
+    icon: Pin,
+    color: "info",
+  },
+
   // Reference: [serialId]
   "device_status.pending_adoption": {
     title: "Log.logs.device_status.pending_adoption.title",
@@ -394,6 +410,21 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     },
     icon: LockOpen,
     color: "success",
+  },
+
+  // Reference: [fingerprint, holder, [...newTagIds], [...toDelete]]
+  "card.tags_update": {
+    title: "Log.logs.card.tags_update.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.card.tags_update.text", {
+        actor: actionActor,
+        fingerprint: (log.reference?.[0] as string) ?? "",
+        holder: (log.reference?.[1] as string) ?? "",
+        newCount: ((log.reference?.[2] as string[]) ?? []).length ?? 0,
+        deleteCount: ((log.reference?.[3] as string[]) ?? []).length ?? 0,
+      }),
+    icon: Pin,
+    color: "info",
   },
 
   // Reference: [name]
