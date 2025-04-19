@@ -6,6 +6,7 @@ import postgres from "postgres";
 import * as apiKeys from "./api-keys/schema";
 import * as cards from "./cards/schema";
 import * as devices from "./devices/schema";
+import * as devicesToTags from "./devices-to-tags/schema";
 import * as logs from "./logs/schema";
 import * as cardsToDevices from "./cards-to-devices/schema";
 import * as tags from "./tags/schema";
@@ -26,6 +27,7 @@ export const db = drizzle(conn, {
     ...apiKeys,
     ...cards,
     ...devices,
+    ...devicesToTags,
     ...logs,
     ...cardsToDevices,
     ...tags,
