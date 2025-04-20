@@ -5,6 +5,7 @@ import {
   type TagUpdate,
 } from "@/lib/validations/tag";
 import { db } from "@/server/db";
+import { devicesToTags } from "@/server/db/devices-to-tags/schema";
 import { logInsert } from "@/server/db/logs/queries";
 import { tags } from "@/server/db/tags/schema";
 import { and, asc, count, desc, eq, ilike, sql } from "drizzle-orm";
@@ -59,8 +60,13 @@ export async function tagsGetAll({ searchParams, ownerId }: TagsGetAllProps) {
 
     const { data, total } = await db.transaction(async (tx) => {
       const data = await tx
-        .select()
+        .select({
+          tag: tags,
+          devicesCount: sql<number>`COUNT(DISTINCT ${devicesToTags.deviceId})`,
+        })
         .from(tags)
+        .leftJoin(devicesToTags, eq(tags.id, devicesToTags.tagId))
+        .groupBy(tags.id)
         .limit(searchParams.perPage)
         .offset(offset)
         .where(where)
@@ -82,7 +88,13 @@ export async function tagsGetAll({ searchParams, ownerId }: TagsGetAllProps) {
     });
 
     const pageCount = Math.ceil(total / searchParams.perPage);
-    return { data, pageCount };
+    return {
+      data: data.map((row) => ({
+        ...row.tag,
+        devicesCount: Number(row.devicesCount) ?? 0,
+      })),
+      pageCount,
+    };
   } catch {
     return { data: [], pageCount: 0 };
   }
