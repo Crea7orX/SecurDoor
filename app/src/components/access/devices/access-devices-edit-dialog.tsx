@@ -90,6 +90,7 @@ export function AccessDevicesEditDialog({
     defaultValues: {
       cards: cards.map((card) => card.id),
     },
+    disabled: isLoading,
   });
   form.watch("cards");
 
