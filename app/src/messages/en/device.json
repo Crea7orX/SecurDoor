@@ -48,16 +48,6 @@
           "success": "Multiple devices updated!"
         },
         "title": "Control Multiple Devices"
-      },
-      "field": {
-        "action": {
-          "description": "Action to perform on the selected devices.",
-          "label": "Action"
-        },
-        "devices": {
-          "label": "Devices",
-          "placeholder": "Select devices"
-        }
       }
     },
     "card": {
@@ -144,9 +134,17 @@
       "view": "View Devices"
     },
     "field": {
+      "action": {
+        "description": "Action to perform on the selected devices.",
+        "label": "Action"
+      },
       "cards": {
         "label": "Cards",
         "placeholder": "Select cards"
+      },
+      "devices": {
+        "label": "Devices",
+        "placeholder": "Select devices"
       },
       "name": {
         "description": "Display name for the device.",
