@@ -22,7 +22,7 @@ export async function apiKeyInsert({
     await db
       .insert(apiKeys)
       .values({
-        name: create.name?.trim(),
+        name: create.name.trim(),
         key: generateId(IdPrefix.PRIVATE_KEY, 128),
         ownerId,
       })

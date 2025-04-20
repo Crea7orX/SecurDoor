@@ -76,6 +76,10 @@
           "text": "\"{actor}\" renamed card holder to \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\").",
           "title": "Card holder renamed"
         },
+        "tags_update": {
+          "text": "\"{actor}\" updated card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\") tags, adding {newCount, plural, =1 {# tag} other {# tags}} and removing {deleteCount, plural, =1 {# tag} other {# tags}}.",
+          "title": "Card tags updated"
+        },
         "unlock": {
           "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") using card with fingerprint \"{fingerprint}\".",
           "title": "Card unlocked device"
@@ -122,6 +126,10 @@
           "text": "\"{actor}\" renamed device to \"{deviceName}\" (SN: \"{serialId}\").",
           "title": "Device renamed"
         },
+        "tags_update": {
+          "text": "\"{actor}\" updated device \"{deviceName}\" (SN: \"{serialId}\") tags, adding {newCount, plural, =1 {# tag} other {# tags}} and removing {deleteCount, plural, =1 {# tag} other {# tags}}.",
+          "title": "Device tags updated"
+        },
         "unlock": {
           "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
           "title": "Device unlocked"
@@ -139,6 +147,20 @@
         "pending_adoption": {
           "text": "\"{actor}\" set device in state pending adoption.",
           "title": "Device pending adoption"
+        }
+      },
+      "tag": {
+        "create": {
+          "text": "\"{actor}\" created tag with name \"{name}\".",
+          "title": "Tag created"
+        },
+        "delete": {
+          "text": "\"{actor}\" deleted tag with name \"{name}\".",
+          "title": "Tag deleted"
+        },
+        "rename": {
+          "text": "\"{actor}\" renamed tag to \"{name}\".",
+          "title": "Tag renamed"
         }
       },
       "unknown": {

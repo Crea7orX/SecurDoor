@@ -14,19 +14,10 @@ import {
   deviceStateInsert,
 } from "@/server/db/devices-states/queries";
 import { devicesStates } from "@/server/db/devices-states/schema";
+import { devicesToTags } from "@/server/db/devices-to-tags/schema";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import {
-  and,
-  asc,
-  count,
-  desc,
-  eq,
-  ilike,
-  inArray,
-  isNull,
-  sql,
-} from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray, isNull, sql } from "drizzle-orm";
 
 export async function deviceInsert(
   deviceCreate: DeviceCreate,
@@ -71,12 +62,15 @@ export async function devicesGetAll(
     const offset = (searchParams.page - 1) * searchParams.perPage;
 
     const where = and(
-      eq(devices.ownerId, ownerId), // Only show devices for the organization
+      eq(devices.ownerId, ownerId), // Ensure ownership
       searchParams.name && searchParams.name.trim() !== ""
         ? ilike(devices.name, `%${searchParams.name.trim()}%`)
         : undefined,
       searchParams.emergencyState && searchParams.emergencyState.length > 0
         ? inArray(devices.emergencyState, searchParams.emergencyState)
+        : undefined,
+      searchParams.tagId && searchParams.tagId.length > 0
+        ? inArray(devicesToTags.tagId, searchParams.tagId)
         : undefined,
     );
 
@@ -85,13 +79,18 @@ export async function devicesGetAll(
         ? searchParams.sort.map((item) =>
             item.desc ? desc(devices[item.id]) : asc(devices[item.id]),
           )
-        : [asc(devices.createdAt)];
+        : [desc(devices.createdAt)];
 
     const { data, total } = await db.transaction(async (tx) => {
       const data = await tx
-        .select()
+        .select({
+          device: devices,
+          state: devicesStates,
+        })
         .from(devices)
         .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
+        .leftJoin(devicesToTags, eq(devices.id, devicesToTags.deviceId))
+        .groupBy(devices.id, devicesStates.deviceId)
         .limit(searchParams.perPage)
         .offset(offset)
         .where(where)
@@ -99,19 +98,20 @@ export async function devicesGetAll(
 
       const total = await tx
         .select({
-          count: count(),
+          count: sql<number>`count(DISTINCT ${devices.id})`,
         })
         .from(devices)
+        .leftJoin(devicesToTags, eq(devices.id, devicesToTags.deviceId))
         .where(where)
         .execute()
         .then((res) => res[0]?.count ?? 0);
 
       return {
-        data: data.map((device) => ({
-          ...device.devices,
-          state: device.devices_states && {
-            id: device.devices_states.deviceId,
-            ...device.devices_states,
+        data: data.map((row) => ({
+          ...row.device,
+          state: row.state && {
+            id: row.state.deviceId,
+            ...row.state,
           },
         })),
         total,
@@ -134,7 +134,12 @@ export async function deviceGetById(id: string, ownerId: string) {
       .select()
       .from(devices)
       .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
       .limit(1)
   )[0];
 
@@ -179,7 +184,12 @@ export async function deviceUpdate(
         }),
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
       .returning()
   )[0];
 
@@ -212,7 +222,12 @@ export async function deviceDelete(
   const device = (
     await db
       .delete(devices)
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
       .returning()
   )[0];
 
@@ -274,7 +289,12 @@ export async function deviceSetLocked({
         isLocked: isLocked,
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, id)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
       .returning()
   )[0];
 

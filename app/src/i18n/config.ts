@@ -13,5 +13,6 @@ export const namespaces = [
   "landing",
   "log",
   "navigation",
+  "tag",
   "zod",
 ];

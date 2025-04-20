@@ -1,6 +1,7 @@
 "use client";
 
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
+import { DataTableSortSelect } from "@/components/data-table/data-table-sort-select";
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -100,6 +101,7 @@ export function DataTableToolbar<TData>({
                 />
               ),
           )}
+        <DataTableSortSelect table={table} />
         {isFiltered && (
           <Button
             variant="ghost"

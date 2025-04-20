@@ -16,6 +16,11 @@ export function getColumns(): ColumnDef<DeviceResponse>[] {
       enableHiding: false,
     },
     {
+      accessorKey: "tagId",
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
       accessorKey: "createdAt",
       enableSorting: false,
       enableHiding: false,

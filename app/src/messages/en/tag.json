@@ -1,0 +1,49 @@
+{
+  "Tag": {
+    "add": {
+      "notification": {
+        "error": "Failed to add tag!",
+        "loading": "Adding tag...",
+        "success": "Tag added!"
+      },
+      "title": "Add Tag"
+    },
+    "delete": {
+      "alert": {
+        "description": "This action cannot be undone. This will permanently delete this tag and remove all associated cards access to associated doors.",
+        "notification": {
+          "error": "Failed to delete tag!",
+          "loading": "Deleting tag...",
+          "success": "Tag deleted!"
+        },
+        "title": "Are you absolutely sure?"
+      }
+    },
+    "edit": {
+      "notification": {
+        "error": "Failed to update tag!",
+        "loading": "Updating tag...",
+        "success": "Tag updated!"
+      },
+      "title": "Edit Tag"
+    },
+    "field": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Administration"
+      }
+    },
+    "filter": {
+      "created_at": {
+        "label": "Created"
+      },
+      "devices_count": {
+        "label": "Devices"
+      },
+      "name": {
+        "label": "Name",
+        "placeholder": "Filter by name"
+      }
+    }
+  }
+}

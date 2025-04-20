@@ -15,7 +15,7 @@ interface ApiKeyCardProps extends React.ComponentProps<"div"> {
 }
 
 export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
-  const t = useTranslations("ApiKey.card");
+  const t = useTranslations("Api_Key.card");
   const format = useFormatter();
 
   const keyRef = React.useRef<HTMLDivElement>(null);

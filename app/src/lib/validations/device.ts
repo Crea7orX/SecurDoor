@@ -1,5 +1,6 @@
 import { getSortingStateParser } from "@/lib/data-table-parsers";
 import { deviceStateResponseSchema } from "@/lib/validations/device-state";
+import { tagResponseSchema } from "@/lib/validations/tag";
 import { emergencyStateEnum } from "@/server/db/devices/schema";
 import {
   createSearchParamsCache,
@@ -57,10 +58,11 @@ export const devicesSearchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsNumberLiteral([10, 20, 30, 40, 50]).withDefault(10),
   sort: getSortingStateParser<Omit<DeviceResponse, "state">>().withDefault([
-    { id: "createdAt", desc: false },
+    { id: "createdAt", desc: true },
   ]),
   name: parseAsString,
   emergencyState: parseAsArrayOf(z.enum(emergencyStateEnum.enumValues)),
+  tagId: parseAsArrayOf(parseAsString),
 });
 
 export type DevicesGetSchema = Awaited<
@@ -81,3 +83,35 @@ export const deviceBulkSchema = z.object({
 });
 
 export type DeviceBulk = z.infer<typeof deviceBulkSchema>;
+
+export const deviceTagsResponseSchema = z.object({
+  tags: z.array(
+    tagResponseSchema.pick({
+      id: true,
+      name: true,
+    }),
+  ),
+});
+
+export type DeviceTagsResponse = z.infer<typeof deviceTagsResponseSchema>;
+
+export const deviceTagsUpdateSchema = z.object({
+  tags: z.string().array(),
+});
+
+export type DeviceTagsUpdate = z.infer<typeof deviceTagsUpdateSchema>;
+
+export const deviceTagsUpdateResponseSchema = z.object({
+  addedTags: z.string().array(),
+  removedTags: z.string().array(),
+});
+
+export type DeviceTagsUpdateResponse = z.infer<
+  typeof deviceTagsUpdateResponseSchema
+>;
+
+export const deviceFilterExpandSchema = z.object({
+  tagId: z.array(z.string()).optional(),
+});
+
+export type DeviceFilterExpand = z.infer<typeof deviceFilterExpandSchema>;

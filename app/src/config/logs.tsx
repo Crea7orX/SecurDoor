@@ -13,10 +13,12 @@ import {
   LockOpen,
   Microchip,
   OctagonMinus,
+  Pin,
   RectangleEllipsis,
   ShieldCheck,
   ShieldX,
   Siren,
+  Tag,
 } from "lucide-react";
 
 export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
@@ -210,6 +212,21 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
+  // Reference: [serialId, name, [...newTagIds], [...toDelete]]
+  "device.tags_update": {
+    title: "Log.logs.device.tags_update.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.device.tags_update.text", {
+        actor: actionActor,
+        serialId: (log.reference?.[0] as string) ?? "",
+        deviceName: (log.reference?.[1] as string) ?? "",
+        newCount: ((log.reference?.[2] as string[]) ?? []).length ?? 0,
+        deleteCount: ((log.reference?.[3] as string[]) ?? []).length ?? 0,
+      }),
+    icon: Pin,
+    color: "info",
+  },
+
   // Reference: [serialId]
   "device_status.pending_adoption": {
     title: "Log.logs.device_status.pending_adoption.title",
@@ -393,6 +410,57 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     },
     icon: LockOpen,
     color: "success",
+  },
+
+  // Reference: [fingerprint, holder, [...newTagIds], [...toDelete]]
+  "card.tags_update": {
+    title: "Log.logs.card.tags_update.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.card.tags_update.text", {
+        actor: actionActor,
+        fingerprint: (log.reference?.[0] as string) ?? "",
+        holder: (log.reference?.[1] as string) ?? "",
+        newCount: ((log.reference?.[2] as string[]) ?? []).length ?? 0,
+        deleteCount: ((log.reference?.[3] as string[]) ?? []).length ?? 0,
+      }),
+    icon: Pin,
+    color: "info",
+  },
+
+  // Reference: [name]
+  "tag.create": {
+    title: "Log.logs.tag.create.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.tag.create.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+      }),
+    icon: Tag,
+    color: "success",
+  },
+
+  // Reference: [name]
+  "tag.delete": {
+    title: "Log.logs.tag.delete.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.tag.delete.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+      }),
+    icon: Tag,
+    color: "destructive",
+  },
+
+  // Reference: [name]
+  "tag.rename": {
+    title: "Log.logs.tag.rename.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.tag.rename.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+      }),
+    icon: Tag,
+    color: "info",
   },
 
   // Reference: [name]

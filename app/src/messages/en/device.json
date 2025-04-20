@@ -48,16 +48,6 @@
           "success": "Multiple devices updated!"
         },
         "title": "Control Multiple Devices"
-      },
-      "field": {
-        "action": {
-          "description": "Action to perform on the selected devices.",
-          "label": "Action"
-        },
-        "devices": {
-          "label": "Devices",
-          "placeholder": "Select devices"
-        }
       }
     },
     "card": {
@@ -144,9 +134,17 @@
       "view": "View Devices"
     },
     "field": {
+      "action": {
+        "description": "Action to perform on the selected devices.",
+        "label": "Action"
+      },
       "cards": {
         "label": "Cards",
         "placeholder": "Select cards"
+      },
+      "devices": {
+        "label": "Devices",
+        "placeholder": "Select devices"
       },
       "name": {
         "description": "Display name for the device.",
@@ -161,6 +159,10 @@
         "description": "The identifier written on the back of the device.",
         "label": "Serial ID",
         "placeholder": "abcdef12-3456-7890-abcd-ef1234567890"
+      },
+      "tags": {
+        "label": "Tags",
+        "placeholder": "Select tags"
       }
     },
     "filter": {
@@ -174,6 +176,9 @@
       "name": {
         "label": "Name",
         "placeholder": "Filter by name"
+      },
+      "tag": {
+        "label": "Tag"
       }
     },
     "label": "Device:",
@@ -215,6 +220,21 @@
         "unknown": "Unknown"
       },
       "title": "Status"
+    },
+    "tags": {
+      "description": "Assigned tags for easier access control",
+      "dialog": {
+        "notification": {
+          "error": "Failed to update tags!",
+          "loading": "Updating tags...",
+          "success": "Tags updated!"
+        },
+        "tag": "{name} ({devicesCount} {devicesCount, plural, =1 {device} other {devices}})",
+        "title": "Edit Tags"
+      },
+      "edit_button": "Edit Tags",
+      "none": "None",
+      "title": "Tags"
     },
     "unlock": {
       "button": "Unlock",

@@ -7,6 +7,7 @@ import { DeviceControlsCard } from "@/components/devices/device-controls-card";
 import { DeviceDangerZoneCard } from "@/components/devices/device-danger-zone-card";
 import { DeviceStateCard } from "@/components/devices/device-state-card";
 import { DeviceStatusCard } from "@/components/devices/device-status-card";
+import { DeviceTagsCard } from "@/components/devices/tags/device-tags-card";
 import { LogRecentActivitiesCard } from "@/components/logs/log-recent-activities-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -75,6 +76,7 @@ export default function DevicePage({ params }: DevicePageProps) {
               <DeviceAccessCard id={params.id} />
             </div>
             <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
+              <DeviceTagsCard id={params.id} />
               <DeviceStatusCard device={data} />
               <DeviceDangerZoneCard id={params.id} />
             </div>

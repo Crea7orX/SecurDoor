@@ -6,7 +6,7 @@ import {
   accessCardAuthenticationResponseSchema,
   accessCardAuthenticationSchema,
 } from "@/lib/validations/access";
-import { accessCardTryAuthentication } from "@/server/db/cards-to-devices/queries";
+import { accessCardTryAuthentication } from "@/server/db/access/queries";
 import { type NextRequest, NextResponse } from "next/server";
 
 // try card authentication

@@ -12,7 +12,12 @@ export async function emergencyStateGetById(deviceId: string, ownerId: string) {
         emergencyState: devices.emergencyState,
       })
       .from(devices)
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, deviceId),
+        ),
+      )
       .limit(1)
   )[0];
 }
@@ -30,7 +35,12 @@ export async function emergencyStateSetDevice(
         emergencyState: state,
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)))
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, deviceId),
+        ),
+      )
       .returning({
         id: devices.id,
         name: devices.name,
@@ -78,7 +88,7 @@ export async function emergencyStateSetDevices({
     })
     .where(
       and(
-        eq(devices.ownerId, ownerId), // ensure ownership
+        eq(devices.ownerId, ownerId), // Ensure ownership
         inArray(devices.id, deviceIds),
       ),
     )
@@ -114,7 +124,12 @@ export async function emergencyStatesGetCount(ownerId: string) {
     })
     .from(devices)
     .groupBy(devices.emergencyState)
-    .where(and(eq(devices.ownerId, ownerId), isNotNull(devices.emergencyState)))
+    .where(
+      and(
+        eq(devices.ownerId, ownerId), // Ensure ownership
+        isNotNull(devices.emergencyState),
+      ),
+    )
     .then((res) =>
       res.reduce(
         (acc, { state, count }) => {

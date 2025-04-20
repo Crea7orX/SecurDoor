@@ -5,18 +5,13 @@ import { db } from "@/server/db";
 import { cardsToDevices } from "@/server/db/cards-to-devices/schema";
 import { cardGetById } from "@/server/db/cards/queries";
 import { cards } from "@/server/db/cards/schema";
-import { deviceStateHeartbeatUpdate } from "@/server/db/devices-states/queries";
-import {
-  deviceGetById,
-  type deviceGetBySerialIdUnprotected,
-} from "@/server/db/devices/queries";
+import { deviceGetById } from "@/server/db/devices/queries";
 import { devices } from "@/server/db/devices/schema";
 import {
-  logInsert,
   logInsertMultiple,
   type LogsInsertMultipleData,
 } from "@/server/db/logs/queries";
-import { and, asc, eq, inArray, sql } from "drizzle-orm";
+import { and, asc, eq, inArray } from "drizzle-orm";
 
 export function accessDeviceGetAll(deviceId: string, ownerId: string) {
   return db
@@ -29,14 +24,14 @@ export function accessDeviceGetAll(deviceId: string, ownerId: string) {
     .innerJoin(
       devices,
       and(
-        eq(devices.ownerId, ownerId), // Ensure device ownership
+        eq(devices.ownerId, ownerId), // Ensure ownership
         eq(devices.id, deviceId),
       ),
     )
     .innerJoin(
       cards,
       and(
-        eq(cards.ownerId, ownerId), // Ensure card ownership
+        eq(cards.ownerId, ownerId), // Ensure ownership
         eq(cards.id, cardsToDevices.cardId),
       ),
     ) // Join to get card details
@@ -162,14 +157,14 @@ export async function accessCardGetAll(cardId: string, ownerId: string) {
     .innerJoin(
       cards,
       and(
-        eq(cards.ownerId, ownerId), // Ensure card ownership
+        eq(cards.ownerId, ownerId), // Ensure ownership
         eq(cards.id, cardId),
       ),
     )
     .innerJoin(
       devices,
       and(
-        eq(devices.ownerId, ownerId), // Ensure device ownership
+        eq(devices.ownerId, ownerId), // Ensure ownership
         eq(devices.id, cardsToDevices.deviceId),
       ),
     ) // Join to get device details
@@ -183,7 +178,7 @@ export async function accessCardUpdate(
   userId: string,
   ownerId: string,
 ) {
-  // Validate card ownership
+  // Ensure card ownership
   const card = await cardGetById(cardId, ownerId);
   if (!card) {
     throw new NotFoundError();
@@ -192,7 +187,7 @@ export async function accessCardUpdate(
   // Remove duplicate device IDs from input
   const uniqueDeviceIds = [...new Set(deviceIds)];
 
-  // Validate provided devices ownership
+  // Ensure provided devices ownership
   const ownedDevices = await db
     .select({ id: devices.id })
     .from(devices)
@@ -290,150 +285,4 @@ export async function accessCardUpdate(
   }
 
   return [newDeviceIds, toDelete];
-}
-
-interface AccessCardTryAuthentication {
-  ownerId: string;
-  device: NonNullable<
-    Awaited<ReturnType<typeof deviceGetBySerialIdUnprotected>>
-  >;
-  deviceId: string;
-  fingerprint: string;
-}
-
-export async function accessCardTryAuthentication({
-  ownerId,
-  device,
-  deviceId,
-  fingerprint,
-}: AccessCardTryAuthentication) {
-  void deviceStateHeartbeatUpdate({ deviceId }); // update device heartbeat
-
-  const access = (
-    await db
-      .select()
-      .from(cardsToDevices)
-      .innerJoin(
-        cards,
-        and(
-          eq(cards.ownerId, ownerId), // Ensure card ownership
-          eq(cards.id, cardsToDevices.cardId),
-        ),
-      )
-      .where(
-        and(
-          eq(cardsToDevices.deviceId, deviceId),
-          eq(cards.fingerprint, fingerprint),
-        ),
-      )
-  )[0];
-
-  // no access given to the device
-  if (!access) {
-    const reference = [device.serialId, device.name, fingerprint];
-    void logInsert(
-      ownerId,
-      "device.access_denied",
-      "system",
-      deviceId,
-      reference,
-    );
-
-    throw new ForbiddenError();
-  }
-
-  // device in emergency state
-  if (device.emergencyState) throw new ForbiddenError();
-
-  // card is deactivated
-  if (!access.cards.active) throw new ForbiddenError();
-
-  // unlock
-  if (device.isLocked) {
-    await db
-      .update(devices)
-      .set({
-        isLocked: false,
-        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
-      })
-      .where(
-        and(
-          eq(devices.ownerId, ownerId), // Ensure device ownership
-          eq(devices.id, deviceId),
-        ),
-      );
-
-    // log
-    const logs = [
-      {
-        action: "device.unlock",
-        objectId: deviceId,
-        reference: [
-          device.serialId,
-          device.name,
-          "true",
-          access.cards.fingerprint,
-          access.cards.holder ?? "NULL",
-        ],
-      },
-      {
-        action: "card.unlock",
-        objectId: access.cards.id,
-        reference: [
-          access.cards.fingerprint,
-          access.cards.holder ?? "NULL",
-          device.serialId,
-          device.name,
-        ],
-      },
-    ];
-    void logInsertMultiple(ownerId, logs, "system");
-  }
-  // lock
-  else {
-    await db
-      .update(devices)
-      .set({
-        isLocked: true,
-        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
-      })
-      .where(
-        and(
-          eq(devices.ownerId, ownerId), // Ensure device ownership
-          eq(devices.id, deviceId),
-        ),
-      );
-
-    // log
-    const logs = [
-      {
-        action: "device.lock",
-        objectId: deviceId,
-        reference: [
-          device.serialId,
-          device.name,
-          "true",
-          access.cards.fingerprint,
-          access.cards.holder ?? "NULL",
-        ],
-      },
-      {
-        action: "card.lock",
-        objectId: access.cards.id,
-        reference: [
-          access.cards.fingerprint,
-          access.cards.holder ?? "NULL",
-          device.serialId,
-          device.name,
-        ],
-      },
-    ];
-    void logInsertMultiple(ownerId, logs, "system");
-  }
-
-  return {
-    isLocked: !device.isLocked,
-    reLockDelay: device.reLockDelay,
-    holder: access.cards.holder,
-  };
 }

@@ -63,7 +63,7 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
     pageCount: data?.pageCount ?? 0,
     filterFields,
     initialState: {
-      sorting: [{ id: "createdAt", desc: false }],
+      sorting: [{ id: "createdAt", desc: true }],
     },
     getRowId: (originalRow) => originalRow.id,
     shallow: false,

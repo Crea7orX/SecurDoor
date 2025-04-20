@@ -87,7 +87,7 @@ export async function logsGetAll(searchParams: LogsGetSchema, ownerId: string) {
     const offset = (searchParams.page - 1) * searchParams.perPage;
 
     const where = and(
-      eq(logs.ownerId, ownerId), // Only show logs for the organization
+      eq(logs.ownerId, ownerId), // Ensure ownership
       searchParams.action.length > 0
         ? inArray(logs.action, searchParams.action)
         : undefined,
@@ -104,7 +104,7 @@ export async function logsGetAll(searchParams: LogsGetSchema, ownerId: string) {
         ? searchParams.sort.map((item) =>
             item.desc ? desc(logs[item.id]) : asc(logs[item.id]),
           )
-        : [asc(logs.createdAt)];
+        : [desc(logs.createdAt)];
 
     const { data, total } = await db.transaction(async (tx) => {
       const data = await tx
@@ -143,7 +143,12 @@ export async function logGetById(id: string, ownerId: string) {
       await db
         .select()
         .from(logs)
-        .where(and(eq(logs.ownerId, ownerId), eq(logs.id, id)))
+        .where(
+          and(
+            eq(logs.ownerId, ownerId), // Ensure ownership
+            eq(logs.id, id),
+          ),
+        )
         .limit(1)
     )[0] ?? null
   );
@@ -157,6 +162,8 @@ export function logsActorsGetAll(ownerId: string) {
       actorId: logs.actorId,
     })
     .from(logs)
-    .where(eq(logs.ownerId, ownerId))
+    .where(
+      eq(logs.ownerId, ownerId), // Ensure ownership
+    )
     .orderBy(asc(logs.actorName), asc(logs.actorId));
 }

@@ -14,9 +14,13 @@ import {
 import { DeviceEmergencyCountAlert } from "@/components/devices/device-emergency-count-alert";
 import { Button } from "@/components/ui/button";
 import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-query";
+import { useGetAllTagsQuery } from "@/hooks/api/tags/use-get-all-tags-query";
 import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
-import { type DeviceResponse } from "@/lib/validations/device";
+import {
+  type DeviceFilterExpand,
+  type DeviceResponse,
+} from "@/lib/validations/device";
 import type { DataTableFilterField, SearchParams } from "@/types/data-table";
 import {
   BellElectric,
@@ -42,10 +46,18 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     searchParams,
     refetchInterval: 5000,
   });
+  const { data: tags, isLoading: tagsIsLoading } = useGetAllTagsQuery({
+    searchParams: {
+      perPage: "50", // todo: maybe pagination
+      sort: '[{"id":"name","desc":false},{"id":"createdAt","desc":false}]',
+    },
+  });
 
   const columns = React.useMemo(() => getColumns(), []);
 
-  const filterFields: DataTableFilterField<DeviceResponse>[] = [
+  const filterFields: DataTableFilterField<
+    DeviceResponse & DeviceFilterExpand
+  >[] = [
     {
       id: "name",
       label: t("filter.name.label"),
@@ -69,6 +81,15 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
         },
       ],
     },
+    {
+      id: "tagId",
+      label: t("filter.tag.label"),
+      options:
+        tags?.data.map((tag) => ({
+          label: tag.name,
+          value: tag.id,
+        })) ?? [],
+    },
   ];
 
   const { table } = useDataTable({
@@ -77,7 +98,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     pageCount: data?.pageCount ?? 0,
     filterFields,
     initialState: {
-      sorting: [{ id: "createdAt", desc: false }],
+      sorting: [{ id: "createdAt", desc: true }],
     },
     getRowId: (originalRow) => originalRow.id,
     shallow: false,
@@ -93,7 +114,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     ]);
   };
 
-  if (isLoading) {
+  if (isLoading || tagsIsLoading) {
     return <DevicesLoading />;
   }
 

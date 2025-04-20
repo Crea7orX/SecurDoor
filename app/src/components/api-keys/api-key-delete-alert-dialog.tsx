@@ -26,7 +26,7 @@ export function ApiKeyDeleteAlertDialog({
   children,
   ...props
 }: ApiKeyDeleteAlertDialogProps) {
-  const t = useTranslations("ApiKey.delete.alert");
+  const t = useTranslations("Api_Key.delete.alert");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);

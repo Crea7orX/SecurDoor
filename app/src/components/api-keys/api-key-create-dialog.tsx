@@ -34,7 +34,7 @@ export function ApiKeyCreateDialog({
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof Dialog>) {
-  const t = useTranslations("ApiKey");
+  const t = useTranslations("Api_Key");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -90,6 +90,7 @@ export function ApiKeyCreateDialog({
                   <FormControl>
                     <Input
                       placeholder={t("field.name.placeholder")}
+                      maxLength={apiKeyCreateSchema.shape.name.maxLength!}
                       {...field}
                     />
                   </FormControl>

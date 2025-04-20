@@ -52,7 +52,7 @@ export async function cardsGetAll(
     const offset = (searchParams.page - 1) * searchParams.perPage;
 
     const where = and(
-      eq(cards.ownerId, ownerId), // Only show cards for the organization
+      eq(cards.ownerId, ownerId), // Ensure ownership
       searchParams.holder && searchParams.holder.trim() !== ""
         ? ilike(cards.holder, `%${searchParams.holder.trim()}%`)
         : undefined,
@@ -66,7 +66,7 @@ export async function cardsGetAll(
         ? searchParams.sort.map((item) =>
             item.desc ? desc(cards[item.id]) : asc(cards[item.id]),
           )
-        : [asc(cards.createdAt)];
+        : [desc(cards.createdAt)];
 
     const { data, total } = await db.transaction(async (tx) => {
       const data = await tx
@@ -105,7 +105,9 @@ export async function cardGetById(id: string, ownerId: string) {
       await db
         .select()
         .from(cards)
-        .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
+        .where(and(
+          eq(cards.ownerId, ownerId), // Ensure ownership
+          eq(cards.id, id)))
         .limit(1)
     )[0] ?? null
   );
@@ -121,7 +123,9 @@ export async function cardGetByFingerprint(
         .select()
         .from(cards)
         .where(
-          and(eq(cards.ownerId, ownerId), eq(cards.fingerprint, fingerprint)),
+          and(
+            eq(cards.ownerId, ownerId), // Ensure ownership
+            eq(cards.fingerprint, fingerprint)),
         )
         .limit(1)
     )[0] ?? null
@@ -144,7 +148,9 @@ export async function cardUpdate(
         ...(typeof update.active === "boolean" && { active: update.active }),
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
-      .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
+      .where(and(
+        eq(cards.ownerId, ownerId), // Ensure ownership
+        eq(cards.id, id)))
       .returning()
   )[0];
 
@@ -172,7 +178,9 @@ export async function cardDelete(id: string, userId: string, ownerId: string) {
   const card = (
     await db
       .delete(cards)
-      .where(and(eq(cards.ownerId, ownerId), eq(cards.id, id)))
+      .where(and(
+        eq(cards.ownerId, ownerId), // Ensure ownership
+        eq(cards.id, id)))
       .returning()
   )[0];
 

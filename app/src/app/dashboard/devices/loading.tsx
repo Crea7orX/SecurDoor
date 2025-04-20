@@ -13,7 +13,8 @@ export default function DevicesLoading() {
       <div className="flex w-full items-center justify-between gap-2 overflow-auto p-1">
         <div className="flex flex-1 items-center gap-2">
           <Skeleton className="h-8 w-40 lg:w-64" />
-          <Skeleton className="h-8 w-40" />
+          <Skeleton className="h-8 w-44" />
+          <Skeleton className="h-8 w-24" />
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" disabled>

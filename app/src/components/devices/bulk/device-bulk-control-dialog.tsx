@@ -75,7 +75,7 @@ export function DeviceBulkControlDialog({
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof Dialog>) {
-  const t = useTranslations("Device.bulk");
+  const t = useTranslations("Device");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -139,17 +139,17 @@ export function DeviceBulkControlDialog({
 
   const onSubmit = async (data: DeviceBulk) => {
     setIsLoading(true);
-    const toastId = toast.loading(t("dialog.notification.loading"));
+    const toastId = toast.loading(t("bulk.dialog.notification.loading"));
     await update(data)
       .then(() => {
-        toast.success(t("dialog.notification.success"), {
+        toast.success(t("bulk.dialog.notification.success"), {
           id: toastId,
         });
 
         setIsOpen(false);
       })
       .catch(() => {
-        toast.error(t("dialog.notification.error"), {
+        toast.error(t("bulk.dialog.notification.error"), {
           id: toastId,
         });
       });
@@ -164,8 +164,10 @@ export function DeviceBulkControlDialog({
         <DialogContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader>
-              <DialogTitle>{t("dialog.title")}</DialogTitle>
-              <DialogDescription>{t("dialog.description")}</DialogDescription>
+              <DialogTitle>{t("bulk.dialog.title")}</DialogTitle>
+              <DialogDescription>
+                {t("bulk.dialog.description")}
+              </DialogDescription>
             </DialogHeader>
             <FormField
               control={form.control}
@@ -204,7 +206,7 @@ export function DeviceBulkControlDialog({
                 <SelectContent>
                   {actions.map((group, index) => (
                     <SelectGroup key={index}>
-                      <SelectLabel>{t(group.label)}</SelectLabel>
+                      <SelectLabel>{t(`bulk.${group.label}`)}</SelectLabel>
                       {group.actions.map((action) => (
                         <SelectItem
                           key={action.value}
@@ -212,7 +214,7 @@ export function DeviceBulkControlDialog({
                           icon={action.icon}
                           iconClassName={action.iconClassName}
                         >
-                          {t(action.label)}
+                          {t(`bulk.${action.label}`)}
                         </SelectItem>
                       ))}
                     </SelectGroup>

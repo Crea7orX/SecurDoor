@@ -1,5 +1,5 @@
 {
-  "ApiKey": {
+  "Api_Key": {
     "add": {
       "notification": {
         "error": "Неуспешно добавяне на API ключ!",

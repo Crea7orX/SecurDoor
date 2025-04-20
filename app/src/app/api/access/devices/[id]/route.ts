@@ -27,9 +27,7 @@ export async function GET(request: NextRequest, props: AccessDeviceByIdProps) {
     return NextResponse.json(
       accessDeviceResponseSchema.parse({
         cards: cards.map((card) => ({
-          id: card.id,
-          fingerprint: card.fingerprint,
-          holder: card.holder,
+          ...card,
         })),
       }),
     );
