@@ -37,6 +37,9 @@
       "created_at": {
         "label": "Created"
       },
+      "devices_count": {
+        "label": "Devices"
+      },
       "name": {
         "label": "Name",
         "placeholder": "Filter by name"

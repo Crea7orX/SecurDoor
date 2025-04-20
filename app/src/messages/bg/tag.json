@@ -37,6 +37,9 @@
       "created_at": {
         "label": "Създаден"
       },
+      "devices_count": {
+        "label": "Устройства"
+      },
       "name": {
         "label": "Име",
         "placeholder": "Филтриране по име"
