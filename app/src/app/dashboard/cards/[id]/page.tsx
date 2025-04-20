@@ -10,6 +10,7 @@ import { LogRecentActivitiesCard } from "@/components/logs/log-recent-activities
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
+import { MasonryItem, MasonryRoot } from "@/components/ui/masonry";
 import { useGetCardByIdQuery } from "@/hooks/api/cards/use-get-card-by-id-query";
 import { ArrowLeft, IdCard } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -61,18 +62,24 @@ export default function CardPage({ params }: CardPageProps) {
         </Card>
 
         <Card className="h-full w-full bg-border px-2 py-4">
-          <div className="sticky top-0 flex flex-wrap justify-center gap-4">
-            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
-              <CardHolderCard card={data} />
-              <CardAddedCard card={data} />
-            </div>
-            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
-              <CardStatusCard card={data} />
-              <CardAccessCard id={params.id} />
-            </div>
-            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
-              <CardDangerZoneCard id={params.id} />
-            </div>
+          <div className="sticky top-0">
+            <MasonryRoot gap={16} columnWidth={350} linear>
+              <MasonryItem>
+                <CardHolderCard card={data} />
+              </MasonryItem>
+              <MasonryItem>
+                <CardStatusCard card={data} />
+              </MasonryItem>
+              <MasonryItem>
+                <CardDangerZoneCard id={params.id} />
+              </MasonryItem>
+              <MasonryItem>
+                <CardAddedCard card={data} />
+              </MasonryItem>
+              <MasonryItem>
+                <CardAccessCard id={params.id} />
+              </MasonryItem>
+            </MasonryRoot>
           </div>
         </Card>
 
