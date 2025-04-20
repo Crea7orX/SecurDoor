@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { type TagResponse } from "@/lib/validations/tag";
 import { Filter, SquarePen, Trash } from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 
 interface TagActionsProps extends React.ComponentProps<"div"> {
@@ -32,8 +33,11 @@ export function TagActions({ className, tag, ...props }: TagActionsProps) {
         variant="outline"
         size="icon"
         className="rounded-none border-0 border-x shadow-none"
+        asChild
       >
-        <Filter />
+        <Link href={`/dashboard/devices?tagId=${tag.id}`}>
+          <Filter />
+        </Link>
       </Button>
       <TagDeleteAlertDialog id={tag.id}>
         <Button
