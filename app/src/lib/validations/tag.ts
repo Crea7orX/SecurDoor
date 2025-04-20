@@ -41,8 +41,14 @@ export type TagsGetSchema = Awaited<
   ReturnType<typeof tagsSearchParamsCache.parse>
 >;
 
+export const tagResponseExpandSchema = z.object({
+  devicesCount: z.number().optional(),
+});
+
+export type TagResponseExpand = z.infer<typeof tagResponseExpandSchema>;
+
 export const tagsPaginatedResponseSchema = z.object({
-  data: tagResponseSchema.array(),
+  data: tagResponseSchema.extend(tagResponseExpandSchema.shape).array(),
   pageCount: z.number(),
 });
 
