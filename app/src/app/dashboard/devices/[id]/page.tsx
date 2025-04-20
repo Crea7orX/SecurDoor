@@ -12,6 +12,7 @@ import { LogRecentActivitiesCard } from "@/components/logs/log-recent-activities
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
+import { MasonryItem, MasonryRoot } from "@/components/ui/masonry";
 import { useGetDeviceByIdQuery } from "@/hooks/api/devices/use-get-device-by-id-query";
 import { ArrowLeft, Microchip } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -66,20 +67,30 @@ export default function DevicePage({ params }: DevicePageProps) {
         </Card>
 
         <Card className="h-full w-full bg-border px-2 py-4">
-          <div className="sticky top-0 flex flex-wrap justify-center gap-4">
-            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
-              <DeviceControlsCard device={data} />
-              <DeviceAddedCard device={data} />
-            </div>
-            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
-              <DeviceStateCard device={data} />
-              <DeviceAccessCard id={params.id} />
-            </div>
-            <div className="flex w-full flex-col gap-4 2xl:w-[49%] min-[1920px]:w-[32%]">
-              <DeviceTagsCard id={params.id} />
-              <DeviceStatusCard device={data} />
-              <DeviceDangerZoneCard id={params.id} />
-            </div>
+          <div className="sticky top-0">
+            <MasonryRoot gap={16} columnWidth={350} linear>
+              <MasonryItem>
+                <DeviceControlsCard device={data} />
+              </MasonryItem>
+              <MasonryItem>
+                <DeviceStateCard device={data} />
+              </MasonryItem>
+              <MasonryItem>
+                <DeviceTagsCard id={params.id} />
+              </MasonryItem>
+              <MasonryItem>
+                <DeviceAddedCard device={data} />
+              </MasonryItem>
+              <MasonryItem>
+                <DeviceAccessCard id={params.id} />
+              </MasonryItem>
+              <MasonryItem>
+                <DeviceStatusCard device={data} />
+              </MasonryItem>
+              <MasonryItem>
+                <DeviceDangerZoneCard id={params.id} />
+              </MasonryItem>
+            </MasonryRoot>
           </div>
         </Card>
 

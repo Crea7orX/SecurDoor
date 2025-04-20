@@ -50,9 +50,9 @@ const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
         </CardContent>
         <CardFooter className="justify-end gap-2 max-md:flex-col">
           {card.active ? (
-            <CardDisableButton id={card.id} />
+            <CardDisableButton className="max-md:w-full" id={card.id} />
           ) : (
-            <CardActivateButton id={card.id} />
+            <CardActivateButton className="max-md:w-full" id={card.id} />
           )}
         </CardFooter>
       </Card>
