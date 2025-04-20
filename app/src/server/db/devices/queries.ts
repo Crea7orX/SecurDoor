@@ -14,19 +14,10 @@ import {
   deviceStateInsert,
 } from "@/server/db/devices-states/queries";
 import { devicesStates } from "@/server/db/devices-states/schema";
+import { devicesToTags } from "@/server/db/devices-to-tags/schema";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
-import {
-  and,
-  asc,
-  count,
-  desc,
-  eq,
-  ilike,
-  inArray,
-  isNull,
-  sql,
-} from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray, isNull, sql } from "drizzle-orm";
 
 export async function deviceInsert(
   deviceCreate: DeviceCreate,
@@ -78,6 +69,9 @@ export async function devicesGetAll(
       searchParams.emergencyState && searchParams.emergencyState.length > 0
         ? inArray(devices.emergencyState, searchParams.emergencyState)
         : undefined,
+      searchParams.tagId && searchParams.tagId.length > 0
+        ? inArray(devicesToTags.tagId, searchParams.tagId)
+        : undefined,
     );
 
     const orderBy =
@@ -89,9 +83,14 @@ export async function devicesGetAll(
 
     const { data, total } = await db.transaction(async (tx) => {
       const data = await tx
-        .select()
+        .select({
+          device: devices,
+          state: devicesStates,
+        })
         .from(devices)
         .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
+        .leftJoin(devicesToTags, eq(devices.id, devicesToTags.deviceId))
+        .groupBy(devices.id, devicesStates.deviceId)
         .limit(searchParams.perPage)
         .offset(offset)
         .where(where)
@@ -99,19 +98,20 @@ export async function devicesGetAll(
 
       const total = await tx
         .select({
-          count: count(),
+          count: sql<number>`count(DISTINCT ${devices.id})`,
         })
         .from(devices)
+        .leftJoin(devicesToTags, eq(devices.id, devicesToTags.deviceId))
         .where(where)
         .execute()
         .then((res) => res[0]?.count ?? 0);
 
       return {
-        data: data.map((device) => ({
-          ...device.devices,
-          state: device.devices_states && {
-            id: device.devices_states.deviceId,
-            ...device.devices_states,
+        data: data.map((row) => ({
+          ...row.device,
+          state: row.state && {
+            id: row.state.deviceId,
+            ...row.state,
           },
         })),
         total,
