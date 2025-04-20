@@ -1,5 +1,6 @@
 import "server-only";
 import { db } from "@/server/db";
+import { devicesToTags } from "@/server/db/devices-to-tags/schema";
 import { devices, type emergencyStateEnum } from "@/server/db/devices/schema";
 import { logInsert, logInsertMultiple } from "@/server/db/logs/queries";
 import { and, count, eq, inArray, isNotNull, sql } from "drizzle-orm";
@@ -69,6 +70,7 @@ export async function emergencyStateSetDevice(
 
 interface EmergencyStateSetDevicesParams {
   deviceIds: string[];
+  tagIds: string[];
   state: (typeof emergencyStateEnum.enumValues)[number] | null;
   userId: string;
   ownerId: string;
@@ -76,10 +78,35 @@ interface EmergencyStateSetDevicesParams {
 
 export async function emergencyStateSetDevices({
   deviceIds,
+  tagIds,
   state,
   userId,
   ownerId,
 }: EmergencyStateSetDevicesParams) {
+  const taggedDeviceIds =
+    tagIds.length > 0
+      ? (
+          await db
+            .select({ deviceId: devicesToTags.deviceId })
+            .from(devicesToTags)
+            .innerJoin(devices, eq(devices.id, devicesToTags.deviceId))
+            .where(
+              and(
+                eq(devices.ownerId, ownerId), // Ensure ownership
+                inArray(devicesToTags.tagId, tagIds),
+              ),
+            )
+        ).map((row) => row.deviceId)
+      : [];
+
+  // Remove duplicates
+  const allTargetDeviceIds = Array.from(
+    new Set([...deviceIds, ...taggedDeviceIds]),
+  );
+
+  // If no devices to update, return early
+  if (allTargetDeviceIds.length === 0) return [];
+
   const _devices = await db
     .update(devices)
     .set({
@@ -89,7 +116,7 @@ export async function emergencyStateSetDevices({
     .where(
       and(
         eq(devices.ownerId, ownerId), // Ensure ownership
-        inArray(devices.id, deviceIds),
+        inArray(devices.id, allTargetDeviceIds),
       ),
     )
     .returning({

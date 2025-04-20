@@ -53,3 +53,9 @@ export const tagsPaginatedResponseSchema = z.object({
 });
 
 export type TagsPaginatedResponse = z.infer<typeof tagsPaginatedResponseSchema>;
+
+export const tagBulkSchema = z.object({
+  tagIds: z.array(z.string()),
+});
+
+export type TagBulk = z.infer<typeof tagBulkSchema>;

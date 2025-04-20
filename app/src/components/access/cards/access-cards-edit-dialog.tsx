@@ -92,7 +92,7 @@ export function AccessCardsEditDialog({
   const tagOptions: MultiSelectOption[] | undefined = React.useMemo(() => {
     return tagsData?.data.map((tag) => {
       return {
-        label: t("access.dialog.tag", {
+        label: t("field.tags.option", {
           name: tag.name,
           devicesCount: tag.devicesCount,
         }),

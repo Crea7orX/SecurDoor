@@ -162,6 +162,7 @@
       },
       "tags": {
         "label": "Етикети",
+        "option": "{name} ({devicesCount} {devicesCount, plural, =1 {устройство} other {устройства}})",
         "placeholder": "Изберете етикети"
       }
     },
@@ -229,7 +230,6 @@
           "loading": "Обновяване на етикетите...",
           "success": "Етикетите са обновени!"
         },
-        "tag": "{name} ({devicesCount} {devicesCount, plural, =1 {устройство} other {устройства}})",
         "title": "Редактиране на етикетите"
       },
       "edit_button": "Редактиране на етикетите",

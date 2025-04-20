@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
 
     const devices = await emergencyStateSetDevices({
       deviceIds: update.deviceIds,
+      tagIds: update.tagIds,
       state: update.state,
       userId,
       ownerId,

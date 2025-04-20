@@ -10,7 +10,6 @@
           "loading": "Обновяване на достъпа...",
           "success": "Достъпът е обновен!"
         },
-        "tag": "{name} ({devicesCount} {devicesCount, plural, =1 {устройство} other {устройства}})",
         "title": "Редактиране на достъпа"
       },
       "edit_button": "Редактиране на достъпа",
@@ -88,6 +87,7 @@
       },
       "tags": {
         "label": "Етикети",
+        "option": "{name} ({devicesCount} {devicesCount, plural, =1 {устройство} other {устройства}})",
         "placeholder": "Изберете етикети"
       }
     },

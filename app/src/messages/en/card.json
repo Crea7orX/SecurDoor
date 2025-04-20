@@ -10,7 +10,6 @@
           "loading": "Updating access...",
           "success": "Access updated!"
         },
-        "tag": "{name} ({devicesCount} {devicesCount, plural, =1 {device} other {devices}})",
         "title": "Edit Access"
       },
       "edit_button": "Edit Access",
@@ -88,6 +87,7 @@
       },
       "tags": {
         "label": "Tags",
+        "option": "{name} ({devicesCount} {devicesCount, plural, =1 {device} other {devices}})",
         "placeholder": "Select tags"
       }
     },
