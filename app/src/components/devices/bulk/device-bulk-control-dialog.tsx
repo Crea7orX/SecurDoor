@@ -109,6 +109,7 @@ export function DeviceBulkControlDialog({
     defaultValues: {
       deviceIds: [],
     },
+    disabled: isLoading,
   });
 
   // Select all devices on initial fetch

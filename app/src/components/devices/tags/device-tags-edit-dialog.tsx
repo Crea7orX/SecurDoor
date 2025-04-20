@@ -85,6 +85,7 @@ export function DeviceTagsEditDialog({
     defaultValues: {
       tags: tags.map((tag) => tag.id),
     },
+    disabled: isLoading,
   });
   form.watch("tags");
 

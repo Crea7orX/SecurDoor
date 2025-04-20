@@ -46,6 +46,7 @@ interface MultiSelectProps extends VariantProps<typeof badgeVariants> {
   maxCount?: number;
   modal?: boolean;
   className?: string;
+  disabled?: boolean;
 }
 
 const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
@@ -60,6 +61,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
       maxCount = 3,
       modal = true,
       className,
+      disabled = false,
       variant,
     },
     ref,
@@ -139,7 +141,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
         onOpenChange={setIsPopoverOpen}
         modal={modal}
       >
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild disabled={disabled}>
           <Button
             onClick={handleTogglePopover}
             className={cn(
