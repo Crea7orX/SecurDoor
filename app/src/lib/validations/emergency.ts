@@ -1,4 +1,5 @@
 import { deviceBulkSchema } from "@/lib/validations/device";
+import { tagBulkSchema } from "@/lib/validations/tag";
 import { emergencyStateEnum } from "@/server/db/devices/schema";
 import { z } from "zod";
 
@@ -17,6 +18,7 @@ export type EmergencyUpdate = z.infer<typeof emergencyUpdateSchema>;
 
 export const emergencyBulkUpdateSchema = z.object({
   ...deviceBulkSchema.shape,
+  ...tagBulkSchema.shape,
   ...emergencyUpdateSchema.shape,
 });
 
