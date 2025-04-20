@@ -79,7 +79,7 @@ export type DevicesPaginatedResponse = z.infer<
 >;
 
 export const deviceBulkSchema = z.object({
-  deviceIds: z.array(z.string()).min(1),
+  deviceIds: z.array(z.string()),
 });
 
 export type DeviceBulk = z.infer<typeof deviceBulkSchema>;
