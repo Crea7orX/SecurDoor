@@ -128,7 +128,7 @@
         },
         "tags_update": {
           "text": "\"{actor}\" актуализира етикетите на устройство \"{deviceName}\" (СН: \"{serialId}\"), добавяйки {newCount, plural, =1 {# етикет} other {# етикета}} и премахвайки {deleteCount, plural, =1 {# етикет} other {# етикета}}.",
-          "title": "Актуализиран достъп на устройство"
+          "title": "Актуализирани етикети на устройство"
         },
         "unlock": {
           "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") {isCard, select, true {използвайки карта с отпечатък \"{fingerprint}\"} other {използвайки таблото}}.",
