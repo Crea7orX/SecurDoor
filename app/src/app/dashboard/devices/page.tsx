@@ -88,6 +88,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
         tags?.data.map((tag) => ({
           label: tag.name,
           value: tag.id,
+          count: tag.devicesCount,
         })) ?? [],
     },
   ];
