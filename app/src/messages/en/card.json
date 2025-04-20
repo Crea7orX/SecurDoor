@@ -10,7 +10,7 @@
           "loading": "Updating access...",
           "success": "Access updated!"
         },
-        "tag": "{name}",
+        "tag": "{name} ({devicesCount} {devicesCount, plural, =1 {device} other {devices}})",
         "title": "Edit Access"
       },
       "edit_button": "Edit Access",

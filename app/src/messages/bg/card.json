@@ -10,7 +10,7 @@
           "loading": "Обновяване на достъпа...",
           "success": "Достъпът е обновен!"
         },
-        "tag": "{name}",
+        "tag": "{name} ({devicesCount} {devicesCount, plural, =1 {устройство} other {устройства}})",
         "title": "Редактиране на достъпа"
       },
       "edit_button": "Редактиране на достъпа",
