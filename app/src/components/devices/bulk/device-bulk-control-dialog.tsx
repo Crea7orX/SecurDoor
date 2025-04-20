@@ -36,8 +36,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-query";
 import { useBulkEmergencyClearMutation } from "@/hooks/api/emergency/use-bulk-update-emergency-clear-mutation";
 import { useBulkUpdateEmergencyMutation } from "@/hooks/api/emergency/use-bulk-update-emergency-mutation";
+import { useGetAllTagsQuery } from "@/hooks/api/tags/use-get-all-tags-query";
 import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
 import { type DeviceBulk, deviceBulkSchema } from "@/lib/validations/device";
+import { type TagBulk, tagBulkSchema } from "@/lib/validations/tag";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Activity, BellElectric, Construction } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -81,21 +83,43 @@ export function DeviceBulkControlDialog({
   const [isOpen, setIsOpen] = React.useState(false);
   const [action, setAction] = React.useState("lockdown");
 
-  const { data, isLoading: isLoadingData } = useGetAllDevicesQuery({
-    searchParams: {
-      perPage: "50", // todo: maybe pagination
-    },
-    enabled: isOpen,
-  });
+  const { data: devicesData, isLoading: devicesIsLoading } =
+    useGetAllDevicesQuery({
+      searchParams: {
+        perPage: "50", // todo: maybe pagination
+        sort: '[{"id":"name","desc":false},{"id":"createdAt","desc":false}]',
+      },
+      enabled: isOpen,
+    });
   const deviceOptions: MultiSelectOption[] | undefined = React.useMemo(() => {
-    return data?.data.map((device) => {
+    return devicesData?.data.map((device) => {
       return {
         label: device.name,
         value: device.name + "-" + device.id,
         key: device.id,
       };
     });
-  }, [data]);
+  }, [devicesData]);
+
+  const { data: tagsData, isLoading: tagsIsLoading } = useGetAllTagsQuery({
+    searchParams: {
+      perPage: "50", // todo: maybe pagination
+      sort: '[{"id":"name","desc":false},{"id":"createdAt","desc":false}]',
+    },
+    enabled: isOpen,
+  });
+  const tagOptions: MultiSelectOption[] | undefined = React.useMemo(() => {
+    return tagsData?.data.map((tag) => {
+      return {
+        label: t("field.tags.option", {
+          name: tag.name,
+          devicesCount: tag.devicesCount,
+        }),
+        value: tag.name + "-" + tag.id,
+        key: tag.id,
+      };
+    });
+  }, [tagsData, t]);
 
   const { mutateAsync: updateEmergencyMutation } =
     useBulkUpdateEmergencyMutation();
@@ -104,30 +128,21 @@ export function DeviceBulkControlDialog({
   const [isLoading, setIsLoading] = React.useState(false);
 
   useI18nZodErrors();
-  const form = useForm<DeviceBulk>({
-    resolver: zodResolver(deviceBulkSchema),
+  const form = useForm<DeviceBulk & TagBulk>({
+    resolver: zodResolver(deviceBulkSchema.extend(tagBulkSchema.shape)),
     defaultValues: {
       deviceIds: [],
+      tagIds: [],
     },
     disabled: isLoading,
   });
 
-  // Select all devices on initial fetch
-  /* eslint-disable react-hooks/exhaustive-deps */
-  React.useEffect(() => {
-    if (!data?.data || form.getValues("deviceIds").length > 0) return;
-
-    form.setValue(
-      "deviceIds",
-      data.data.map((device) => device.id),
-    );
-  }, [data]);
-
-  const update = async (data: DeviceBulk) => {
+  const update = async (data: DeviceBulk & TagBulk) => {
     if (action === "lockdown" || action === "evacuation") {
       return updateEmergencyMutation({
         state: action,
         deviceIds: data.deviceIds,
+        tagIds: data.tagIds,
       });
     }
 
@@ -138,7 +153,7 @@ export function DeviceBulkControlDialog({
     return Promise.resolve();
   };
 
-  const onSubmit = async (data: DeviceBulk) => {
+  const onSubmit = async (data: DeviceBulk & TagBulk) => {
     setIsLoading(true);
     const toastId = toast.loading(t("bulk.dialog.notification.loading"));
     await update(data)
@@ -176,7 +191,7 @@ export function DeviceBulkControlDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("field.devices.label")}</FormLabel>
-                  {isLoadingData ? (
+                  {devicesIsLoading ? (
                     <Skeleton className="h-10 w-full" />
                   ) : (
                     <FormControl>
@@ -191,6 +206,34 @@ export function DeviceBulkControlDialog({
                         }}
                         placeholder={t("field.devices.placeholder")}
                         heading={t("field.devices.label")}
+                      />
+                    </FormControl>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tagIds"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("field.tags.label")}</FormLabel>
+                  {tagsIsLoading ? (
+                    <Skeleton className="h-10 w-full" />
+                  ) : (
+                    <FormControl>
+                      <MultiSelect
+                        {...field}
+                        options={tagOptions ?? []}
+                        value={tagOptions?.filter((option) =>
+                          field.value.includes(option.key),
+                        )}
+                        onChange={(options) => {
+                          field.onChange(options.map((option) => option.key));
+                        }}
+                        placeholder={t("field.tags.placeholder")}
+                        heading={t("field.tags.label")}
                       />
                     </FormControl>
                   )}
@@ -233,7 +276,17 @@ export function DeviceBulkControlDialog({
               >
                 {tButton("cancel")}
               </Button>
-              <Button disabled={isLoading}>{tButton("submit")}</Button>
+              <Button
+                disabled={
+                  isLoading ||
+                  !(
+                    form.getValues("deviceIds").length > 0 ||
+                    form.getValues("tagIds").length > 0
+                  )
+                }
+              >
+                {tButton("submit")}
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>
