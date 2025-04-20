@@ -66,6 +66,7 @@ export function DeviceTagsEditDialog({
       return {
         label: t("tags.dialog.tag", {
           name: tag.name,
+          devicesCount: tag.devicesCount,
         }),
         value: tag.name + "-" + tag.id,
         key: tag.id,
