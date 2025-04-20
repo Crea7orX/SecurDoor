@@ -229,7 +229,7 @@
           "loading": "Updating tags...",
           "success": "Tags updated!"
         },
-        "tag": "{name}",
+        "tag": "{name} ({devicesCount} {devicesCount, plural, =1 {device} other {devices}})",
         "title": "Edit Tags"
       },
       "edit_button": "Edit Tags",
