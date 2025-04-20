@@ -94,6 +94,7 @@ export function AccessCardsEditDialog({
       return {
         label: t("access.dialog.tag", {
           name: tag.name,
+          devicesCount: tag.devicesCount,
         }),
         value: tag.name + "-" + tag.id,
         key: tag.id,
