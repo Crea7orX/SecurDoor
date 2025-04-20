@@ -58,6 +58,7 @@ export function AccessDevicesEditDialog({
   const { data, isLoading: isLoadingData } = useGetAllCardsQuery({
     searchParams: {
       perPage: "50", // todo: maybe pagination
+      sort: '[{"id":"holder","desc":false},{"id":"fingerprint","desc":false},{"id":"createdAt","desc":false}]',
     },
     enabled: isOpen,
   });
