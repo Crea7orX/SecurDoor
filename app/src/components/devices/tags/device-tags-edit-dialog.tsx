@@ -64,7 +64,7 @@ export function DeviceTagsEditDialog({
   const tagOptions: MultiSelectOption[] | undefined = React.useMemo(() => {
     return data?.data.map((tag) => {
       return {
-        label: t("tags.dialog.tag", {
+        label: t("field.tags.option", {
           name: tag.name,
           devicesCount: tag.devicesCount,
         }),

@@ -162,6 +162,7 @@
       },
       "tags": {
         "label": "Tags",
+        "option": "{name} ({devicesCount} {devicesCount, plural, =1 {device} other {devices}})",
         "placeholder": "Select tags"
       }
     },
@@ -229,7 +230,6 @@
           "loading": "Updating tags...",
           "success": "Tags updated!"
         },
-        "tag": "{name} ({devicesCount} {devicesCount, plural, =1 {device} other {devices}})",
         "title": "Edit Tags"
       },
       "edit_button": "Edit Tags",
