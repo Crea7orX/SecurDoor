@@ -36,7 +36,7 @@ export default function CardPage({ params }: CardPageProps) {
   }
 
   return (
-    <div className="flex h-full gap-6 p-4">
+    <div className="flex h-full min-h-[90dvh] gap-6 p-4">
       <div className="flex w-full max-w-96 flex-col gap-8 max-lg:hidden">
         <Button className="self-start" disabled={isLoading} asChild>
           <Link href="/dashboard/cards">
