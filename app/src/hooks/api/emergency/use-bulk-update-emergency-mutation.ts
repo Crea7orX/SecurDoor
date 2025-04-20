@@ -29,6 +29,9 @@ export function useBulkUpdateEmergencyMutation() {
         queryClient.invalidateQueries({
           queryKey: ["Emergency", "Get", "Count"],
         }),
+        queryClient.invalidateQueries({
+          queryKey: ["Devices", "GetAll"],
+        }),
       ]),
   });
 }
