@@ -62,6 +62,7 @@ export const devicesSearchParamsCache = createSearchParamsCache({
   ]),
   name: parseAsString,
   emergencyState: parseAsArrayOf(z.enum(emergencyStateEnum.enumValues)),
+  tagId: parseAsArrayOf(parseAsString),
 });
 
 export type DevicesGetSchema = Awaited<
