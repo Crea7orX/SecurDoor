@@ -109,3 +109,9 @@ export const deviceTagsUpdateResponseSchema = z.object({
 export type DeviceTagsUpdateResponse = z.infer<
   typeof deviceTagsUpdateResponseSchema
 >;
+
+export const deviceFilterExpandSchema = z.object({
+  tagId: z.array(z.string()).optional(),
+});
+
+export type DeviceFilterExpand = z.infer<typeof deviceFilterExpandSchema>;
