@@ -129,7 +129,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     <span className="overflow-hidden text-ellipsis">
                       {option.label}
                     </span>
-                    {option.count && (
+                    {typeof option.count === "number" && (
                       <span className="ml-auto flex size-4 items-center justify-center font-mono text-xs">
                         {option.count}
                       </span>
