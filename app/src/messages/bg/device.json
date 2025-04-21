@@ -50,16 +50,6 @@
         "title": "Управление на много устройства"
       }
     },
-    "card": {
-      "emergency_state": {
-        "evacuation": "ЕВАКУАЦИЯ",
-        "lockdown": "ЗАКЛЮЧВАНЕ"
-      },
-      "state": {
-        "locked": "ЗАКЛЮЧЕНО",
-        "unlocked": "ОТКЛЮЧЕНО"
-      }
-    },
     "controls": {
       "basic": {
         "header": "Основни",
