@@ -5,26 +5,24 @@ import {
 } from "@/config/device-statuses";
 import { cn } from "@/lib/utils";
 import { CircleDot, CircleDotDashed } from "lucide-react";
-import { useNow, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceStatusBadgesProps
   extends React.ComponentPropsWithoutRef<typeof Badge> {
   lastSeenAt: number;
   status: keyof typeof DeviceStatusDisplayInfos;
+  now: Date;
 }
 
 export function DeviceStatusBadges({
   className,
   lastSeenAt,
   status,
+  now,
   ...props
 }: DeviceStatusBadgesProps) {
   const t = useTranslations();
-
-  const now = useNow({
-    updateInterval: 1000,
-  }); // re-render every 1s for device status
 
   const deviceStatusDisplayInfo = getDeviceStatusDisplayInfo(status);
 

@@ -43,6 +43,7 @@ const DeviceStatusCard = React.forwardRef<
             className="text-md"
             lastSeenAt={device.state?.lastSeenAt ?? 0}
             status={device.state?.status ?? "unknown"}
+            now={now}
           />
         </div>
         {!device.state ? (

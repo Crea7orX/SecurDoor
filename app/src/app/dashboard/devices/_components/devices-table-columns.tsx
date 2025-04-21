@@ -57,6 +57,7 @@ export function getColumns({ now }: Props): ColumnDef<DeviceResponse>[] {
           <DeviceStatusBadges
             lastSeenAt={row.original.state?.lastSeenAt ?? 0}
             status={row.original.state?.status ?? "unknown"}
+            now={now}
           />
         </div>
       ),
