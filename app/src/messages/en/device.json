@@ -157,6 +157,9 @@
       }
     },
     "filter": {
+      "created_at": {
+        "label": "Added"
+      },
       "emergency_state": {
         "label": "Emergency State",
         "options": {
@@ -167,6 +170,12 @@
       "name": {
         "label": "Name",
         "placeholder": "Filter by name"
+      },
+      "state": {
+        "label": "State"
+      },
+      "status": {
+        "label": "Status"
       },
       "tag": {
         "label": "Tag"

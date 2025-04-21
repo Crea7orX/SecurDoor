@@ -157,6 +157,9 @@
       }
     },
     "filter": {
+      "created_at": {
+        "label": "Добавено"
+      },
       "emergency_state": {
         "label": "Аварийно състояние",
         "options": {
@@ -167,6 +170,12 @@
       "name": {
         "label": "Име",
         "placeholder": "Филтриране по име"
+      },
+      "state": {
+        "label": "Състояние"
+      },
+      "status": {
+        "label": "Статус"
       },
       "tag": {
         "label": "Етикет"
