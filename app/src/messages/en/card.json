@@ -89,11 +89,14 @@
     },
     "filter": {
       "active": {
-        "label": "Active",
+        "label": "Status",
         "options": {
           "active": "Active",
           "disabled": "Disabled"
         }
+      },
+      "created_at": {
+        "label": "Added"
       },
       "holder": {
         "label": "Holder",
