@@ -160,9 +160,6 @@
       "created_at": {
         "label": "Added"
       },
-      "is_locked": {
-        "label": "State"
-      },
       "emergency_state": {
         "label": "Emergency State",
         "options": {
