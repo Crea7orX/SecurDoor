@@ -40,7 +40,7 @@ const ChartDashboardAccessForWeek = React.forwardRef<
   });
 
   const [activeChart, setActiveChart] =
-    React.useState<keyof ChartConfig>("unlocks");
+    React.useState<keyof typeof chartConfig>("unlocks");
 
   return (
     <Card className={cn("w-full", className)} ref={ref} {...props}>

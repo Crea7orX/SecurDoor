@@ -14,7 +14,7 @@ import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 interface ChartAccessContainerProps
   extends Omit<React.ComponentProps<typeof ChartContainer>, "children"> {
   data: ChartAccessForWeekResponse[];
-  activeChart: string;
+  activeChart: "unlocks" | "locks";
 }
 
 const ChartAccessContainer = React.forwardRef<

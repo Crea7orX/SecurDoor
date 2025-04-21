@@ -12,7 +12,7 @@ interface ChartAccessTabsHeaderProps
   extends React.HTMLAttributes<HTMLDivElement> {
   chartConfig: ChartConfig;
   activeChart: string;
-  setActiveChart: Dispatch<SetStateAction<keyof ChartConfig>>;
+  setActiveChart: Dispatch<SetStateAction<"unlocks" | "locks">>;
   data: ChartAccessForWeekResponse[];
   isLoading: boolean;
 }
@@ -55,7 +55,7 @@ const ChartAccessTabsHeader = React.forwardRef<
               key={key}
               data-active={activeChart === key}
               className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
-              onClick={() => setActiveChart(key)}
+              onClick={() => setActiveChart(key as "unlocks" | "locks")}
             >
               <span className="text-xs text-muted-foreground">
                 {t(chartConfig[key]?.label)}
