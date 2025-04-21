@@ -87,6 +87,11 @@ export function getColumns({ now }: Props): ColumnDef<DeviceResponse>[] {
       },
     },
     {
+      accessorKey: "isLockedState",
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
       accessorKey: "emergencyState",
       enableSorting: false,
       enableHiding: false,
