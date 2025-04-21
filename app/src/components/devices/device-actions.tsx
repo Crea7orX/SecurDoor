@@ -77,6 +77,7 @@ export function DeviceActions({
         variant="outline"
         size="icon"
         className="rounded-l-none border-0 border-l shadow-none"
+        asChild
       >
         <Link href={`/dashboard/devices/${device.id}`}>
           <Settings />
