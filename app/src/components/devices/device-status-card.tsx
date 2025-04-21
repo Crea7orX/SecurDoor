@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
+import { DeviceStatusBadges } from "@/components/devices/access/device-status-badges";
 import {
   Card,
   CardContent,
@@ -9,10 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getDeviceStatusDisplayInfo } from "@/config/device-statuses";
-import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
-import { CircleDot, CircleDotDashed, EthernetPort } from "lucide-react";
+import { EthernetPort } from "lucide-react";
 import { useFormatter, useNow, useTranslations } from "next-intl";
 import * as React from "react";
 
@@ -24,16 +22,11 @@ const DeviceStatusCard = React.forwardRef<
   HTMLDivElement,
   DeviceStatusCardProps
 >(({ className, device, ...props }, ref) => {
-  const _t = useTranslations();
   const t = useTranslations("Device.status");
   const format = useFormatter();
   const now = useNow({
     updateInterval: 1000,
   }); // re-render every 1s for device status
-
-  const deviceStatusDisplayInfo = getDeviceStatusDisplayInfo(
-    device.state?.status ?? "",
-  );
 
   return (
     <Card className={className} ref={ref} {...props}>
@@ -46,28 +39,11 @@ const DeviceStatusCard = React.forwardRef<
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-wrap gap-2">
-          {now.getTime() - (device.state?.lastSeenAt ?? 0) * 1000 > 15000 ? (
-            <Badge variant="destructive" className="text-md">
-              <CircleDotDashed className="mr-1 size-4" />
-              <span>{t("state.offline")}</span>
-            </Badge>
-          ) : (
-            <Badge variant="success" className="text-md">
-              <CircleDot className="mr-1 size-4" />
-              <span>{t("state.online")}</span>
-            </Badge>
-          )}
-          {device.state?.status && device.state?.status !== "adopted" && (
-            <Badge variant={deviceStatusDisplayInfo.color} className="text-md">
-              <deviceStatusDisplayInfo.icon
-                className={cn(
-                  "mr-1 size-4",
-                  `fill-${deviceStatusDisplayInfo.color}`,
-                )}
-              />
-              <span>{_t(deviceStatusDisplayInfo.text)}</span>
-            </Badge>
-          )}
+          <DeviceStatusBadges
+            className="text-md"
+            lastSeenAt={device.state?.lastSeenAt ?? 0}
+            status={device.state?.status ?? "unknown"}
+          />
         </div>
         {!device.state ? (
           <Skeleton className="h-6 w-48" />
