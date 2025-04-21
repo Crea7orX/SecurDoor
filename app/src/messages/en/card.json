@@ -48,10 +48,6 @@
       "title": "Added"
     },
     "card": {
-      "state": {
-        "active": "ACTIVE",
-        "disabled": "DISABLED"
-      },
       "title": "Card: <semibold>{fingerprint}</semibold>"
     },
     "danger_zone": {
