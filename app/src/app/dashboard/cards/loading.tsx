@@ -14,8 +14,10 @@ export default function CardsLoading() {
         <div className="flex flex-1 items-center gap-2">
           <Skeleton className="h-8 w-40 lg:w-64" />
           <Skeleton className="h-8 w-24" />
+          <Skeleton className="h-8 w-56" />
         </div>
         <div className="flex items-center gap-2">
+          <Skeleton className="h-8 w-[5.2rem]" />
           <Button size="sm" asChild>
             <Link href="/dashboard/cards/add">
               <PlusCircle className="size-4" />
