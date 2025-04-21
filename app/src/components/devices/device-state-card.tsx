@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+import { DeviceStateBadges } from "@/components/devices/access/device-state-badges";
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type DeviceResponse } from "@/lib/validations/device";
-import { BellElectric, Construction, Hand, Lock, LockOpen } from "lucide-react";
+import { Hand } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 
@@ -32,35 +32,12 @@ const DeviceStateCard = React.forwardRef<HTMLDivElement, DeviceStateCardProps>(
         <CardContent className="flex gap-2">
           {!device.state ? (
             <Skeleton className="h-8 w-32" />
-          ) : device.state.isLockedState ? (
-            <Badge variant="destructive" className="text-md">
-              <Lock className="mr-1 size-4" />
-              <span>{t("state.locked")}</span>
-            </Badge>
           ) : (
-            <Badge variant="success" className="text-md">
-              <LockOpen className="mr-1 size-4" />
-              <span>{t("state.unlocked")}</span>
-            </Badge>
-          )}
-          {device.emergencyState === "lockdown" ? (
-            <Badge
-              variant="destructive"
-              className="text-md ring-4 ring-destructive/50"
-            >
-              <Construction className="mr-1 size-4" />
-              <span>{t("emergency_state.lockdown")}</span>
-            </Badge>
-          ) : (
-            device.emergencyState === "evacuation" && (
-              <Badge
-                variant="warning"
-                className="text-md ring-4 ring-warning/50"
-              >
-                <BellElectric className="mr-1 size-4" />
-                <span>{t("emergency_state.evacuation")}</span>
-              </Badge>
-            )
+            <DeviceStateBadges
+              className="text-md"
+              isLockedState={device.state.isLockedState}
+              emergencyState={device.emergencyState}
+            />
           )}
         </CardContent>
       </Card>

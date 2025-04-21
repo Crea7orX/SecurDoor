@@ -1,6 +1,6 @@
 import { DeviceLockButton } from "@/components/devices/access/device-lock-button";
+import { DeviceStateBadges } from "@/components/devices/access/device-state-badges";
 import { DeviceUnlockButton } from "@/components/devices/access/device-unlock-button";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -8,13 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { type DeviceStateResponse } from "@/lib/validations/device-state";
-import {
-  BellElectric,
-  Construction,
-  Lock,
-  LockOpen,
-  Settings,
-} from "lucide-react";
+import { Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
@@ -74,32 +68,11 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
           <div className="flex flex-wrap items-center gap-2 max-md:justify-center">
             {!device.state ? (
               <Skeleton className="h-6 w-24" />
-            ) : device.state.isLockedState ? (
-              <Badge variant="destructive">
-                <Lock className="mr-1 size-4" />
-                <span>{t("state.locked")}</span>
-              </Badge>
             ) : (
-              <Badge variant="success">
-                <LockOpen className="mr-1 size-4" />
-                <span>{t("state.unlocked")}</span>
-              </Badge>
-            )}
-            {device.emergencyState === "lockdown" ? (
-              <Badge
-                variant="destructive"
-                className="ring-4 ring-destructive/50"
-              >
-                <Construction className="mr-1 size-4" />
-                <span>{t("emergency_state.lockdown")}</span>
-              </Badge>
-            ) : (
-              device.emergencyState === "evacuation" && (
-                <Badge variant="warning" className="ring-4 ring-warning/50">
-                  <BellElectric className="mr-1 size-4" />
-                  <span>{t("emergency_state.evacuation")}</span>
-                </Badge>
-              )
+              <DeviceStateBadges
+                isLockedState={device.state.isLockedState}
+                emergencyState={device.emergencyState}
+              />
             )}
           </div>
         </CardHeader>
