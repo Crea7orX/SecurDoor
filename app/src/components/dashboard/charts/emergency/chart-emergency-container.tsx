@@ -1,5 +1,7 @@
 "use client";
 
+import { ChartEmergencySkeleton } from "@/components/dashboard/charts/emergency/chart-emergency-skeleton";
+import { NoResultsLabel } from "@/components/data-table/no-results-label";
 import {
   ChartContainer,
   ChartTooltip,
@@ -22,6 +24,24 @@ const ChartEmergencyContainer = React.forwardRef<
 >(({ className, data, ...props }, ref) => {
   const t = useTranslations();
   const format = useFormatter();
+
+  const totalEmergencies = React.useMemo(() => {
+    if (!data) return 0;
+
+    return data.reduce(
+      (acc, curr) => acc + curr.lockdowns + curr.evacuations,
+      0,
+    );
+  }, [data]);
+
+  if (totalEmergencies === 0) {
+    return (
+      <div className="relative flex h-full items-center justify-center">
+        <NoResultsLabel />
+        <ChartEmergencySkeleton />
+      </div>
+    );
+  }
 
   return (
     <ChartContainer
