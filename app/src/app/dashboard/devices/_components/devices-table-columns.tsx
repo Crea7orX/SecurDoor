@@ -8,7 +8,6 @@ import { DeviceStatusDot } from "@/components/devices/access/device-status-dot";
 import { DeviceActions } from "@/components/devices/device-actions";
 import { type DeviceResponse } from "@/lib/validations/device";
 import { type ColumnDef } from "@tanstack/react-table";
-import * as React from "react";
 
 const translationKey = "Device.filter";
 

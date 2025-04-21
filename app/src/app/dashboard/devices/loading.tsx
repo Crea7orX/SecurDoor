@@ -4,7 +4,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { PlusCircle, SquareStack } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import * as React from "react";
 
 export default function DevicesLoading() {
   const t = useTranslations("Device");
