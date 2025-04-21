@@ -1,5 +1,6 @@
 import { DeviceLockButton } from "@/components/devices/access/device-lock-button";
 import { DeviceStateBadges } from "@/components/devices/access/device-state-badges";
+import { DeviceStatusDot } from "@/components/devices/access/device-status-dot";
 import { DeviceUnlockButton } from "@/components/devices/access/device-unlock-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,30 +8,10 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
-import { type DeviceStateResponse } from "@/lib/validations/device-state";
 import { Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
-
-export const statusColorVariants = {
-  pendingAdoption: "bg-warning ring-warning/50",
-  adopting: "bg-info ring-info/50",
-  online: "bg-success ring-success/50",
-  offline: "bg-destructive ring-destructive/50",
-};
-
-function getStatusColor(deviceState: DeviceStateResponse, now: Date) {
-  if (deviceState.status === "pending_adoption")
-    return statusColorVariants.pendingAdoption;
-
-  if (deviceState.status === "adopting") return statusColorVariants.adopting;
-
-  if (now.getTime() - (deviceState.lastSeenAt ?? 0) * 1000 < 15000)
-    return statusColorVariants.online;
-
-  return statusColorVariants.offline;
-}
 
 interface DeviceCardProps extends React.HTMLAttributes<HTMLDivElement> {
   device: DeviceResponse;
@@ -39,7 +20,6 @@ interface DeviceCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
   ({ className, device, now, ...props }, ref) => {
-    const t = useTranslations("Device.card");
     const tButton = useTranslations("Common.button");
 
     return (
@@ -51,11 +31,11 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
         ref={ref}
         {...props}
       >
-        <div
-          className={cn(
-            "absolute -left-2 -top-2 size-4 rounded-full ring-4",
-            getStatusColor(device.state!, now),
-          )}
+        <DeviceStatusDot
+          className="absolute -left-2 -top-2"
+          status={device.state?.status ?? "unknown"}
+          lastSeenAt={device.state?.lastSeenAt ?? 0}
+          now={now}
         />
         <CardHeader className="items-center gap-2 space-y-0 md:flex-row">
           <CardTitle className="w-full max-w-fit truncate">
