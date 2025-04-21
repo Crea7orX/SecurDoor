@@ -243,7 +243,11 @@ export function DeviceBulkControlDialog({
             />
             <FormItem>
               <FormLabel>{t("field.action.label")}</FormLabel>
-              <Select value={action} onValueChange={setAction}>
+              <Select
+                value={action}
+                onValueChange={setAction}
+                disabled={isLoading}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
