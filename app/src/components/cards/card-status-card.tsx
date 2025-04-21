@@ -2,7 +2,7 @@
 
 import { CardActivateButton } from "@/components/cards/access/card-activate-button";
 import { CardDisableButton } from "@/components/cards/access/card-disable-button";
-import { Badge } from "@/components/ui/badge";
+import { CardStatusBadge } from "@/components/cards/access/card-status-badge";
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { type CardResponse } from "@/lib/validations/card";
-import { Hand, OctagonMinus, ShieldCheck } from "lucide-react";
+import { Hand } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 
@@ -35,17 +35,7 @@ const CardStatusCard = React.forwardRef<HTMLDivElement, CardStatusCardProps>(
           <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
-          {card.active ? (
-            <Badge variant="success" className="text-md">
-              <ShieldCheck className="mr-1 size-4" />
-              <span>{t("state.active")}</span>
-            </Badge>
-          ) : (
-            <Badge variant="destructive" className="text-md">
-              <OctagonMinus className="mr-1 size-4" />
-              <span>{t("state.disabled")}</span>
-            </Badge>
-          )}
+          <CardStatusBadge className="text-md" active={card.active} />
           <Separator className="mt-6 h-1 rounded-xl" />
         </CardContent>
         <CardFooter className="justify-end gap-2 max-md:flex-col">

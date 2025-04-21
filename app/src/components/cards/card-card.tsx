@@ -2,6 +2,7 @@
 
 import { CardActivateButton } from "@/components/cards/access/card-activate-button";
 import { CardDisableButton } from "@/components/cards/access/card-disable-button";
+import { CardStatusBadge } from "@/components/cards/access/card-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,13 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type CardResponse } from "@/lib/validations/card";
-import {
-  OctagonMinus,
-  Settings,
-  ShieldCheck,
-  ShieldQuestion,
-  User,
-} from "lucide-react";
+import { Settings, ShieldQuestion, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
@@ -52,17 +47,7 @@ const CardCard = React.forwardRef<HTMLDivElement, CardCardProps>(
             orientation="vertical"
             className="h-6 bg-card-foreground max-md:hidden"
           />
-          {card.active ? (
-            <Badge variant="success">
-              <ShieldCheck className="mr-1 size-4" />
-              <span>{t("card.state.active")}</span>
-            </Badge>
-          ) : (
-            <Badge variant="destructive">
-              <OctagonMinus className="mr-1 size-4" />
-              <span>{t("card.state.disabled")}</span>
-            </Badge>
-          )}
+          <CardStatusBadge active={card.active} />
         </CardHeader>
         <CardContent className="flex flex-col gap-3 rounded-xl bg-card pt-2">
           <div className="flex flex-col gap-2">
