@@ -172,7 +172,11 @@
         "placeholder": "Филтриране по име"
       },
       "state": {
-        "label": "Състояние"
+        "label": "Състояние",
+        "options": {
+          "locked": "Заключено",
+          "unlocked": "Отключено"
+        }
       },
       "status": {
         "label": "Статус"
