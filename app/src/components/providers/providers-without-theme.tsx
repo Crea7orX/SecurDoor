@@ -14,12 +14,12 @@ interface ProvidersProps {
 }
 
 export function ProvidersWithoutTheme({ children }: ProvidersProps) {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: theme === "dark" ? dark : undefined,
+        baseTheme: resolvedTheme === "dark" ? dark : undefined,
       }}
     >
       <ApiProvider>
