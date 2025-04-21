@@ -5,6 +5,7 @@ import { emergencyStateEnum } from "@/server/db/devices/schema";
 import {
   createSearchParamsCache,
   parseAsArrayOf,
+  parseAsBoolean,
   parseAsInteger,
   parseAsNumberLiteral,
   parseAsString,
@@ -61,6 +62,7 @@ export const devicesSearchParamsCache = createSearchParamsCache({
     { id: "createdAt", desc: true },
   ]),
   name: parseAsString,
+  isLockedState: parseAsArrayOf(parseAsBoolean),
   emergencyState: parseAsArrayOf(z.enum(emergencyStateEnum.enumValues)),
   tagId: parseAsArrayOf(parseAsString),
 });
@@ -111,6 +113,7 @@ export type DeviceTagsUpdateResponse = z.infer<
 >;
 
 export const deviceFilterExpandSchema = z.object({
+  isLockedState: z.array(z.boolean()).optional(),
   tagId: z.array(z.string()).optional(),
 });
 
