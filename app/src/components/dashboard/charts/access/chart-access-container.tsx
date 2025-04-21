@@ -1,5 +1,7 @@
 "use client";
 
+import { ChartAccessSkeleton } from "@/components/dashboard/charts/access/chart-access-skeleton";
+import { NoResultsLabel } from "@/components/data-table/no-results-label";
 import {
   ChartContainer,
   ChartTooltip,
@@ -14,7 +16,7 @@ import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 interface ChartAccessContainerProps
   extends Omit<React.ComponentProps<typeof ChartContainer>, "children"> {
   data: ChartAccessForWeekResponse[];
-  activeChart: string;
+  activeChart: "unlocks" | "locks";
 }
 
 const ChartAccessContainer = React.forwardRef<
@@ -23,6 +25,21 @@ const ChartAccessContainer = React.forwardRef<
 >(({ className, data, activeChart, ...props }, ref) => {
   const t = useTranslations();
   const format = useFormatter();
+
+  const totalAccess = React.useMemo(() => {
+    if (!data) return 0;
+
+    return data.reduce((acc, curr) => acc + curr[activeChart], 0);
+  }, [activeChart, data]);
+
+  if (totalAccess === 0) {
+    return (
+      <div className="relative flex h-full items-center justify-center">
+        <NoResultsLabel />
+        <ChartAccessSkeleton />
+      </div>
+    );
+  }
 
   return (
     <ChartContainer

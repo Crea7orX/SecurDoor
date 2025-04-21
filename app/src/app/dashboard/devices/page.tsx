@@ -14,6 +14,7 @@ import {
 import { DeviceEmergencyCountAlert } from "@/components/devices/device-emergency-count-alert";
 import { Button } from "@/components/ui/button";
 import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-query";
+import { useGetEmergencyCountQuery } from "@/hooks/api/emergency/use-get-emergency-count-query";
 import { useGetAllTagsQuery } from "@/hooks/api/tags/use-get-all-tags-query";
 import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
@@ -46,6 +47,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     searchParams,
     refetchInterval: 5000,
   });
+  const { data: emergencyCount } = useGetEmergencyCountQuery();
   const { data: tags, isLoading: tagsIsLoading } = useGetAllTagsQuery({
     searchParams: {
       perPage: "50", // todo: maybe pagination
@@ -70,12 +72,14 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
         {
           label: t("filter.emergency_state.options.lockdown"),
           value: "lockdown",
+          count: emergencyCount?.lockdownCount,
           icon: Construction,
           iconClassName: "text-destructive",
         },
         {
           label: t("filter.emergency_state.options.evacuation"),
           value: "evacuation",
+          count: emergencyCount?.evacuationCount,
           icon: BellElectric,
           iconClassName: "text-warning",
         },

@@ -1,5 +1,7 @@
 "use client";
 
+import { ChartActiveUsersSkeleton } from "@/components/dashboard/charts/active-users/chart-active-users-skeleton";
+import { NoResultsLabel } from "@/components/data-table/no-results-label";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
 import { type ChartActiveUsersForWeekResponse } from "@/lib/validations/chart";
@@ -38,6 +40,15 @@ const ChartActiveUsersContainer = React.forwardRef<
 
     return data.reduce((acc, curr) => acc + curr.total, 0);
   }, [data]);
+
+  if (totalInteractions === 0) {
+    return (
+      <div className="relative flex h-full items-center justify-center">
+        <NoResultsLabel />
+        <ChartActiveUsersSkeleton />
+      </div>
+    );
+  }
 
   return (
     <ChartContainer

@@ -31,7 +31,10 @@ export function DataTable<TData, TValue>({
   ...props
 }: DataTableProps<TData, TValue>) {
   return (
-    <Card className={cn("w-full bg-muted p-0.5", className)} {...props}>
+    <Card
+      className={cn("w-full overflow-hidden bg-muted p-0.5", className)}
+      {...props}
+    >
       <Table className="whitespace-nowrap font-medium">
         <TableHeader className="[&_tr]:border-0">
           {table.getHeaderGroups().map((headerGroup) => (
