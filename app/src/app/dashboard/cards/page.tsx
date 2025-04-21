@@ -3,12 +3,15 @@
 import { getColumns } from "@/app/dashboard/cards/_components/cards-table-columns";
 import CardsLoading from "@/app/dashboard/cards/loading";
 import { CardCard, CardCardSkeleton } from "@/components/cards/card-card";
+import { DataTable } from "@/components/data-table/data-table";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
+import { DataTableViewButtons } from "@/components/data-table/data-table-view-buttons";
 import { NoResultsLabel } from "@/components/data-table/no-results-label";
 import { DemoAlert } from "@/components/demo/demo-alert";
 import { Button } from "@/components/ui/button";
 import { useGetAllCardsQuery } from "@/hooks/api/cards/use-get-all-cards-query";
+import { useDataTableViewStore } from "@/hooks/store/use-data-table-view-store";
 import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
 import { type CardResponse } from "@/lib/validations/card";
@@ -28,6 +31,8 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
   const { data, isLoading, isPlaceholderData } = useGetAllCardsQuery({
     searchParams,
   });
+
+  const { view } = useDataTableViewStore();
 
   const columns = React.useMemo(() => getColumns(), []);
 
@@ -79,6 +84,7 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
       <DemoAlert />
 
       <DataTableToolbar table={table} filterFields={filterFields}>
+        <DataTableViewButtons />
         <Button size="sm" asChild>
           <Link href="/dashboard/cards/add">
             <PlusCircle className="size-4" />
@@ -86,26 +92,34 @@ export default function CardsPage({ searchParams }: CardsPageProps) {
           </Link>
         </Button>
       </DataTableToolbar>
-      <div className="relative flex w-full flex-wrap items-center justify-center gap-12 overflow-hidden rounded-lg border bg-muted/60 px-2 py-4">
-        {table.getRowModel().rows?.length ? (
-          table
-            .getRowModel()
-            .rows.map((row) => (
-              <CardCard
-                className={cn(isPlaceholderData && "opacity-80")}
-                key={row.id}
-                card={row.original}
-              />
-            ))
-        ) : (
-          <>
-            <NoResultsLabel className="top-1/4 translate-y-1/4" />
-            {Array.from({ length: 10 }).map((_, index) => (
-              <CardCardSkeleton key={index} className="opacity-50" />
-            ))}
-          </>
-        )}
-      </div>
+      {view === "grid" ? (
+        <div className="relative flex w-full flex-wrap items-center justify-center gap-12 overflow-hidden rounded-xl border bg-muted/60 px-2 py-4">
+          {table.getRowModel().rows?.length ? (
+            table
+              .getRowModel()
+              .rows.map((row) => (
+                <CardCard
+                  className={cn(isPlaceholderData && "opacity-80")}
+                  key={row.id}
+                  card={row.original}
+                />
+              ))
+          ) : (
+            <>
+              <NoResultsLabel className="top-1/4 translate-y-1/4" />
+              {Array.from({ length: 10 }).map((_, index) => (
+                <CardCardSkeleton key={index} className="opacity-50" />
+              ))}
+            </>
+          )}
+        </div>
+      ) : (
+        <DataTable
+          className={cn(isPlaceholderData && "opacity-80")}
+          table={table}
+          columns={columns}
+        />
+      )}
       <DataTablePagination table={table} enableSelection={false} />
     </div>
   );

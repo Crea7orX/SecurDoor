@@ -48,10 +48,6 @@
       "title": "Добавена"
     },
     "card": {
-      "state": {
-        "active": "АКТИВНА",
-        "disabled": "ДЕАКТИВИРАНА"
-      },
       "title": "Карта: <semibold>{fingerprint}</semibold>"
     },
     "danger_zone": {
@@ -98,6 +94,9 @@
           "active": "Активна",
           "disabled": "Деактивирана"
         }
+      },
+      "created_at": {
+        "label": "Добавена"
       },
       "holder": {
         "label": "Притежател",

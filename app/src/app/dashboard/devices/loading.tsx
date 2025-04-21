@@ -15,8 +15,10 @@ export default function DevicesLoading() {
           <Skeleton className="h-8 w-40 lg:w-64" />
           <Skeleton className="h-8 w-44" />
           <Skeleton className="h-8 w-24" />
+          <Skeleton className="h-8 w-56" />
         </div>
         <div className="flex items-center gap-2">
+          <Skeleton className="h-8 w-[5.2rem]" />
           <Button variant="outline" size="sm" disabled>
             <SquareStack className="size-4" />
             {t("bulk.button")}

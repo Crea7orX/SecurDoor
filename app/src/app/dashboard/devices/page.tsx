@@ -2,8 +2,10 @@
 
 import { getColumns } from "@/app/dashboard/devices/_components/devices-table-columns";
 import DevicesLoading from "@/app/dashboard/devices/loading";
+import { DataTable } from "@/components/data-table/data-table";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
+import { DataTableViewButtons } from "@/components/data-table/data-table-view-buttons";
 import { NoResultsLabel } from "@/components/data-table/no-results-label";
 import { DemoAlert } from "@/components/demo/demo-alert";
 import { DeviceBulkControlDialog } from "@/components/devices/bulk/device-bulk-control-dialog";
@@ -16,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-query";
 import { useGetEmergencyCountQuery } from "@/hooks/api/emergency/use-get-emergency-count-query";
 import { useGetAllTagsQuery } from "@/hooks/api/tags/use-get-all-tags-query";
+import { useDataTableViewStore } from "@/hooks/store/use-data-table-view-store";
 import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
 import {
@@ -55,7 +58,9 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     },
   });
 
-  const columns = React.useMemo(() => getColumns(), []);
+  const { view } = useDataTableViewStore();
+
+  const columns = React.useMemo(() => getColumns({ now }), [now]);
 
   const filterFields: DataTableFilterField<
     DeviceResponse & DeviceFilterExpand
@@ -104,6 +109,10 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     filterFields,
     initialState: {
       sorting: [{ id: "createdAt", desc: true }],
+      columnVisibility: {
+        emergencyState: false,
+        tagId: false,
+      },
     },
     getRowId: (originalRow) => originalRow.id,
     shallow: false,
@@ -129,40 +138,49 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
       <DeviceEmergencyCountAlert onViewClick={emergencyCountAlertOnViewClick} />
 
       <DataTableToolbar table={table} filterFields={filterFields}>
+        <DataTableViewButtons />
         <DeviceBulkControlDialog>
           <Button variant="outline" size="sm">
-            <SquareStack className="size-4" />
+            <SquareStack />
             {t("bulk.button")}
           </Button>
         </DeviceBulkControlDialog>
         <Button size="sm" asChild>
           <Link href="/dashboard/devices/add">
-            <PlusCircle className="size-4" />
+            <PlusCircle />
             {t("add.header")}
           </Link>
         </Button>
       </DataTableToolbar>
-      <div className="relative flex w-full flex-wrap items-center justify-center gap-12 overflow-hidden rounded-lg border bg-muted/60 px-2 py-4">
-        {table.getRowModel().rows?.length ? (
-          table
-            .getRowModel()
-            .rows.map((row) => (
-              <DeviceCard
-                className={cn(isPlaceholderData && "opacity-80")}
-                key={row.id}
-                device={row.original}
-                now={now}
-              />
-            ))
-        ) : (
-          <>
-            <NoResultsLabel className="top-1/4 translate-y-1/4" />
-            {Array.from({ length: 10 }).map((_, index) => (
-              <DeviceCardSkeleton key={index} className="opacity-50" />
-            ))}
-          </>
-        )}
-      </div>
+      {view === "grid" ? (
+        <div className="relative flex w-full flex-wrap items-center justify-center gap-12 overflow-hidden rounded-xl border bg-muted/60 px-2 py-4">
+          {table.getRowModel().rows?.length ? (
+            table
+              .getRowModel()
+              .rows.map((row) => (
+                <DeviceCard
+                  className={cn(isPlaceholderData && "opacity-80")}
+                  key={row.id}
+                  device={row.original}
+                  now={now}
+                />
+              ))
+          ) : (
+            <>
+              <NoResultsLabel className="top-1/4 translate-y-1/4" />
+              {Array.from({ length: 10 }).map((_, index) => (
+                <DeviceCardSkeleton key={index} className="opacity-50" />
+              ))}
+            </>
+          )}
+        </div>
+      ) : (
+        <DataTable
+          className={cn(isPlaceholderData && "opacity-80")}
+          table={table}
+          columns={columns}
+        />
+      )}
       <DataTablePagination table={table} enableSelection={false} />
     </div>
   );
