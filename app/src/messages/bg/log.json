@@ -78,7 +78,7 @@
         },
         "tags_update": {
           "text": "\"{actor}\" актуализира етикетите на карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\"), добавяйки {newCount, plural, =1 {# етикет} other {# етикета}} и премахвайки {deleteCount, plural, =1 {# етикет} other {# етикета}}.",
-          "title": "Актуализиран достъп на карта"
+          "title": "Актуализирани етикети на карта"
         },
         "unlock": {
           "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки карта с отпечатък \"{fingerprint}\".",

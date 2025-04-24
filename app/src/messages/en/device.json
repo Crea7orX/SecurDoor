@@ -172,7 +172,11 @@
         "placeholder": "Filter by name"
       },
       "state": {
-        "label": "State"
+        "label": "State",
+        "options": {
+          "locked": "Locked",
+          "unlocked": "Unlocked"
+        }
       },
       "status": {
         "label": "Status"

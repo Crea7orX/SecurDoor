@@ -66,6 +66,9 @@ export async function devicesGetAll(
       searchParams.name && searchParams.name.trim() !== ""
         ? ilike(devices.name, `%${searchParams.name.trim()}%`)
         : undefined,
+      searchParams.isLockedState && searchParams.isLockedState.length > 0
+        ? inArray(devicesStates.isLockedState, searchParams.isLockedState)
+        : undefined,
       searchParams.emergencyState && searchParams.emergencyState.length > 0
         ? inArray(devices.emergencyState, searchParams.emergencyState)
         : undefined,
@@ -101,6 +104,7 @@ export async function devicesGetAll(
           count: sql<number>`count(DISTINCT ${devices.id})`,
         })
         .from(devices)
+        .leftJoin(devicesStates, eq(devices.id, devicesStates.deviceId))
         .leftJoin(devicesToTags, eq(devices.id, devicesToTags.deviceId))
         .where(where)
         .execute()

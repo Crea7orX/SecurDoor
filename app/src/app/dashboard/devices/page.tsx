@@ -29,6 +29,8 @@ import type { DataTableFilterField, SearchParams } from "@/types/data-table";
 import {
   BellElectric,
   Construction,
+  Lock,
+  LockOpen,
   PlusCircle,
   SquareStack,
 } from "lucide-react";
@@ -71,6 +73,24 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
       placeholder: t("filter.name.placeholder"),
     },
     {
+      id: "isLockedState",
+      label: t("filter.state.label"),
+      options: [
+        {
+          label: t("filter.state.options.locked"),
+          value: "true",
+          icon: Lock,
+          iconClassName: "text-destructive",
+        },
+        {
+          label: t("filter.state.options.unlocked"),
+          value: "false",
+          icon: LockOpen,
+          iconClassName: "text-success",
+        },
+      ],
+    },
+    {
       id: "emergencyState",
       label: t("filter.emergency_state.label"),
       options: [
@@ -110,6 +130,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
     initialState: {
       sorting: [{ id: "createdAt", desc: true }],
       columnVisibility: {
+        isLockedState: false,
         emergencyState: false,
         tagId: false,
       },

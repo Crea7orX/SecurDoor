@@ -2,6 +2,7 @@
 
 import { CardStatusBadge } from "@/components/cards/access/card-status-badge";
 import { CardActions } from "@/components/cards/card-actions";
+import { CardHolderColumn } from "@/components/cards/card-holder-column";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { FormattedDate } from "@/components/data-table/formatted-date";
 import { type CardResponse } from "@/lib/validations/card";
@@ -21,7 +22,9 @@ export function getColumns(): ColumnDef<CardResponse>[] {
         />
       ),
       cell: ({ row }) => (
-        <span className="xl:min-w-64">{row.getValue("holder")}</span>
+        <div className="xl:min-w-64">
+          <CardHolderColumn holder={row.getValue("holder")} />
+        </div>
       ),
       meta: {
         headerName: `${translationKey}.holder.label`,

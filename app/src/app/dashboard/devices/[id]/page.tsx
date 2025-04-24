@@ -68,7 +68,12 @@ export default function DevicePage({ params }: DevicePageProps) {
 
         <Card className="h-full w-full bg-border px-2 py-4">
           <div className="sticky top-0">
-            <MasonryRoot gap={16} columnWidth={350} linear>
+            <MasonryRoot
+              gap={16}
+              columnWidth={350}
+              linear
+              key={data.emergencyState} // todo: to force re-render (really bad, need to find a better way)
+            >
               <MasonryItem>
                 <DeviceControlsCard device={data} />
               </MasonryItem>
