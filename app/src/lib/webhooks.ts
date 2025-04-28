@@ -36,8 +36,7 @@ export async function triggerDiscordWebhook({
   // Add footer to last embed
   if (embeds.length > 0) {
     embeds[embeds.length - 1]!.footer = {
-      text: "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
-      // todo
+      text: t("Log.webhook.footer"),
     };
   }
 
@@ -85,14 +84,10 @@ export async function triggerSlackWebhook({
       attachments: [
         ...attachments,
         {
-          fallback:
-            "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
-          // todo
+          fallback: t("Log.webhook.footer"),
           fields: [
             {
-              value:
-                "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
-              // todo
+              value: t("Log.webhook.footer"),
               short: false,
             },
           ],
