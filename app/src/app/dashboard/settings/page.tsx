@@ -1,6 +1,6 @@
 import { ApiKeysCard } from "@/components/api-keys/api-keys-card";
 import { DemoAlert } from "@/components/demo/demo-alert";
-import * as React from "react";
+import { WebhooksCard } from "@/components/webhooks/webhooks-card";
 
 export default function SettingsPage() {
   return (
@@ -8,6 +8,7 @@ export default function SettingsPage() {
       <DemoAlert />
 
       <ApiKeysCard />
+      <WebhooksCard />
     </div>
   );
 }
