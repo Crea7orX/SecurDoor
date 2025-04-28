@@ -4,7 +4,7 @@ import { WebhookTypeAlreadyExistsError } from "@/lib/exceptions";
 import { type WebhookCreate } from "@/lib/validations/webhook";
 import { db } from "@/server/db";
 import { logInsert } from "@/server/db/logs/queries";
-import { and, asc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { webhooks } from "./schema";
 
 interface WebhookInsertProps {
@@ -49,7 +49,7 @@ export async function webhookInsert({
   )[0];
 
   if (webhook) {
-    const reference = [webhook.type];
+    const reference = [webhook.name, webhook.type];
     void logInsert(ownerId, "webhook.create", userId, webhook.id, reference);
   }
 
@@ -67,7 +67,7 @@ export async function webhooksGetAll({ ownerId }: WebhooksGetAllProps) {
     .where(
       eq(webhooks.ownerId, ownerId), // Ensure ownership
     )
-    .orderBy(asc(webhooks.type));
+    .orderBy(desc(webhooks.type));
 }
 
 interface WebhookDeleteProps {
@@ -81,7 +81,7 @@ export async function webhookDelete({
   userId,
   ownerId,
 }: WebhookDeleteProps) {
-  const apiKey = (
+  const webhook = (
     await db
       .delete(webhooks)
       .where(
@@ -93,10 +93,10 @@ export async function webhookDelete({
       .returning()
   )[0];
 
-  if (apiKey) {
-    const reference = [apiKey.type];
-    void logInsert(ownerId, "webhook.delete", userId, apiKey.id, reference);
+  if (webhook) {
+    const reference = [webhook.name, webhook.type];
+    void logInsert(ownerId, "webhook.delete", userId, webhook.id, reference);
   }
 
-  return apiKey;
+  return webhook;
 }
