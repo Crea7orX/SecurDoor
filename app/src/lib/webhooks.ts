@@ -11,81 +11,93 @@ const colors = {
   warning: "f9c74f",
 };
 
-interface TriggerDiscordWebhookProps {
-  logData: LogResponse;
+interface TriggerWebhookProps {
+  url: string;
+  logsData: LogResponse[];
 }
 
 export async function triggerDiscordWebhook({
-  logData,
-}: TriggerDiscordWebhookProps) {
+  url,
+  logsData,
+}: TriggerWebhookProps) {
   const t = await getTranslations({ locale: "bg" });
-  const log = getLog({ t, logData });
 
-  await fetch(
-    "https://discord.com/api/webhooks/1111111111111111111/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: "SecurDoor",
-        embeds: [
-          {
-            title: t(log.title),
-            description: log.text?.toString().replaceAll('"', "**"), // This is a workaround for bolded text, if user enters quotes in tag name for example, can break the message in Discord
-            color: parseInt(colors[log.color], 16),
-            footer: {
-              text: `SecurDoor Logs - Official Integration\nFor more information visit your dashboard!`,
-            },
-          },
-        ],
-      }),
+  const embeds = [];
+  for (const logData of logsData) {
+    const log = getLog({ t, logData });
+    embeds.push({
+      title: t(log.title),
+      description: log.text?.toString().replaceAll('"', "**"), // This is a workaround for bolded text, if user enters quotes in tag name for example, can break the message in Discord
+      color: parseInt(colors[log.color], 16),
+      footer: {},
+    });
+  }
+
+  // Add footer to last embed
+  if (embeds.length > 0) {
+    embeds[embeds.length - 1]!.footer = {
+      text: "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
+      // todo
+    };
+  }
+
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify({
+      username: "SecurDoor",
+      embeds,
+    }),
+  });
 }
 
 export async function triggerSlackWebhook({
-  logData,
-}: TriggerDiscordWebhookProps) {
+  url,
+  logsData,
+}: TriggerWebhookProps) {
   const t = await getTranslations({ locale: "bg" });
-  const log = getLog({ t, logData });
 
-  await fetch(
-    "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXX",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: "SecurDoor",
-        attachments: [
-          {
-            fallback: log.text?.toString().replaceAll('"', "*"),
-            color: colors[log.color],
-            fields: [
-              {
-                title: t(log.title),
-                value: log.text?.toString().replaceAll('"', "*"),
-                short: false,
-              },
-            ],
-          },
+  const attachments = [];
+  for (const logData of logsData) {
+    const log = getLog({ t, logData });
+    attachments.push({
+      fallback: log.text?.toString().replaceAll('"', "*"),
+      color: colors[log.color],
+      fields: [
+        {
+          title: t(log.title),
+          value: log.text?.toString().replaceAll('"', "*"),
+          short: false,
+        },
+      ],
+    });
+  }
 
-          {
-            fallback:
-              "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
-            fields: [
-              {
-                value:
-                  "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
-                short: false,
-              },
-            ],
-          },
-        ],
-      }),
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify({
+      username: "SecurDoor",
+      attachments: [
+        ...attachments,
+        {
+          fallback:
+            "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
+          // todo
+          fields: [
+            {
+              value:
+                "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
+              // todo
+              short: false,
+            },
+          ],
+        },
+      ],
+    }),
+  });
 }
