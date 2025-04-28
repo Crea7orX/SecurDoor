@@ -5,6 +5,7 @@ enum IdPrefix {
   LOG = "log_",
   PRIVATE_KEY = "pk_",
   TAG = "tag_",
+  WEBHOOK = "wh_",
 }
 
 export default IdPrefix;
