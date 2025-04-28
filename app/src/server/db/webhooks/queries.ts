@@ -1,11 +1,13 @@
 import "server-only";
 
 import { WebhookTypeAlreadyExistsError } from "@/lib/exceptions";
+import { type LogResponse } from "@/lib/validations/log";
 import { type WebhookCreate } from "@/lib/validations/webhook";
+import { triggerDiscordWebhook, triggerSlackWebhook } from "@/lib/webhooks";
 import { db } from "@/server/db";
 import { logInsert } from "@/server/db/logs/queries";
+import { webhooks, webhookTypeEnum } from "@/server/db/webhooks/schema";
 import { and, desc, eq } from "drizzle-orm";
-import { webhooks } from "./schema";
 
 interface WebhookInsertProps {
   create: WebhookCreate;
@@ -99,4 +101,45 @@ export async function webhookDelete({
   }
 
   return webhook;
+}
+
+interface WebhooksTriggerProps {
+  ownerId: string;
+  logs: LogResponse[];
+}
+
+export async function webhooksTrigger({ ownerId, logs }: WebhooksTriggerProps) {
+  const webhooks = await webhooksGetAll({ ownerId });
+
+  // Split logs to groups of 10
+  const groups = logs.reduce((acc, log, index) => {
+    if (index % 10 === 0) {
+      acc.push([]);
+    }
+    const lastGroup = acc[acc.length - 1];
+    if (lastGroup) {
+      lastGroup.push(log);
+    }
+    return acc;
+  }, [] as LogResponse[][]);
+
+  // Trigger webhooks
+  for (const webhook of webhooks) {
+    for (const group of groups) {
+      // Discord
+      if (webhook.type === webhookTypeEnum.enumValues[0]) {
+        await triggerDiscordWebhook({
+          url: webhook.url,
+          logsData: group,
+        });
+      }
+      // Slack
+      else if (webhook.type === webhookTypeEnum.enumValues[1]) {
+        await triggerSlackWebhook({
+          url: webhook.url,
+          logsData: group,
+        });
+      }
+    }
+  }
 }
