@@ -52,7 +52,7 @@ export function ApiKeyCard({ className, apiKey, ...props }: ApiKeyCardProps) {
       {...props}
     >
       <div className="flex flex-col">
-        <p className="font-semibold">{apiKey.name}</p>
+        <p className="break-all font-semibold">{apiKey.name}</p>
         <p className="text-muted-foreground">
           {t.rich("created_at", {
             date: format.dateTime(apiKey.createdAt * 1000, {
