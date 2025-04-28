@@ -53,3 +53,9 @@ export class DeviceNotForAdoptionError extends Error {
     super(message);
   }
 }
+
+export class WebhookTypeAlreadyExistsError extends Error {
+  constructor(message = "Webhook of this type already exists") {
+    super(message);
+  }
+}
