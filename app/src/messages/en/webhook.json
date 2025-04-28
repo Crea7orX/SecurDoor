@@ -1,0 +1,48 @@
+{
+    "Webhook": {
+        "add": {
+            "notification": {
+                "error": "Failed to add webhook!",
+                "error_already_exists": "Webhook of this type already exists!",
+                "loading": "Adding webhook...",
+                "success": "Webhook added!"
+            },
+            "title": "Add webhook"
+        },
+        "all_card": {
+            "button": {
+                "create": "Add new webhook"
+            },
+            "description": "Integration with webhooks for notifications. Choose where and what events to be notified about!",
+            "title": "Webhooks"
+        },
+        "card": {
+            "created_at": "Created at: <semibold>{date}</semibold>",
+            "type": "Type: <semibold>{type}</semibold>"
+        },
+        "delete": {
+            "alert": {
+                "description": "This action cannot be undone. This will permanently delete this webhook and stop triggering it.",
+                "notification": {
+                    "error": "Failed to delete webhook!",
+                    "loading": "Deleting webhook...",
+                    "success": "Webhook deleted!"
+                },
+                "title": "Are you absolutely sure?"
+            }
+        },
+        "field": {
+            "name": {
+                "label": "Name",
+                "placeholder": "Enter name"
+            },
+            "type": {
+                "label": "Type",
+                "placeholder": "Select type"
+            },
+            "url": {
+                "label": "Webhook URL"
+            }
+        }
+    }
+}
