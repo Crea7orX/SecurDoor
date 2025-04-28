@@ -51,7 +51,6 @@ export function WebhookCard({
             ),
           })}
         </p>
-        asd
       </div>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="w-fit whitespace-nowrap rounded-md border group-hover:border-input max-sm:self-end lg:border-card">
