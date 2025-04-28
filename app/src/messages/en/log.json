@@ -166,6 +166,16 @@
       "unknown": {
         "text": "Unknown",
         "title": "Unknown"
+      },
+      "webhook": {
+        "create": {
+          "text": "\"{actor}\" created webhook with name \"{name}\" and type \"{type}\".",
+          "title": "Webhook created"
+        },
+        "delete": {
+          "text": "\"{actor}\" deleted webhook with name \"{name}\" and type \"{type}\".",
+          "title": "Webhook deleted"
+        }
       }
     },
     "recent_access": {
