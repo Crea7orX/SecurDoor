@@ -19,6 +19,7 @@ import {
   ShieldX,
   Siren,
   Tag,
+  Webhook,
 } from "lucide-react";
 
 export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
@@ -484,6 +485,32 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         name: (log.reference?.[0] as string) ?? "",
       }),
     icon: Key,
+    color: "destructive",
+  },
+
+  // Reference: [name, type]
+  "webhook.create": {
+    title: "Log.logs.webhook.create.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.webhook.create.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+        type: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Webhook,
+    color: "success",
+  },
+
+  // Reference: [name, type]
+  "webhook.delete": {
+    title: "Log.logs.webhook.delete.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.webhook.delete.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+        type: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Webhook,
     color: "destructive",
   },
 };
