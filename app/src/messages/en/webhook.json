@@ -18,6 +18,7 @@
         },
         "card": {
             "created_at": "Created at: <semibold>{date}</semibold>",
+            "scope": "Scope: <semibold>{actionsCount, plural, =1 {# action} other {# actions}}</semibold>",
             "type": "Type: <semibold>{type}</semibold>"
         },
         "delete": {
@@ -48,6 +49,7 @@
                 "label": "Webhook URL"
             }
         },
+        "footer": "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
         "test": {
             "alert": {
                 "description": "This will send a test message to check if the webhook is working properly.",
@@ -58,9 +60,8 @@
                 },
                 "title": "Are you absolutely sure?"
             },
-            "title": "Webhook test",
-            "description": "This is a test message to check if the webhook is working properly."
-        },
-        "footer": "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!"
+            "description": "This is a test message to check if the webhook is working properly.",
+            "title": "Webhook test"
+        }
     }
 }
