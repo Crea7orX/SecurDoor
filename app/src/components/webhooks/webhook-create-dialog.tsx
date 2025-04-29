@@ -84,7 +84,7 @@ export function WebhookCreateDialog({
       name: "",
       type: undefined,
       url: "",
-      scope: [],
+      scope: Object.keys(LogDisplayInfos),
     },
     disabled: isLoading,
   });
