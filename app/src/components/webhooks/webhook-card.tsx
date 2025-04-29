@@ -2,12 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { WebhookDeleteAlertDialog } from "@/components/webhooks/webhook-delete-alert-dialog";
+import { WebhookTestAlertDialog } from "@/components/webhooks/webhook-test-alert-dialog";
 import { cn } from "@/lib/utils";
 import { type WebhookResponse } from "@/lib/validations/webhook";
 import { FlaskConical, SquarePen, Trash } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
-import { WebhookDeleteAlertDialog } from "./webhook-delete-alert-dialog";
 
 interface WebhookCardProps extends React.ComponentProps<"div"> {
   webhook: WebhookResponse;
@@ -62,14 +63,15 @@ export function WebhookCard({
             {/* todo */}
             <SquarePen />
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="not-group-hover:hidden rounded-none border-0 border-x shadow-none group-hover:visible lg:invisible"
-          >
-            {/* todo */}
-            <FlaskConical />
-          </Button>
+          <WebhookTestAlertDialog id={webhook.id}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="not-group-hover:hidden rounded-none border-0 border-x shadow-none group-hover:visible lg:invisible"
+            >
+              <FlaskConical />
+            </Button>
+          </WebhookTestAlertDialog>
           <WebhookDeleteAlertDialog id={webhook.id}>
             <Button
               variant="outline"
