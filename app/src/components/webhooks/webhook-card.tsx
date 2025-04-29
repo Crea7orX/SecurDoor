@@ -33,6 +33,14 @@ export function WebhookCard({
       <div className="flex flex-col">
         <p className="break-all font-semibold">{webhook.name}</p>
         <p className="text-muted-foreground">
+          {t.rich("scope", {
+            actionsCount: webhook.scope.length,
+            semibold: (chunks) => (
+              <span className="font-semibold">{chunks}</span>
+            ),
+          })}
+        </p>
+        <p className="text-muted-foreground">
           {t.rich("type", {
             type: webhook.type,
             semibold: (chunks) => (
@@ -101,7 +109,8 @@ export function WebhookCardSkeleton({
     >
       <div className="flex w-full flex-col gap-1">
         <Skeleton className="h-6 w-full max-w-32" />
-        <Skeleton className="h-5 w-full max-w-48" />
+        <Skeleton className="h-5 w-full max-w-40" />
+        <Skeleton className="h-5 w-full max-w-28" />
         <Skeleton className="h-5 w-full max-w-64" />
       </div>
       <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center lg:justify-end">
