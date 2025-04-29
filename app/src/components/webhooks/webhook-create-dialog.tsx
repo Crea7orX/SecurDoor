@@ -198,7 +198,6 @@ export function WebhookCreateDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("field.scope.label")}</FormLabel>
-
                   <FormControl>
                     <MultiSelect
                       {...field}
