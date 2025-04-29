@@ -66,6 +66,7 @@ export async function triggerDiscordWebhook({
 export async function triggerSlackWebhook({
   url,
   logsData,
+  test = false,
 }: TriggerWebhookProps) {
   const t = await getTranslations({ locale: "bg" });
 
@@ -85,6 +86,20 @@ export async function triggerSlackWebhook({
     });
   }
 
+  if (test) {
+    attachments.push({
+      fallback: t("Webhook.test.title"),
+      color: colors.info,
+      fields: [
+        {
+          title: t("Webhook.test.title"),
+          value: t("Webhook.test.description"),
+          short: false,
+        },
+      ],
+    });
+  }
+
   await fetch(url, {
     method: "POST",
     headers: {
@@ -95,10 +110,10 @@ export async function triggerSlackWebhook({
       attachments: [
         ...attachments,
         {
-          fallback: t("Log.webhook.footer"),
+          fallback: t("Webhook.footer"),
           fields: [
             {
-              value: t("Log.webhook.footer"),
+              value: t("Webhook.footer"),
               short: false,
             },
           ],
