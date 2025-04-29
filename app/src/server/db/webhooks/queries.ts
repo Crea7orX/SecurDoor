@@ -126,6 +126,24 @@ export async function webhookDelete({
   return webhook;
 }
 
+interface WebhookTestProps {
+  id: string;
+  ownerId: string;
+}
+
+export async function webhookTest({ id, ownerId }: WebhookTestProps) {
+  const webhook = await webhookGetById({ id, ownerId });
+
+  if (webhook) {
+    await webhookTriggerByType({
+      url: webhook.url,
+      type: webhook.type,
+      logsData: [],
+      test: true,
+    });
+  }
+}
+
 interface WebhooksTriggerProps {
   ownerId: string;
   logs: LogResponse[];
@@ -152,30 +170,33 @@ export async function webhooksTrigger({ ownerId, logs }: WebhooksTriggerProps) {
     // Trigger webhooks
     for (const group of groups) {
       await webhookTriggerByType({
-          url: webhook.url,
+        url: webhook.url,
         type: webhook.type,
-          logsData: group,
-        });
-      }
+        logsData: group,
+      });
     }
+  }
 }
 
 interface WebhookTriggerByTypeProps {
   url: string;
   type: string;
   logsData: LogResponse[];
+  test?: boolean;
 }
 
 async function webhookTriggerByType({
   url,
   type,
   logsData,
+  test = false,
 }: WebhookTriggerByTypeProps) {
   // Discord
   if (type === webhookTypeEnum.enumValues[0]) {
     await triggerDiscordWebhook({
       url,
       logsData,
+      test,
     });
   }
   // Slack
@@ -183,6 +204,7 @@ async function webhookTriggerByType({
     await triggerSlackWebhook({
       url,
       logsData,
+      test,
     });
   }
 }
