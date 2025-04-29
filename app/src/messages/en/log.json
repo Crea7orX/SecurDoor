@@ -187,9 +187,6 @@
       "last_updated": "Last updated: {date}",
       "title": "Recent Activity",
       "view_all": "View all Logs"
-    },
-    "webhook": {
-      "footer": "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!"
     }
   }
 }

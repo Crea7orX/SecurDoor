@@ -47,6 +47,20 @@
             "url": {
                 "label": "Webhook URL"
             }
-        }
+        },
+        "test": {
+            "alert": {
+                "description": "This will send a test message to check if the webhook is working properly.",
+                "notification": {
+                    "error": "Failed to test webhook!",
+                    "loading": "Testing webhook...",
+                    "success": "Webhook tested successfully!"
+                },
+                "title": "Are you absolutely sure?"
+            },
+            "title": "Webhook test",
+            "description": "This is a test message to check if the webhook is working properly."
+        },
+        "footer": "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!"
     }
 }
