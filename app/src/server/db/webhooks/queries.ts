@@ -54,6 +54,9 @@ export async function webhookInsert({
   if (webhook) {
     const reference = [webhook.name, webhook.type, webhook.scope];
     void logInsert(ownerId, "webhook.create", userId, webhook.id, reference);
+
+    // Test webhook
+    void webhookTest({ ownerId, id: webhook.id });
   }
 
   return webhook;
