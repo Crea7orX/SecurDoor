@@ -68,8 +68,12 @@ export function ApiKeyDeleteAlertDialog({
           <AlertDialogCancel disabled={isLoading}>
             {tButton("cancel")}
           </AlertDialogCancel>
-          <Button disabled={isLoading} onClick={() => handleDelete()}>
-            {tButton("continue")}
+          <Button
+            variant="destructive"
+            disabled={isLoading}
+            onClick={() => handleDelete()}
+          >
+            {tButton("remove")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
