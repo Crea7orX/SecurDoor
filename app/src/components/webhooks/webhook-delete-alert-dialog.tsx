@@ -16,7 +16,7 @@ import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
-interface ApiKeyDeleteAlertDialogProps
+interface WebhookDeleteAlertDialogProps
   extends React.ComponentPropsWithoutRef<typeof AlertDialog> {
   id: string;
 }
@@ -25,7 +25,7 @@ export function WebhookDeleteAlertDialog({
   id,
   children,
   ...props
-}: ApiKeyDeleteAlertDialogProps) {
+}: WebhookDeleteAlertDialogProps) {
   const t = useTranslations("Webhook.delete.alert");
   const tButton = useTranslations("Common.button");
 
