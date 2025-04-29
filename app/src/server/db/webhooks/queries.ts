@@ -73,6 +73,28 @@ export async function webhooksGetAll({ ownerId }: WebhooksGetAllProps) {
     .orderBy(desc(webhooks.type));
 }
 
+interface WebhookGetByIdProps {
+  id: string;
+  ownerId: string;
+}
+
+export async function webhookGetById({ id, ownerId }: WebhookGetByIdProps) {
+  return (
+    (
+      await db
+        .select()
+        .from(webhooks)
+        .where(
+          and(
+            eq(webhooks.ownerId, ownerId), // Ensure ownership
+            eq(webhooks.id, id),
+          ),
+        )
+        .limit(1)
+    )[0] ?? null
+  );
+}
+
 interface WebhookDeleteProps {
   id: string;
   userId: string;
