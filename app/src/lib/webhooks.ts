@@ -14,11 +14,13 @@ const colors = {
 interface TriggerWebhookProps {
   url: string;
   logsData: LogResponse[];
+  test?: boolean;
 }
 
 export async function triggerDiscordWebhook({
   url,
   logsData,
+  test = false,
 }: TriggerWebhookProps) {
   const t = await getTranslations({ locale: "bg" });
 
@@ -33,10 +35,19 @@ export async function triggerDiscordWebhook({
     });
   }
 
+  if (test) {
+    embeds.push({
+      title: t("Webhook.test.title"),
+      description: t("Webhook.test.description"),
+      color: parseInt(colors.info, 16),
+      footer: {},
+    });
+  }
+
   // Add footer to last embed
   if (embeds.length > 0) {
     embeds[embeds.length - 1]!.footer = {
-      text: t("Log.webhook.footer"),
+      text: t("Webhook.footer"),
     };
   }
 
