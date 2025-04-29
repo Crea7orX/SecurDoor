@@ -151,20 +151,38 @@ export async function webhooksTrigger({ ownerId, logs }: WebhooksTriggerProps) {
 
     // Trigger webhooks
     for (const group of groups) {
-      // Discord
-      if (webhook.type === webhookTypeEnum.enumValues[0]) {
-        await triggerDiscordWebhook({
+      await webhookTriggerByType({
           url: webhook.url,
-          logsData: group,
-        });
-      }
-      // Slack
-      else if (webhook.type === webhookTypeEnum.enumValues[1]) {
-        await triggerSlackWebhook({
-          url: webhook.url,
+        type: webhook.type,
           logsData: group,
         });
       }
     }
+}
+
+interface WebhookTriggerByTypeProps {
+  url: string;
+  type: string;
+  logsData: LogResponse[];
+}
+
+async function webhookTriggerByType({
+  url,
+  type,
+  logsData,
+}: WebhookTriggerByTypeProps) {
+  // Discord
+  if (type === webhookTypeEnum.enumValues[0]) {
+    await triggerDiscordWebhook({
+      url,
+      logsData,
+    });
+  }
+  // Slack
+  else if (type === webhookTypeEnum.enumValues[1]) {
+    await triggerSlackWebhook({
+      url,
+      logsData,
+    });
   }
 }
