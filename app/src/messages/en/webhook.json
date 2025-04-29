@@ -36,6 +36,10 @@
                 "label": "Name",
                 "placeholder": "Enter name"
             },
+            "scope": {
+                "label": "Scope",
+                "placeholder": "Select actions"
+            },
             "type": {
                 "label": "Type",
                 "placeholder": "Select type"
