@@ -11,6 +11,10 @@ export const webhooks = pgTable("webhooks", {
   name: varchar("name", { length: 256 }).notNull(),
   type: webhookTypeEnum("type").notNull(),
   url: text("url").notNull(),
+  scope: text("scope")
+    .array()
+    .notNull()
+    .default(sql`ARRAY[]::text[]`),
   ownerId: varchar("owner_id", { length: 256 }).notNull(),
   createdAt: integer("created_at")
     .default(sql`(EXTRACT(EPOCH FROM NOW()))`)
