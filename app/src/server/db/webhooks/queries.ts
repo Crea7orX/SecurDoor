@@ -112,20 +112,22 @@ interface WebhooksTriggerProps {
 export async function webhooksTrigger({ ownerId, logs }: WebhooksTriggerProps) {
   const webhooks = await webhooksGetAll({ ownerId });
 
-  // Split logs to groups of 10
-  const groups = logs.reduce((acc, log, index) => {
-    if (index % 10 === 0) {
-      acc.push([]);
-    }
-    const lastGroup = acc[acc.length - 1];
-    if (lastGroup) {
-      lastGroup.push(log);
-    }
-    return acc;
-  }, [] as LogResponse[][]);
-
-  // Trigger webhooks
   for (const webhook of webhooks) {
+    // Filter logs by scope and split to groups of 10
+    const groups = logs
+      .filter((log) => webhook.scope.includes(log.action))
+      .reduce((acc, log, index) => {
+        if (index % 10 === 0) {
+          acc.push([]);
+        }
+        const lastGroup = acc[acc.length - 1];
+        if (lastGroup) {
+          lastGroup.push(log);
+        }
+        return acc;
+      }, [] as LogResponse[][]);
+
+    // Trigger webhooks
     for (const group of groups) {
       // Discord
       if (webhook.type === webhookTypeEnum.enumValues[0]) {
