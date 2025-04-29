@@ -41,7 +41,7 @@ export function WebhookTestAlertDialog({
     const toastId = toast.loading(t("notification.loading"));
     await test()
       .then(() => {
-        toast.warning(t("notification.success"), {
+        toast.success(t("notification.success"), {
           id: toastId,
         });
 
