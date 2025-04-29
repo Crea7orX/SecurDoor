@@ -45,13 +45,14 @@ export async function webhookInsert({
         name: create.name,
         type: create.type,
         url: create.url,
+        scope: create.scope,
         ownerId,
       })
       .returning()
   )[0];
 
   if (webhook) {
-    const reference = [webhook.name, webhook.type];
+    const reference = [webhook.name, webhook.type, webhook.scope];
     void logInsert(ownerId, "webhook.create", userId, webhook.id, reference);
   }
 
@@ -96,7 +97,7 @@ export async function webhookDelete({
   )[0];
 
   if (webhook) {
-    const reference = [webhook.name, webhook.type];
+    const reference = [webhook.name, webhook.type, webhook.scope];
     void logInsert(ownerId, "webhook.delete", userId, webhook.id, reference);
   }
 
