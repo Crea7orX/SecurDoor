@@ -19,12 +19,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
+  MultiSelect,
+  type MultiSelectOption,
+} from "@/components/ui/multi-select";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { LogDisplayInfos } from "@/config/logs";
 import { useCreateWebhookMutation } from "@/hooks/api/webhooks/use-create-webhook-mutation";
 import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
 import {
@@ -53,10 +58,21 @@ export function WebhookCreateDialog({
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof Dialog>) {
+  const _t = useTranslations();
   const t = useTranslations("Webhook");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const scopeOptions: MultiSelectOption[] = React.useMemo(() => {
+    return Object.entries(LogDisplayInfos).map(([action, display]) => {
+      return {
+        label: _t(display.title),
+        value: action,
+        key: action,
+      };
+    });
+  }, [_t]);
 
   const { mutateAsync: create } = useCreateWebhookMutation();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -68,6 +84,7 @@ export function WebhookCreateDialog({
       name: "",
       type: undefined,
       url: "",
+      scope: [],
     },
     disabled: isLoading,
   });
@@ -169,6 +186,31 @@ export function WebhookCreateDialog({
                       placeholder="https://example.com/webhook"
                       maxLength={webhookCreateSchema.shape.url.maxLength!}
                       {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="scope"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("field.scope.label")}</FormLabel>
+
+                  <FormControl>
+                    <MultiSelect
+                      {...field}
+                      options={scopeOptions}
+                      value={scopeOptions.filter((option) =>
+                        field.value.includes(option.key),
+                      )}
+                      onChange={(options) => {
+                        field.onChange(options.map((option) => option.key));
+                      }}
+                      placeholder={t("field.scope.placeholder")}
+                      heading={t("field.scope.label")}
                     />
                   </FormControl>
                   <FormMessage />
