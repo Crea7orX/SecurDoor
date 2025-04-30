@@ -176,6 +176,14 @@
           "text": "\"{actor}\" deleted webhook with name \"{name}\" (Type: \"{type}\") and scope of {actionsCount, plural, =1 {# action} other {# actions}}.",
           "title": "Webhook deleted"
         },
+        "disable": {
+          "text": "\"{actor}\" disabled webhook \"{name}\" (Type: \"{type}\").",
+          "title": "Webhook disabled"
+        },
+        "enable": {
+          "text": "\"{actor}\" enabled webhook \"{name}\" (Type: \"{type}\").",
+          "title": "Webhook enabled"
+        },
         "rename": {
           "text": "\"{actor}\" renamed webhook to \"{name}\" (Type: \"{type}\").",
           "title": "Webhook renamed"
