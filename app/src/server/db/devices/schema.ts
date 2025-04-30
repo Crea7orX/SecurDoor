@@ -14,6 +14,7 @@ export const emergencyStateEnum = pgEnum("emergency_state", [
   "lockdown",
   "evacuation",
 ]);
+export const pendingCommand = pgEnum("pending_command", ["restart"]);
 
 export const devices = pgTable("devices", {
   id: varchar("id", { length: 256 })
@@ -25,6 +26,7 @@ export const devices = pgTable("devices", {
   reLockDelay: integer("re_lock_delay").notNull().default(5),
   isLocked: boolean("is_locked").notNull().default(true),
   emergencyState: emergencyStateEnum("emergency_state"),
+  pendingCommand: pendingCommand("pending_command"),
   publicKey: text("public_key"),
   ownerId: varchar("owner_id", { length: 256 }).notNull(),
   createdAt: integer("created_at")
