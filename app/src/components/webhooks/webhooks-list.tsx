@@ -32,7 +32,7 @@ export function WebhooksList({
       ) : (
         <>
           <NoResultsLabel className="top-1/2 -translate-y-1/2" />
-          {Array.from({ length: 2 }).map((_, index) => (
+          {Array.from({ length: 3 }).map((_, index) => (
             <WebhookCardSkeleton key={index} className="opacity-50" />
           ))}
         </>
@@ -46,7 +46,7 @@ export function WebhookListSkeleton({
 }: React.ComponentProps<"div">) {
   return (
     <div className={cn("flex flex-col gap-1", className)}>
-      {Array.from({ length: 2 }).map((_, index) => (
+      {Array.from({ length: 3 }).map((_, index) => (
         <WebhookCardSkeleton key={index} />
       ))}
     </div>
