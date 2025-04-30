@@ -55,7 +55,12 @@ export async function webhookInsert({
   )[0];
 
   if (webhook) {
-    const reference = [webhook.name, webhook.type, webhook.scope];
+    const reference = [
+      webhook.name,
+      webhook.type,
+      webhook.scope,
+      webhook.enabled,
+    ];
     void logInsert(ownerId, "webhook.create", userId, webhook.id, reference);
 
     // Test webhook
@@ -124,6 +129,9 @@ export async function webhookUpdate({
         ...(typeof update.scope === "object" && {
           scope: update.scope,
         }),
+        ...(typeof update.enabled === "boolean" && {
+          enabled: update.enabled,
+        }),
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
       .where(
@@ -136,7 +144,12 @@ export async function webhookUpdate({
   )[0];
 
   if (webhook) {
-    const reference = [webhook.name, webhook.type, webhook.scope];
+    const reference = [
+      webhook.name,
+      webhook.type,
+      webhook.scope,
+      webhook.enabled,
+    ];
     if (typeof update.name === "string") {
       void logInsert(ownerId, "webhook.rename", userId, webhook.id, reference);
     }
@@ -145,6 +158,16 @@ export async function webhookUpdate({
       void logInsert(
         ownerId,
         "webhook.scope_update",
+        userId,
+        webhook.id,
+        reference,
+      );
+    }
+
+    if (typeof update.enabled === "boolean") {
+      void logInsert(
+        ownerId,
+        update.enabled ? "webhook.enable" : "webhook.disable",
         userId,
         webhook.id,
         reference,
@@ -179,7 +202,12 @@ export async function webhookDelete({
   )[0];
 
   if (webhook) {
-    const reference = [webhook.name, webhook.type, webhook.scope];
+    const reference = [
+      webhook.name,
+      webhook.type,
+      webhook.scope,
+      webhook.enabled,
+    ];
     void logInsert(ownerId, "webhook.delete", userId, webhook.id, reference);
   }
 
@@ -213,6 +241,8 @@ export async function webhooksTrigger({ ownerId, logs }: WebhooksTriggerProps) {
   const webhooks = await webhooksGetAll({ ownerId });
 
   for (const webhook of webhooks) {
+    if (!webhook.enabled) continue;
+
     // Filter logs by scope and split to groups of 10
     const groups = logs
       .filter((log) => webhook.scope.includes(log.action))
