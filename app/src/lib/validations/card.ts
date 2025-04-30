@@ -3,9 +3,9 @@ import { tagResponseSchema } from "@/lib/validations/tag";
 import {
   createSearchParamsCache,
   parseAsArrayOf,
+  parseAsBoolean,
   parseAsInteger,
   parseAsNumberLiteral,
-  parseAsBoolean,
   parseAsString,
 } from "nuqs/server";
 import { z } from "zod";
@@ -31,7 +31,7 @@ export const cardResponseSchema = z.object({
 export type CardResponse = z.infer<typeof cardResponseSchema>;
 
 export const cardUpdateSchema = z.object({
-  holder: z.string().optional().nullable(),
+  holder: z.string().min(2).max(256).optional().nullable(),
   active: z.boolean().optional().nullable(),
 });
 
