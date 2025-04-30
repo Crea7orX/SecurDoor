@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   ShieldX,
   Siren,
+  SquareTerminal,
   Tag,
   Webhook,
 } from "lucide-react";
@@ -226,6 +227,20 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
       }),
     icon: Pin,
     color: "info",
+  },
+
+  // Reference: [serialId, deviceName, pendingCommand]
+  "device.pending_command": {
+    title: "Log.logs.device.pending_command.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.device.pending_command.text", {
+        actor: actionActor,
+        serialId: (log.reference?.[0] as string) ?? "",
+        deviceName: (log.reference?.[1] as string) ?? "",
+        pendingCommand: (log.reference?.[2] as string) ?? "",
+      }),
+    icon: SquareTerminal,
+    color: "warning",
   },
 
   // Reference: [serialId]
