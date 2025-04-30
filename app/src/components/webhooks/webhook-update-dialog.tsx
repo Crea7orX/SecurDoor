@@ -99,7 +99,7 @@ export function WebhookUpdateDialog({
     form.reset();
   };
 
-  const onSubmit = async (data: TagUpdate) => {
+  const onSubmit = async (data: WebhookUpdate) => {
     if (!form.formState.isDirty) return;
 
     // Filter only dirty fields
