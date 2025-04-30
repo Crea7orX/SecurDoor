@@ -1,6 +1,13 @@
 import IdPrefix, { generateId } from "@/lib/ids";
 import { sql } from "drizzle-orm";
-import { integer, pgEnum, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  pgEnum,
+  pgTable,
+  text,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 export const webhookTypeEnum = pgEnum("webhook_type", ["discord", "slack"]);
 
@@ -15,6 +22,7 @@ export const webhooks = pgTable("webhooks", {
     .array()
     .notNull()
     .default(sql`ARRAY[]::text[]`),
+  enabled: boolean("enabled").notNull().default(true),
   ownerId: varchar("owner_id", { length: 256 }).notNull(),
   createdAt: integer("created_at")
     .default(sql`(EXTRACT(EPOCH FROM NOW()))`)
