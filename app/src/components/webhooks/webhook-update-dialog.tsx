@@ -22,6 +22,7 @@ import {
   MultiSelect,
   type MultiSelectOption,
 } from "@/components/ui/multi-select";
+import { Switch } from "@/components/ui/switch";
 import { LogDisplayInfos } from "@/config/logs";
 import { useUpdateWebhookMutation } from "@/hooks/api/webhooks/use-update-webhook-mutation";
 import { useI18nZodErrors } from "@/hooks/use-i18n-zod-errors";
@@ -74,6 +75,7 @@ export function WebhookUpdateDialog({
     defaultValues: {
       name: webhook.name,
       scope: webhook.scope,
+      enabled: webhook.enabled,
     },
     disabled: isLoading,
   });
@@ -85,6 +87,7 @@ export function WebhookUpdateDialog({
       {
         name: webhook.name,
         scope: webhook.scope,
+        enabled: webhook.enabled,
       },
       {
         keepValues: true,
@@ -173,6 +176,24 @@ export function WebhookUpdateDialog({
                       }}
                       placeholder={t("field.scope.placeholder")}
                       heading={t("field.scope.label")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="enabled"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-2">
+                  <FormLabel>{t("field.enabled.label")}</FormLabel>
+                  <FormControl>
+                    <Switch
+                      className="-translate-y-1"
+                      checked={field.value ?? true}
+                      onCheckedChange={field.onChange}
+                      disabled={field.disabled}
                     />
                   </FormControl>
                   <FormMessage />
