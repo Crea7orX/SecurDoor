@@ -1,4 +1,5 @@
 import "server-only";
+
 import {
   BadRequestError,
   CardWithSameFingerprintError,
@@ -8,6 +9,7 @@ import {
   NotFoundError,
   PublicKeyAlreadySetError,
   UnauthorizedError,
+  WebhookUrlAlreadyExistsError,
 } from "@/lib/exceptions";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -53,6 +55,10 @@ export function handleError(error: unknown) {
   }
 
   if (error instanceof DeviceNotForAdoptionError) {
+    return NextResponse.json({ error: error.message }, { status: 409 });
+  }
+
+  if (error instanceof WebhookUrlAlreadyExistsError) {
     return NextResponse.json({ error: error.message }, { status: 409 });
   }
 

@@ -14,5 +14,6 @@ export const namespaces = [
   "log",
   "navigation",
   "tag",
+  "webhook",
   "zod",
 ];

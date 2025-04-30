@@ -11,37 +11,37 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { useDeleteApiKeyMutation } from "@/hooks/api/api-keys/use-delete-api-key-mutation";
+import { useTestWebhookMutation } from "@/hooks/api/webhooks/use-test-webhook-mutation";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
-interface ApiKeyDeleteAlertDialogProps
+interface WebhookTestAlertDialogProps
   extends React.ComponentPropsWithoutRef<typeof AlertDialog> {
   id: string;
 }
 
-export function ApiKeyDeleteAlertDialog({
+export function WebhookTestAlertDialog({
   id,
   children,
   ...props
-}: ApiKeyDeleteAlertDialogProps) {
-  const t = useTranslations("Api_Key.delete.alert");
+}: WebhookTestAlertDialogProps) {
+  const t = useTranslations("Webhook.test.alert");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const { mutateAsync: doDelete } = useDeleteApiKeyMutation({
+  const { mutateAsync: test } = useTestWebhookMutation({
     id: id,
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleDelete = async () => {
+  const handleTest = async () => {
     setIsLoading(true);
     const toastId = toast.loading(t("notification.loading"));
-    await doDelete()
+    await test()
       .then(() => {
-        toast.warning(t("notification.success"), {
+        toast.success(t("notification.success"), {
           id: toastId,
         });
 
@@ -68,12 +68,8 @@ export function ApiKeyDeleteAlertDialog({
           <AlertDialogCancel disabled={isLoading}>
             {tButton("cancel")}
           </AlertDialogCancel>
-          <Button
-            variant="destructive"
-            disabled={isLoading}
-            onClick={() => handleDelete()}
-          >
-            {tButton("remove")}
+          <Button disabled={isLoading} onClick={() => handleTest()}>
+            {tButton("continue")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

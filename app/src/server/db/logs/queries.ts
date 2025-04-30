@@ -1,8 +1,9 @@
 import "server-only";
 
-import { type LogsGetSchema } from "@/lib/validations/log";
+import { logResponseSchema, type LogsGetSchema } from "@/lib/validations/log";
 import { db } from "@/server/db";
 import { logs } from "@/server/db/logs/schema";
+import { webhooksTrigger } from "@/server/db/webhooks/queries";
 import { clerkClient } from "@clerk/nextjs/server";
 import { and, asc, count, desc, eq, inArray } from "drizzle-orm";
 
@@ -25,19 +26,23 @@ export async function logInsert(
     }
   }
 
-  db.insert(logs)
-    .values({
-      action,
-      actorName,
-      actorEmail,
-      actorId,
-      objectId: objectId,
-      reference: reference,
-      ownerId,
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  const log = (
+    await db
+      .insert(logs)
+      .values({
+        action,
+        actorName,
+        actorEmail,
+        actorId,
+        objectId: objectId,
+        reference: reference,
+        ownerId,
+      })
+      .returning()
+  )[0];
+
+  // Trigger webhooks
+  void webhooksTrigger({ ownerId, logs: [logResponseSchema.parse(log)] });
 }
 
 export type LogsInsertMultipleData = {
@@ -74,12 +79,13 @@ export async function logInsertMultiple(
   }));
 
   // Insert all logs in one query
-  await db
-    .insert(logs)
-    .values(values)
-    .catch((error) => {
-      console.error(error);
-    });
+  const _logs = await db.insert(logs).values(values).returning();
+
+  // Trigger webhooks
+  void webhooksTrigger({
+    ownerId,
+    logs: _logs.map((log) => logResponseSchema.parse(log)),
+  });
 }
 
 export async function logsGetAll(searchParams: LogsGetSchema, ownerId: string) {

@@ -11,27 +11,27 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { useDeleteApiKeyMutation } from "@/hooks/api/api-keys/use-delete-api-key-mutation";
+import { useDeleteWebhookMutation } from "@/hooks/api/webhooks/use-delete-webhook-mutation";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { toast } from "sonner";
 
-interface ApiKeyDeleteAlertDialogProps
+interface WebhookDeleteAlertDialogProps
   extends React.ComponentPropsWithoutRef<typeof AlertDialog> {
   id: string;
 }
 
-export function ApiKeyDeleteAlertDialog({
+export function WebhookDeleteAlertDialog({
   id,
   children,
   ...props
-}: ApiKeyDeleteAlertDialogProps) {
-  const t = useTranslations("Api_Key.delete.alert");
+}: WebhookDeleteAlertDialogProps) {
+  const t = useTranslations("Webhook.delete.alert");
   const tButton = useTranslations("Common.button");
 
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const { mutateAsync: doDelete } = useDeleteApiKeyMutation({
+  const { mutateAsync: doDelete } = useDeleteWebhookMutation({
     id: id,
   });
   const [isLoading, setIsLoading] = React.useState(false);

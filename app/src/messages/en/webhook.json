@@ -1,0 +1,78 @@
+{
+    "Webhook": {
+        "add": {
+            "notification": {
+                "error": "Failed to add webhook!",
+                "error_already_exists": "Webhook with this URL already exists!",
+                "loading": "Adding webhook...",
+                "success": "Webhook added!"
+            },
+            "title": "Add Webhook"
+        },
+        "all_card": {
+            "button": {
+                "create": "Add new webhook"
+            },
+            "description": "Integration with webhooks for notifications. Choose where and what events to be notified about!",
+            "title": "Webhooks"
+        },
+        "card": {
+            "created_at": "Created at: <semibold>{date}</semibold>",
+            "scope": "Scope: <semibold>{actionsCount, plural, =1 {# action} other {# actions}}</semibold>",
+            "type": "Type: <semibold>{type}</semibold>"
+        },
+        "delete": {
+            "alert": {
+                "description": "This action cannot be undone. This will permanently delete this webhook and stop triggering it.",
+                "notification": {
+                    "error": "Failed to delete webhook!",
+                    "loading": "Deleting webhook...",
+                    "success": "Webhook deleted!"
+                },
+                "title": "Are you absolutely sure?"
+            }
+        },
+        "edit": {
+            "notification": {
+                "error": "Failed to update webhook!",
+                "loading": "Updating webhook...",
+                "success": "Webhook updated!"
+            },
+            "title": "Edit Webhook"
+        },
+        "field": {
+            "enabled": {
+                "label": "Enabled"
+            },
+            "name": {
+                "label": "Name",
+                "placeholder": "Enter name"
+            },
+            "scope": {
+                "label": "Scope",
+                "placeholder": "Select actions"
+            },
+            "type": {
+                "label": "Type",
+                "placeholder": "Select type"
+            },
+            "url": {
+                "label": "Webhook URL"
+            }
+        },
+        "footer": "SecurDoor Logs - Official Integration\nFor more information visit your dashboard!",
+        "test": {
+            "alert": {
+                "description": "This will send a test message to check if the webhook is working properly.",
+                "notification": {
+                    "error": "Failed to test webhook!",
+                    "loading": "Testing webhook...",
+                    "success": "Webhook tested successfully!"
+                },
+                "title": "Are you absolutely sure?"
+            },
+            "description": "This is a test message to check if the webhook is working properly.",
+            "title": "Webhook test"
+        }
+    }
+}
