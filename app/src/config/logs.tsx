@@ -503,7 +503,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.create": {
     title: "Log.logs.webhook.create.title",
     text: ({ t, log, actionActor }) =>
@@ -517,7 +517,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "success",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type]
   "webhook.delete": {
     title: "Log.logs.webhook.delete.title",
     text: ({ t, log, actionActor }) =>
@@ -530,7 +530,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.rename": {
     title: "Log.logs.webhook.rename.title",
     text: ({ t, log, actionActor }) =>
@@ -544,7 +544,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "info",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.scope_update": {
     title: "Log.logs.webhook.scope_update.title",
     text: ({ t, log, actionActor }) =>
@@ -558,7 +558,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "warning",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.enable": {
     title: "Log.logs.webhook.enable.title",
     text: ({ t, log, actionActor }) =>
@@ -571,7 +571,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "success",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.disable": {
     title: "Log.logs.webhook.disable.title",
     text: ({ t, log, actionActor }) =>

@@ -55,12 +55,7 @@ export async function webhookInsert({
   )[0];
 
   if (webhook) {
-    const reference = [
-      webhook.name,
-      webhook.type,
-      webhook.scope,
-      webhook.enabled,
-    ];
+    const reference = [webhook.name, webhook.type, webhook.scope];
     void logInsert(ownerId, "webhook.create", userId, webhook.id, reference);
 
     // Test webhook
@@ -144,12 +139,7 @@ export async function webhookUpdate({
   )[0];
 
   if (webhook) {
-    const reference = [
-      webhook.name,
-      webhook.type,
-      webhook.scope,
-      webhook.enabled,
-    ];
+    const reference = [webhook.name, webhook.type, webhook.scope];
     if (typeof update.name === "string") {
       void logInsert(ownerId, "webhook.rename", userId, webhook.id, reference);
     }
@@ -202,12 +192,7 @@ export async function webhookDelete({
   )[0];
 
   if (webhook) {
-    const reference = [
-      webhook.name,
-      webhook.type,
-      webhook.scope,
-      webhook.enabled,
-    ];
+    const reference = [webhook.name, webhook.type];
     void logInsert(ownerId, "webhook.delete", userId, webhook.id, reference);
   }
 
