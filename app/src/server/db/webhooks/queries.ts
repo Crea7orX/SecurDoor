@@ -2,12 +2,15 @@ import "server-only";
 
 import { WebhookTypeAlreadyExistsError } from "@/lib/exceptions";
 import { type LogResponse } from "@/lib/validations/log";
-import { type WebhookCreate } from "@/lib/validations/webhook";
+import {
+  type WebhookCreate,
+  type WebhookUpdate,
+} from "@/lib/validations/webhook";
 import { triggerDiscordWebhook, triggerSlackWebhook } from "@/lib/webhooks";
 import { db } from "@/server/db";
 import { logInsert } from "@/server/db/logs/queries";
 import { webhooks, webhookTypeEnum } from "@/server/db/webhooks/schema";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 
 interface WebhookInsertProps {
   create: WebhookCreate;
@@ -96,6 +99,60 @@ export async function webhookGetById({ id, ownerId }: WebhookGetByIdProps) {
         .limit(1)
     )[0] ?? null
   );
+}
+
+interface WebhookUpdateProps {
+  id: string;
+  update: WebhookUpdate;
+  userId: string;
+  ownerId: string;
+}
+
+export async function webhookUpdate({
+  id,
+  update,
+  userId,
+  ownerId,
+}: WebhookUpdateProps) {
+  const webhook = (
+    await db
+      .update(webhooks)
+      .set({
+        ...(typeof update.name === "string" && {
+          name: update.name.trim(),
+        }),
+        ...(typeof update.scope === "object" && {
+          scope: update.scope,
+        }),
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(
+        and(
+          eq(webhooks.ownerId, ownerId), // Ensure ownership
+          eq(webhooks.id, id),
+        ),
+      )
+      .returning()
+  )[0];
+
+  if (webhook) {
+    const reference = [webhook.name, webhook.type, webhook.scope];
+    if (typeof update.name === "string") {
+      void logInsert(ownerId, "webhook.rename", userId, webhook.id, reference);
+    }
+
+    if (typeof update.scope === "object") {
+      void logInsert(
+        ownerId,
+        "webhook.scope_update",
+        userId,
+        webhook.id,
+        reference,
+      );
+    }
+  }
+
+  return webhook;
 }
 
 interface WebhookDeleteProps {
