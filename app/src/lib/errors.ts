@@ -9,7 +9,7 @@ import {
   NotFoundError,
   PublicKeyAlreadySetError,
   UnauthorizedError,
-  WebhookTypeAlreadyExistsError,
+  WebhookUrlAlreadyExistsError,
 } from "@/lib/exceptions";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -58,7 +58,7 @@ export function handleError(error: unknown) {
     return NextResponse.json({ error: error.message }, { status: 409 });
   }
 
-  if (error instanceof WebhookTypeAlreadyExistsError) {
+  if (error instanceof WebhookUrlAlreadyExistsError) {
     return NextResponse.json({ error: error.message }, { status: 409 });
   }
 

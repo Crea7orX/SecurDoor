@@ -1,6 +1,6 @@
 import "server-only";
 
-import { WebhookTypeAlreadyExistsError } from "@/lib/exceptions";
+import { WebhookUrlAlreadyExistsError } from "@/lib/exceptions";
 import { type LogResponse } from "@/lib/validations/log";
 import {
   type WebhookCreate,
@@ -23,7 +23,7 @@ export async function webhookInsert({
   userId,
   ownerId,
 }: WebhookInsertProps) {
-  // Check if the webhook type already exists for the owner
+  // Check if the webhook url already exists for the owner
   const existingWebhook = (
     await db
       .select()
@@ -31,23 +31,23 @@ export async function webhookInsert({
       .where(
         and(
           eq(webhooks.ownerId, ownerId), // Ensure ownership
-          eq(webhooks.type, create.type), // Check for existing type
+          eq(webhooks.url, create.url), // Check for existing url
         ),
       )
       .limit(1)
   )[0];
 
   if (existingWebhook) {
-    throw new WebhookTypeAlreadyExistsError();
+    throw new WebhookUrlAlreadyExistsError();
   }
 
   const webhook = (
     await db
       .insert(webhooks)
       .values({
-        name: create.name,
+        name: create.name.trim(),
         type: create.type,
-        url: create.url,
+        url: create.url.trim(),
         scope: create.scope,
         ownerId,
       })

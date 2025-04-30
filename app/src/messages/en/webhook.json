@@ -3,7 +3,7 @@
         "add": {
             "notification": {
                 "error": "Failed to add webhook!",
-                "error_already_exists": "Webhook of this type already exists!",
+                "error_already_exists": "Webhook with this URL already exists!",
                 "loading": "Adding webhook...",
                 "success": "Webhook added!"
             },
