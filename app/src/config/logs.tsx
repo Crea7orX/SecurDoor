@@ -488,7 +488,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [name, type, scope]
+  // Reference: [name, type, scope, enabled]
   "webhook.create": {
     title: "Log.logs.webhook.create.title",
     text: ({ t, log, actionActor }) =>
@@ -502,7 +502,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "success",
   },
 
-  // Reference: [name, type, scope]
+  // Reference: [name, type, scope, enabled]
   "webhook.delete": {
     title: "Log.logs.webhook.delete.title",
     text: ({ t, log, actionActor }) =>
@@ -515,7 +515,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [name, type, scope]
+  // Reference: [name, type, scope, enabled]
   "webhook.rename": {
     title: "Log.logs.webhook.rename.title",
     text: ({ t, log, actionActor }) =>
@@ -529,7 +529,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "info",
   },
 
-  // Reference: [name, type, scope]
+  // Reference: [name, type, scope, enabled]
   "webhook.scope_update": {
     title: "Log.logs.webhook.scope_update.title",
     text: ({ t, log, actionActor }) =>
@@ -538,6 +538,32 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         name: (log.reference?.[0] as string) ?? "",
         type: (log.reference?.[1] as string) ?? "",
         actionsCount: ((log.reference?.[2] as string[]) ?? []).length ?? 0,
+      }),
+    icon: Webhook,
+    color: "warning",
+  },
+
+  // Reference: [name, type, scope, enabled]
+  "webhook.enable": {
+    title: "Log.logs.webhook.enable.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.webhook.enable.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+        type: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Webhook,
+    color: "success",
+  },
+
+  // Reference: [name, type, scope, enabled]
+  "webhook.disable": {
+    title: "Log.logs.webhook.disable.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.webhook.disable.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+        type: (log.reference?.[1] as string) ?? "",
       }),
     icon: Webhook,
     color: "warning",
