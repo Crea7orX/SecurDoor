@@ -185,6 +185,21 @@ export async function deviceStateHeartbeat({
     throw new NotFoundError();
   }
 
+  if (device.pendingCommand) {
+    await db
+      .update(devices)
+      .set({
+        pendingCommand: null,
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, deviceId),
+        ),
+      );
+  }
+
   return {
     ...device,
     ...deviceStateUpdated,
