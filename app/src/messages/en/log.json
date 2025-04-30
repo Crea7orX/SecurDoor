@@ -114,6 +114,10 @@
           "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
           "title": "Device locked"
         },
+        "pending_command": {
+          "text": "\"{actor}\" sent command \"{pendingCommand, select, restart {restart} other {(unknown)}}\" to device \"{deviceName}\" (SN: \"{serialId}\").",
+          "title": "Command sent to device"
+        },
         "re_lock_delay": {
           "text": "\"{actor}\" updated device \"{deviceName}\" (SN: \"{serialId}\") re-lock delay to \"{reLockDelay, select, 0 {never} other {{reLockDelay} {reLockDelay, plural, one {second} other {seconds}}}}\".",
           "title": "Device re-lock delay updated"

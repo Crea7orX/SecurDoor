@@ -114,6 +114,10 @@
           "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") {isCard, select, true {използвайки карта с отпечатък \"{fingerprint}\"} other {използвайки таблото}}.",
           "title": "Заключено устройство"
         },
+        "pending_command": {
+          "text": "\"{actor}\" изпрати команда \"{pendingCommand, select, restart {рестартиране} other {(неизвестна)}}\" до устройство \"{deviceName}\" (СН: \"{serialId}\").",
+          "title": "Изпратена команда до устройство"
+        },
         "re_lock_delay": {
           "text": "\"{actor}\" обнови времето за повторно заключване на устройство \"{deviceName}\" (СН: \"{serialId}\") на \"{reLockDelay, select, 0 {никога} other {{reLockDelay} {reLockDelay, plural, one {секунда} other {секунди}}}}\".",
           "title": "Обновено време за повторно заключване на устройство"
