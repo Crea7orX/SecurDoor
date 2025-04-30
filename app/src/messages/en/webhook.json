@@ -41,6 +41,9 @@
             "title": "Edit Webhook"
         },
         "field": {
+            "enabled": {
+                "label": "Enabled"
+            },
             "name": {
                 "label": "Name",
                 "placeholder": "Enter name"

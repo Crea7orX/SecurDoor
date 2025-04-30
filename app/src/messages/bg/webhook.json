@@ -41,6 +41,9 @@
             "title": "Редактиране на уебкука"
         },
         "field": {
+            "enabled": {
+                "label": "Активна"
+            },
             "name": {
                 "label": "Име",
                 "placeholder": "Въведете име"
