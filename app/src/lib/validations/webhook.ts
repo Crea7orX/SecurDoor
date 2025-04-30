@@ -25,3 +25,14 @@ export const webhookResponseSchema = z.object({
 });
 
 export type WebhookResponse = z.infer<typeof webhookResponseSchema>;
+
+export const webhookUpdateSchema = z.object({
+  name: z.string().min(2).max(256).optional(),
+  scope: z
+    .enum(Object.entries(LogDisplayInfos).map(([action]) => action) as [string])
+    .array()
+    .min(1)
+    .optional(),
+});
+
+export type WebhookUpdate = z.infer<typeof webhookUpdateSchema>;
