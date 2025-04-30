@@ -7,7 +7,7 @@ import { WebhookTestAlertDialog } from "@/components/webhooks/webhook-test-alert
 import { WebhookUpdateDialog } from "@/components/webhooks/webhook-update-dialog";
 import { cn } from "@/lib/utils";
 import { type WebhookResponse } from "@/lib/validations/webhook";
-import { FlaskConical, SquarePen, Trash } from "lucide-react";
+import { FlaskConical, SquarePen, Trash, Webhook } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import * as React from "react";
 
@@ -31,36 +31,44 @@ export function WebhookCard({
       )}
       {...props}
     >
-      <div className="flex flex-col">
-        <p className="break-all font-semibold">{webhook.name}</p>
-        <p className="text-muted-foreground">
-          {t.rich("scope", {
-            actionsCount: webhook.scope.length,
-            semibold: (chunks) => (
-              <span className="font-semibold">{chunks}</span>
-            ),
-          })}
-        </p>
-        <p className="text-muted-foreground">
-          {t.rich("type", {
-            type: webhook.type,
-            semibold: (chunks) => (
-              <span className="font-semibold capitalize">{chunks}</span>
-            ),
-          })}
-        </p>
-        <p className="text-muted-foreground">
-          {t.rich("created_at", {
-            date: format.dateTime(webhook.createdAt * 1000, {
-              dateStyle: "medium",
-              timeStyle: "medium",
-              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            }),
-            semibold: (chunks) => (
-              <span className="font-semibold">{chunks}</span>
-            ),
-          })}
-        </p>
+      <div className="flex items-center gap-2">
+        <Webhook
+          className={cn(
+            "size-6 text-destructive",
+            webhook.enabled && "text-success",
+          )}
+        />
+        <div className="flex flex-col">
+          <p className="break-all font-semibold">{webhook.name}</p>
+          <p className="text-muted-foreground">
+            {t.rich("scope", {
+              actionsCount: webhook.scope.length,
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
+          </p>
+          <p className="text-muted-foreground">
+            {t.rich("type", {
+              type: webhook.type,
+              semibold: (chunks) => (
+                <span className="font-semibold capitalize">{chunks}</span>
+              ),
+            })}
+          </p>
+          <p className="text-muted-foreground">
+            {t.rich("created_at", {
+              date: format.dateTime(webhook.createdAt * 1000, {
+                dateStyle: "medium",
+                timeStyle: "medium",
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+              }),
+              semibold: (chunks) => (
+                <span className="font-semibold">{chunks}</span>
+              ),
+            })}
+          </p>
+        </div>
       </div>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="w-fit whitespace-nowrap rounded-md border group-hover:border-input max-sm:self-end lg:border-card">
@@ -109,11 +117,14 @@ export function WebhookCardSkeleton({
       )}
       {...props}
     >
-      <div className="flex w-full flex-col gap-1">
-        <Skeleton className="h-6 w-full max-w-32" />
-        <Skeleton className="h-5 w-full max-w-40" />
-        <Skeleton className="h-5 w-full max-w-28" />
-        <Skeleton className="h-5 w-full max-w-64" />
+      <div className="flex w-full items-center gap-2">
+        <Skeleton className="size-6" />
+        <div className="flex w-full flex-col gap-1">
+          <Skeleton className="h-6 w-full max-w-32" />
+          <Skeleton className="h-5 w-full max-w-40" />
+          <Skeleton className="h-5 w-full max-w-28" />
+          <Skeleton className="h-5 w-full max-w-64" />
+        </div>
       </div>
       <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center lg:justify-end">
         <Skeleton className="h-9 w-[6.75rem]" />
