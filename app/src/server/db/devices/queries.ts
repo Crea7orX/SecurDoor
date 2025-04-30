@@ -5,6 +5,7 @@ import { generateKey } from "@/lib/keys";
 import { formatPublicKeyForDB } from "@/lib/signatures";
 import {
   type DeviceCreate,
+  type DeviceSetPendingCommand,
   type DevicesGetSchema,
   type DeviceUpdate,
 } from "@/lib/validations/device";
@@ -307,6 +308,49 @@ export async function deviceSetLocked({
     void logInsert(
       ownerId,
       isLocked ? "device.lock" : "device.unlock",
+      userId,
+      device.id,
+      reference,
+    );
+  }
+
+  return device;
+}
+
+interface DeviceSetPendingCommandProps {
+  id: string;
+  set: DeviceSetPendingCommand;
+  userId: string;
+  ownerId: string;
+}
+
+export async function deviceSetPendingCommand({
+  id,
+  set,
+  userId,
+  ownerId,
+}: DeviceSetPendingCommandProps) {
+  const device = (
+    await db
+      .update(devices)
+      .set({
+        pendingCommand: set.pendingCommand,
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(
+        and(
+          eq(devices.ownerId, ownerId), // Ensure ownership
+          eq(devices.id, id),
+        ),
+      )
+      .returning()
+  )[0];
+
+  if (device) {
+    const reference = [device.serialId, device.name, set.pendingCommand];
+    void logInsert(
+      ownerId,
+      "device.pending_command",
       userId,
       device.id,
       reference,
