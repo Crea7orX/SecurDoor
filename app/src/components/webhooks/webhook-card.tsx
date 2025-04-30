@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { WebhookDeleteAlertDialog } from "@/components/webhooks/webhook-delete-alert-dialog";
 import { WebhookTestAlertDialog } from "@/components/webhooks/webhook-test-alert-dialog";
+import { WebhookUpdateDialog } from "@/components/webhooks/webhook-update-dialog";
 import { cn } from "@/lib/utils";
 import { type WebhookResponse } from "@/lib/validations/webhook";
 import { FlaskConical, SquarePen, Trash } from "lucide-react";
@@ -63,14 +64,15 @@ export function WebhookCard({
       </div>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="w-fit whitespace-nowrap rounded-md border group-hover:border-input max-sm:self-end lg:border-card">
-          <Button
-            variant="outline"
-            size="icon"
-            className="rounded-r-none border-0 shadow-none"
-          >
-            {/* todo */}
-            <SquarePen />
-          </Button>
+          <WebhookUpdateDialog webhook={webhook}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-r-none border-0 shadow-none"
+            >
+              <SquarePen />
+            </Button>
+          </WebhookUpdateDialog>
           <WebhookTestAlertDialog id={webhook.id}>
             <Button
               variant="outline"
