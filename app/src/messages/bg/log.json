@@ -169,12 +169,20 @@
       },
       "webhook": {
         "create": {
-          "text": "\"{actor}\" създаде уебкука с име \"{name}\", тип \"{type}\" и обхват от {actionsCount, plural, =1 {# действие} other {# действия}}.",
+          "text": "\"{actor}\" създаде уебкука с име \"{name}\" (Тип: \"{type}\") и обхват от {actionsCount, plural, =1 {# действие} other {# действия}}.",
           "title": "Създадена уебкука"
         },
         "delete": {
-          "text": "\"{actor}\" изтри уебкука с име \"{name}\", тип \"{type}\" и обхват от {actionsCount, plural, =1 {# действие} other {# действия}}.",
+          "text": "\"{actor}\" изтри уебкука с име \"{name}\" (Тип: \"{type}\") и обхват от {actionsCount, plural, =1 {# действие} other {# действия}}.",
           "title": "Изтрита уебкука"
+        },
+        "rename": {
+          "text": "\"{actor}\" преименува уебкука на \"{name}\" (Тип: \"{type}\").",
+          "title": "Преименувана уебкука"
+        },
+        "scope_update": {
+          "text": "\"{actor}\" обнови обхвата на уебкука \"{name}\" (Тип: \"{type}\") на {actionsCount, plural, =1 {# действие} other {# действия}}.",
+          "title": "Обновен обхват на уебкука"
         }
       }
     },
