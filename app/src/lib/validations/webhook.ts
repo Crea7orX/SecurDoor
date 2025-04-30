@@ -19,6 +19,7 @@ export const webhookResponseSchema = z.object({
   name: z.string(),
   type: z.enum(webhookTypeEnum.enumValues),
   scope: z.string().array(),
+  enabled: z.boolean(),
   ownerId: z.string(),
   createdAt: z.number(),
   updatedAt: z.number().nullable(),
@@ -33,6 +34,7 @@ export const webhookUpdateSchema = z.object({
     .array()
     .min(1)
     .optional(),
+  enabled: z.boolean().optional(),
 });
 
 export type WebhookUpdate = z.infer<typeof webhookUpdateSchema>;
