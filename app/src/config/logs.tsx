@@ -488,7 +488,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [name, type]
+  // Reference: [name, type, scope]
   "webhook.create": {
     title: "Log.logs.webhook.create.title",
     text: ({ t, log, actionActor }) =>
@@ -502,7 +502,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "success",
   },
 
-  // Reference: [name, type]
+  // Reference: [name, type, scope]
   "webhook.delete": {
     title: "Log.logs.webhook.delete.title",
     text: ({ t, log, actionActor }) =>
@@ -510,9 +510,36 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
         actor: actionActor,
         name: (log.reference?.[0] as string) ?? "",
         type: (log.reference?.[1] as string) ?? "",
-        actionsCount: ((log.reference?.[2] as string[]) ?? []).length ?? 0,
       }),
     icon: Webhook,
     color: "destructive",
+  },
+
+  // Reference: [name, type, scope]
+  "webhook.rename": {
+    title: "Log.logs.webhook.rename.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.webhook.rename.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+        type: (log.reference?.[1] as string) ?? "",
+        actionsCount: ((log.reference?.[2] as string[]) ?? []).length ?? 0,
+      }),
+    icon: Webhook,
+    color: "info",
+  },
+
+  // Reference: [name, type, scope]
+  "webhook.scope_update": {
+    title: "Log.logs.webhook.scope_update.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.webhook.scope_update.text", {
+        actor: actionActor,
+        name: (log.reference?.[0] as string) ?? "",
+        type: (log.reference?.[1] as string) ?? "",
+        actionsCount: ((log.reference?.[2] as string[]) ?? []).length ?? 0,
+      }),
+    icon: Webhook,
+    color: "warning",
   },
 };
