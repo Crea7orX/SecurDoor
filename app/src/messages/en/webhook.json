@@ -7,7 +7,7 @@
                 "loading": "Adding webhook...",
                 "success": "Webhook added!"
             },
-            "title": "Add webhook"
+            "title": "Add Webhook"
         },
         "all_card": {
             "button": {
@@ -31,6 +31,14 @@
                 },
                 "title": "Are you absolutely sure?"
             }
+        },
+        "edit": {
+            "notification": {
+                "error": "Failed to update webhook!",
+                "loading": "Updating webhook...",
+                "success": "Webhook updated!"
+            },
+            "title": "Edit Webhook"
         },
         "field": {
             "name": {
