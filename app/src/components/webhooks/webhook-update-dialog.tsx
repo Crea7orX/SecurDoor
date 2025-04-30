@@ -58,7 +58,7 @@ export function WebhookUpdateDialog({
     return Object.entries(LogDisplayInfos).map(([action, display]) => {
       return {
         label: _t(display.title),
-        value: action,
+        value: _t(display.title) + "-" + action,
         key: action,
       };
     });
