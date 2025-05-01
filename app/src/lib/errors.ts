@@ -2,6 +2,7 @@ import "server-only";
 
 import {
   BadRequestError,
+  BiometricWithSameBiometricIdError,
   CardWithSameFingerprintError,
   DeviceNotForAdoptionError,
   DeviceWithSameSerialIdError,
@@ -50,15 +51,22 @@ export function handleError(error: unknown) {
     );
   }
 
+  if (error instanceof BiometricWithSameBiometricIdError) {
+    return NextResponse.json(
+      { error: error.message, id: error.id },
+      { status: 409 },
+    );
+  }
+
+  if (error instanceof WebhookUrlAlreadyExistsError) {
+    return NextResponse.json({ error: error.message }, { status: 409 });
+  }
+
   if (error instanceof PublicKeyAlreadySetError) {
     return NextResponse.json({ error: error.message }, { status: 409 });
   }
 
   if (error instanceof DeviceNotForAdoptionError) {
-    return NextResponse.json({ error: error.message }, { status: 409 });
-  }
-
-  if (error instanceof WebhookUrlAlreadyExistsError) {
     return NextResponse.json({ error: error.message }, { status: 409 });
   }
 

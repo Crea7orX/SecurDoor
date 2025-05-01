@@ -42,6 +42,22 @@ export class DeviceWithSameSerialIdError extends Error {
   }
 }
 
+export class BiometricWithSameBiometricIdError extends Error {
+  constructor(
+    public id: string,
+    message = "Biometric with same biometric id already exists",
+  ) {
+    super(message);
+    this.id = id;
+  }
+}
+
+export class WebhookUrlAlreadyExistsError extends Error {
+  constructor(message = "Webhook with this URL already exists") {
+    super(message);
+  }
+}
+
 export class PublicKeyAlreadySetError extends Error {
   constructor(message = "Public key already set") {
     super(message);
@@ -50,12 +66,6 @@ export class PublicKeyAlreadySetError extends Error {
 
 export class DeviceNotForAdoptionError extends Error {
   constructor(message = "Device is not for adoption") {
-    super(message);
-  }
-}
-
-export class WebhookUrlAlreadyExistsError extends Error {
-  constructor(message = "Webhook with this URL already exists") {
     super(message);
   }
 }
