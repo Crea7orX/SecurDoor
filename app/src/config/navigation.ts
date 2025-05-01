@@ -1,5 +1,6 @@
 import { type Navigation } from "@/types";
 import {
+  Fingerprint,
   House,
   IdCard,
   Microchip,
@@ -27,6 +28,12 @@ export function getNavigationList(pathname: string): Navigation[] {
       url: "/dashboard/cards",
       icon: IdCard,
       active: pathname.includes("/cards"),
+    },
+    {
+      title: "Navigation.biometrics",
+      url: "/dashboard/biometrics",
+      icon: Fingerprint,
+      active: pathname.includes("/biometrics"),
     },
     {
       title: "Navigation.tags",
