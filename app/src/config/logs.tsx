@@ -119,27 +119,27 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [serialId, name, isCard, cardFingerprint?, cardHolder?]
+  // Reference: [serialId, name, unlockType, unlockId?, unlockIndividual?]
   "device.lock": {
     title: "Log.logs.device.lock.title",
     text: ({ t, log, actionActor }) => {
-      const isCard = log.reference?.[2] === "true";
+      const isDashboard = log.reference?.[2] === "dash";
 
       return t.rich("Log.logs.device.lock.text", {
-        actor: isCard
-          ? ((log.reference?.[4] ?? actionActor) as string)
-          : actionActor,
+        actor: isDashboard
+          ? actionActor
+          : ((log.reference?.[4] ?? actionActor) as string),
         serialId: (log.reference?.[0] as string) ?? "",
         deviceName: (log.reference?.[1] as string) ?? "",
-        isCard,
-        fingerprint: (log.reference?.[3] as string) ?? "",
+        unlockType: (log.reference?.[2] as string) ?? "",
+        unlockId: (log.reference?.[3] as string) ?? "",
       });
     },
     actor: ({ t, log, actionActor }) => {
       const actor = log.reference?.[4] as string;
 
       // from dashboard
-      if (log.reference?.[2] === "false") {
+      if (log.reference?.[2] === "dash") {
         return actionActor;
       }
 
@@ -153,27 +153,27 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [serialId, name, isCard, cardFingerprint?, cardHolder?]
+  // Reference: [serialId, name, unlockType, unlockId?, unlockIndividual?]
   "device.unlock": {
     title: "Log.logs.device.unlock.title",
     text: ({ t, log, actionActor }) => {
-      const isCard = log.reference?.[2] === "true";
+      const isDashboard = log.reference?.[2] === "dash";
 
       return t.rich("Log.logs.device.unlock.text", {
-        actor: isCard
-          ? ((log.reference?.[4] ?? actionActor) as string)
-          : actionActor,
+        actor: isDashboard
+          ? actionActor
+          : ((log.reference?.[4] ?? actionActor) as string),
         serialId: (log.reference?.[0] as string) ?? "",
         deviceName: (log.reference?.[1] as string) ?? "",
-        isCard,
-        fingerprint: (log.reference?.[3] as string) ?? "",
+        unlockType: (log.reference?.[2] as string) ?? "",
+        unlockId: (log.reference?.[3] as string) ?? "",
       });
     },
     actor: ({ t, log, actionActor }) => {
       const actor = log.reference?.[4] as string;
 
       // from dashboard
-      if (log.reference?.[2] === "false") {
+      if (log.reference?.[2] === "dash") {
         return actionActor;
       }
 

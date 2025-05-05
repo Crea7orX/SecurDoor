@@ -304,7 +304,7 @@ export async function deviceSetLocked({
   )[0];
 
   if (device) {
-    const reference = [device.serialId, device.name, "false"];
+    const reference = [device.serialId, device.name, "dash"];
     void logInsert(
       ownerId,
       isLocked ? "device.lock" : "device.unlock",

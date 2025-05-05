@@ -12,7 +12,7 @@ import { devices } from "@/server/db/devices/schema";
 import { logInsert, logInsertMultiple } from "@/server/db/logs/queries";
 import { and, eq, sql } from "drizzle-orm";
 
-interface AccessCardTryAuthentication {
+interface accessCardTryAuthenticationProps {
   ownerId: string;
   device: NonNullable<
     Awaited<ReturnType<typeof deviceGetBySerialIdUnprotected>>
@@ -26,7 +26,7 @@ export async function accessCardTryAuthentication({
   device,
   deviceId,
   fingerprint,
-}: AccessCardTryAuthentication) {
+}: accessCardTryAuthenticationProps) {
   void deviceStateHeartbeatUpdate({ deviceId }); // Update device heartbeat
 
   // Try direct access
@@ -91,7 +91,7 @@ export async function accessCardTryAuthentication({
   const deviceRef = [
     device.serialId,
     device.name,
-    "true",
+    "card",
     card.fingerprint,
     card.holder ?? "NULL",
   ];
