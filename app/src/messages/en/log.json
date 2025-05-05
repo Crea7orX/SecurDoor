@@ -39,6 +39,28 @@
           "title": "API key deleted"
         }
       },
+      "biometric": {
+        "activate": {
+          "text": "\"{actor}\" activated biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric activated"
+        },
+        "create": {
+          "text": "\"{actor}\" created biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric created"
+        },
+        "deactivate": {
+          "text": "\"{actor}\" deactivated biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric deactivated"
+        },
+        "delete": {
+          "text": "\"{actor}\" deleted biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric deleted"
+        },
+        "rename": {
+          "text": "\"{actor}\" renamed biometric individual to \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric individual renamed"
+        }
+      },
       "card": {
         "access_update": {
           "text": "\"{actor}\" updated card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\") access, adding {newCount, plural, =1 {# device} other {# devices}} and removing {deleteCount, plural, =1 {# device} other {# devices}}.",

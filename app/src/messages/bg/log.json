@@ -39,6 +39,28 @@
           "title": "Изтрит API ключ"
         }
       },
+      "biometric": {
+        "activate": {
+          "text": "\"{actor}\" активира биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Активирани биометрични данни"
+        },
+        "create": {
+          "text": "\"{actor}\" създаде биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Създадени биометрични данни"
+        },
+        "deactivate": {
+          "text": "\"{actor}\" деактивира биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Деактивирани биометрични данни"
+        },
+        "delete": {
+          "text": "\"{actor}\" изтри биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Изтрити биометрични данни"
+        },
+        "rename": {
+          "text": "\"{actor}\" преименува притежателя на биометрични данни на \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Преименуван притежател на биометрични данни"
+        }
+      },
       "card": {
         "access_update": {
           "text": "\"{actor}\" актуализира достъпа на карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\"), добавяйки {newCount, plural, =1 {# устройство} other {# устройства}} и премахвайки {deleteCount, plural, =1 {# устройство} other {# устройства}}.",
