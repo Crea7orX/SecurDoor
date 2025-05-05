@@ -12,7 +12,7 @@ import { z } from "zod";
 
 export const cardCreateSchema = z.object({
   fingerprint: z.string().min(8).max(32),
-  holder: z.string().min(2).max(256).optional().nullable(),
+  holder: z.string().max(256).optional().nullable(),
   active: z.boolean().optional().nullable(),
 });
 
@@ -31,7 +31,7 @@ export const cardResponseSchema = z.object({
 export type CardResponse = z.infer<typeof cardResponseSchema>;
 
 export const cardUpdateSchema = z.object({
-  holder: z.string().min(2).max(256).optional().nullable(),
+  holder: z.string().max(256).optional().nullable(),
   active: z.boolean().optional().nullable(),
 });
 

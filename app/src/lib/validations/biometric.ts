@@ -11,7 +11,7 @@ import { z } from "zod";
 
 export const biometricCreateSchema = z.object({
   biometricId: z.number().min(0).max(127),
-  individual: z.string().min(2).max(256).optional().nullable(),
+  individual: z.string().max(256).optional().nullable(),
   active: z.boolean().optional().nullable(),
 });
 
@@ -31,7 +31,7 @@ export const biometricResponseSchema = z.object({
 export type BiometricResponse = z.infer<typeof biometricResponseSchema>;
 
 export const biometricUpdateSchema = z.object({
-  individual: z.string().min(2).max(256).optional().nullable(),
+  individual: z.string().max(256).optional().nullable(),
   active: z.boolean().optional().nullable(),
 });
 
