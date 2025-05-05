@@ -6,6 +6,7 @@ import {
   DiamondMinus,
   DiamondPlus,
   EthernetPort,
+  Fingerprint,
   IdCard,
   Key,
   LaptopMinimalCheck,
@@ -441,6 +442,71 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
       }),
     icon: Pin,
     color: "info",
+  },
+
+  // Reference: [biometricId, individual, active]
+  "biometric.create": {
+    title: "Log.logs.biometric.create.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.create.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Fingerprint,
+    color: "success",
+  },
+
+  // Reference: [biometricId, individual, active]
+  "biometric.delete": {
+    title: "Log.logs.biometric.delete.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.delete.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Fingerprint,
+    color: "destructive",
+  },
+
+  // Reference: [biometricId, individual]
+  "biometric.rename": {
+    title: "Log.logs.biometric.rename.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.rename.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Fingerprint,
+    color: "info",
+  },
+
+  // Reference: [biometricId, individual]
+  "biometric.activate": {
+    title: "Log.logs.biometric.activate.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.activate.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: ShieldCheck,
+    color: "success",
+  },
+
+  // Reference: [biometricId, individual]
+  "biometric.deactivate": {
+    title: "Log.logs.biometric.deactivate.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.deactivate.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: OctagonMinus,
+    color: "warning",
   },
 
   // Reference: [name]
