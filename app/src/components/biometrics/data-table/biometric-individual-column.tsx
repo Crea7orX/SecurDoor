@@ -12,7 +12,7 @@ export function BiometricIndividualColumn({
   individual,
   ...props
 }: BiometricIndividualColumnProps) {
-  const t = useTranslations("Individual");
+  const t = useTranslations("Biometric");
 
   return individual ? (
     <span className={className} {...props}>
