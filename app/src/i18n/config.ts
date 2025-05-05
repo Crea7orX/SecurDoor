@@ -5,6 +5,7 @@ export const defaultLocale: Locale = "en";
 
 export const namespaces = [
   "api-key",
+  "biometric",
   "card",
   "common",
   "dashboard",

@@ -1,0 +1,105 @@
+{
+    "Biometric": {
+        "access": {
+            "description": "The device which is associated with the biometric",
+            "title": "Access",
+            "view_device": "View Device"
+        },
+        "add": {
+            "confirm": {
+                "description": "This will send command to the device to add biometric. You will have 10 seconds to register the biometric on the device.",
+                "notification": {
+                    "error": "Failed to add biometric!",
+                    "loading": "Adding Card...",
+                    "success": "Card Added!"
+                },
+                "title": "Are you absolutely sure?"
+            },
+            "title": "Add Biometric"
+        },
+        "added": {
+            "description": "The date and time when the biometric was added",
+            "title": "Added"
+        },
+        "card": {
+            "title": "Biometric: <semibold>{id}</semibold>"
+        },
+        "danger_zone": {
+            "description": "Dangerous actions that can not be undone",
+            "title": "Danger Zone"
+        },
+        "delete": {
+            "alert": {
+                "description": "This action cannot be undone. This will permanently delete this biometric and remove its access to the door.",
+                "notification": {
+                    "error": "Failed to delete biometric!",
+                    "loading": "Deleting biometric...",
+                    "success": "Biometric deleted!"
+                },
+                "title": "Are you absolutely sure?"
+            }
+        },
+        "field": {
+            "device": {
+                "description": "Select the device from which you want to add the biometric. Then place your finger on the reader.",
+                "label": "Device"
+            },
+            "individual": {
+                "description": "Biometric individual name.",
+                "label": "Biometric",
+                "placeholder": "John Doe",
+                "unknown": "Unknown"
+            }
+        },
+        "filter": {
+            "active": {
+                "label": "Status",
+                "options": {
+                    "active": "Active",
+                    "disabled": "Disabled"
+                }
+            },
+            "created_at": {
+                "label": "Added"
+            },
+            "individual": {
+                "label": "Individual",
+                "placeholder": "Filter by individual"
+            }
+        },
+        "individual": {
+            "description": "Individual of the biometric",
+            "notification": {
+                "error": "Failed to rename individual!",
+                "loading": "Renaming individual...",
+                "success": "Individual renamed!"
+            },
+            "title": "Individual"
+        },
+        "label": "Biometric:",
+        "status": {
+            "button": {
+                "activate": "Activate",
+                "disable": "Disable"
+            },
+            "description": "Access status of the biometric",
+            "notification": {
+                "activate": {
+                    "error": "Failed to activate biometric!",
+                    "loading": "Activating biometric...",
+                    "success": "Biometric activated!"
+                },
+                "disable": {
+                    "error": "Failed to disable biometric!",
+                    "loading": "Disabling biometric...",
+                    "success": "Biometric disabled!"
+                }
+            },
+            "state": {
+                "active": "Active",
+                "disabled": "Disabled"
+            },
+            "title": "Status"
+        }
+    }
+}
