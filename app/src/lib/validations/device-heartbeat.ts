@@ -1,6 +1,8 @@
 import { apiSignedResponseSchema } from "@/lib/validations/api-signed";
-import { pendingCommandEnum } from "@/server/db/devices-states/schema";
-import { emergencyStateEnum } from "@/server/db/devices/schema";
+import {
+  emergencyStateEnum,
+  pendingCommandEnum,
+} from "@/server/db/devices/schema";
 import { z } from "zod";
 
 export const deviceHeartbeatSchema = z.object({
