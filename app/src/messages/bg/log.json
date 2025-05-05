@@ -115,7 +115,7 @@
           "title": "Заключено устройство"
         },
         "pending_command": {
-          "text": "\"{actor}\" изпрати команда \"{pendingCommand, select, restart {рестартиране} other {(неизвестна)}}\" до устройство \"{deviceName}\" (СН: \"{serialId}\").",
+          "text": "\"{actor}\" изпрати команда \"{pendingCommand, select, restart {рестартиране} register_biometric {добавяне на биометрични данни} other {(неизвестна)}}\" до устройство \"{deviceName}\" (СН: \"{serialId}\").",
           "title": "Изпратена команда до устройство"
         },
         "re_lock_delay": {

@@ -115,7 +115,7 @@
           "title": "Device locked"
         },
         "pending_command": {
-          "text": "\"{actor}\" sent command \"{pendingCommand, select, restart {restart} other {(unknown)}}\" to device \"{deviceName}\" (SN: \"{serialId}\").",
+          "text": "\"{actor}\" sent command \"{pendingCommand, select, restart {restart} register_biometric {register biometrics} other {(unknown)}}\" to device \"{deviceName}\" (SN: \"{serialId}\").",
           "title": "Command sent to device"
         },
         "re_lock_delay": {
