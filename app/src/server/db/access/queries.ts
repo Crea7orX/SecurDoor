@@ -2,6 +2,7 @@ import "server-only";
 
 import { ForbiddenError } from "@/lib/exceptions";
 import { db } from "@/server/db";
+import { biometrics } from "@/server/db/biometrics/schema";
 import { cardsToDevices } from "@/server/db/cards-to-devices/schema";
 import { cardsToTags } from "@/server/db/cards-to-tags/schema";
 import { cards } from "@/server/db/cards/schema";
@@ -137,5 +138,110 @@ export async function accessCardTryAuthentication({
     isLocked: !device.isLocked,
     reLockDelay: device.reLockDelay,
     holder: card.holder,
+  };
+}
+
+interface accessBiometricTryAuthenticationProps {
+  ownerId: string;
+  device: NonNullable<
+    Awaited<ReturnType<typeof deviceGetBySerialIdUnprotected>>
+  >;
+  deviceId: string;
+  biometricId: number;
+}
+
+export async function accessBiometricTryAuthentication({
+  ownerId,
+  device,
+  deviceId,
+  biometricId,
+}: accessBiometricTryAuthenticationProps) {
+  void deviceStateHeartbeatUpdate({ deviceId }); // Update device heartbeat
+
+  // Try biometric access
+  const biometric = (
+    await db
+      .select()
+      .from(biometrics)
+      .where(
+        and(
+          eq(biometrics.ownerId, ownerId), // Ensure ownership
+          eq(biometrics.biometricId, biometricId),
+          eq(biometrics.deviceId, deviceId),
+        ),
+      )
+      .limit(1)
+  )[0];
+
+  if (!biometric) {
+    const reference = [device.serialId, device.name, biometricId];
+    void logInsert(
+      ownerId,
+      "device.access_denied_biometric",
+      "system",
+      deviceId,
+      reference,
+    );
+    throw new ForbiddenError();
+  }
+
+  if (device.emergencyState || !biometric.active) throw new ForbiddenError();
+
+  const deviceRef = [
+    device.serialId,
+    device.name,
+    "bio",
+    biometric.biometricId,
+    biometric.individual ?? "NULL",
+  ];
+
+  const biometricRef = [
+    biometric.biometricId,
+    biometric.individual ?? "NULL",
+    device.serialId,
+    device.name,
+  ];
+
+  // Update device locked state
+  if (device.isLocked) {
+    await db
+      .update(devices)
+      .set({
+        isLocked: false,
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)));
+  } else {
+    await db
+      .update(devices)
+      .set({
+        isLocked: true,
+        updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
+      })
+      .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)));
+  }
+
+  // Log access
+  void logInsertMultiple(
+    ownerId,
+    [
+      {
+        action: device.isLocked ? "device.unlock" : "device.lock",
+        objectId: deviceId,
+        reference: deviceRef,
+      },
+      {
+        action: device.isLocked ? "biometric.unlock" : "biometric.lock",
+        objectId: biometric.id,
+        reference: biometricRef,
+      },
+    ],
+    "system",
+  );
+
+  return {
+    isLocked: !device.isLocked,
+    reLockDelay: device.reLockDelay,
+    individual: biometric.individual,
   };
 }
