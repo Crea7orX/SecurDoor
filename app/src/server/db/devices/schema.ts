@@ -14,7 +14,10 @@ export const emergencyStateEnum = pgEnum("emergency_state", [
   "lockdown",
   "evacuation",
 ]);
-export const pendingCommand = pgEnum("pending_command", ["restart"]);
+export const pendingCommand = pgEnum("pending_command", [
+  "restart",
+  "register_biometric",
+]);
 
 export const devices = pgTable("devices", {
   id: varchar("id", { length: 256 })
