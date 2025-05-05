@@ -56,9 +56,17 @@
           "text": "\"{actor}\" deleted biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
           "title": "Biometric deleted"
         },
+        "lock": {
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") using biometric with ID \"{biometricId}\".",
+          "title": "Biometric locked device"
+        },
         "rename": {
           "text": "\"{actor}\" renamed biometric individual to \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
           "title": "Biometric individual renamed"
+        },
+        "unlock": {
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") using biometric with ID \"{biometricId}\".",
+          "title": "Biometric unlocked device"
         }
       },
       "card": {
@@ -133,7 +141,7 @@
           "title": "Device emergency state updated"
         },
         "lock": {
-          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") using {unlockType, select, card {card with fingerprint \"{unlockId}\"} bio {biometric with ID \"{unlockId}\"} other {the dashboard}}.",
           "title": "Device locked"
         },
         "pending_command": {
@@ -157,7 +165,7 @@
           "title": "Device tags updated"
         },
         "unlock": {
-          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") using {unlockType, select, card {card with fingerprint \"{unlockId}\"} bio {biometric with ID \"{unlockId}\"} other {the dashboard}}.",
           "title": "Device unlocked"
         }
       },

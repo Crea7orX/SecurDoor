@@ -56,9 +56,17 @@
           "text": "\"{actor}\" изтри биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
           "title": "Изтрити биометрични данни"
         },
+        "lock": {
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки биометрични данни с ИД \"{biometricId}\".",
+          "title": "Заключено устройство с биометрични данни"
+        },
         "rename": {
           "text": "\"{actor}\" преименува притежателя на биометрични данни на \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
           "title": "Преименуван притежател на биометрични данни"
+        },
+        "unlock": {
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки биометрични данни с ИД \"{biometricId}\".",
+          "title": "Отключено устройство с биометрични данни"
         }
       },
       "card": {
@@ -133,7 +141,7 @@
           "title": "Обновено аварийно състояние на устройство"
         },
         "lock": {
-          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") {isCard, select, true {използвайки карта с отпечатък \"{fingerprint}\"} other {използвайки таблото}}.",
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки {unlockType, select, card {карта с отпечатък \"{unlockId}\"} bio {биометрични данни с ИД \"{unlockId}\"} other {таблото}}.",
           "title": "Заключено устройство"
         },
         "pending_command": {
@@ -157,7 +165,7 @@
           "title": "Актуализирани етикети на устройство"
         },
         "unlock": {
-          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") {isCard, select, true {използвайки карта с отпечатък \"{fingerprint}\"} other {използвайки таблото}}.",
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки {unlockType, select, card {карта с отпечатък \"{unlockId}\"} bio {биометрични данни с ИД \"{unlockId}\"} other {таблото}}.",
           "title": "Отключено устройство"
         }
       },
