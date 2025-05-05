@@ -81,7 +81,7 @@ export function DataTable<TData, TValue>({
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className="relative h-32 text-center"
+                className="relative h-32 rounded-xl text-center"
               >
                 <NoResultsLabel className="top-1/2 -translate-x-1/2 -translate-y-1/2" />
               </TableCell>

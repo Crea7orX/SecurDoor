@@ -60,6 +60,18 @@ export type AccessCardUpdateResponse = z.infer<
   typeof accessCardUpdateResponseSchema
 >;
 
+// AUTHENTICATION
+
+export const accessAuthenticationResponseSchema = z.object({
+  isLocked: z.boolean(),
+  reLockDelay: z.number(),
+  ...apiSignedResponseSchema.shape,
+});
+
+export type AccessAuthenticationResponse = z.infer<
+  typeof accessAuthenticationResponseSchema
+>;
+
 // CARD AUTHENTICATION
 
 export const accessCardAuthenticationSchema = z.object({
@@ -71,12 +83,29 @@ export type AccessCardAuthentication = z.infer<
 >;
 
 export const accessCardAuthenticationResponseSchema = z.object({
-  isLocked: z.boolean(),
-  reLockDelay: z.number(),
   holder: z.string().nullable(),
-  ...apiSignedResponseSchema.shape,
+  ...accessAuthenticationResponseSchema.shape,
 });
 
 export type AccessCardAuthenticationResponse = z.infer<
   typeof accessCardAuthenticationResponseSchema
+>;
+
+// BIOMETRIC AUTHENTICATION
+
+export const accessBiometricAuthenticationSchema = z.object({
+  biometricId: z.number(),
+});
+
+export type AccessBiometricAuthentication = z.infer<
+  typeof accessBiometricAuthenticationSchema
+>;
+
+export const accessBiometricAuthenticationResponseSchema = z.object({
+  individual: z.string().nullable(),
+  ...accessAuthenticationResponseSchema.shape,
+});
+
+export type AccessBiometricAuthenticationResponse = z.infer<
+  typeof accessBiometricAuthenticationResponseSchema
 >;

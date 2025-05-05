@@ -6,6 +6,7 @@ import {
   DiamondMinus,
   DiamondPlus,
   EthernetPort,
+  Fingerprint,
   IdCard,
   Key,
   LaptopMinimalCheck,
@@ -18,6 +19,7 @@ import {
   ShieldCheck,
   ShieldX,
   Siren,
+  SquareTerminal,
   Tag,
   Webhook,
 } from "lucide-react";
@@ -117,27 +119,27 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [serialId, name, isCard, cardFingerprint?, cardHolder?]
+  // Reference: [serialId, name, unlockType, unlockId?, unlockIndividual?]
   "device.lock": {
     title: "Log.logs.device.lock.title",
     text: ({ t, log, actionActor }) => {
-      const isCard = log.reference?.[2] === "true";
+      const isDashboard = log.reference?.[2] === "dash";
 
       return t.rich("Log.logs.device.lock.text", {
-        actor: isCard
-          ? ((log.reference?.[4] ?? actionActor) as string)
-          : actionActor,
+        actor: isDashboard
+          ? actionActor
+          : ((log.reference?.[4] ?? actionActor) as string),
         serialId: (log.reference?.[0] as string) ?? "",
         deviceName: (log.reference?.[1] as string) ?? "",
-        isCard,
-        fingerprint: (log.reference?.[3] as string) ?? "",
+        unlockType: (log.reference?.[2] as string) ?? "",
+        unlockId: (log.reference?.[3] as string) ?? "",
       });
     },
     actor: ({ t, log, actionActor }) => {
       const actor = log.reference?.[4] as string;
 
       // from dashboard
-      if (log.reference?.[2] === "false") {
+      if (log.reference?.[2] === "dash") {
         return actionActor;
       }
 
@@ -151,27 +153,27 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [serialId, name, isCard, cardFingerprint?, cardHolder?]
+  // Reference: [serialId, name, unlockType, unlockId?, unlockIndividual?]
   "device.unlock": {
     title: "Log.logs.device.unlock.title",
     text: ({ t, log, actionActor }) => {
-      const isCard = log.reference?.[2] === "true";
+      const isDashboard = log.reference?.[2] === "dash";
 
       return t.rich("Log.logs.device.unlock.text", {
-        actor: isCard
-          ? ((log.reference?.[4] ?? actionActor) as string)
-          : actionActor,
+        actor: isDashboard
+          ? actionActor
+          : ((log.reference?.[4] ?? actionActor) as string),
         serialId: (log.reference?.[0] as string) ?? "",
         deviceName: (log.reference?.[1] as string) ?? "",
-        isCard,
-        fingerprint: (log.reference?.[3] as string) ?? "",
+        unlockType: (log.reference?.[2] as string) ?? "",
+        unlockId: (log.reference?.[3] as string) ?? "",
       });
     },
     actor: ({ t, log, actionActor }) => {
       const actor = log.reference?.[4] as string;
 
       // from dashboard
-      if (log.reference?.[2] === "false") {
+      if (log.reference?.[2] === "dash") {
         return actionActor;
       }
 
@@ -226,6 +228,20 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
       }),
     icon: Pin,
     color: "info",
+  },
+
+  // Reference: [serialId, deviceName, pendingCommand]
+  "device.pending_command": {
+    title: "Log.logs.device.pending_command.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.device.pending_command.text", {
+        actor: actionActor,
+        serialId: (log.reference?.[0] as string) ?? "",
+        deviceName: (log.reference?.[1] as string) ?? "",
+        pendingCommand: (log.reference?.[2] as string) ?? "",
+      }),
+    icon: SquareTerminal,
+    color: "warning",
   },
 
   // Reference: [serialId]
@@ -428,6 +444,117 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "info",
   },
 
+  // Reference: [biometricId, individual, active]
+  "biometric.create": {
+    title: "Log.logs.biometric.create.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.create.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Fingerprint,
+    color: "success",
+  },
+
+  // Reference: [biometricId, individual, active]
+  "biometric.delete": {
+    title: "Log.logs.biometric.delete.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.delete.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Fingerprint,
+    color: "destructive",
+  },
+
+  // Reference: [biometricId, individual]
+  "biometric.rename": {
+    title: "Log.logs.biometric.rename.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.rename.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: Fingerprint,
+    color: "info",
+  },
+
+  // Reference: [biometricId, individual]
+  "biometric.activate": {
+    title: "Log.logs.biometric.activate.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.activate.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: ShieldCheck,
+    color: "success",
+  },
+
+  // Reference: [biometricId, individual]
+  "biometric.deactivate": {
+    title: "Log.logs.biometric.deactivate.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.biometric.deactivate.text", {
+        actor: actionActor,
+        biometricId: (log.reference?.[0] as string) ?? "",
+        individual: (log.reference?.[1] as string) ?? "",
+      }),
+    icon: OctagonMinus,
+    color: "warning",
+  },
+
+  // Reference: [biometricId, individual, deviceSerialId, deviceName]
+  "biometric.lock": {
+    title: "Log.logs.biometric.lock.title",
+    text: ({ t, log }) =>
+      t.rich("Log.logs.biometric.lock.text", {
+        actor: (log.reference?.[1] as string) ?? "",
+        biometricId: (log.reference?.[0] as string) ?? "",
+        serialId: (log.reference?.[2] as string) ?? "",
+        deviceName: (log.reference?.[3] as string) ?? "",
+      }),
+    actor: ({ t, log }) => {
+      const actor = log.reference?.[1] as string;
+
+      if (actor === "NULL") {
+        return t("Log.activity_card.by.unknown");
+      }
+
+      return actor ?? t("Log.activity_card.by.unknown");
+    },
+    icon: Lock,
+    color: "destructive",
+  },
+
+  // Reference: [biometricId, individual, deviceSerialId, deviceName]
+  "biometric.unlock": {
+    title: "Log.logs.biometric.unlock.title",
+    text: ({ t, log }) =>
+      t.rich("Log.logs.biometric.unlock.text", {
+        actor: (log.reference?.[1] as string) ?? "",
+        biometricId: (log.reference?.[0] as string) ?? "",
+        serialId: (log.reference?.[2] as string) ?? "",
+        deviceName: (log.reference?.[3] as string) ?? "",
+      }),
+    actor: ({ t, log }) => {
+      const actor = log.reference?.[1] as string;
+
+      if (actor === "NULL") {
+        return t("Log.activity_card.by.unknown");
+      }
+
+      return actor ?? t("Log.activity_card.by.unknown");
+    },
+    icon: LockOpen,
+    color: "success",
+  },
+
   // Reference: [name]
   "tag.create": {
     title: "Log.logs.tag.create.title",
@@ -488,7 +615,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.create": {
     title: "Log.logs.webhook.create.title",
     text: ({ t, log, actionActor }) =>
@@ -502,7 +629,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "success",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type]
   "webhook.delete": {
     title: "Log.logs.webhook.delete.title",
     text: ({ t, log, actionActor }) =>
@@ -515,7 +642,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.rename": {
     title: "Log.logs.webhook.rename.title",
     text: ({ t, log, actionActor }) =>
@@ -529,7 +656,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "info",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.scope_update": {
     title: "Log.logs.webhook.scope_update.title",
     text: ({ t, log, actionActor }) =>
@@ -543,7 +670,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "warning",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.enable": {
     title: "Log.logs.webhook.enable.title",
     text: ({ t, log, actionActor }) =>
@@ -556,7 +683,7 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "success",
   },
 
-  // Reference: [name, type, scope, enabled]
+  // Reference: [name, type, scope]
   "webhook.disable": {
     title: "Log.logs.webhook.disable.title",
     text: ({ t, log, actionActor }) =>

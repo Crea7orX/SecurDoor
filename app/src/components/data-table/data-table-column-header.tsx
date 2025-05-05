@@ -23,10 +23,10 @@ export function DataTableColumnHeader<TData, TValue>({
       className={cn(
         className,
         "inline-flex items-center text-secondary-foreground",
-        column.getCanSort() && column.getIsSorted() && "cursor-pointer",
+        column.getCanSort() && "cursor-pointer",
       )}
       onClick={() => {
-        if (!column.getCanSort() || !column.getIsSorted()) return;
+        if (!column.getCanSort()) return;
         column.toggleSorting(column.getIsSorted() === "asc");
       }}
       {...props}

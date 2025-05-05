@@ -197,6 +197,17 @@
     "reboot": {
       "button": "Reboot"
     },
+    "restart": {
+      "alert": {
+        "description": "This action cannot be undone. This will restart this device and it will be inaccessible until it is restarted.",
+        "notification": {
+          "error": "Failed to restart device!",
+          "loading": "Restarting device...",
+          "success": "Restart command sent!"
+        },
+        "title": "Are you absolutely sure?"
+      }
+    },
     "state": {
       "description": "State of the door lock",
       "emergency_state": {

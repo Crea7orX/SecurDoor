@@ -1,3 +1,4 @@
+import { DeviceRestartAlertDialog } from "@/components/devices/command/device-restart-alert-dialog";
 import { DeviceDeleteAlertDialog } from "@/components/devices/device-delete-alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,23 +8,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { type DeviceResponse } from "@/lib/validations/device";
 import { Power, Trash, TriangleAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceDangerZoneCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  id: string;
+  device: DeviceResponse;
 }
 
 const DeviceDangerZoneCard = React.forwardRef<
   HTMLDivElement,
   DeviceDangerZoneCardProps
->(({ className, id, ...props }, ref) => {
+>(({ className, device, ...props }, ref) => {
   const t = useTranslations("Device");
   const tButton = useTranslations("Common.button");
-
-  // todo: fetch data from api with id
 
   return (
     <Card className={className} ref={ref} {...props}>
@@ -35,11 +35,16 @@ const DeviceDangerZoneCard = React.forwardRef<
         <CardDescription>{t("danger_zone.description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex items-stretch gap-2 max-md:flex-col">
-        <Button variant="warning">
-          <Power />
-          <span>{t("reboot.button")}</span>
-        </Button>
-        <DeviceDeleteAlertDialog id={id}>
+        <DeviceRestartAlertDialog id={device.id}>
+          <Button
+            variant="warning"
+            disabled={device.pendingCommand === "restart"}
+          >
+            <Power />
+            <span>{t("reboot.button")}</span>
+          </Button>
+        </DeviceRestartAlertDialog>
+        <DeviceDeleteAlertDialog id={device.id}>
           <Button variant="destructive">
             <Trash />
             <span>{tButton("remove")}</span>

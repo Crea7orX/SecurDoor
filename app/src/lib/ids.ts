@@ -1,5 +1,6 @@
 enum IdPrefix {
   API_KEY = "api_",
+  BIOMETRIC = "bio_",
   CARD = "card_",
   DEVICE = "dvc_",
   LOG = "log_",

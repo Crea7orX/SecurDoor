@@ -24,26 +24,26 @@ export function DataTableSortSelect<TData>({
 }: DataTableSortSelectProps<TData>) {
   const t = useTranslations();
 
+  const [value, setValue] = React.useState("");
+
+  const columns = table.getAllColumns();
   const canSort = React.useMemo(
-    () => table.getAllColumns().some((column) => column.getCanSort()),
-    [table],
+    () => columns.some((column) => column.getCanSort()),
+    [columns],
   );
-  const initialSortedColumn = React.useMemo(
-    () => table.getAllColumns().find((column) => column.getIsSorted()),
-    [table],
-  );
+  React.useMemo(() => {
+    setValue(columns.find((column) => column.getIsSorted())?.id ?? "");
+  }, [columns]);
 
   const onValueChange = (value: string) => {
+    setValue(value);
     table.getColumn(value)?.toggleSorting(true);
   };
 
   if (!canSort) return null;
 
   return (
-    <Select
-      defaultValue={initialSortedColumn?.id}
-      onValueChange={onValueChange}
-    >
+    <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger className={cn("h-8 w-fit gap-2", className)} {...props}>
         {t("Data_Table.sort_by")}
         <SelectValue />

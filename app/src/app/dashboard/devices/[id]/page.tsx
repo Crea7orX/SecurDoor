@@ -93,7 +93,7 @@ export default function DevicePage({ params }: DevicePageProps) {
                 <DeviceStatusCard device={data} />
               </MasonryItem>
               <MasonryItem>
-                <DeviceDangerZoneCard id={params.id} />
+                <DeviceDangerZoneCard device={data} />
               </MasonryItem>
             </MasonryRoot>
           </div>

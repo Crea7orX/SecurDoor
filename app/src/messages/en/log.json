@@ -39,6 +39,36 @@
           "title": "API key deleted"
         }
       },
+      "biometric": {
+        "activate": {
+          "text": "\"{actor}\" activated biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric activated"
+        },
+        "create": {
+          "text": "\"{actor}\" created biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric created"
+        },
+        "deactivate": {
+          "text": "\"{actor}\" deactivated biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric deactivated"
+        },
+        "delete": {
+          "text": "\"{actor}\" deleted biometric with individual \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric deleted"
+        },
+        "lock": {
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") using biometric with ID \"{biometricId}\".",
+          "title": "Biometric locked device"
+        },
+        "rename": {
+          "text": "\"{actor}\" renamed biometric individual to \"{individual, select, NULL {(unknown)} other {{individual}}}\" (BID: \"{biometricId}\").",
+          "title": "Biometric individual renamed"
+        },
+        "unlock": {
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") using biometric with ID \"{biometricId}\".",
+          "title": "Biometric unlocked device"
+        }
+      },
       "card": {
         "access_update": {
           "text": "\"{actor}\" updated card with holder \"{holder, select, NULL {(unknown)} other {{holder}}}\" (FID: \"{fingerprint}\") access, adding {newCount, plural, =1 {# device} other {# devices}} and removing {deleteCount, plural, =1 {# device} other {# devices}}.",
@@ -111,8 +141,12 @@
           "title": "Device emergency state updated"
         },
         "lock": {
-          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" locked device \"{deviceName}\" (SN: \"{serialId}\") using {unlockType, select, card {card with fingerprint \"{unlockId}\"} bio {biometric with ID \"{unlockId}\"} other {the dashboard}}.",
           "title": "Device locked"
+        },
+        "pending_command": {
+          "text": "\"{actor}\" sent command \"{pendingCommand, select, restart {restart} register_biometric {register biometrics} other {(unknown)}}\" to device \"{deviceName}\" (SN: \"{serialId}\").",
+          "title": "Command sent to device"
         },
         "re_lock_delay": {
           "text": "\"{actor}\" updated device \"{deviceName}\" (SN: \"{serialId}\") re-lock delay to \"{reLockDelay, select, 0 {never} other {{reLockDelay} {reLockDelay, plural, one {second} other {seconds}}}}\".",
@@ -131,7 +165,7 @@
           "title": "Device tags updated"
         },
         "unlock": {
-          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") {isCard, select, true {using card with fingerprint \"{fingerprint}\"} other {using the dashboard}}.",
+          "text": "\"{actor, select, NULL {(unknown)} other {{actor}}}\" unlocked device \"{deviceName}\" (SN: \"{serialId}\") using {unlockType, select, card {card with fingerprint \"{unlockId}\"} bio {biometric with ID \"{unlockId}\"} other {the dashboard}}.",
           "title": "Device unlocked"
         }
       },

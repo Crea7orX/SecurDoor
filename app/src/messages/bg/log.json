@@ -39,6 +39,36 @@
           "title": "Изтрит API ключ"
         }
       },
+      "biometric": {
+        "activate": {
+          "text": "\"{actor}\" активира биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Активирани биометрични данни"
+        },
+        "create": {
+          "text": "\"{actor}\" създаде биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Създадени биометрични данни"
+        },
+        "deactivate": {
+          "text": "\"{actor}\" деактивира биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Деактивирани биометрични данни"
+        },
+        "delete": {
+          "text": "\"{actor}\" изтри биометрични данни с притежател \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Изтрити биометрични данни"
+        },
+        "lock": {
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки биометрични данни с ИД \"{biometricId}\".",
+          "title": "Заключено устройство с биометрични данни"
+        },
+        "rename": {
+          "text": "\"{actor}\" преименува притежателя на биометрични данни на \"{individual, select, NULL {(неизвестен)} other {{individual}}}\" (БДИД: \"{biometricId}\").",
+          "title": "Преименуван притежател на биометрични данни"
+        },
+        "unlock": {
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки биометрични данни с ИД \"{biometricId}\".",
+          "title": "Отключено устройство с биометрични данни"
+        }
+      },
       "card": {
         "access_update": {
           "text": "\"{actor}\" актуализира достъпа на карта с притежател \"{holder, select, NULL {(неизвестен)} other {{holder}}}\" (ОИД: \"{fingerprint}\"), добавяйки {newCount, plural, =1 {# устройство} other {# устройства}} и премахвайки {deleteCount, plural, =1 {# устройство} other {# устройства}}.",
@@ -111,8 +141,12 @@
           "title": "Обновено аварийно състояние на устройство"
         },
         "lock": {
-          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") {isCard, select, true {използвайки карта с отпечатък \"{fingerprint}\"} other {използвайки таблото}}.",
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" заключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки {unlockType, select, card {карта с отпечатък \"{unlockId}\"} bio {биометрични данни с ИД \"{unlockId}\"} other {таблото}}.",
           "title": "Заключено устройство"
+        },
+        "pending_command": {
+          "text": "\"{actor}\" изпрати команда \"{pendingCommand, select, restart {рестартиране} register_biometric {добавяне на биометрични данни} other {(неизвестна)}}\" до устройство \"{deviceName}\" (СН: \"{serialId}\").",
+          "title": "Изпратена команда до устройство"
         },
         "re_lock_delay": {
           "text": "\"{actor}\" обнови времето за повторно заключване на устройство \"{deviceName}\" (СН: \"{serialId}\") на \"{reLockDelay, select, 0 {никога} other {{reLockDelay} {reLockDelay, plural, one {секунда} other {секунди}}}}\".",
@@ -131,7 +165,7 @@
           "title": "Актуализирани етикети на устройство"
         },
         "unlock": {
-          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") {isCard, select, true {използвайки карта с отпечатък \"{fingerprint}\"} other {използвайки таблото}}.",
+          "text": "\"{actor, select, NULL {(неизвестен)} other {{actor}}}\" отключи устройство \"{deviceName}\" (СН: \"{serialId}\") използвайки {unlockType, select, card {карта с отпечатък \"{unlockId}\"} bio {биометрични данни с ИД \"{unlockId}\"} other {таблото}}.",
           "title": "Отключено устройство"
         }
       },
