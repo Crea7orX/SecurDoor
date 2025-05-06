@@ -62,6 +62,9 @@
             "created_at": {
                 "label": "Added"
             },
+            "device": {
+                "label": "Device"
+            },
             "individual": {
                 "label": "Individual",
                 "placeholder": "Filter by individual"

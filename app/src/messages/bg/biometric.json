@@ -62,6 +62,9 @@
             "created_at": {
                 "label": "Добавени"
             },
+            "device": {
+                "label": "Устройство"
+            },
             "individual": {
                 "label": "Притежател",
                 "placeholder": "Филтриране по притежател"
