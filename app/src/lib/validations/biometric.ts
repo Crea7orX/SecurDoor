@@ -45,6 +45,7 @@ export const biometricsSearchParamsCache = createSearchParamsCache({
   ]),
   individual: parseAsString,
   active: parseAsArrayOf(parseAsBoolean),
+  deviceId: parseAsArrayOf(parseAsString),
 });
 
 export type BiometricsGetSchema = Awaited<
