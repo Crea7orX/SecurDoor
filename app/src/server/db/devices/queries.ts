@@ -16,6 +16,7 @@ import {
 } from "@/server/db/devices-states/queries";
 import { devicesStates } from "@/server/db/devices-states/schema";
 import { devicesToTags } from "@/server/db/devices-to-tags/schema";
+import { cancelScheduledReLock } from "@/server/db/devices/re-lock";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert } from "@/server/db/logs/queries";
 import { and, asc, desc, eq, ilike, inArray, isNull, sql } from "drizzle-orm";
@@ -279,6 +280,7 @@ interface DeviceSetLockedParams {
   userId: string;
   ownerId: string;
   isLocked: boolean;
+  autoLock?: boolean;
 }
 
 export async function deviceSetLocked({
@@ -286,7 +288,13 @@ export async function deviceSetLocked({
   userId,
   ownerId,
   isLocked,
+  autoLock = false,
 }: DeviceSetLockedParams) {
+  // If we're locking the device, cancel any re-lock timer
+  if (!autoLock && isLocked) {
+    cancelScheduledReLock({ deviceId: id });
+  }
+
   const device = (
     await db
       .update(devices)
