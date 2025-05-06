@@ -46,6 +46,11 @@ export function getColumns(): ColumnDef<BiometricResponse>[] {
       },
     },
     {
+      accessorKey: "deviceId",
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
       accessorKey: "createdAt",
       enableHiding: false,
       header: ({ column }) => (

@@ -118,7 +118,11 @@
       "device": {
         "access_denied": {
           "text": "Someone tried to access device \"{deviceName}\" (SN: \"{serialId}\") using card with fingerprint \"{fingerprint}\" but it was denied.",
-          "title": "Device access denied"
+          "title": "Device access denied with card"
+        },
+        "access_denied_biometric": {
+          "text": "Someone tried to access device \"{deviceName}\" (SN: \"{serialId}\") using biometric with ID \"{biometricId}\" but it was denied.",
+          "title": "Device access denied with biometrics"
         },
         "access_update": {
           "text": "\"{actor}\" updated device \"{deviceName}\" (SN: \"{serialId}\") access, adding {newCount, plural, =1 {# card} other {# cards}} and removing {deleteCount, plural, =1 {# card} other {# cards}}.",

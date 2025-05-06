@@ -10,8 +10,8 @@
                 "description": "This will send command to the device to add biometric. You will have 10 seconds to register the biometric on the device.",
                 "notification": {
                     "error": "Failed to add biometric!",
-                    "loading": "Adding Card...",
-                    "success": "Card Added!"
+                    "loading": "Adding biometric...",
+                    "success": "Add biometric command sent!"
                 },
                 "title": "Are you absolutely sure?"
             },
@@ -61,6 +61,9 @@
             },
             "created_at": {
                 "label": "Added"
+            },
+            "device": {
+                "label": "Device"
             },
             "individual": {
                 "label": "Individual",

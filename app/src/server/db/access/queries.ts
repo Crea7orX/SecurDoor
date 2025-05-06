@@ -9,6 +9,10 @@ import { cards } from "@/server/db/cards/schema";
 import { deviceStateHeartbeatUpdate } from "@/server/db/devices-states/queries";
 import { devicesToTags } from "@/server/db/devices-to-tags/schema";
 import { type deviceGetBySerialIdUnprotected } from "@/server/db/devices/queries";
+import {
+  cancelScheduledReLock,
+  scheduleReLock,
+} from "@/server/db/devices/re-lock";
 import { devices } from "@/server/db/devices/schema";
 import { logInsert, logInsertMultiple } from "@/server/db/logs/queries";
 import { and, eq, sql } from "drizzle-orm";
@@ -97,6 +101,11 @@ export async function accessCardTryAuthentication({
     card.holder ?? "NULL",
   ];
 
+  // If unlocking, cancel any scheduled re-locks
+  if (!device.isLocked) {
+    cancelScheduledReLock({ deviceId });
+  }
+
   // Update device locked state
   if (device.isLocked) {
     await db
@@ -106,6 +115,13 @@ export async function accessCardTryAuthentication({
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
       .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)));
+
+    void scheduleReLock({
+      deviceId,
+      userId: "system",
+      ownerId,
+      delay: device.reLockDelay,
+    });
   } else {
     await db
       .update(devices)
@@ -202,6 +218,11 @@ export async function accessBiometricTryAuthentication({
     device.name,
   ];
 
+  // If unlocking, cancel any scheduled re-locks
+  if (!device.isLocked) {
+    cancelScheduledReLock({ deviceId });
+  }
+
   // Update device locked state
   if (device.isLocked) {
     await db
@@ -211,6 +232,13 @@ export async function accessBiometricTryAuthentication({
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
       .where(and(eq(devices.ownerId, ownerId), eq(devices.id, deviceId)));
+
+    void scheduleReLock({
+      deviceId,
+      userId: "system",
+      ownerId,
+      delay: device.reLockDelay,
+    });
   } else {
     await db
       .update(devices)

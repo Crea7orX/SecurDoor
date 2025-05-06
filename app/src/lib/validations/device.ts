@@ -1,7 +1,10 @@
 import { getSortingStateParser } from "@/lib/data-table-parsers";
 import { deviceStateResponseSchema } from "@/lib/validations/device-state";
 import { tagResponseSchema } from "@/lib/validations/tag";
-import { emergencyStateEnum, pendingCommand } from "@/server/db/devices/schema";
+import {
+  emergencyStateEnum,
+  pendingCommandEnum,
+} from "@/server/db/devices/schema";
 import {
   createSearchParamsCache,
   parseAsArrayOf,
@@ -27,7 +30,7 @@ export const deviceResponseSchema = z.object({
   reLockDelay: z.number(),
   isLocked: z.boolean(),
   emergencyState: z.enum(emergencyStateEnum.enumValues).nullable(),
-  pendingCommand: z.enum(pendingCommand.enumValues).nullable(),
+  pendingCommand: z.enum(pendingCommandEnum.enumValues).nullable(),
   ownerId: z.string(),
   createdAt: z.number(),
   updatedAt: z.number().nullable(),
@@ -114,7 +117,7 @@ export type DeviceTagsUpdateResponse = z.infer<
 >;
 
 export const deviceSetPendingCommandSchema = z.object({
-  pendingCommand: z.enum(pendingCommand.enumValues).nullable(),
+  pendingCommand: z.enum(pendingCommandEnum.enumValues).nullable(),
 });
 
 export type DeviceSetPendingCommand = z.infer<
