@@ -34,6 +34,7 @@ export default function BiometricsPage({ searchParams }: BiometricsPageProps) {
 
   const { data, isLoading, isPlaceholderData } = useGetAllBiometricsQuery({
     searchParams,
+    refetchInterval: 2500,
   });
   const { data: devices, isLoading: devicesIsLoading } = useGetAllDevicesQuery({
     searchParams: {
