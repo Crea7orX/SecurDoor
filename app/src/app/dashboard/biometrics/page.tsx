@@ -15,6 +15,7 @@ import { NoResultsLabel } from "@/components/data-table/no-results-label";
 import { DemoAlert } from "@/components/demo/demo-alert";
 import { Button } from "@/components/ui/button";
 import { useGetAllBiometricsQuery } from "@/hooks/api/biometrics/use-get-all-biometrics-query";
+import { useGetAllDevicesQuery } from "@/hooks/api/devices/use-get-all-devices-query";
 import { useDataTableViewStore } from "@/hooks/store/use-data-table-view-store";
 import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
@@ -33,6 +34,12 @@ export default function BiometricsPage({ searchParams }: BiometricsPageProps) {
 
   const { data, isLoading, isPlaceholderData } = useGetAllBiometricsQuery({
     searchParams,
+  });
+  const { data: devices, isLoading: devicesIsLoading } = useGetAllDevicesQuery({
+    searchParams: {
+      perPage: "50", // todo: maybe pagination
+      sort: '[{"id":"name","desc":false},{"id":"createdAt","desc":false}]',
+    },
   });
 
   const { view } = useDataTableViewStore();
@@ -63,6 +70,15 @@ export default function BiometricsPage({ searchParams }: BiometricsPageProps) {
         },
       ],
     },
+    {
+      id: "deviceId",
+      label: t("filter.device.label"),
+      options:
+        devices?.data.map((device) => ({
+          label: device.name,
+          value: device.id,
+        })) ?? [],
+    },
   ];
 
   const { table } = useDataTable({
@@ -72,6 +88,9 @@ export default function BiometricsPage({ searchParams }: BiometricsPageProps) {
     filterFields,
     initialState: {
       sorting: [{ id: "createdAt", desc: true }],
+      columnVisibility: {
+        deviceId: false,
+      },
     },
     getRowId: (originalRow) => originalRow.id,
     shallow: false,
