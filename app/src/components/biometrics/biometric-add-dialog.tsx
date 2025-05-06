@@ -43,10 +43,11 @@ export function BiometricAddDialog({
       enabled: isOpen,
     });
 
-  const { mutateAsync: registerFingeprint } =
-    useSetDevicePendingCommandMutation({
+  const { mutateAsync: registerBiometric } = useSetDevicePendingCommandMutation(
+    {
       id: deviceId ?? "",
-    });
+    },
+  );
 
   return (
     <Dialog {...props} open={isOpen} onOpenChange={setIsOpen}>
@@ -85,7 +86,7 @@ export function BiometricAddDialog({
           </Button>
           <ConfirmAlertDialog
             onConfirm={() =>
-              registerFingeprint({ pendingCommand: "register_biometric" })
+              registerBiometric({ pendingCommand: "register_biometric" })
             }
             onSuccess={() => setIsOpen(false)}
             namespace="Biometric.add.confirm"
