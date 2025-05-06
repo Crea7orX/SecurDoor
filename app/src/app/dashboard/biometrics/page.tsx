@@ -97,7 +97,7 @@ export default function BiometricsPage({ searchParams }: BiometricsPageProps) {
     clearOnDefault: true,
   });
 
-  if (isLoading) {
+  if (isLoading || devicesIsLoading) {
     return <BiometricsLoading />;
   }
 
