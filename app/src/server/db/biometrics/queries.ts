@@ -83,6 +83,9 @@ export async function biometricsGetAll({
       searchParams.active && searchParams.active.length > 0
         ? inArray(biometrics.active, searchParams.active)
         : undefined,
+      searchParams.deviceId && searchParams.deviceId.length > 0
+        ? inArray(biometrics.deviceId, searchParams.deviceId)
+        : undefined,
     );
 
     const orderBy =
