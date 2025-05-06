@@ -215,6 +215,20 @@ export const LogDisplayInfos: Record<string, LogDisplayInfo> = {
     color: "destructive",
   },
 
+  // Reference: [serialId, name, biometricId]
+  "device.access_denied_biometric": {
+    title: "Log.logs.device.access_denied_biometric.title",
+    text: ({ t, log, actionActor }) =>
+      t.rich("Log.logs.device.access_denied_biometric.text", {
+        actor: actionActor,
+        serialId: (log.reference?.[0] as string) ?? "",
+        deviceName: (log.reference?.[1] as string) ?? "",
+        biometricId: (log.reference?.[2] as string) ?? "",
+      }),
+    icon: ShieldX,
+    color: "destructive",
+  },
+
   // Reference: [serialId, name, [...newTagIds], [...toDelete]]
   "device.tags_update": {
     title: "Log.logs.device.tags_update.title",
