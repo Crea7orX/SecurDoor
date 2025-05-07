@@ -126,7 +126,6 @@ void DeviceController::buzzBuzzer(int times, int delayMs) {
 }
 
 void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger, DeviceController &deviceController, RemoteConnection &remoteConnection, TimeKeeping &timeKeeping, MessagingService &messagingService) {
-    finger.LEDcontrol(false);
     deviceController.deleteRemovedFingerprints(finger, deviceController, remoteConnection, timeKeeping, messagingService);
 
     finger.getTemplateCount();
@@ -138,7 +137,6 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
         return;
     }
 
-    finger.LEDcontrol(true);
     deviceController.buzzBuzzer(2, 150);
     logger.log(LoggingConfig::MYLOG, INFO, "Enrolling finger as ID %u", id);
 
@@ -152,7 +150,6 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
         unsigned long startTime = millis();
         while (finger.getImage() != FINGERPRINT_OK) {
             if (millis() - startTime > 10000) {
-                finger.LEDcontrol(false);
                 logger.log(LoggingConfig::MYLOG, INFO, "Timeout");
                 lcdDisplay.clear();
                 lcdDisplay.setCursor(0, 0);
@@ -162,7 +159,6 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
                 deviceController.buzzBuzzer(2, 400);
                 delay(1000);
                 lcdDisplay.standbyDisplay();
-                finger.LEDcontrol(true);
                 return;
             }
         }
@@ -177,12 +173,10 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
         deviceController.buzzBuzzer(2, 400);
         delay(1000);
         lcdDisplay.standbyDisplay();
-        finger.LEDcontrol(true);
         return;
     }
 
     // turn off fingerprint LED
-    finger.LEDcontrol(false);
     lcdDisplay.clear();
     lcdDisplay.setCursor(0, 0);
     lcdDisplay.print("|  SecurDoor   |");
@@ -195,7 +189,6 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
         unsigned long startTime = millis();
         while (finger.getImage() != FINGERPRINT_NOFINGER) {
             if (millis() - startTime > 10000) {
-                finger.LEDcontrol(false);
                 logger.log(LoggingConfig::MYLOG, INFO, "Timeout");
                 lcdDisplay.clear();
                 lcdDisplay.setCursor(0, 0);
@@ -205,13 +198,11 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
                 deviceController.buzzBuzzer(2, 400);
                 delay(1000);
                 lcdDisplay.standbyDisplay();
-                finger.LEDcontrol(true);
                 return;
             }
         }
     }
 
-    finger.LEDcontrol(true);
     deviceController.buzzBuzzer(1, 300);
     logger.log(LoggingConfig::MYLOG, INFO, "Place same finger again");
     lcdDisplay.clear();
@@ -223,7 +214,6 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
         unsigned long startTime = millis();
         while (finger.getImage() != FINGERPRINT_OK) {
             if (millis() - startTime > 10000) {
-                finger.LEDcontrol(false);
                 logger.log(LoggingConfig::MYLOG, INFO, "Timeout");
                 lcdDisplay.clear();
                 lcdDisplay.setCursor(0, 0);
@@ -233,13 +223,11 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
                 deviceController.buzzBuzzer(2, 400);
                 delay(1000);
                 lcdDisplay.standbyDisplay();
-                finger.LEDcontrol(true);
                 return;
             }
         }
     }
     if (finger.image2Tz(2) != FINGERPRINT_OK) {
-        finger.LEDcontrol(false);
         logger.log(LoggingConfig::MYLOG, INFO, "Image fail");
         lcdDisplay.clear();
         lcdDisplay.setCursor(0, 0);
@@ -249,12 +237,10 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
         deviceController.buzzBuzzer(2, 400);
         delay(1000);
         lcdDisplay.standbyDisplay();
-        finger.LEDcontrol(true);
         return;
     }
 
     if (finger.createModel() != FINGERPRINT_OK) {
-        finger.LEDcontrol(false);
         logger.log(LoggingConfig::MYLOG, INFO, "Create fail");
         lcdDisplay.clear();
         lcdDisplay.setCursor(0, 0);
@@ -264,11 +250,9 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
         deviceController.buzzBuzzer(2, 400);
         delay(1000);
         lcdDisplay.standbyDisplay();
-        finger.LEDcontrol(true);
         return;
     }
     if (finger.storeModel(id) != FINGERPRINT_OK) {
-        finger.LEDcontrol(false);
         logger.log(LoggingConfig::MYLOG, INFO, "Store fail");
         lcdDisplay.clear();
         lcdDisplay.setCursor(0, 0);
@@ -278,10 +262,8 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
         deviceController.buzzBuzzer(2, 400);
         delay(1000);
         lcdDisplay.standbyDisplay();
-        finger.LEDcontrol(true);
         return;
     }
-    finger.LEDcontrol(false);
 
     deviceController.buzzBuzzer(2, 200);
     lcdDisplay.clear();
@@ -294,7 +276,6 @@ void DeviceController::beginEnrollmentOfFingerprint(Adafruit_Fingerprint &finger
     remoteConnection.enrollFingerprintToServer(id, deviceController, timeKeeping, messagingService);
 
     delay(1000);
-    finger.LEDcontrol(true);
     lcdDisplay.standbyDisplay();
 }
 
