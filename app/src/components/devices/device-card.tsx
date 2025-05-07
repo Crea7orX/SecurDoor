@@ -47,10 +47,14 @@ const DeviceCard = React.forwardRef<HTMLDivElement, DeviceCardProps>(
           />
           <div className="flex flex-wrap items-center gap-2 max-md:justify-center">
             {!device.state ? (
-              <Skeleton className="h-6 w-24" />
+              <>
+                <Skeleton className="h-6 w-24" />
+                <Skeleton className="h-6 w-24" />
+              </>
             ) : (
               <DeviceStateBadges
                 isLockedState={device.state.isLockedState}
+                doorState={device.state.doorState}
                 emergencyState={device.emergencyState}
               />
             )}

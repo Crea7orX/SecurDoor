@@ -78,6 +78,7 @@ export function getColumns({ now }: Props): ColumnDef<DeviceResponse>[] {
         <div className="flex items-center gap-2">
           <DeviceStateBadges
             isLockedState={row.original.state?.isLockedState ?? true}
+            doorState={row.original.state?.doorState ?? null}
             emergencyState={row.getValue("emergencyState")}
           />
         </div>

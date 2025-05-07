@@ -29,13 +29,17 @@ const DeviceStateCard = React.forwardRef<HTMLDivElement, DeviceStateCardProps>(
           </CardTitle>
           <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
-        <CardContent className="flex gap-2">
+        <CardContent className="flex flex-wrap gap-2">
           {!device.state ? (
-            <Skeleton className="h-8 w-32" />
+            <>
+              <Skeleton className="h-8 w-32" />
+              <Skeleton className="h-8 w-32" />
+            </>
           ) : (
             <DeviceStateBadges
               className="text-md"
               isLockedState={device.state.isLockedState}
+              doorState={device.state.doorState}
               emergencyState={device.emergencyState}
             />
           )}
