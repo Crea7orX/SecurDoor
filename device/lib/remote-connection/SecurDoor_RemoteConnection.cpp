@@ -157,7 +157,6 @@ void RemoteConnection::sendHeartbeat(TimeKeeping &timeKeepingService,
     if (millis() - lastHeartbeat > 5000) {
         // deviceController.rgbLed(50, 0, 0, true, false);
         deviceController.setLED(1, true);
-        fingerprintSensor.LEDcontrol(false);
         lastHeartbeat = millis();
 
         // Build headers
@@ -235,7 +234,6 @@ void RemoteConnection::sendHeartbeat(TimeKeeping &timeKeepingService,
                     deviceController.setEmergency(true);
                     deviceController.setDashboardOverride(true);
                 }
-                fingerprintSensor.LEDcontrol(!deviceController.isEmergency());
                 delay(1000);
                 return;
             } else {
