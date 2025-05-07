@@ -7,6 +7,7 @@ import { z } from "zod";
 
 export const deviceHeartbeatSchema = z.object({
   isLockedState: z.boolean(),
+  doorState: z.boolean().optional(),
 });
 
 export type DeviceHeartbeat = z.infer<typeof deviceHeartbeatSchema>;

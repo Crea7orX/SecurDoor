@@ -1,19 +1,29 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { type DeviceResponse } from "@/lib/validations/device";
-import { BellElectric, Construction, Lock, LockOpen } from "lucide-react";
+import {
+  BellElectric,
+  Construction,
+  DoorClosed,
+  DoorClosedLocked,
+  DoorOpen,
+  Lock,
+  LockOpen,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 
 interface DeviceStateBadgesProps
   extends React.ComponentPropsWithoutRef<typeof Badge> {
   isLockedState: boolean;
+  doorState: boolean | null;
   emergencyState: DeviceResponse["emergencyState"];
 }
 
 export function DeviceStateBadges({
   className,
   isLockedState,
+  doorState,
   emergencyState,
   ...props
 }: DeviceStateBadgesProps) {
@@ -32,6 +42,23 @@ export function DeviceStateBadges({
           <span>{t("state.unlocked")}</span>
         </Badge>
       )}
+      {typeof doorState === "boolean" &&
+        (doorState ? (
+          <Badge className={className} {...props} variant="success">
+            {emergencyState === "lockdown" ? (
+              <DoorClosedLocked className="mr-1 size-4" />
+            ) : (
+              <DoorClosed className="mr-1 size-4" />
+            )}
+
+            <span>{t("state.closed")}</span>
+          </Badge>
+        ) : (
+          <Badge className={className} {...props} variant="destructive">
+            <DoorOpen className="mr-1 size-4" />
+            <span>{t("state.open")}</span>
+          </Badge>
+        ))}
       {emergencyState === "lockdown" ? (
         <Badge
           className={cn("ring-4 ring-destructive/50", className)}

@@ -215,7 +215,9 @@
         "lockdown": "LOCKDOWN"
       },
       "state": {
+        "closed": "Closed",
         "locked": "Locked",
+        "open": "Open",
         "unlocked": "Unlocked"
       },
       "title": "State"

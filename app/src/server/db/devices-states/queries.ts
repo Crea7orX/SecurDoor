@@ -173,6 +173,8 @@ export async function deviceStateHeartbeat({
       .update(devicesStates)
       .set({
         isLockedState: heartbeat.isLockedState,
+        doorState:
+          typeof heartbeat.doorState === "boolean" ? heartbeat.doorState : null,
         lastSeenAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
         updatedAt: sql`(EXTRACT(EPOCH FROM NOW()))`,
       })
