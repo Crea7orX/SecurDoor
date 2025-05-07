@@ -60,3 +60,9 @@ export const biometricsPaginatedResponseSchema = z.object({
 export type BiometricsPaginatedResponse = z.infer<
   typeof biometricsPaginatedResponseSchema
 >;
+
+export const biometricsGetKnownSchema = z.object({
+  knownBiometricIds: z.number().array(),
+});
+
+export type BiometricsGetKnownSchema = z.infer<typeof biometricsGetKnownSchema>;
