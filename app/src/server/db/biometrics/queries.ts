@@ -272,3 +272,26 @@ export async function biometricDelete({
 
   return biometric;
 }
+
+interface biometricsGetKnownProps {
+  deviceId: string;
+  ownerId: string;
+}
+
+export async function biometricsGetKnown({
+  deviceId,
+  ownerId,
+}: biometricsGetKnownProps) {
+  const knownBiometrics = await db
+    .select({ biometricId: biometrics.biometricId })
+    .from(biometrics)
+    .where(
+      and(
+        eq(biometrics.ownerId, ownerId), // Ensure ownership
+        eq(biometrics.deviceId, deviceId),
+      ),
+    )
+    .orderBy(asc(biometrics.biometricId));
+
+  return knownBiometrics.map((item) => item.biometricId);
+}
