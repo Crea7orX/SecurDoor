@@ -67,8 +67,8 @@ namespace SecurDoor
     namespace ServoConfig
     {
         constexpr uint8_t SERVO_PIN = 13;
-        constexpr uint16_t SERVO_UNLOCK_ANGLE = 90;
-        constexpr uint16_t SERVO_LOCK_ANGLE = 0;
+        constexpr uint16_t SERVO_UNLOCK_ANGLE = 0;
+        constexpr uint16_t SERVO_LOCK_ANGLE = 90;
     }
 
     namespace NetworkConfig
