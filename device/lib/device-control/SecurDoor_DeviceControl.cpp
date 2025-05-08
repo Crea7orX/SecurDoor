@@ -396,7 +396,7 @@ namespace SecurDoor
                     lastBeep = millis();
                 }
                 
-                if (DeviceConfig::USE_DOOR_SWITCH)
+                if (!DeviceConfig::USE_DOOR_SWITCH)
                 {
                     if (millis() - startTime >= 10000)
                     {
