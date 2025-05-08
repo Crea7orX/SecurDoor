@@ -6,49 +6,49 @@
 #include <SecurDoor_Globals.hpp>
 #include <tuple>
 
-namespace SecurDoor {
+namespace SecurDoor
+{
+    class TimeKeeping;
+    class DeviceController;
+    class MessagingService;
 
-class TimeKeeping;
-class DeviceController;
-class MessagingService;
+    class RemoteConnection
+    {
+    public:
+        RemoteConnection();
 
-class RemoteConnection {
-public:
-    RemoteConnection();
+        tuple<String, int> sendHttpsRequest(const String &host,
+                                            const String &path,
+                                            const bool &secure = true,
+                                            const String &method = "GET",
+                                            const String &headers = String(),
+                                            const String &payload = String(),
+                                            const bool &displayBusy = true);
 
-    tuple<String, int> sendHttpsRequest(const String &host,
-                            const String &path,
-                            const bool &secure = true,
-                            const String &method = "GET",
-                            const String &headers = String(),
-                            const String &payload = String(),
-                           const bool &displayBusy = true);
+        String downloadRootCertificate(const String &domain, const String &path);
 
-    String downloadRootCertificate(const String &domain, const String &path);
+        // The two new methods extracted from loop()
+        void checkTimestamp(TimeKeeping &timeKeepingService, DeviceController &deviceController);
 
-    // The two new methods extracted from loop()
-    void checkTimestamp(TimeKeeping &timeKeepingService, DeviceController &deviceController);
+        void sendHeartbeat(TimeKeeping &timeKeepingService,
+                           DeviceController &deviceController,
+                           MessagingService &messagingService,
+                           Adafruit_Fingerprint &fingerprintSensor,
+                           RemoteConnection &remoteConnection);
 
-    void sendHeartbeat(TimeKeeping &timeKeepingService,
-                       DeviceController &deviceController,
-                       MessagingService &messagingService,
-                       Adafruit_Fingerprint &fingerprintSensor,
-                          RemoteConnection &remoteConnection);
+        void enrollFingerprintToServer(int fingerID, DeviceController &deviceController, TimeKeeping &timeKeepingService, MessagingService &messagingService);
 
-    void enrollFingerprintToServer(int fingerID, DeviceController &deviceController, TimeKeeping &timeKeepingService, MessagingService &messagingService);
+        void authenticateCard(const String &cardUID, DeviceController &deviceController, TimeKeeping &timeKeepingService, MessagingService &messagingService);
+        void authenticateFingerprint(int fingerID, DeviceController &deviceController, TimeKeeping &timeKeepingService, MessagingService &messagingService);
 
-    void authenticateCard(const String &cardUID, DeviceController &deviceController, TimeKeeping &timeKeepingService, MessagingService &messagingService);
-    void authenticateFingerprint(int fingerID, DeviceController &deviceController, TimeKeeping &timeKeepingService, MessagingService &messagingService);
+    private:
+        unsigned long lastCheck;
+        unsigned long lastFetch;
+        unsigned long lastHeartbeat;
+        unsigned long localTimestamp;
+        bool firstRun = true;
+    };
 
-private:
-    // We store your old "loop" variables here
-    unsigned long lastCheck;
-    unsigned long lastFetch;
-    unsigned long lastHeartbeat;
-    unsigned long localTimestamp; // tracks what used to be 'lastTimestamp'
-    bool firstRun = true;
-};
+}
 
-} // namespace SecurDoor
-
-#endif // SECURDOOR_REMOTE_CONNECTION_HPP
+#endif
