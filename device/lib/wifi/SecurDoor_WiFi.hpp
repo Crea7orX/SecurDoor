@@ -4,9 +4,10 @@
 #include "SecurDoor_Globals.hpp"
 #include "SecurDoor_DeviceControl.hpp"
 
-namespace SecurDoor {
-
-    class SecurDoorWiFi {
+namespace SecurDoor
+{
+    class SecurDoorWiFi
+    {
     public:
         using RestartCallback = void (*)();
 
@@ -19,7 +20,6 @@ namespace SecurDoor {
         WiFiManagerWrapper wm;
         RestartCallback restartCallback;
     };
-
 }
 
 #endif
