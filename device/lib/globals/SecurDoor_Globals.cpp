@@ -67,7 +67,7 @@ namespace SecurDoor
         lcdDisplay.setCursor(0, 0);
         lcdDisplay.print("|  SecurDoor   |");
         lcdDisplay.setCursor(0, 1);
-        lcdDisplay.print(">   DENIED     <");
+        lcdDisplay.print(">    DENIED    <");
     }
 
     void LCDController::emergencyDisplay(int code)
