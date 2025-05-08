@@ -395,10 +395,13 @@ namespace SecurDoor
                     buzzBuzzer(1, 300);
                     lastBeep = millis();
                 }
-
-                if (millis() - startTime >= 10000)
+                
+                if (DeviceConfig::USE_DOOR_SWITCH)
                 {
-                    break;
+                    if (millis() - startTime >= 10000)
+                    {
+                        break;
+                    }
                 }
 
                 delay(500);
