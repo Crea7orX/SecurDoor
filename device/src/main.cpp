@@ -64,6 +64,7 @@ unsigned long lastCheck = 0;
 unsigned long lastFetch = 0;
 unsigned long lastHeartbeat = 0;
 bool debugFreeze;
+bool wasOpenWhenLocked = false;
 
 void setup()
 {
@@ -308,10 +309,18 @@ void loop()
             lcdDisplay.setCursor(0, 1);
             lcdDisplay.print(">  DOOR OPEN! <");
             deviceController.setLED(1, true);
+            servo.write(ServoConfig::SERVO_UNLOCK_ANGLE);
+            wasOpenWhenLocked = true;
             deviceController.buzzBuzzer(2, 400);
             remoteConnection.sendHeartbeat(timeKeepingService, deviceController, messagingService, finger, remoteConnection);
             delay(500);
             return;
+        }
+
+        if (deviceController.isLocked() && wasOpenWhenLocked)
+        {
+            wasOpenWhenLocked = false;
+            servo.write(ServoConfig::SERVO_LOCK_ANGLE);
         }
     }
 
