@@ -276,8 +276,6 @@ namespace SecurDoor
                     if (deviceController.isEmergency())
                     {
                         deviceController.setEmergency(false);
-                        deviceController.setLocked(false, timeKeepingService.getTimestamp());
-                        deviceController.setLastLockedState(false);
                     }
                 }
 
