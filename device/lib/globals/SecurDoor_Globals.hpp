@@ -23,9 +23,6 @@ namespace SecurDoor
 
     namespace DisplayConfig
     {
-        constexpr uint8_t OLED_ADDR = 0x3C;
-        constexpr uint8_t OLED_SDA_PIN = 15;
-        constexpr uint8_t OLED_SCL_PIN = 4;
         constexpr uint8_t LCD_ADDR = 0x27;
         constexpr uint8_t LCD_COLS = 16;
         constexpr uint8_t LCD_ROWS = 2;
