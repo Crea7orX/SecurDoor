@@ -339,48 +339,42 @@ void loop()
 
     if (hasFingerprintSensor)
     {
-        if ((!deviceController.isLocked() && !deviceController.isDoorClosed()) || deviceController.isEmergency())
+        if (finger.getImage() == FINGERPRINT_OK)
         {
-        }
-        else
-        {
-            if (finger.getImage() == FINGERPRINT_OK)
+            logger.log(LoggingConfig::MYLOG, INFO, "Finger detected!");
+            lcdDisplay.readingDisplay();
+            deviceController.setLED(1, true);
+            if (finger.image2Tz() != FINGERPRINT_OK)
             {
-                logger.log(LoggingConfig::MYLOG, INFO, "Finger detected!");
-                lcdDisplay.readingDisplay();
-                deviceController.setLED(1, true);
-                if (finger.image2Tz() != FINGERPRINT_OK)
+                lcdDisplay.accessDeniedDisplay();
+                deviceController.buzzBuzzer(2, 400);
+                delay(500);
+                lcdDisplay.standbyDisplay();
+                deviceController.setLED(2, true);
+            }
+            if (finger.fingerFastSearch() != FINGERPRINT_OK)
+            {
+                lcdDisplay.accessDeniedDisplay();
+                deviceController.buzzBuzzer(2, 400);
+                delay(500);
+                lcdDisplay.standbyDisplay();
+                deviceController.setLED(2, true);
+                return;
+            }
+            else
+            {
+                logger.log(LoggingConfig::MYLOG, INFO, String("Match: ID " + String(finger.fingerID) + " confidence " + String(finger.confidence)).c_str());
+                if (finger.confidence > FingerprintConfig::FINGERPRINT_SENSOR_MINIMUM_FINGERPRINT_SCORE)
                 {
-                    lcdDisplay.accessDeniedDisplay();
-                    deviceController.buzzBuzzer(2, 400);
-                    delay(500);
-                    lcdDisplay.standbyDisplay();
-                    deviceController.setLED(2, true);
-                }
-                if (finger.fingerFastSearch() != FINGERPRINT_OK)
-                {
-                    lcdDisplay.accessDeniedDisplay();
-                    deviceController.buzzBuzzer(2, 400);
-                    delay(500);
-                    lcdDisplay.standbyDisplay();
-                    deviceController.setLED(2, true);
-                    return;
+                    remoteConnection.authenticateFingerprint(finger.fingerID, deviceController, timeKeepingService, messagingService);
                 }
                 else
                 {
-                    logger.log(LoggingConfig::MYLOG, INFO, String("Match: ID " + String(finger.fingerID) + " confidence " + String(finger.confidence)).c_str());
-                    if (finger.confidence > FingerprintConfig::FINGERPRINT_SENSOR_MINIMUM_FINGERPRINT_SCORE)
-                    {
-                        remoteConnection.authenticateFingerprint(finger.fingerID, deviceController, timeKeepingService, messagingService);
-                    }
-                    else
-                    {
-                        lcdDisplay.accessDeniedDisplay();
-                        deviceController.buzzBuzzer(2, 400);
-                        delay(500);
-                        lcdDisplay.standbyDisplay();
-                        deviceController.setLED(2, true);
-                    }
+                    lcdDisplay.accessDeniedDisplay();
+                    deviceController.buzzBuzzer(2, 400);
+                    delay(500);
+                    lcdDisplay.standbyDisplay();
+                    deviceController.setLED(2, true);
                 }
             }
         }
