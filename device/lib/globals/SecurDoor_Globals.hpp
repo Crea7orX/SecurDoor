@@ -16,7 +16,6 @@
 #include <Elog.h>
 #include <ESP32Servo.h>
 #include <Adafruit_Fingerprint.h>
-#include <global_servo.hpp>
 
 namespace SecurDoor
 {
@@ -133,6 +132,7 @@ namespace SecurDoor
     extern LCDController lcdDisplay;
     extern WebServerHandler webServer;
     extern IPAddress localIPAddress;
+    extern Servo servo;
 }
 
 namespace SecurDoor

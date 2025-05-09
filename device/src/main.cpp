@@ -43,7 +43,6 @@
 #include "SecurDoor_RemoteConnection.hpp"
 #include "SecurDoor_TimeKeeping.hpp"
 #include "SecurDoor_RSAKeys.hpp"
-#include "global_servo.hpp"
 
 using namespace SecurDoor;
 

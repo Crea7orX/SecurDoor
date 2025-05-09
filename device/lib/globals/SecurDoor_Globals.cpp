@@ -8,6 +8,7 @@ namespace SecurDoor
     LCDController lcdDisplay(DisplayConfig::LCD_ADDR, DisplayConfig::LCD_COLS, DisplayConfig::LCD_ROWS);
     WebServerHandler webServer;
     IPAddress localIPAddress;
+    Servo servo;
 
     WiFiManagerWrapper::WiFiManagerWrapper() : WiFiManager() {}
     WiFiManagerWrapper::~WiFiManagerWrapper() {}
