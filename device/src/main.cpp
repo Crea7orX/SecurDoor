@@ -92,6 +92,7 @@ void setup()
     }
 
     SPI.begin(RFIDConfig::SCK_PIN, RFIDConfig::MISO_PIN, RFIDConfig::MOSI_PIN, RFIDConfig::NSS_PIN);
+    Wire.begin(DisplayConfig::LCD_SDA_PIN, DisplayConfig::LCD_SCL_PIN);
 
     if (lcdDisplay.initialize())
     {
