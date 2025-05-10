@@ -50,7 +50,7 @@ export default function DevicesPage({ searchParams }: DevicesPageProps) {
 
   const { data, isLoading, isPlaceholderData } = useGetAllDevicesQuery({
     searchParams,
-    refetchInterval: 5000,
+    refetchInterval: 2500,
   });
   const { data: emergencyCount } = useGetEmergencyCountQuery();
   const { data: tags, isLoading: tagsIsLoading } = useGetAllTagsQuery({

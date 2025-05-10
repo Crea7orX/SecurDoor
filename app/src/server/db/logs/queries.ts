@@ -162,14 +162,16 @@ export async function logGetById(id: string, ownerId: string) {
 
 export function logsActorsGetAll(ownerId: string) {
   return db
-    .selectDistinctOn([logs.actorName, logs.actorId], {
+    .selectDistinctOn([logs.actorId], {
+      actorId: logs.actorId,
       actorName: logs.actorName,
       actorEmail: logs.actorEmail,
-      actorId: logs.actorId,
     })
     .from(logs)
-    .where(
-      eq(logs.ownerId, ownerId), // Ensure ownership
-    )
-    .orderBy(asc(logs.actorName), asc(logs.actorId));
+    .where(eq(logs.ownerId, ownerId))
+    .orderBy(
+      logs.actorId, // Required for DISTINCT ON
+      desc(logs.createdAt), // Ensures newest log per actorId
+      asc(logs.actorName), // Secondary sort of final result
+    );
 }

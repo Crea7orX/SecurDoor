@@ -7,6 +7,8 @@ import {
 import { biometricsGetAll } from "@/server/db/biometrics/queries";
 import { type NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 // get all biometrics
 export async function GET(request: NextRequest) {
   try {
