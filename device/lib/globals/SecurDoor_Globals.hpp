@@ -16,27 +16,28 @@
 #include <Elog.h>
 #include <ESP32Servo.h>
 #include <Adafruit_Fingerprint.h>
-#include <global_servo.hpp>
 
-namespace SecurDoor {
-    
-    namespace DisplayConfig {
-        constexpr uint8_t OLED_ADDR = 0x3C;
-        constexpr uint8_t OLED_SDA_PIN = 15;
-        constexpr uint8_t OLED_SCL_PIN = 4;
+namespace SecurDoor
+{
+
+    namespace DisplayConfig
+    {
+        constexpr uint8_t LCD_SDA_PIN = 15;
+        constexpr uint8_t LCD_SCL_PIN = 4;
         constexpr uint8_t LCD_ADDR = 0x27;
         constexpr uint8_t LCD_COLS = 16;
         constexpr uint8_t LCD_ROWS = 2;
     }
 
-    namespace LEDConfig {
+    namespace LEDConfig
+    {
         constexpr uint8_t BUILTIN_PIN = 2;
         constexpr uint8_t RED_PIN = 25;
-        // constexpr uint8_t GREEN_PIN = 12;
         constexpr uint8_t BLUE_PIN = 26;
     }
 
-    namespace BuzzerConfig {
+    namespace BuzzerConfig
+    {
         constexpr uint8_t BUZZER_PIN = 27;
         constexpr bool BUZZER_ON = true;
         constexpr bool BUZZER_IS_PASSIVE = true;
@@ -44,43 +45,45 @@ namespace SecurDoor {
         constexpr uint8_t PASSIVE_BUZZER_CHANNEL = 8;
     }
 
-    namespace DeviceConfig {
+    namespace DeviceConfig
+    {
         constexpr size_t MIN_HEAP_SIZE_BYTES = 150 * 1024;
         constexpr uint32_t SERIAL_BAUD_RATE = 115200;
         constexpr bool USE_DOOR_SWITCH = true;
         constexpr bool CONTINUOUSLY_CHECK_FOR_DOOR = true;
     }
 
-    namespace RFIDConfig {
-        constexpr uint8_t RST_PIN  = 22;
-        constexpr uint8_t NSS_PIN  = 21;
-        constexpr uint8_t SCK_PIN  = 14;
+    namespace RFIDConfig
+    {
+        constexpr uint8_t RST_PIN = 22;
+        constexpr uint8_t NSS_PIN = 21;
+        constexpr uint8_t SCK_PIN = 14;
         constexpr uint8_t MISO_PIN = 19;
         constexpr uint8_t MOSI_PIN = 23;
     }
 
-    namespace ServoConfig {
+    namespace ServoConfig
+    {
         constexpr uint8_t SERVO_PIN = 13;
-        constexpr uint16_t SERVO_UNLOCK_ANGLE = 90;
-        constexpr uint16_t SERVO_LOCK_ANGLE = 0;
+        constexpr uint16_t SERVO_UNLOCK_ANGLE = 0;
+        constexpr uint16_t SERVO_LOCK_ANGLE = 90;
     }
 
-    namespace NetworkConfig {
+    namespace NetworkConfig
+    {
         constexpr const char *root_ca_domain = "cacerts.digicert.com";
         constexpr const char *root_ca_path = "/DigiCertGlobalRootG2.crt.pem";
         constexpr uint8_t MAX_CERT_DOWNLOAD_RETRIES = 3;
         extern String test_root_ca;
     }
 
-    namespace LoggingConfig {
+    namespace LoggingConfig
+    {
         constexpr uint8_t MYLOG = 0;
     }
 
-    namespace APIConfig {
-        
-        // SERIAL_ID is deprecated. Use DEVICE_UNIQUE_ID instead.
-        // static const char *SERIAL_ID = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
-
+    namespace APIConfig
+    {
         static const char *API_SIGNED_DOMAIN = "api-signed.securdoor.eu";
         static const char *API_DOMAIN = "api.securdoor.eu";
 
@@ -93,12 +96,14 @@ namespace SecurDoor {
         static const char *API_FINGERPRINT_KNOWN = "/devices/known_biometrics";
     }
 
-    namespace TimekeepingConfig {
+    namespace TimekeepingConfig
+    {
         static const char *TIME_API_DOMAIN = APIConfig::API_SIGNED_DOMAIN;
-        static const char *TIME_API_PATH   = "/timestamp";
+        static const char *TIME_API_PATH = "/timestamp";
     }
 
-    namespace FingerprintConfig {
+    namespace FingerprintConfig
+    {
         static const char *FINGERPRINT_API_DOMAIN = APIConfig::API_SIGNED_DOMAIN;
 
         constexpr uint8_t FINGERPRINT_SENSOR_RX_PIN = 16;
@@ -107,12 +112,14 @@ namespace SecurDoor {
         constexpr uint8_t FINGERPRINT_SENSOR_MINIMUM_FINGERPRINT_SCORE = 100;
     }
 
-    namespace SonicConfig {
+    namespace SonicConfig
+    {
         constexpr uint8_t TRIG_PIN = 5;
         constexpr uint8_t ECHO_PIN = 18;
     }
 
-    namespace DoorSwitchConfig {
+    namespace DoorSwitchConfig
+    {
         constexpr uint8_t DOOR_SWITCH_PIN = 18;
         constexpr uint8_t DOOR_SWITCH_DEBOUNCE_MS = 50;
     }
@@ -127,30 +134,35 @@ namespace SecurDoor {
     extern LCDController lcdDisplay;
     extern WebServerHandler webServer;
     extern IPAddress localIPAddress;
+    extern Servo servo;
 }
 
-namespace SecurDoor {
-
-    class WiFiManagerWrapper : public WiFiManager {
+namespace SecurDoor
+{
+    class WiFiManagerWrapper : public WiFiManager
+    {
     public:
         WiFiManagerWrapper();
         ~WiFiManagerWrapper();
     };
 
-    class PreferencesWrapper : public Preferences {
+    class PreferencesWrapper : public Preferences
+    {
     public:
         PreferencesWrapper();
         ~PreferencesWrapper();
     };
 
-    class WebServerHandler : public WebServer {
+    class WebServerHandler : public WebServer
+    {
     public:
         WebServerHandler(uint16_t port = 80);
         ~WebServerHandler();
         void beginServer();
     };
 
-    class LCDController : public LiquidCrystal_I2C {
+    class LCDController : public LiquidCrystal_I2C
+    {
     public:
         LCDController(uint8_t address, uint8_t cols, uint8_t rows);
         ~LCDController();
@@ -171,4 +183,4 @@ namespace SecurDoor {
     extern IPAddress localIPAddress;
 }
 
-#endif // SECURDOOR_GLOBALS_HPP
+#endif
