@@ -25,6 +25,7 @@ export async function biometricInsert({
   ownerId,
 }: BiometricInsertProps) {
   const biometricByBiometricId = await biometricGetByBiometricId({
+    deviceId,
     biometricId: create.biometricId,
     ownerId,
   });
@@ -149,11 +150,13 @@ export async function biometricGetById({ id, ownerId }: BiometricGetByIdProps) {
 }
 
 interface BiometricGetByBiometricId {
+  deviceId: string;
   biometricId: number;
   ownerId: string;
 }
 
 export async function biometricGetByBiometricId({
+  deviceId,
   biometricId,
   ownerId,
 }: BiometricGetByBiometricId) {
@@ -165,6 +168,7 @@ export async function biometricGetByBiometricId({
         .where(
           and(
             eq(biometrics.ownerId, ownerId), // Ensure ownership
+            eq(biometrics.deviceId, deviceId),
             eq(biometrics.biometricId, biometricId),
           ),
         )
