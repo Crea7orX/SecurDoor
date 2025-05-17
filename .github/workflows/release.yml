@@ -1,9 +1,12 @@
 name: Release
 
+permissions:
+  contents: write
+
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "*"
 
 jobs:
   create-release:
@@ -12,20 +15,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.repository.default_branch }}
 
-      - name: Update Tag Ref
-        uses: EndBug/latest-tag@latest
+      - name: Set node
+        uses: actions/setup-node@v4
         with:
-          ref: ${{ github.ref_name }}
+          registry-url: https://registry.npmjs.org/
+          node-version: lts/*
 
-      - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        id: auto_release
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          title: "${{ env.RELEASE_VERSION }}"
-          prerelease: false
+      - run: npx changelogithub
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
