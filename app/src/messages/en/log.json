@@ -211,7 +211,7 @@
           "title": "Webhook created"
         },
         "delete": {
-          "text": "\"{actor}\" deleted webhook with name \"{name}\" (Type: \"{type}\") and scope of {actionsCount, plural, =1 {# action} other {# actions}}.",
+          "text": "\"{actor}\" deleted webhook with name \"{name}\" (Type: \"{type}\").",
           "title": "Webhook deleted"
         },
         "disable": {
